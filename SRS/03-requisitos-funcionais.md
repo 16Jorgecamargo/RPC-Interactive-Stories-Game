@@ -282,6 +282,45 @@
 - **Processamento**: Restrição de ações de combate, manutenção de acesso ao chat
 - **Saída**: Interface de espectador com chat habilitado e ações de combate desabilitadas
 
+## RF48 - Upload de Arquivo Mermaid
+**Descrição**: Sistema deve permitir upload de arquivos .mmd para criação de histórias.
+- **Entrada**: Arquivo Mermaid (.mmd), título, descrição, configurações de visibilidade
+- **Processamento**: Upload para diretório temporário, validação do conteúdo Mermaid, parse e criação da história
+- **Saída**: História criada a partir do arquivo ou erro de validação
+
+## RF49 - Sistema de Votação com Timeout Automático
+**Descrição**: Sistema deve suportar votações com finalização automática por timeout.
+- **Entrada**: Pergunta, opções de resposta, tempo limite (1-60 minutos), configurações de empate
+- **Processamento**: Controle de timeout automático, contagem regressiva, finalização automática
+- **Saída**: Resultado da votação com resolução automática por timeout
+
+## RF50 - Extensão de Timeout de Votação
+**Descrição**: Mestres devem poder estender o tempo de votações ativas.
+- **Entrada**: ID da sessão, minutos adicionais (1-30), autorização de mestre
+- **Processamento**: Atualização do timeout, cancelamento do timeout anterior, criação de novo timeout
+- **Saída**: Novo tempo de finalização ou erro de autorização
+
+## RF51 - Resolução Avançada de Empates
+**Descrição**: Sistema deve oferecer múltiplas opções para resolver empates em votações.
+- **Entrada**: Votação empatada, método de resolução (REVOTE/RANDOM/MASTER_DECIDES)
+- **Processamento**:
+  - REVOTE: Nova votação apenas com opções empatadas
+  - RANDOM: Escolha aleatória entre empates
+  - MASTER_DECIDES: Mestre escolhe manualmente
+- **Saída**: Empate resolvido com método apropriado ou nova votação iniciada
+
+## RF52 - Sistema de Re-votação Controlada
+**Descrição**: Sistema deve permitir re-votações com opções específicas e timeout reduzido.
+- **Entrada**: Opções empatadas, tempo de re-votação (1-30 minutos)
+- **Processamento**: Criação de nova votação limitada às opções especificadas, timeout automático
+- **Saída**: Nova votação ativa ou resultado da re-votação
+
+## RF53 - Monitoramento de Status de Votação
+**Descrição**: Sistema deve fornecer informações detalhadas sobre votações em andamento.
+- **Entrada**: ID da sessão, autorização de participante
+- **Processamento**: Verificação de votação ativa, cálculo de tempo restante, status de participação
+- **Saída**: Informações de timeout, tempo restante, configurações de empate
+
 ---
 
 [← Anterior: Descrição Geral](./02-descricao-geral.md) | [Voltar ao Menu](./README.md) | [Próximo: Requisitos Não Funcionais →](./04-requisitos-nao-funcionais.md)

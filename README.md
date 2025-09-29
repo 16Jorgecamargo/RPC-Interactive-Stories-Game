@@ -115,3 +115,19 @@ Sistema de **histórias interativas multijogador distribuído** que permite:
 ---
 
 *Desenvolvido para a disciplina CC5SDT - Sistemas Distribuídos e Tecnologias*
+## Cliente Web (Frontend)
+
+Um cliente estatico foi adicionado na pasta `client/`, seguindo a estrutura descrita no SRS. Ele oferece paginas isoladas para login, cadastro e listagem dos personagens associados ao usuario.
+
+### Como executar
+1. `cd client`
+2. `npm install`
+3. `npm start`  (abre o lite-server em `http://localhost:3000`)
+
+Por padrão o cliente consome o endpoint RPC configurado em `app-config.js`. é possovel sobrescrever o endereço armazenando `hist-interactive-server-url` no `localStorage` ou editando o arquivo de configuração.
+
+### Funcionalidades atuais
+- Formularios responsivos de login e cadastro com feedback em tempo real.
+- Persistencia do token JWT em `localStorage` após autenticação.
+- Página de "Meus Personagens" com carregamento via RPC e indicação de status (disponível/em sessão) conforme SRS.
+

@@ -55,7 +55,7 @@
 ## Interface de Usuário
 - [ ] **Login/Cadastro intuitivo**: Telas de autenticação claras
 - [ ] **Gestão de personagens**: Interface fácil para CRUD de personagens
-- [ ] **Lista de sessões**: Sessões disponíveis exibidas claramente
+- [ ] **Lista de sessoes**: Sessões disponíveis exibidas claramente
 - [ ] **Tela de jogo**: Interface de votação e chat integradas
 - [ ] **Feedback visual**: Loading states e confirmações adequadas
 - [ ] **Responsividade**: Interface funciona em diferentes resoluções
@@ -105,9 +105,9 @@
 
 ---
 
-**Status de Completude**: ⏳ **Em Desenvolvimento**
+**Status de Completude**: **Em desenvolvimento**
 
-**Última Atualização**: 26 de Setembro de 2025
+**Última Atualização**: 28 de Setembro de 2025
 
 ---
 

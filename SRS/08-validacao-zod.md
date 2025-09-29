@@ -1012,6 +1012,51 @@ const AttemptReviveSchema = z.object({
   sessionId: z.string().uuid(),
   characterId: z.string().uuid()
 });
+
+// Schema para upload de arquivo Mermaid
+const UploadMermaidFileSchema = z.object({
+  filename: z.string().min(1, 'Nome do arquivo é obrigatório'),
+  title: z.string().min(1, 'Título é obrigatório').max(200, 'Título muito longo'),
+  description: z.string().max(1000, 'Descrição muito longa').optional(),
+  visibility: z.enum(['PUBLIC', 'PRIVATE', 'SHARED']).default('PRIVATE'),
+  tags: z.array(z.string().max(50)).max(10, 'Máximo 10 tags').optional()
+});
+
+// Schema para votação com timeout automático
+const StartVoteWithTimeoutSchema = z.object({
+  sessionId: z.string().uuid(),
+  question: z.string().min(1, 'Pergunta é obrigatória').max(500),
+  options: z.array(z.string().min(1).max(200)).min(2, 'Mínimo 2 opções').max(6, 'Máximo 6 opções'),
+  timeoutMinutes: z.number().int().min(1).max(60).default(5),
+  autoFinish: z.boolean().default(true),
+  allowTies: z.boolean().default(false)
+});
+
+// Schema para obter timeout de votação
+const GetVoteTimeoutSchema = z.object({
+  sessionId: z.string().uuid()
+});
+
+// Schema para estender timeout de votação
+const ExtendVoteTimeoutSchema = z.object({
+  sessionId: z.string().uuid(),
+  additionalMinutes: z.number().int().min(1).max(30)
+});
+
+// Schema para resolver empate em votação
+const ResolveVoteTieSchema = z.object({
+  sessionId: z.string().uuid(),
+  resolution: z.enum(['REVOTE', 'RANDOM', 'MASTER_DECIDES']),
+  masterChoice: z.number().int().min(0).optional(),
+  newTimeoutMinutes: z.number().int().min(1).max(30).default(3)
+});
+
+// Schema para iniciar re-votação
+const StartRevoteSchema = z.object({
+  sessionId: z.string().uuid(),
+  tiedOptions: z.array(z.number().int().min(0)).min(2, 'Mínimo 2 opções empatadas'),
+  timeoutMinutes: z.number().int().min(1).max(30).default(3)
+});
 ```
 
 ---

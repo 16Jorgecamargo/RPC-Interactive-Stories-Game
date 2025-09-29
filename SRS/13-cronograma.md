@@ -47,7 +47,7 @@
 - [ ] CRUD de sessões de jogo
 - [ ] Vinculação de personagens a sessões
 - [ ] Validação de propriedade de recursos
-- [ ] Interface para gerenciamento de histórias e sessões
+- [ ] Interface para gerenciamento de historias e sessoes
 
 ## Semana 4: Jogabilidade Core
 ### Objetivos
@@ -173,3 +173,4 @@
 ---
 
 [← Anterior: Considerações de Implementação](./12-consideracoes-implementacao.md) | [Voltar ao Menu](./README.md) | [Próximo: Critérios de Aceitação →](./14-criterios-aceitacao.md)
+

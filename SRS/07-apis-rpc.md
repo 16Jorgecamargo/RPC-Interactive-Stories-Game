@@ -133,6 +133,21 @@ updatePlayerStatus(sessionId: string, token: string): Promise<{sucesso: boolean,
 // Forçar finalização de votação (quando tempo expira)
 finalizeVoting(sessionId: string, token: string): Promise<{result: VotingResult, nextChapter: Chapter}>
 
+// Iniciar votação com timeout automático
+startVoteWithTimeout(sessionId: string, question: string, options: string[], timeoutMinutes: number, autoFinish: boolean, allowTies: boolean, token: string): Promise<{vote: VoteWithTimeout}>
+
+// Obter informações de timeout da votação
+getVoteTimeout(sessionId: string, token: string): Promise<{hasActiveVote: boolean, vote?: VoteTimeoutInfo}>
+
+// Estender timeout de votação ativa
+extendVoteTimeout(sessionId: string, additionalMinutes: number, token: string): Promise<{newEndTime: Date, additionalMinutes: number}>
+
+// Resolver empate em votação
+resolveVoteTie(sessionId: string, resolution: 'REVOTE'|'RANDOM'|'MASTER_DECIDES', masterChoice?: number, newTimeoutMinutes?: number, token: string): Promise<{type: string, resolution?: TieResolution, revote?: RevoteInfo}>
+
+// Iniciar re-votação com opções específicas
+startRevote(sessionId: string, tiedOptions: number[], timeoutMinutes: number, token: string): Promise<{revote: RevoteInfo}>
+
 // Obter histórias disponíveis
 getAvailableStories(token: string): Promise<{stories: Story[]}>
 
