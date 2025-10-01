@@ -5,20 +5,27 @@ const MAX_RETRIES = 3;
 class RpcClient {
   constructor(endpoint = SERVER_URL) {
     this.endpoint = endpoint;
+    this.requestId = 1;
   }
 
   async call(method, params = {}, retries = 0) {
+    const payload = {
+      jsonrpc: '2.0',
+      id: this.requestId++,
+      method,
+      params
+    };
+
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-      const url = `${this.endpoint}${method}`;
-      const response = await fetch(url, {
+      const response = await fetch(`${this.endpoint}/rpc`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(params),
+        body: JSON.stringify(payload),
         signal: controller.signal
       });
 
@@ -26,11 +33,22 @@ class RpcClient {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        if (errorData.error) {
+          throw new Error(errorData.error.message || 'RPC Error');
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      return data;
+
+      if (data.error) {
+        const error = new Error(data.error.message || 'RPC Error');
+        error.code = data.error.code;
+        error.data = data.error.data;
+        throw error;
+      }
+
+      return data.result;
     } catch (error) {
       if (error.name === 'AbortError') {
         if (retries < MAX_RETRIES) {
@@ -51,11 +69,7 @@ class RpcClient {
   }
 
   async health() {
-    const response = await fetch(`${this.endpoint}/health`);
-    if (!response.ok) {
-      throw new Error(`Health check failed: ${response.status}`);
-    }
-    return response.json();
+    return this.call('health');
   }
 }
 

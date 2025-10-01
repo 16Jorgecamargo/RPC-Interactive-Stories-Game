@@ -1,6 +1,178 @@
 # 7. APIs RPC
 
-## 7.1 Abordagem de Documentação
+## 7.1 Arquitetura JSON-RPC 2.0 Híbrida
+
+Este projeto implementa **JSON-RPC 2.0 real** com uma camada de compatibilidade para Swagger UI.
+
+### Modelo Dual de Endpoints
+
+**1. Endpoint JSON-RPC 2.0 Puro** (usado pelo frontend):
+```typescript
+POST /rpc
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "login",
+  "params": {
+    "username": "usuario1",
+    "password": "senha123"
+  }
+}
+```
+
+**Resposta de Sucesso:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "token": "eyJhbGc...",
+    "user": { "id": "user_123", "username": "usuario1", "role": "USER" },
+    "expiresIn": 86400
+  }
+}
+```
+
+**Resposta de Erro:**
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32001,
+    "message": "Credenciais inválidas",
+    "data": { "reason": "Usuário ou senha incorretos" }
+  }
+}
+```
+
+**2. Endpoints REST para Swagger UI** (wrappers de documentação):
+```typescript
+POST /rpc/login
+POST /rpc/register
+GET /rpc/me
+```
+
+Estes endpoints são **wrappers que internamente chamam os mesmos métodos RPC**. Existem apenas para proporcionar uma melhor UX no Swagger UI, permitindo testar cada método individualmente.
+
+### Códigos de Erro JSON-RPC 2.0
+
+| Código | Nome | Descrição |
+|--------|------|-----------|
+| -32700 | Parse error | JSON inválido |
+| -32600 | Invalid Request | Requisição mal formada |
+| -32601 | Method not found | Método não existe |
+| -32602 | Invalid params | Parâmetros inválidos |
+| -32603 | Internal error | Erro interno do servidor |
+| -32000 | Server error | Erro customizado do servidor |
+| -32001 | Unauthorized | Não autenticado |
+| -32002 | Forbidden | Sem permissão |
+
+### Frontend: Cliente RPC
+
+O cliente JavaScript faz chamadas JSON-RPC 2.0 puras:
+
+```javascript
+class RpcClient {
+  constructor(endpoint = 'http://localhost:8443') {
+    this.endpoint = endpoint;
+    this.requestId = 1;
+  }
+
+  async call(method, params = {}) {
+    const payload = {
+      jsonrpc: '2.0',
+      id: this.requestId++,
+      method,  // 'login', 'register', 'me', etc.
+      params
+    };
+
+    const response = await fetch(`${this.endpoint}/rpc`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
+    return data.result;
+  }
+}
+
+// Uso:
+const client = new RpcClient();
+const result = await client.call('login', { username: 'user1', password: 'pass' });
+```
+
+### Backend: Handler RPC
+
+Um único handler processa todas as chamadas RPC:
+
+```typescript
+// jsonrpc_handler.ts
+const methodRegistry: Record<string, RpcMethod> = {
+  'login': async (params) => await authService.login(params),
+  'register': async (params) => await authService.register(params),
+  'me': async (params) => await authService.me(params.token),
+  'health': async () => ({ status: 'ok', uptime: process.uptime() })
+};
+
+app.post('/rpc', async (request, reply) => {
+  const { jsonrpc, id, method, params } = request.body;
+
+  if (jsonrpc !== '2.0') {
+    return reply.send({
+      jsonrpc: '2.0',
+      id,
+      error: { code: -32600, message: 'Invalid Request' }
+    });
+  }
+
+  const rpcMethod = methodRegistry[method];
+  if (!rpcMethod) {
+    return reply.send({
+      jsonrpc: '2.0',
+      id,
+      error: { code: -32601, message: 'Method not found' }
+    });
+  }
+
+  try {
+    const result = await rpcMethod(params || {});
+    return reply.send({ jsonrpc: '2.0', id, result });
+  } catch (error) {
+    return reply.send({
+      jsonrpc: '2.0',
+      id,
+      error: {
+        code: error.code || -32603,
+        message: error.message,
+        data: error.data
+      }
+    });
+  }
+});
+```
+
+### Métodos RPC Disponíveis
+
+Todos os métodos listados na seção 7.3 são chamados via o campo `method` no payload JSON-RPC:
+
+- `login` → Autenticação
+- `register` → Cadastro
+- `me` → Dados do usuário
+- `createSession` → Criar sessão
+- `joinSession` → Entrar em sessão
+- `vote` → Votar em opção
+- E todos os outros...
+
+## 7.2 Abordagem de Documentação
 
 Este projeto utiliza **autodocumentação** através de **Fastify + Zod + Swagger**:
 

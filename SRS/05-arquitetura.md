@@ -81,14 +81,29 @@ graph TB
 3. **Endpoints**: RPC Server exposto via port mapping
 4. **Domínio**: Acessível via IP público ou domínio
 
-### Comunicação RPC Remota
+### Comunicação JSON-RPC 2.0 Híbrida
 - **Framework**: Fastify com `fastify-type-provider-zod`
 - **Validação**: Schemas Zod para entrada/saída
 - **Documentação**: Swagger UI em `/docs` (gerada automaticamente)
-- **Protocolo**: JSON-RPC 2.0 over HTTP/HTTPS
+- **Protocolo**: **JSON-RPC 2.0 puro** over HTTP/HTTPS
 - **CORS**: Configurado para aceitar requests do cliente
 - **Autenticação**: JWT tokens para sessões
 - **Long Polling**: Para atualizações em tempo real
+
+#### Arquitetura Dual
+
+**1. Endpoint RPC Real** (usado pelo frontend):
+```
+POST /rpc
+Body: { "jsonrpc": "2.0", "id": 1, "method": "login", "params": {...} }
+Response: { "jsonrpc": "2.0", "id": 1, "result": {...} }
+```
+
+**2. Wrappers REST** (apenas para Swagger UI):
+```
+POST /rpc/login, /rpc/register, GET /rpc/me
+```
+São wrappers que internamente chamam os mesmos métodos RPC, proporcionando melhor UX no Swagger.
 
 ### Stack de Autodocumentação
 1. **Zod + @asteasolutions/zod-to-openapi**: Define schemas de validação com `.openapi({ example, description })`

@@ -10,21 +10,40 @@ historias-interativas-servidor/
 ├── src/
 │   ├── rpc/
 │   │   ├── handlers/
-│   │   │   ├── auth.js
-│   │   │   ├── users.js
-│   │   │   ├── characters.js
-│   │   │   ├── sessions.js
-│   │   │   ├── stories.js
-│   │   │   ├── game.js
-│   │   │   ├── chat.js
-│   │   │   └── admin.js
+│   │   │   ├── rpc_methods/            # Métodos RPC organizados por domínio
+│   │   │   │   ├── auth_methods.ts     # register, login, me, validateToken
+│   │   │   │   ├── health_methods.ts   # health
+│   │   │   │   ├── users_methods.ts    # listUsers, getUser
+│   │   │   │   ├── characters_methods.ts # createCharacter, listCharacters
+│   │   │   │   ├── sessions_methods.ts  # createSession, joinSession
+│   │   │   │   ├── stories_methods.ts   # listStories, getStory
+│   │   │   │   ├── game_methods.ts      # vote, getGameState
+│   │   │   │   ├── chat_methods.ts      # sendMessage, getMessages
+│   │   │   │   ├── admin_methods.ts     # promoteUser, deleteSession
+│   │   │   │   └── index.ts            # Exporta methodRegistry combinado
+│   │   │   ├── wrappers/               # Wrappers REST para Swagger UI
+│   │   │   │   ├── auth_wrappers.ts    # /rpc/register, /rpc/login, /rpc/me
+│   │   │   │   ├── health_wrappers.ts  # /health
+│   │   │   │   ├── users_wrappers.ts   # /rpc/users/*
+│   │   │   │   ├── characters_wrappers.ts # /rpc/characters/*
+│   │   │   │   ├── sessions_wrappers.ts # /rpc/sessions/*
+│   │   │   │   └── index.ts            # Registra todos os wrappers
+│   │   │   ├── jsonrpc_handler.ts      # Handler principal RPC (POST /rpc)
+│   │   │   └── swagger_wrapper_handler.ts # Coordenador de wrappers
+│   │   ├── openapi/                    # OpenAPI Registry modular
+│   │   │   ├── paths/
+│   │   │   │   ├── auth_paths.ts       # Documentação endpoints auth
+│   │   │   │   ├── rpc_paths.ts        # Documentação endpoint RPC genérico
+│   │   │   │   ├── health_paths.ts     # Documentação health
+│   │   │   │   ├── users_paths.ts      
+│   │   │   │   ├── characters_paths.ts 
+│   │   │   │   └── sessions_paths.ts   
+│   │   │   └── registry.ts             # Registry central
 │   │   ├── middleware/
-│   │   │   ├── auth.js
-│   │   │   ├── validation.js
-│   │   │   ├── cors.js
-│   │   │   └── errorHandler.js
-│   │   ├── openapi_registry.ts    # Registry OpenAPI (exemplos)
-│   │   └── server.js
+│   │   │   ├── auth.ts                 # Autenticação JWT
+│   │   │   ├── validation.ts           # Validação customizada
+│   │   │   └── errorHandler.ts         # Tratamento de erros
+│   │   └── server.ts                   # Servidor Fastify principal
 │   ├── services/
 │   │   ├── authService.js
 │   │   ├── userService.js
@@ -44,28 +63,24 @@ historias-interativas-servidor/
 │   │   ├── storyStore.js
 │   │   ├── messageStore.js
 │   │   └── eventStore.js
-│   ├── models/
-│   │   ├── schemas.ts           # Schemas Zod centralizados
-│   │   ├── userSchemas.ts
-│   │   ├── characterSchemas.ts
-│   │   ├── sessionSchemas.ts
-│   │   ├── storySchemas.ts
-│   │   ├── messageSchemas.ts
-│   │   ├── voteSchemas.ts
-│   │   └── updateSchemas.ts
+│   ├── models/                         # Schemas Zod com .openapi()
+│   │   ├── jsonrpc_schemas.ts          # JSON-RPC 2.0, Health schemas
+│   │   ├── auth_schemas.ts             # Register, Login, User schemas
+│   │   ├── user_schemas.ts             # User CRUD schemas
+│   │   ├── character_schemas.ts        # Character D&D schemas
+│   │   ├── session_schemas.ts          # Session, Voting schemas
+│   │   ├── story_schemas.ts            # Story, Mermaid schemas
+│   │   ├── message_schemas.ts          # Chat message schemas
+│   │   └── update_schemas.ts           # Real-time update schemas
 │   ├── utils/
-│   │   ├── jwt.js
-│   │   ├── bcrypt.js
-│   │   ├── validators.js
-│   │   └── logger.js
-│   ├── plugins/
-│   │   ├── swagger.ts           # Configuração @fastify/swagger
-│   │   └── typeProvider.ts      # fastify-type-provider-zod
+│   │   ├── jwt.ts                      # JWT sign/verify
+│   │   ├── bcrypt.ts                   # Password hashing
+│   │   ├── validators.ts               # Validações customizadas
+│   │   └── logger.ts                   # Winston logger
 │   └── shared/
-│       ├── schemas.js
-│       ├── constants.js
-│       ├── types.js
-│       └── utils.js
+│       ├── constants.ts                # Constantes do sistema
+│       ├── types.ts                    # TypeScript types
+│       └── utils.ts                    # Utilidades gerais
 ├── stories/
 │   ├── caverna-misteriosa.mmd
 │   ├── floresta-encantada.mmd
@@ -146,17 +161,25 @@ historias-interativas-cliente/
 ## 9.2 Descrição dos Componentes
 
 ### **Servidor (VPS)**
-- **rpc/**: Servidor Fastify + handlers de rotas
-- **services/**: Lógica de negócio completa
+- **rpc/handlers/rpc_methods/**: Métodos RPC organizados por domínio (auth, health, game, etc.)
+- **rpc/handlers/wrappers/**: Wrappers REST para Swagger UI (endpoints de documentação)
+- **rpc/openapi/**: Registry OpenAPI modular com paths separados por domínio
+- **rpc/middleware/**: Middlewares (autenticação JWT, validação, etc.)
+- **services/**: Lógica de negócio completa separada dos handlers
 - **stores/**: Persistência de dados (JSON/SQLite)
-- **models/**: Schemas Zod para validação e documentação
-- **utils/**: Autenticação JWT, logging
-- **plugins/**: Swagger UI e Type Provider Zod
-- **shared/**: Schemas compartilhados
+- **models/**: Schemas Zod com `.openapi()` para validação e documentação automática
+- **utils/**: JWT, bcrypt, validators, logger
+- **shared/**: Constantes, types, utilidades gerais
 - **stories/**: Histórias Mermaid do servidor
 - **Dockerfile**: Configuração da imagem Docker
 - **docker-compose.yml**: Orquestração de containers
 - **deploy.sh**: Automação de deploy
+
+**Benefícios da Arquitetura Modular:**
+- ✅ **Escalabilidade**: Fácil adicionar novos métodos RPC sem arquivos gigantes
+- ✅ **Manutenibilidade**: Cada domínio (auth, characters, sessions) tem seu arquivo
+- ✅ **Separação de Responsabilidades**: Methods, Wrappers, OpenAPI Paths separados
+- ✅ **Facilita Trabalho em Equipe**: Desenvolvedores podem trabalhar em módulos diferentes sem conflitos
 
 ### **Cliente (Local)**
 - **rpc/**: Cliente HTTP para servidor remoto

@@ -69,7 +69,7 @@ function validateForm(username, password) {
 
 async function handleLogin(username, password) {
   try {
-    const response = await rpcClient.call('/rpc/login', {
+    const response = await rpcClient.call('login', {
       username,
       password
     });
