@@ -1,18 +1,40 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import * as characterService from '../../../services/character_service.js';
+import * as characterOptionsService from '../../../services/character_options_service.js';
 import {
   CreateCharacterSchema,
   GetCharactersSchema,
   GetCharacterSchema,
   UpdateCharacterSchema,
   DeleteCharacterSchema,
+  GetCharacterOptionsSchema,
   CharacterResponseSchema,
   CharactersListSchema,
   DeleteCharacterResponseSchema,
+  CharacterOptionsResponseSchema,
 } from '../../../models/character_schemas.js';
 
 export async function registerCharacterWrappers(app: FastifyInstance) {
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/character-options',
+    schema: {
+      tags: ['Characters'],
+      summary: 'Obter opções de raças e classes',
+      description:
+        'Retorna todas as raças e classes disponíveis para criação de personagens, incluindo descrições e traits. Internamente usa JSON-RPC 2.0 (method: "getCharacterOptions").',
+      body: GetCharacterOptionsSchema,
+      response: {
+        200: CharacterOptionsResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await characterOptionsService.getCharacterOptions(request.body);
+      return reply.send(result);
+    },
+  });
+
   app.withTypeProvider<ZodTypeProvider>().route({
     method: 'POST',
     url: '/rpc/characters',

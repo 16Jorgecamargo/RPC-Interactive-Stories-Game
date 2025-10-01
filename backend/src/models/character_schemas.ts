@@ -11,6 +11,29 @@ export const ClassEnum = z.enum(['Warrior', 'Mage', 'Rogue', 'Cleric']).openapi(
   example: 'Warrior',
 });
 
+export const RaceSchema = z.object({
+  id: z.string().openapi({ example: 'human' }),
+  name: z.string().openapi({ example: 'Human' }),
+  description: z.string().openapi({ example: 'Versáteis e adaptáveis, humanos são a raça mais comum' }),
+  traits: z.array(z.string()).openapi({ example: ['+1 em todos os atributos', 'Versátil'] }),
+});
+
+export const ClassSchema = z.object({
+  id: z.string().openapi({ example: 'warrior' }),
+  name: z.string().openapi({ example: 'Warrior' }),
+  description: z.string().openapi({ example: 'Guerreiros são mestres do combate corpo a corpo' }),
+  traits: z.array(z.string()).openapi({ example: ['Proficiência com armas pesadas', 'Alta constituição'] }),
+});
+
+export const GetCharacterOptionsSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...' }),
+});
+
+export const CharacterOptionsResponseSchema = z.object({
+  races: z.array(RaceSchema),
+  classes: z.array(ClassSchema),
+});
+
 export const AttributesSchema = z.object({
   strength: z.number().int().min(3).max(18).openapi({ example: 15 }),
   dexterity: z.number().int().min(3).max(18).openapi({ example: 14 }),
@@ -105,6 +128,11 @@ export const DeleteCharacterResponseSchema = z.object({
   success: z.boolean().openapi({ example: true }),
   message: z.string().openapi({ example: 'Personagem excluído com sucesso' }),
 });
+
+export type Race = z.infer<typeof RaceSchema>;
+export type Class = z.infer<typeof ClassSchema>;
+export type GetCharacterOptions = z.infer<typeof GetCharacterOptionsSchema>;
+export type CharacterOptionsResponse = z.infer<typeof CharacterOptionsResponseSchema>;
 
 export type Character = z.infer<typeof CharacterSchema>;
 export type CreateCharacter = z.infer<typeof CreateCharacterSchema>;

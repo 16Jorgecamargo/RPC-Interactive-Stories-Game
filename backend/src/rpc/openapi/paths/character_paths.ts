@@ -5,12 +5,43 @@ import {
   GetCharacterSchema,
   UpdateCharacterSchema,
   DeleteCharacterSchema,
+  GetCharacterOptionsSchema,
   CharacterResponseSchema,
   CharactersListSchema,
   DeleteCharacterResponseSchema,
+  CharacterOptionsResponseSchema,
 } from '../../../models/character_schemas.js';
 
 export function registerCharacterPaths(registry: OpenAPIRegistry) {
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/character-options',
+    tags: ['Characters'],
+    summary: 'Obter opções de raças e classes',
+    description:
+      'Retorna todas as raças e classes disponíveis para criação de personagens, incluindo descrições e traits. Wrapper REST que internamente chama o método RPC "getCharacterOptions".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetCharacterOptionsSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Opções de raças e classes retornadas com sucesso',
+        content: {
+          'application/json': {
+            schema: CharacterOptionsResponseSchema,
+          },
+        },
+      },
+    },
+  });
+
   registry.registerPath({
     method: 'post',
     path: '/rpc/characters',

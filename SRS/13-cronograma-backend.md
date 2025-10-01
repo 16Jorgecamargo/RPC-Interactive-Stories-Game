@@ -17,7 +17,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 - [x] **BE-SETUP-005**: Configurar ESLint/Prettier
 - [x] **BE-SETUP-006**: Configurar scripts npm (`dev`, `build`, `start`)
 
-**Critério de Aceite**: `npm run dev` executa servidor básico na porta 8443
+**Critério de Aceite**: `npm run dev` executa servidor básico na porta 8443 ✅
 
 ---
 
@@ -33,7 +33,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 - [x] **BE-SERVER-006**: Criar rota `/health` para health checks
 - [x] **BE-SERVER-007**: Testar Swagger UI em `localhost:8443/docs`
 
-**Critério de Aceite**: Swagger UI acessível e exibindo rota `/health`
+**Critério de Aceite**: Swagger UI acessível e exibindo rota `/health` ✅
 
 ---
 
@@ -103,20 +103,20 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 
 ---
 
-### Sprint 2.3: Opções de Raças e Classes
+### Sprint 2.3: Opções de Raças e Classes 
 **Objetivo**: Dados mestres para criação de personagens
 
 #### Cards
-- [ ] **BE-CHAR-011**: Criar `RaceSchema` e `ClassSchema`
-- [ ] **BE-CHAR-012**: Implementar `GET /rpc/character-options` (raças + classes)
+- [x] **BE-CHAR-011**: Criar `RaceSchema` e `ClassSchema`
+- [x] **BE-CHAR-012**: Implementar `GET /rpc/character-options` (raças + classes)
   - **Depende de**: `BE-CHAR-011`
-- [ ] **BE-CHAR-013**: Popular dados base (Humano, Elfo, Anão, Halfling)
-- [ ] **BE-CHAR-014**: Popular classes (Guerreiro, Mago, Ladino, Clérigo)
-- [ ] **BE-CHAR-015**: Adicionar descrições e traits nas opções
-- [ ] **BE-CHAR-016**: Validar que raça/classe escolhidas existem no sistema
+- [x] **BE-CHAR-013**: Popular dados base (Humano, Elfo, Anão, Halfling)
+- [x] **BE-CHAR-014**: Popular classes (Guerreiro, Mago, Ladino, Clérigo)
+- [x] **BE-CHAR-015**: Adicionar descrições e traits nas opções
+- [x] **BE-CHAR-016**: Validar que raça/classe escolhidas existem no sistema
   - **Depende de**: `BE-CHAR-012`, `BE-CHAR-013`, `BE-CHAR-014`
 
-**Critério de Aceite**: Frontend recebe lista de raças e classes para dropdowns
+**Critério de Aceite**: Frontend recebe lista de raças e classes para dropdowns ✅
 
 ---
 

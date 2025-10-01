@@ -1,15 +1,22 @@
 import * as characterService from '../../../services/character_service.js';
+import * as characterOptionsService from '../../../services/character_options_service.js';
 import {
   CreateCharacterSchema,
   GetCharactersSchema,
   GetCharacterSchema,
   UpdateCharacterSchema,
   DeleteCharacterSchema,
+  GetCharacterOptionsSchema,
 } from '../../../models/character_schemas.js';
 
 type RpcMethod = (params: any) => Promise<any>;
 
 export const characterMethods: Record<string, RpcMethod> = {
+  getCharacterOptions: async (params) => {
+    const validated = GetCharacterOptionsSchema.parse(params);
+    return await characterOptionsService.getCharacterOptions(validated);
+  },
+
   createCharacter: async (params) => {
     const validated = CreateCharacterSchema.parse(params);
     return await characterService.createCharacter(validated);
