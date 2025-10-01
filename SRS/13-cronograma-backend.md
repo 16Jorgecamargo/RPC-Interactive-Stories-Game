@@ -25,13 +25,13 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Servidor HTTP com autodocumentação funcional
 
 #### Cards
-- [ ] **BE-SERVER-001**: Criar `src/rpc/server.ts` com Fastify básico
-- [ ] **BE-SERVER-002**: Configurar `fastify-type-provider-zod`
-- [ ] **BE-SERVER-003**: Configurar `@fastify/swagger` para OpenAPI
-- [ ] **BE-SERVER-004**: Configurar `@fastify/swagger-ui` em `/docs`
-- [ ] **BE-SERVER-005**: Implementar middleware CORS para clientes remotos
-- [ ] **BE-SERVER-006**: Criar rota `/health` para health checks
-- [ ] **BE-SERVER-007**: Testar Swagger UI em `localhost:8443/docs`
+- [x] **BE-SERVER-001**: Criar `src/rpc/server.ts` com Fastify básico
+- [x] **BE-SERVER-002**: Configurar `fastify-type-provider-zod`
+- [x] **BE-SERVER-003**: Configurar `@fastify/swagger` para OpenAPI
+- [x] **BE-SERVER-004**: Configurar `@fastify/swagger-ui` em `/docs`
+- [x] **BE-SERVER-005**: Implementar middleware CORS para clientes remotos
+- [x] **BE-SERVER-006**: Criar rota `/health` para health checks
+- [x] **BE-SERVER-007**: Testar Swagger UI em `localhost:8443/docs`
 
 **Critério de Aceite**: Swagger UI acessível e exibindo rota `/health`
 
