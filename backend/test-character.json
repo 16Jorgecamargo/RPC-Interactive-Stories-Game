@@ -1,0 +1,21 @@
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyXzE3NTkyOTU5OTM4NTlfcnVsM2pxbCIsInVzZXJuYW1lIjoiam9yZ2UiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc1OTMyNDYwNSwiZXhwIjoxNzU5NDExMDA1fQ.QMv5PHdFLCOSPFZH2RrFsj136MeeZx7qV8lO6vgyoes",
+  "name": "Thorin Escudo de Carvalho",
+  "race": "Human",
+  "class": "Warrior",
+  "attributes": {
+    "strength": 15,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 12,
+    "wisdom": 10,
+    "charisma": 8
+  },
+  "background": {
+    "appearance": "Alto e musculoso, cabelos negros e olhos azuis penetrantes",
+    "personality": "Corajoso e leal, sempre pronto para defender os fracos",
+    "fears": "Teme perder seus companheiros em batalha",
+    "goals": "Tornar-se um herói lendário e proteger seu reino"
+  },
+  "equipment": ["Espada longa", "Escudo de aço", "Armadura de placas"]
+}

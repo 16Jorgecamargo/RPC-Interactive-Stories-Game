@@ -16,6 +16,7 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
     summary: 'Obter dados do usuário logado',
     description:
       'Retorna os dados do usuário autenticado. Wrapper REST que internamente chama o método RPC "me".',
+    security: [{ bearerAuth: [] }],
     request: {
       body: {
         content: {
@@ -47,6 +48,7 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
     summary: 'Atualizar perfil do usuário',
     description:
       'Atualiza informações do perfil do usuário autenticado. Wrapper REST que internamente chama o método RPC "updateProfile".',
+    security: [{ bearerAuth: [] }],
     request: {
       body: {
         content: {
@@ -81,6 +83,7 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
     summary: 'Alterar senha do usuário',
     description:
       'Permite ao usuário autenticado alterar sua senha. Wrapper REST que internamente chama o método RPC "changePassword".',
+    security: [{ bearerAuth: [] }],
     request: {
       body: {
         content: {

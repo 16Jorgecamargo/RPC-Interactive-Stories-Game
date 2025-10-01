@@ -51,6 +51,7 @@ async function start() {
         { name: 'Auth', description: 'Autenticação (wrappers para Swagger UI)' },
         { name: 'Health', description: 'Verificação de saúde do servidor' },
         { name: 'Users', description: 'Gerenciamento de usuários (wrappers para Swagger UI)' },
+        { name: 'Characters', description: 'Gerenciamento de personagens D&D (wrappers para Swagger UI)' },
       ],
     });
 

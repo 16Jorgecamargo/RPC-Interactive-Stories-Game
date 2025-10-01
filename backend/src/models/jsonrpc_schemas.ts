@@ -43,6 +43,7 @@ export const JSON_RPC_ERRORS = {
   SERVER_ERROR: { code: -32000, message: 'Server error' },
   UNAUTHORIZED: { code: -32001, message: 'Unauthorized' },
   FORBIDDEN: { code: -32002, message: 'Forbidden' },
+  NOT_FOUND: { code: -32003, message: 'Not found' },
 } as const;
 
 export type JsonRpcRequest = z.infer<typeof JsonRpcRequestSchema>;

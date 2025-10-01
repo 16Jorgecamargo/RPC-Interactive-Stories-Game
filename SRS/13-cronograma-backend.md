@@ -81,22 +81,22 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Criação e gerenciamento de personagens
 
 #### Cards
-- [ ] **BE-CHAR-001**: Criar `CharacterSchema` com atributos D&D
-- [ ] **BE-CHAR-002**: Criar `src/models/characterSchemas.ts` com validações
-- [ ] **BE-CHAR-003**: Implementar `src/stores/characterStore.ts`
-- [ ] **BE-CHAR-004**: Implementar `POST /rpc/characters` (criar personagem)
+- [x] **BE-CHAR-001**: Criar `CharacterSchema` com atributos D&D
+- [x] **BE-CHAR-002**: Criar `src/models/characterSchemas.ts` com validações
+- [x] **BE-CHAR-003**: Implementar `src/stores/characterStore.ts`
+- [x] **BE-CHAR-004**: Implementar `POST /rpc/characters` (criar personagem)
   - **Depende de**: `BE-CHAR-001`, `BE-CHAR-003`
-- [ ] **BE-CHAR-005**: Implementar `GET /rpc/characters` (listar meus personagens)
+- [x] **BE-CHAR-005**: Implementar `GET /rpc/characters` (listar meus personagens)
   - **Depende de**: `BE-CHAR-003`, `BE-AUTH-007`
-- [ ] **BE-CHAR-006**: Implementar `GET /rpc/characters/:id` (detalhes)
+- [x] **BE-CHAR-006**: Implementar `GET /rpc/characters/:id` (detalhes)
   - **Depende de**: `BE-CHAR-003`
-- [ ] **BE-CHAR-007**: Implementar `PATCH /rpc/characters/:id` (atualizar)
+- [x] **BE-CHAR-007**: Implementar `PATCH /rpc/characters/:id` (atualizar)
   - **Depende de**: `BE-CHAR-006`
-- [ ] **BE-CHAR-008**: Implementar `DELETE /rpc/characters/:id` (excluir)
+- [x] **BE-CHAR-008**: Implementar `DELETE /rpc/characters/:id` (excluir)
   - **Depende de**: `BE-CHAR-006`
-- [ ] **BE-CHAR-009**: Validar vinculação `userId` (usuário só edita seus próprios)
+- [x] **BE-CHAR-009**: Validar vinculação `userId` (usuário só edita seus próprios)
   - **Depende de**: `BE-CHAR-004`
-- [ ] **BE-CHAR-010**: Adicionar validação de atributos (soma entre 3-18)
+- [x] **BE-CHAR-010**: Adicionar validação de atributos (soma entre 3-18)
   - **Depende de**: `BE-CHAR-001`
 
 **Critério de Aceite**: Usuário consegue criar, editar e excluir personagens D&D
@@ -217,6 +217,13 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
   - **Depende de**: `BE-SESSION-014`
 - [ ] **BE-SESSION-017**: Implementar `POST /rpc/sessions/:id/start` (iniciar jogo)
   - **Depende de**: `BE-SESSION-016`
+- [ ] **BE-SESSION-018**: Re-habilitar validações de `sessionId` em `character_service.ts`
+  - **Localização**: `src/services/character_service.ts` linhas 95-102 e 145-152
+  - **Descrição**: Descomentar validações que bloqueiam edição/exclusão de personagens vinculados a sessões
+  - **Lógica necessária**:
+    - Permitir edição/exclusão se sessão em estado `CREATING_CHARACTERS`
+    - Bloquear edição/exclusão se sessão em estado `IN_PROGRESS` ou `COMPLETED`
+  - **Depende de**: `BE-SESSION-011`, `BE-SESSION-012`
 
 **Critério de Aceite**: Sessão só inicia quando todos os participantes criaram personagens
 
