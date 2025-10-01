@@ -65,14 +65,14 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Cadastro de novos usuários
 
 #### Cards
-- [ ] **FE-AUTH-008**: Criar `public/register.html` com formulário de registro
-- [ ] **FE-AUTH-009**: Criar `src/ui/auth/register.js` com lógica de registro
-- [ ] **FE-AUTH-010**: Implementar `register(username, password, confirmPassword)`
+- [x] **FE-AUTH-008**: Criar `public/register.html` com formulário de registro
+- [x] **FE-AUTH-009**: Criar `src/ui/auth/register.js` com lógica de registro
+- [x] **FE-AUTH-010**: Implementar `register(username, password, confirmPassword)`
   - **Depende de**: `BE-AUTH-005`, `FE-RPC-002`
-- [ ] **FE-AUTH-011**: Validar que senhas coincidem no frontend
-- [ ] **FE-AUTH-012**: Validar força de senha (mínimo 6 caracteres)
-- [ ] **FE-AUTH-013**: Exibir mensagens de erro (usuário já existe)
-- [ ] **FE-AUTH-014**: Redirecionar para login após registro bem-sucedido
+- [x] **FE-AUTH-011**: Validar que senhas coincidem no frontend
+- [x] **FE-AUTH-012**: Validar força de senha (mínimo 6 caracteres)
+- [x] **FE-AUTH-013**: Exibir mensagens de erro (usuário já existe)
+- [x] **FE-AUTH-014**: Redirecionar para login após registro bem-sucedido
 
 **Critério de Aceite**: Usuário consegue se registrar e fazer login
 
@@ -82,15 +82,15 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Verificar autenticação em todas as páginas
 
 #### Cards
-- [ ] **FE-AUTH-015**: Criar `src/utils/auth.js` com funções auxiliares
-- [ ] **FE-AUTH-016**: Implementar `getToken()` para ler do localStorage
-- [ ] **FE-AUTH-017**: Implementar `isAuthenticated()` para verificar token
-- [ ] **FE-AUTH-018**: Implementar `requireAuth()` para redirecionar se não logado
-- [ ] **FE-AUTH-019**: Adicionar `requireAuth()` em todas as páginas protegidas
-- [ ] **FE-AUTH-020**: Implementar botão de logout que limpa localStorage
-- [ ] **FE-AUTH-021**: Testar fluxo completo de autenticação
+- [x] **FE-AUTH-015**: Criar `src/utils/auth.js` com funções auxiliares
+- [x] **FE-AUTH-016**: Implementar `getToken()` para ler do localStorage
+- [x] **FE-AUTH-017**: Implementar `isAuthenticated()` para verificar token
+- [x] **FE-AUTH-018**: Implementar `requireAuth()` para redirecionar se não logado
+- [x] **FE-AUTH-019**: Adicionar `requireAuth()` em todas as páginas protegidas
+- [x] **FE-AUTH-020**: Implementar botão de logout que limpa localStorage
+- [x] **FE-AUTH-021**: Testar fluxo completo de autenticação
 
-**Critério de Aceite**: Páginas protegidas redirecionam para login se não autenticado
+**Critério de Aceite**: Páginas protegidas redirecionam para login se não autenticado ✅
 
 ---
 
@@ -119,6 +119,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-CHAR-001**: Criar `public/characters.html` com lista de personagens
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-CHAR-002**: Criar `src/ui/characters/list.js` com lógica de listagem
 - [ ] **FE-CHAR-003**: Implementar `getMyCharacters()` chamando backend
   - **Depende de**: `BE-CHAR-005`, `FE-AUTH-016`
@@ -136,6 +137,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-CHAR-008**: Criar `public/character-create.html` com formulário completo
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-CHAR-009**: Criar `src/ui/characters/create.js` com lógica de criação
 - [ ] **FE-CHAR-010**: Implementar `getCharacterOptions()` para popular dropdowns
   - **Depende de**: `BE-CHAR-012`, `FE-RPC-002`
@@ -158,6 +160,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-CHAR-019**: Criar `public/character-edit.html` (reutilizar form de criação)
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-CHAR-020**: Criar `src/ui/characters/edit.js` com lógica de edição
 - [ ] **FE-CHAR-021**: Implementar `getCharacter(id)` para carregar dados
   - **Depende de**: `BE-CHAR-006`, `FE-AUTH-016`
@@ -177,6 +180,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-SESSION-001**: Criar `public/session-create.html` com formulário
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-SESSION-002**: Criar `src/ui/sessions/create.js` com lógica de criação
 - [ ] **FE-SESSION-003**: Implementar `getStoryCatalog()` para listar histórias disponíveis
   - **Depende de**: `BE-STORY-015`, `FE-AUTH-016`
@@ -198,6 +202,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-SESSION-010**: Criar `public/session-join.html` com campo de código
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-SESSION-011**: Criar `src/ui/sessions/join.js` com lógica de entrada
 - [ ] **FE-SESSION-012**: Implementar `joinSession(code)` chamando backend
   - **Depende de**: `BE-SESSION-005`, `FE-AUTH-016`
@@ -214,6 +219,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-SESSION-016**: Criar `public/waiting-room.html` com layout da sala
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-SESSION-017**: Criar `src/ui/sessions/waitingRoom.js` com lógica da sala
 - [ ] **FE-SESSION-018**: Implementar `getWaitingRoomState(sessionId)` chamando backend
   - **Depende de**: `BE-SESSION-007`, `FE-AUTH-016`
@@ -239,6 +245,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-SESSION-028**: Criar `public/sessions.html` com lista de sessões
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-SESSION-029**: Criar `src/ui/sessions/list.js` com lógica de listagem
 - [ ] **FE-SESSION-030**: Implementar `getMySessions()` chamando backend
   - **Depende de**: `BE-SESSION-006`, `FE-AUTH-016`
@@ -259,6 +266,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-GAME-001**: Criar `public/game.html` com layout de 3 colunas
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-GAME-002**: Criar `src/ui/game/gameScreen.js` com lógica principal
 - [ ] **FE-GAME-003**: Coluna esquerda: Timeline da narrativa
 - [ ] **FE-GAME-004**: Coluna central: Capítulo atual + opções de votação
@@ -397,6 +405,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
   - **Depende de**: `BE-COMBAT-003`, `BE-POLL-003`
 - [ ] **FE-COMBAT-002**: Exibir modal "Combate Iniciado!"
 - [ ] **FE-COMBAT-003**: Criar `public/combat.html` com layout de combate
+  - **TODO**: Adicionar `requireAuth()` no início do script
 - [ ] **FE-COMBAT-004**: Redirecionar para tela de combate
 - [ ] **FE-COMBAT-005**: Implementar `getCombatState(sessionId)` chamando backend
   - **Depende de**: `BE-COMBAT-020`, `FE-AUTH-016`
@@ -486,6 +495,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-ADMIN-001**: Criar `public/admin/dashboard.html` (admin only)
+  - **TODO**: Adicionar `requireAuth()` + verificação de role admin no início do script
 - [ ] **FE-ADMIN-002**: Verificar role admin antes de renderizar
   - **Depende de**: `FE-AUTH-015`
 - [ ] **FE-ADMIN-003**: Implementar `getAdminStats()` chamando backend
@@ -502,6 +512,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-ADMIN-006**: Criar `public/admin/users.html` com lista de usuários
+  - **TODO**: Adicionar `requireAuth()` + verificação de role admin no início do script
 - [ ] **FE-ADMIN-007**: Implementar `getAllUsers()` chamando backend
   - **Depende de**: `BE-ADMIN-001`, `FE-AUTH-016`
 - [ ] **FE-ADMIN-008**: Exibir tabela com username, role, stats, ações
@@ -522,6 +533,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 #### Cards
 - [ ] **FE-ADMIN-013**: Criar `public/admin/stories.html` com lista de histórias
+  - **TODO**: Adicionar `requireAuth()` + verificação de role admin no início do script
 - [ ] **FE-ADMIN-014**: Implementar `getAllStories()` chamando backend
   - **Depende de**: `BE-STORY-014`, `FE-AUTH-016`
 - [ ] **FE-ADMIN-015**: Exibir tabela com título, gênero, status, ações

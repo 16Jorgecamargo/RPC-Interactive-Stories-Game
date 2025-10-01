@@ -123,24 +123,18 @@
     </div>
   </div>
 
-  <script>
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+  <script type="module">
+    import { requireAuth, logout } from '/src/utils/auth.js';
 
-    if (!token) {
-      window.location.href = '/login.html';
-    }
+    const user = await requireAuth();
 
-    const usernameElement = document.getElementById('username');
-    if (user.username) {
+    if (user) {
+      const usernameElement = document.getElementById('username');
       usernameElement.textContent = user.username;
     }
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('expiresIn');
-      localStorage.removeItem('loginTime');
+      logout();
       window.location.href = '/login.html';
     });
   </script>
