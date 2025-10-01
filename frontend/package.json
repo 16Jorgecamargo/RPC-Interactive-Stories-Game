@@ -1,0 +1,17 @@
+{
+  "name": "rpc-stories-frontend",
+  "version": "1.0.0",
+  "description": "Cliente frontend estático para sistema de histórias interativas",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": ["rpc", "client", "stories", "game"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

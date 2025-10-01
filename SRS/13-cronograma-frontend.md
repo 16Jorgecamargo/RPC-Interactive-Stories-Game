@@ -12,13 +12,13 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Configurar ambiente frontend
 
 #### Cards
-- [ ] **FE-SETUP-001**: Criar repositório ou pasta separado para cliente
-- [ ] **FE-SETUP-002**: Inicializar projeto com `npm init`
-- [ ] **FE-SETUP-003**: Criar estrutura de pastas (`src/`, `public/`, `styles/`)
-- [ ] **FE-SETUP-004**: Instalar Express para servir arquivos estáticos
-- [ ] **FE-SETUP-005**: Criar `server.js` que serve `public/index.html`
-- [ ] **FE-SETUP-006**: Configurar scripts npm (`start`, `dev`)
-- [ ] **FE-SETUP-007**: Criar `.env` com `VITE_SERVER_URL=http://173.249.60.72:8443`
+- [x] **FE-SETUP-001**: Criar repositório ou pasta separado para cliente
+- [x] **FE-SETUP-002**: Inicializar projeto com `npm init`
+- [x] **FE-SETUP-003**: Criar estrutura de pastas (`src/`, `public/`, `styles/`)
+- [x] **FE-SETUP-004**: Instalar Express para servir arquivos estáticos
+- [x] **FE-SETUP-005**: Criar `server.js` que serve `public/index.html`
+- [x] **FE-SETUP-006**: Configurar scripts npm (`start`, `dev`)
+- [x] **FE-SETUP-007**: Criar `.env` com `VITE_SERVER_URL=http://173.249.60.72:8443`
 
 **Critério de Aceite**: `npm start` abre browser em `localhost:5173`
 
