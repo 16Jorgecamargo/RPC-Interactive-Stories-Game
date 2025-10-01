@@ -1,4 +1,4 @@
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:8443';
+const SERVER_URL = 'http://localhost:8443';
 const TIMEOUT_MS = 10000;
 const MAX_RETRIES = 3;
 
@@ -8,42 +8,29 @@ class RpcClient {
   }
 
   async call(method, params = {}, retries = 0) {
-    const payload = {
-      jsonrpc: '2.0',
-      id: Date.now(),
-      method,
-      params
-    };
-
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-      const response = await fetch(this.endpoint, {
+      const url = `${this.endpoint}${method}`;
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(params),
         signal: controller.signal
       });
 
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-
-      if (data.error) {
-        const error = new Error(data.error.message || 'RPC Error');
-        error.code = data.error.code;
-        error.data = data.error.data;
-        throw error;
-      }
-
-      return data.result;
+      return data;
     } catch (error) {
       if (error.name === 'AbortError') {
         if (retries < MAX_RETRIES) {

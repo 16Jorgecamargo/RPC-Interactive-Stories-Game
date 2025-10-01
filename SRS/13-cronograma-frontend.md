@@ -47,17 +47,17 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Interface de autenticação
 
 #### Cards
-- [ ] **FE-AUTH-001**: Criar `public/login.html` com formulário de login
-- [ ] **FE-AUTH-002**: Criar `src/ui/auth/login.js` com lógica de login
-- [ ] **FE-AUTH-003**: Implementar `login(username, password)` chamando backend
+- [x] **FE-AUTH-001**: Criar `public/login.html` com formulário de login
+- [x] **FE-AUTH-002**: Criar `src/ui/auth/login.js` com lógica de login
+- [x] **FE-AUTH-003**: Implementar `login(username, password)` chamando backend
   - **Depende de**: `BE-AUTH-006`, `FE-RPC-002`
-- [ ] **FE-AUTH-004**: Salvar JWT token em `localStorage` após login
+- [x] **FE-AUTH-004**: Salvar JWT token em `localStorage` após login
   - **Depende de**: `FE-AUTH-003`
-- [ ] **FE-AUTH-005**: Redirecionar para dashboard após login bem-sucedido
-- [ ] **FE-AUTH-006**: Exibir mensagens de erro (credenciais inválidas)
-- [ ] **FE-AUTH-007**: Adicionar validação de campos vazios
+- [x] **FE-AUTH-005**: Redirecionar para dashboard após login bem-sucedido
+- [x] **FE-AUTH-006**: Exibir mensagens de erro (credenciais inválidas)
+- [x] **FE-AUTH-007**: Adicionar validação de campos vazios
 
-**Critério de Aceite**: Usuário faz login e é redirecionado para dashboard
+**Critério de Aceite**: Usuário faz login e é redirecionado para dashboard ✅
 
 ---
 
