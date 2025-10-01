@@ -18,8 +18,8 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
       return reply.code(401).send({
         error: {
           code: -32001,
-          message: 'Token não fornecido'
-        }
+          message: 'Token não fornecido',
+        },
       });
     }
 
@@ -30,8 +30,8 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
       return reply.code(401).send({
         error: {
           code: -32001,
-          message: 'Usuário não encontrado'
-        }
+          message: 'Usuário não encontrado',
+        },
       });
     }
 
@@ -40,8 +40,8 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
     return reply.code(401).send({
       error: {
         code: -32001,
-        message: 'Token inválido ou expirado'
-      }
+        message: 'Token inválido ou expirado',
+      },
     });
   }
 }

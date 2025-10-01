@@ -6,8 +6,9 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { OpenApiGeneratorV3 } from '@asteasolutions/zod-to-openapi';
 import dotenv from 'dotenv';
 import { authenticate } from './middleware/auth.js';
-import authHandler from './handlers/auth_handler.js';
-import { registry } from './openapi_registry.js';
+import jsonRpcHandler from './handlers/jsonrpc_handler.js';
+import swaggerWrapperHandler from './handlers/swagger_wrapper_handler.js';
+import { registry } from './openapi/registry.js';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ async function start() {
       origin: process.env.CORS_ORIGIN || '*',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
-      credentials: true
+      credentials: true,
     });
 
     const generator = new OpenApiGeneratorV3(registry.definitions);
@@ -33,54 +34,46 @@ async function start() {
       info: {
         title: 'RPC Interactive Stories API',
         description: 'API JSON-RPC 2.0 para sistema de histórias interativas multiplayer',
-        version: '1.0.0'
+        version: '1.0.0',
       },
       servers: [
         {
           url: `http://localhost:${PORT}`,
-          description: 'Development server'
+          description: 'Development server',
         },
         {
           url: 'http://173.249.60.72:8443',
-          description: 'Production server'
-        }
+          description: 'Production server',
+        },
       ],
       tags: [
-        { name: 'Auth', description: 'Autenticação e registro' },
-        { name: 'Users', description: 'Gerenciamento de usuários' },
-        { name: 'Characters', description: 'Personagens D&D' },
-        { name: 'Stories', description: 'Histórias e narrativas' },
-        { name: 'Sessions', description: 'Sessões de jogo' },
-        { name: 'Game', description: 'Mecânicas de jogo' },
-        { name: 'Chat', description: 'Sistema de mensagens' },
-        { name: 'Admin', description: 'Funções administrativas' }
-      ]
+        { name: 'JSON-RPC', description: 'Endpoint JSON-RPC 2.0 puro (usado pelo frontend)' },
+        { name: 'Auth', description: 'Autenticação (wrappers para Swagger UI)' },
+        { name: 'Health', description: 'Verificação de saúde do servidor' },
+      ],
     });
 
     await app.register(swagger, {
       mode: 'static',
       specification: {
-        document: openapiDocument as any
-      }
+        document: openapiDocument as any,
+      },
     });
 
     await app.register(swaggerUi, {
       routePrefix: '/docs',
       uiConfig: {
         docExpansion: 'list',
-        deepLinking: true
+        deepLinking: true,
       },
-      staticCSP: true
+      staticCSP: true,
     });
 
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
-    app.get('/health', async () => {
-      return { status: 'ok', timestamp: new Date().toISOString() };
-    });
-
-    await app.register(authHandler);
+    await app.register(jsonRpcHandler);
+    await app.register(swaggerWrapperHandler);
 
     await app.ready();
     await app.listen({ port: PORT, host: HOST });

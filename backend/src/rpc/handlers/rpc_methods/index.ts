@@ -1,0 +1,7 @@
+import { authMethods } from './auth_methods.js';
+import { healthMethods } from './health_methods.js';
+
+export const methodRegistry = {
+  ...authMethods,
+  ...healthMethods,
+};

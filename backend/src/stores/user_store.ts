@@ -39,7 +39,7 @@ export function createUser(username: string, passwordHash: string): User {
     username,
     password: passwordHash,
     role: 'USER',
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
 
   users.push(newUser);
@@ -50,12 +50,12 @@ export function createUser(username: string, passwordHash: string): User {
 
 export function findByUsername(username: string): User | undefined {
   const users = loadUsers();
-  return users.find(u => u.username === username);
+  return users.find((u) => u.username === username);
 }
 
 export function findById(id: string): User | undefined {
   const users = loadUsers();
-  return users.find(u => u.id === id);
+  return users.find((u) => u.id === id);
 }
 
 export function userExists(username: string): boolean {
