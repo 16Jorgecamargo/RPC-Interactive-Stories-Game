@@ -10,12 +10,12 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Preparar ambiente e estrutura base do servidor
 
 #### Cards
-- [ ] **BE-SETUP-001**: Inicializar novo repositorio ou pasta para o servidor com `.gitignore` e README
-- [ ] **BE-SETUP-002**: Configurar TypeScript (`tsconfig.json`, tipos base)
-- [ ] **BE-SETUP-003**: Instalar dependências core (Fastify, Zod, JWT, bcrypt)
-- [ ] **BE-SETUP-004**: Criar estrutura de pastas (`src/`, `stories/`, etc.)
-- [ ] **BE-SETUP-005**: Configurar ESLint/Prettier
-- [ ] **BE-SETUP-006**: Configurar scripts npm (`dev`, `build`, `start`)
+- [x] **BE-SETUP-001**: Inicializar novo repositorio ou pasta para o servidor com `.gitignore` e README
+- [x] **BE-SETUP-002**: Configurar TypeScript (`tsconfig.json`, tipos base)
+- [x] **BE-SETUP-003**: Instalar dependências core (Fastify, Zod, JWT, bcrypt)
+- [x] **BE-SETUP-004**: Criar estrutura de pastas (`src/`, `stories/`, etc.)
+- [x] **BE-SETUP-005**: Configurar ESLint/Prettier
+- [x] **BE-SETUP-006**: Configurar scripts npm (`dev`, `build`, `start`)
 
 **Critério de Aceite**: `npm run dev` executa servidor básico na porta 8443
 
