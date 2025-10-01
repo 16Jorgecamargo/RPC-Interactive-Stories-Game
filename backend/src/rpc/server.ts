@@ -50,6 +50,7 @@ async function start() {
         { name: 'JSON-RPC', description: 'Endpoint JSON-RPC 2.0 puro (usado pelo frontend)' },
         { name: 'Auth', description: 'Autenticação (wrappers para Swagger UI)' },
         { name: 'Health', description: 'Verificação de saúde do servidor' },
+        { name: 'Users', description: 'Gerenciamento de usuários (wrappers para Swagger UI)' },
       ],
     });
 

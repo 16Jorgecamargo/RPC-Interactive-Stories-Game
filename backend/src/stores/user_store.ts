@@ -61,3 +61,35 @@ export function findById(id: string): User | undefined {
 export function userExists(username: string): boolean {
   return findByUsername(username) !== undefined;
 }
+
+export function updateUser(userId: string, updates: Partial<Omit<User, 'id' | 'createdAt'>>): User | null {
+  const users = loadUsers();
+  const index = users.findIndex((u) => u.id === userId);
+
+  if (index === -1) {
+    return null;
+  }
+
+  users[index] = { ...users[index], ...updates };
+  saveUsers(users);
+
+  return users[index];
+}
+
+export function updatePassword(userId: string, newPasswordHash: string): boolean {
+  const users = loadUsers();
+  const index = users.findIndex((u) => u.id === userId);
+
+  if (index === -1) {
+    return false;
+  }
+
+  users[index].password = newPasswordHash;
+  saveUsers(users);
+
+  return true;
+}
+
+export function getAllUsers(): User[] {
+  return loadUsers();
+}

@@ -61,19 +61,19 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Gerenciamento completo de usuários
 
 #### Cards
-- [ ] **BE-USER-001**: Criar `UserSchema` com validações Zod
-- [ ] **BE-USER-002**: Implementar `GET /rpc/users/me` (dados do usuário logado)
+- [x] **BE-USER-001**: Criar `UserSchema` com validações Zod
+- [x] **BE-USER-002**: Implementar `GET /rpc/users/me` (dados do usuário logado)
   - **Depende de**: `BE-AUTH-007`
-- [ ] **BE-USER-003**: Implementar `PATCH /rpc/users/me` (atualizar perfil)
+- [x] **BE-USER-003**: Implementar `PATCH /rpc/users/me` (atualizar perfil)
   - **Depende de**: `BE-USER-002`
-- [ ] **BE-USER-004**: Implementar `POST /rpc/users/change-password`
+- [x] **BE-USER-004**: Implementar `POST /rpc/users/change-password`
   - **Depende de**: `BE-AUTH-003`
-- [ ] **BE-USER-005**: Adicionar campo `role: USER | ADMIN` no schema
-- [ ] **BE-USER-006**: Criar middleware `requireAdmin` para rotas admin
+- [x] **BE-USER-005**: Adicionar campo `role: USER | ADMIN` no schema
+- [x] **BE-USER-006**: Criar middleware `requireAdmin` para rotas admin
   - **Depende de**: `BE-USER-005`
-- [ ] **BE-USER-007**: Testar todos os endpoints no Swagger UI
+- [x] **BE-USER-007**: Testar todos os endpoints no Swagger UI
 
-**Critério de Aceite**: Usuário consegue visualizar e editar seu perfil
+**Critério de Aceite**: Usuário consegue visualizar e editar seu perfil ✅
 
 ---
 

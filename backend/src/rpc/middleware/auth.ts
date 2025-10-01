@@ -45,3 +45,20 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
     });
   }
 }
+
+export async function requireAdmin(request: FastifyRequest, reply: FastifyReply) {
+  await authenticate(request, reply);
+
+  if (!request.user) {
+    return;
+  }
+
+  if (request.user.role !== 'ADMIN') {
+    return reply.code(403).send({
+      error: {
+        code: -32002,
+        message: 'Acesso negado: privilégios de administrador necessários',
+      },
+    });
+  }
+}
