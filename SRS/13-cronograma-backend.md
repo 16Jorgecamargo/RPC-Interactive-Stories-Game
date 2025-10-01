@@ -126,23 +126,23 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Converter Mermaid em estrutura de capítulos
 
 #### Cards
-- [ ] **BE-STORY-001**: Criar `src/services/mermaidParser.ts`
-- [ ] **BE-STORY-002**: Implementar parse de nós texto (`["texto"]`)
+- [x] **BE-STORY-001**: Criar `src/services/mermaidParser.ts`
+- [x] **BE-STORY-002**: Implementar parse de nós texto (`["texto"]`)
   - **Depende de**: `BE-STORY-001`
-- [ ] **BE-STORY-003**: Implementar parse de nós decisão (`{decisão?}`)
+- [x] **BE-STORY-003**: Implementar parse de nós decisão (`{decisão?}`)
   - **Depende de**: `BE-STORY-002`
-- [ ] **BE-STORY-004**: Implementar parse de arestas com labels (`-->|label|`)
+- [x] **BE-STORY-004**: Implementar parse de arestas com labels (`-->|label|`)
   - **Depende de**: `BE-STORY-003`
-- [ ] **BE-STORY-005**: Gerar mapa `capitulos: Map<id, {texto, opcoes}>`
+- [x] **BE-STORY-005**: Gerar mapa `capitulos: Map<id, {texto, opcoes}>`
   - **Depende de**: `BE-STORY-004`
-- [ ] **BE-STORY-006**: Adicionar validação de grafo (sem ciclos infinitos)
+- [x] **BE-STORY-006**: Adicionar validação de grafo (sem ciclos infinitos)
   - **Depende de**: `BE-STORY-005`
-- [ ] **BE-STORY-007**: Testar com arquivo `stories/caverna-misteriosa.mmd`
+- [x] **BE-STORY-007**: Testar com arquivo `stories/caverna-misteriosa.mmd`
   - **Depende de**: `BE-STORY-006`
-- [ ] **BE-STORY-008**: Detectar nós de combate (`[COMBATE]`)
+- [x] **BE-STORY-008**: Detectar nós de combate (`[COMBATE]`)
   - **Depende de**: `BE-STORY-005`
 
-**Critério de Aceite**: Parser converte arquivo `.mmd` em JSON navegável
+**Critério de Aceite**: Parser converte arquivo `.mmd` em JSON navegável ✅
 
 ---
 
