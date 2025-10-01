@@ -24,14 +24,17 @@ import { FastifyPluginAsync } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
 const LoginSchema = z.object({
-  username: z.string().min(3).describe("Nome de usuário"),
-  password: z.string().min(6).describe("Senha do usuário")
+  username: z.string().min(3).openapi({ example: "usuario1", description: "Nome de usuário" }),
+  password: z.string().min(6).openapi({ example: "senha123", description: "Senha do usuário" })
 });
 
 const LoginResponseSchema = z.object({
-  token: z.string().describe("JWT token de autenticação"),
+  token: z.string().openapi({
+    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    description: "JWT token de autenticação"
+  }),
   user: UserSchema,
-  expiresIn: z.number().describe("Tempo de expiração em segundos")
+  expiresIn: z.number().openapi({ example: 86400, description: "Tempo de expiração em segundos (24h)" })
 });
 
 const authRoutes: FastifyPluginAsync = async (app) => {
@@ -70,7 +73,7 @@ Todos os métodos RPC seguem este padrão:
 ```typescript
 const methodParamsSchema = z.object({
   token: z.string().optional(),
-  param1: z.string().describe("Descrição do parâmetro")
+  param1: z.string().openapi({ example: "valor_exemplo", description: "Descrição do parâmetro" })
 });
 
 const methodResponseSchema = z.object({
@@ -1107,9 +1110,9 @@ const SessionSchema = z.object({
 });
 
 const ErrorSchema = z.object({
-  code: z.number().describe("Código de erro JSON-RPC"),
-  message: z.string().describe("Mensagem de erro"),
-  data: z.any().optional().describe("Dados adicionais do erro")
+  code: z.number().openapi({ example: -32000, description: "Código de erro JSON-RPC" }),
+  message: z.string().openapi({ example: "Token inválido", description: "Mensagem de erro" }),
+  data: z.any().optional().openapi({ example: { detail: "JWT expired" }, description: "Dados adicionais do erro" })
 });
 ```
 

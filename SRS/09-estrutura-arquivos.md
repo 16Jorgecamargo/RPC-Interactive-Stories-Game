@@ -23,6 +23,7 @@ historias-interativas-servidor/
 │   │   │   ├── validation.js
 │   │   │   ├── cors.js
 │   │   │   └── errorHandler.js
+│   │   ├── openapi_registry.ts    # Registry OpenAPI (exemplos)
 │   │   └── server.js
 │   ├── services/
 │   │   ├── authService.js
@@ -212,23 +213,26 @@ DEV_PORT=5173
 import { z } from "zod";
 
 export const LoginSchema = z.object({
-  username: z.string().min(3).max(20).describe("Nome de usuário"),
-  password: z.string().min(6).describe("Senha do usuário")
+  username: z.string().min(3).max(20).openapi({ example: "usuario1", description: "Nome de usuário" }),
+  password: z.string().min(6).openapi({ example: "senha123", description: "Senha do usuário" })
 });
 
 export const LoginResponseSchema = z.object({
-  token: z.string().describe("JWT token de autenticação"),
+  token: z.string().openapi({
+    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    description: "JWT token de autenticação"
+  }),
   user: z.object({
     id: z.string().uuid(),
     username: z.string(),
     role: z.enum(["USER", "ADMIN"])
   }),
-  expiresIn: z.number().describe("Tempo de expiração em segundos")
+  expiresIn: z.number().openapi({ example: 86400, description: "Tempo de expiração em segundos (24h)" })
 });
 
 export const CharacterSchema = z.object({
   id: z.string().uuid(),
-  name: z.string().min(1).max(50).describe("Nome do personagem"),
+  name: z.string().min(1).max(50).openapi({ example: "Thorin Escudo-de-Carvalho", description: "Nome do personagem" }),
   race: z.enum(["Humano", "Elfo", "Anão", "Halfling"]),
   class: z.enum(["Guerreiro", "Mago", "Ladino", "Clérigo"]),
   attributes: z.object({
@@ -238,8 +242,14 @@ export const CharacterSchema = z.object({
     intelligence: z.number().min(1).max(20),
     wisdom: z.number().min(1).max(20),
     charisma: z.number().min(1).max(20)
-  }).describe("Atributos D&D do personagem"),
-  background: z.string().min(10).describe("História de background"),
+  }).openapi({
+    example: { strength: 16, dexterity: 12, constitution: 14, intelligence: 10, wisdom: 13, charisma: 8 },
+    description: "Atributos D&D do personagem"
+  }),
+  background: z.string().min(10).openapi({
+    example: "Guerreiro anão exilado em busca de redenção...",
+    description: "História de background"
+  }),
   userId: z.string().uuid(),
   sessionId: z.string().uuid(),
   isComplete: z.boolean()

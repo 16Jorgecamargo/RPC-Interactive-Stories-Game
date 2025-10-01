@@ -2,58 +2,69 @@
 
 ## 8.1 Abordagem de Validação e Documentação
 
-Este projeto utiliza **Zod** como fonte única de validação e documentação:
+Este projeto utiliza **Zod** como fonte única de validação e documentação, integrado com **@asteasolutions/zod-to-openapi** para gerar exemplos automaticamente:
 
 ### Fluxo de Integração
 
 ```
-Schema Zod (.describe())
+Schema Zod (.openapi({ example, description }))
     ↓
-fastify-type-provider-zod (setValidatorCompiler)
+@asteasolutions/zod-to-openapi (extendZodWithOpenApi)
+    ↓
+OpenAPI Registry (registerPath)
+    ↓
+OpenApiGeneratorV3 (generateDocument)
+    ↓
+@fastify/swagger (mode: 'static')
+    ↓
+Swagger UI em /docs (com exemplos!)
+    +
+fastify-type-provider-zod (validação runtime)
     ↓
 Validação automática de request/response
-    ↓
-@fastify/swagger (serializerCompiler)
-    ↓
-OpenAPI 3.0 gerado automaticamente
-    ↓
-Swagger UI em /docs
 ```
 
 ### Princípios
 
-1. **Schemas definem tudo**: Validação, tipos TypeScript, e documentação OpenAPI
-2. **`.describe()` vira docs**: Toda string em `.describe()` aparece na documentação
+1. **Schemas definem tudo**: Validação, tipos TypeScript, documentação OpenAPI, e exemplos
+2. **`.openapi()` vira docs + examples**: Descrições e exemplos aparecem no Swagger UI
 3. **Validação automática**: Fastify valida entrada/saída antes de executar handlers
 4. **Type-safety**: TypeScript infere tipos dos schemas automaticamente
 5. **Erro 400 automático**: Payloads inválidos retornam erro antes de chegar no handler
+6. **Exemplos interativos**: Swagger UI preenche automaticamente com valores de exemplo
 
 ### Exemplo Completo
 
 ```typescript
 import { z } from "zod";
+import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import { FastifyPluginAsync } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
-// Schema de entrada
+extendZodWithOpenApi(z);
+
+// Schema de entrada com exemplos
 export const CreateCharacterSchema = z.object({
   name: z.string()
     .min(2, "Nome muito curto")
     .max(30, "Nome muito longo")
-    .describe("Nome do personagem D&D"),
+    .openapi({ example: "Aragorn", description: "Nome do personagem D&D" }),
   race: z.enum(["Humano", "Elfo", "Anão", "Halfling"])
-    .describe("Raça do personagem"),
+    .openapi({ example: "Humano", description: "Raça do personagem" }),
   class: z.enum(["Guerreiro", "Mago", "Ladino", "Clérigo"])
-    .describe("Classe do personagem"),
+    .openapi({ example: "Guerreiro", description: "Classe do personagem" }),
   attributes: z.object({
-    strength: z.number().min(3).max(18).describe("Força"),
-    dexterity: z.number().min(3).max(18).describe("Destreza"),
-    constitution: z.number().min(3).max(18).describe("Constituição"),
-    intelligence: z.number().min(3).max(18).describe("Inteligência"),
-    wisdom: z.number().min(3).max(18).describe("Sabedoria"),
-    charisma: z.number().min(3).max(18).describe("Carisma")
-  }).describe("Atributos D&D (rolagem 4d6 drop lowest)"),
-  background: z.string().min(10).describe("História de background do personagem")
+    strength: z.number().min(3).max(18).openapi({ example: 16, description: "Força" }),
+    dexterity: z.number().min(3).max(18).openapi({ example: 13, description: "Destreza" }),
+    constitution: z.number().min(3).max(18).openapi({ example: 15, description: "Constituição" }),
+    intelligence: z.number().min(3).max(18).openapi({ example: 12, description: "Inteligência" }),
+    wisdom: z.number().min(3).max(18).openapi({ example: 14, description: "Sabedoria" }),
+    charisma: z.number().min(3).max(18).openapi({ example: 11, description: "Carisma" })
+  }).openapi({ description: "Atributos D&D (rolagem 4d6 drop lowest)" }),
+  background: z.string().min(10).openapi({
+    example: "Soldado experiente do reino do norte...",
+    description: "História de background do personagem"
+  })
 });
 
 // Schema de resposta
@@ -114,9 +125,88 @@ const characterRoutes: FastifyPluginAsync = async (app) => {
 **Resultado**: A rota acima automaticamente:
 - ✅ Valida `request.body` contra `CreateCharacterSchema`
 - ✅ Retorna erro 400 se dados inválidos
-- ✅ Gera documentação OpenAPI em `/docs`
+- ✅ Gera documentação OpenAPI em `/docs` **com exemplos interativos**
 - ✅ Infere tipos TypeScript (`request.body` é tipado)
 - ✅ Valida `response` contra `CharacterResponseSchema`
+
+### OpenAPI Registry Pattern
+
+Para usar `@asteasolutions/zod-to-openapi`, criamos um **registry centralizado** que define todas as rotas e suas documentações:
+
+```typescript
+// src/rpc/openapi_registry.ts
+import { OpenAPIRegistry } from "@asteasolutions/zod-to-openapi";
+import { CreateCharacterSchema, CharacterResponseSchema } from "../models/characterSchemas.js";
+
+export const registry = new OpenAPIRegistry();
+
+registry.registerPath({
+  method: "post",
+  path: "/rpc/characters",
+  tags: ["Characters"],
+  summary: "Cria novo personagem D&D",
+  description: "Valida atributos, gera ID, persiste no banco",
+  request: {
+    body: {
+      content: {
+        "application/json": {
+          schema: CreateCharacterSchema, // Exemplos vêm daqui!
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: "Personagem criado com sucesso",
+      content: {
+        "application/json": {
+          schema: CharacterResponseSchema,
+        },
+      },
+    },
+  },
+});
+```
+
+### Configuração do Servidor
+
+No `server.ts`, usamos o `OpenApiGeneratorV3` para gerar o documento e passamos para o Swagger em modo estático:
+
+```typescript
+import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
+import { registry } from "./openapi_registry.js";
+
+const generator = new OpenApiGeneratorV3(registry.definitions);
+const openapiDocument = generator.generateDocument({
+  openapi: "3.0.3",
+  info: {
+    title: "RPC Interactive Stories API",
+    version: "1.0.0"
+  },
+  servers: [
+    { url: "http://localhost:8443", description: "Development" },
+    { url: "http://173.249.60.72:8443", description: "Production" }
+  ]
+});
+
+// Swagger em modo estático (usa documento pré-gerado)
+await app.register(swagger, {
+  mode: "static",
+  specification: {
+    document: openapiDocument
+  }
+});
+
+await app.register(swaggerUi, {
+  routePrefix: "/docs"
+});
+```
+
+**Vantagens desta abordagem**:
+- ✅ Exemplos aparecem automaticamente no Swagger UI
+- ✅ Documentação centralizada em um único arquivo
+- ✅ Validação Zod continua funcionando nas rotas Fastify
+- ✅ Type-safety completo (TypeScript + Zod + OpenAPI)
 
 ## 8.2 Schemas de Validação do Projeto
 
@@ -1181,18 +1271,23 @@ const StartRevoteSchema = z.object({
 
 ## 8.3 Boas Práticas de Schemas Zod
 
-### 1. Sempre use `.describe()` para documentação
+### 1. Sempre use `.openapi()` com exemplo e descrição
 
 ```typescript
-// ❌ Ruim - sem descrição
+// ❌ Ruim - sem documentação
 age: z.number().min(18).max(100)
 
-// ✅ Bom - com descrição
+// ✅ Bom - com exemplo e descrição
 age: z.number()
   .min(18, "Idade mínima 18 anos")
   .max(100, "Idade máxima 100 anos")
-  .describe("Idade do personagem em anos")
+  .openapi({
+    example: 25,
+    description: "Idade do personagem em anos"
+  })
 ```
+
+**Importante**: Use `.openapi()` em TODOS os campos para gerar exemplos no Swagger UI!
 
 ### 2. Use mensagens de erro customizadas
 
@@ -1201,7 +1296,10 @@ password: z.string()
   .min(6, "Senha deve ter no mínimo 6 caracteres")
   .max(50, "Senha muito longa")
   .regex(/[A-Z]/, "Senha deve ter ao menos uma letra maiúscula")
-  .describe("Senha do usuário")
+  .openapi({
+    example: "Senha123",
+    description: "Senha do usuário (mín. 6 caracteres, 1 maiúscula)"
+  })
 ```
 
 ### 3. Use `.refine()` para validações complexas

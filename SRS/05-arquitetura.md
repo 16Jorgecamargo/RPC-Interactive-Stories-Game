@@ -91,9 +91,9 @@ graph TB
 - **Long Polling**: Para atualizações em tempo real
 
 ### Stack de Autodocumentação
-1. **Zod**: Define schemas de validação com `.describe()`
-2. **fastify-type-provider-zod**: Conecta Zod ao Fastify
-3. **@fastify/swagger**: Gera especificação OpenAPI dos schemas
+1. **Zod + @asteasolutions/zod-to-openapi**: Define schemas de validação com `.openapi({ example, description })`
+2. **OpenAPIRegistry**: Centraliza registro de rotas e documentação
+3. **@fastify/swagger (mode: 'static')**: Usa documento OpenAPI pré-gerado com exemplos
 4. **@fastify/swagger-ui**: Interface interativa em `/docs`
 
 Benefícios:

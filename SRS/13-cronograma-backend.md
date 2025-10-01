@@ -41,17 +41,17 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Sistema de autenticação completo
 
 #### Cards
-- [ ] **BE-AUTH-001**: Criar schemas Zod para `RegisterSchema` e `LoginSchema`
-- [ ] **BE-AUTH-002**: Implementar `src/utils/jwt.ts` (sign/verify)
-- [ ] **BE-AUTH-003**: Implementar `src/utils/bcrypt.ts` (hash/compare)
-- [ ] **BE-AUTH-004**: Criar `src/stores/userStore.ts` (persistência JSON)
-- [ ] **BE-AUTH-005**: Implementar `POST /rpc/register` com validação Zod
-- [ ] **BE-AUTH-006**: Implementar `POST /rpc/login` retornando JWT
-- [ ] **BE-AUTH-007**: Criar middleware `src/rpc/middleware/auth.ts` para validar tokens
-- [ ] **BE-AUTH-008**: Adicionar `401 Unauthorized` para rotas protegidas
-- [ ] **BE-AUTH-009**: Testar fluxo completo no Swagger UI
+- [x] **BE-AUTH-001**: Criar schemas Zod para `RegisterSchema` e `LoginSchema`
+- [x] **BE-AUTH-002**: Implementar `src/utils/jwt.ts` (sign/verify)
+- [x] **BE-AUTH-003**: Implementar `src/utils/bcrypt.ts` (hash/compare)
+- [x] **BE-AUTH-004**: Criar `src/stores/userStore.ts` (persistência JSON)
+- [x] **BE-AUTH-005**: Implementar `POST /rpc/register` com validação Zod
+- [x] **BE-AUTH-006**: Implementar `POST /rpc/login` retornando JWT
+- [x] **BE-AUTH-007**: Criar middleware `src/rpc/middleware/auth.ts` para validar tokens
+- [x] **BE-AUTH-008**: Adicionar `401 Unauthorized` para rotas protegidas
+- [x] **BE-AUTH-009**: Testar fluxo completo no Swagger UI
 
-**Critério de Aceite**: Usuário consegue registrar, fazer login, e acessar rota protegida com token
+**Critério de Aceite**: Usuário consegue registrar, fazer login, e acessar rota protegida com token ✅
 
 ---
 
