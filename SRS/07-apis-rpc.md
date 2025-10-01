@@ -1,6 +1,85 @@
 # 7. APIs RPC
 
-## 7.1 Métodos do Servidor
+## 7.1 Abordagem de Documentação
+
+Este projeto utiliza **autodocumentação** através de **Fastify + Zod + Swagger**:
+
+- **Schemas Zod**: Definem estruturas de dados, validações e descrições
+- **Fastify Type Provider**: Conecta Zod ao Fastify para validação automática
+- **@fastify/swagger**: Gera especificação OpenAPI automaticamente
+- **@fastify/swagger-ui**: Interface interativa em `/docs`
+
+### Vantagens da Autodocumentação
+
+1. **Fonte única de verdade**: Schemas servem para validação E documentação
+2. **Sempre atualizada**: Docs geradas automaticamente do código
+3. **Interativa**: Swagger UI permite testar endpoints diretamente
+4. **Type-safe**: TypeScript infere tipos dos schemas Zod
+
+### Exemplo de Rota Autodocumentada
+
+```typescript
+import { z } from "zod";
+import { FastifyPluginAsync } from "fastify";
+import { ZodTypeProvider } from "fastify-type-provider-zod";
+
+const LoginSchema = z.object({
+  username: z.string().min(3).describe("Nome de usuário"),
+  password: z.string().min(6).describe("Senha do usuário")
+});
+
+const LoginResponseSchema = z.object({
+  token: z.string().describe("JWT token de autenticação"),
+  user: UserSchema,
+  expiresIn: z.number().describe("Tempo de expiração em segundos")
+});
+
+const authRoutes: FastifyPluginAsync = async (app) => {
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "POST",
+    url: "/rpc/login",
+    schema: {
+      tags: ["Authentication"],
+      summary: "Autentica usuário e retorna JWT token",
+      body: LoginSchema,
+      response: {
+        200: LoginResponseSchema,
+        401: ErrorSchema
+      }
+    },
+    handler: async (request, reply) => {
+      const { username, password } = request.body;
+      return await authService.login(username, password);
+    }
+  });
+};
+```
+
+**Resultado**: A rota acima gera automaticamente:
+- Validação de entrada/saída com Zod
+- Documentação OpenAPI em `/docs`
+- Inferência de tipos TypeScript
+- Interface interativa para testes
+
+## 7.2 Métodos do Servidor
+
+### Convenções de Schemas Zod
+
+Todos os métodos RPC seguem este padrão:
+
+```typescript
+const methodParamsSchema = z.object({
+  token: z.string().optional(),
+  param1: z.string().describe("Descrição do parâmetro")
+});
+
+const methodResponseSchema = z.object({
+  success: z.boolean(),
+  data: z.any()
+});
+```
+
+## 7.3 Catálogo de Endpoints
 
 ### Autenticação e Usuários
 ```javascript
@@ -831,14 +910,14 @@ type Update = {
     {
       id: 'update_123',
       type: 'PLAYER_JOINED',
-      timestamp: '2025-09-26T10:30:00Z',
+      timestamp: '2024-01-15T10:30:00Z',
       sessionId: 'session_789',
       data: { userId: 'user_123', username: 'jogador1' }
     },
     {
       id: 'update_124',
       type: 'CHARACTER_CREATED',
-      timestamp: '2025-09-26T10:31:00Z',
+      timestamp: '2024-01-15T10:31:00Z',
       sessionId: 'session_789',
       data: {
         characterId: 'char_456',
@@ -850,14 +929,14 @@ type Update = {
     {
       id: 'update_125',
       type: 'ALL_CHARACTERS_READY',
-      timestamp: '2025-09-26T10:32:00Z',
+      timestamp: '2024-01-15T10:32:00Z',
       sessionId: 'session_789',
       data: { canStart: true, participantCount: 3 }
     },
     {
       id: 'update_126',
       type: 'SESSION_STATE_CHANGED',
-      timestamp: '2025-09-26T10:33:00Z',
+      timestamp: '2024-01-15T10:33:00Z',
       sessionId: 'session_789',
       data: {
         oldState: 'CREATING_CHARACTERS',
@@ -868,28 +947,28 @@ type Update = {
     {
       id: 'update_127',
       type: 'GAME_STARTED',
-      timestamp: '2025-09-26T10:34:00Z',
+      timestamp: '2024-01-15T10:34:00Z',
       sessionId: 'session_789',
       data: { redirectTo: 'gameScreen', chapter: 'inicio' }
     },
     {
       id: 'update_128',
       type: 'NEW_MESSAGE',
-      timestamp: '2025-09-26T10:35:00Z',
+      timestamp: '2024-01-15T10:35:00Z',
       sessionId: 'session_789',
       data: { messageId: 'msg_456', characterName: 'Aragorn', mensagem: 'Vamos entrar na caverna!' }
     },
     {
       id: 'update_125',
       type: 'VOTE_RECEIVED',
-      timestamp: '2025-09-26T10:32:00Z',
+      timestamp: '2024-01-15T10:32:00Z',
       sessionId: 'session_789',
       data: { characterId: 'char_456', opcaoId: 'entrar', pendingVotes: 2 }
     },
     {
       id: 'update_126',
       type: 'CHAPTER_CHANGED',
-      timestamp: '2025-09-26T10:33:00Z',
+      timestamp: '2024-01-15T10:33:00Z',
       sessionId: 'session_789',
       data: { newChapter: { id: 'dentro-caverna', texto: '...', opcoes: [...] } }
     }
@@ -898,108 +977,140 @@ type Update = {
 }
 ```
 
-## 7.3 Documentação Swagger
+## 7.4 Acessando a Documentação Interativa
 
-Todas as APIs RPC serão documentadas automaticamente com Swagger/OpenAPI:
+### Servidor Local (Desenvolvimento)
+```bash
+npm run dev
+```
+Acesse: `http://localhost:8443/docs`
+
+### Servidor VPS (Produção)
+Acesse: `http://173.249.60.72:8443/docs`
+
+### Funcionalidades do Swagger UI
+
+1. **Explorar Endpoints**: Navegue por todas as rotas organizadas por tags
+2. **Testar Requisições**: Execute chamadas diretamente da interface
+3. **Ver Schemas**: Inspecione estruturas de dados e validações
+4. **Autenticação**: Configure JWT token para testar rotas autenticadas
+5. **Ver Exemplos**: Consulte payloads de exemplo para cada endpoint
+
+### Estrutura da Documentação Gerada
 
 ```yaml
-# Exemplo de documentação Swagger para um endpoint
-/rpc/login:
-  post:
-    summary: Autentica usuário e retorna JWT token
-    tags:
-      - Authentication
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              username:
-                type: string
-                example: "jogador1"
-              password:
-                type: string
-                format: password
-                example: "senha123"
-            required:
-              - username
-              - password
-    responses:
-      200:
-        description: Login bem-sucedido
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-                user:
-                  $ref: '#/components/schemas/User'
-                expiresIn:
-                  type: number
-                  example: 3600
-      401:
-        description: Credenciais inválidas
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Error'
-
+openapi: 3.0.0
+info:
+  title: "Interactive Stories RPC API"
+  description: "Sistema de histórias interativas multiplayer com JSON-RPC 2.0"
+  version: "1.0.0"
+servers:
+  - url: "http://173.249.60.72:8443"
+    description: "Servidor VPS (Produção)"
+  - url: "http://localhost:8443"
+    description: "Servidor Local (Desenvolvimento)"
+tags:
+  - name: "Authentication"
+    description: "Autenticação e gerenciamento de usuários"
+  - name: "Characters"
+    description: "Criação e gerenciamento de personagens D&D"
+  - name: "Sessions"
+    description: "Criação e gerenciamento de sessões de jogo"
+  - name: "Game"
+    description: "Gameplay, votação e progressão de história"
+  - name: "Combat"
+    description: "Sistema de combate D&D"
+  - name: "Chat"
+    description: "Chat em tempo real"
+  - name: "Stories"
+    description: "Gerenciamento de histórias Mermaid"
+  - name: "Admin"
+    description: "Painel administrativo"
 components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-        username:
-          type: string
-        role:
-          type: string
-          enum: [USER, ADMIN]
-        createdAt:
-          type: string
-          format: date-time
-
-    Character:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        userId:
-          type: string
-        sessionId:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-        details:
-          type: object
-
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      description: "JWT token obtido via /rpc/login"
+```
 
-security:
-  - bearerAuth: []
+### Exemplo de Uso no Swagger UI
+
+1. **Login**:
+   - Abra `/docs`
+   - Expanda `POST /rpc/login`
+   - Clique em "Try it out"
+   - Insira credenciais
+   - Execute
+   - Copie o `token` da resposta
+
+2. **Autenticar Requisições**:
+   - Clique no botão "Authorize" (cadeado no topo)
+   - Cole o token no formato: `Bearer <seu-token>`
+   - Confirme
+
+3. **Testar Endpoints Protegidos**:
+   - Agora todas as rotas com cadeado usarão o token automaticamente
+   - Teste endpoints como `GET /rpc/sessions`, `POST /rpc/characters`, etc.
+
+### Schemas Zod Comuns
+
+Todos os schemas estão definidos em `src/models/schemas.ts` e são automaticamente convertidos para OpenAPI:
+
+```typescript
+const UserSchema = z.object({
+  id: z.string().uuid(),
+  username: z.string().min(3).max(20),
+  role: z.enum(["USER", "ADMIN"]),
+  createdAt: z.string().datetime(),
+  lastLogin: z.string().datetime().optional()
+});
+
+const CharacterSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1).max(50),
+  race: z.enum(["Humano", "Elfo", "Anão", "Halfling"]),
+  class: z.enum(["Guerreiro", "Mago", "Ladino", "Clérigo"]),
+  attributes: z.object({
+    strength: z.number().min(1).max(20),
+    dexterity: z.number().min(1).max(20),
+    constitution: z.number().min(1).max(20),
+    intelligence: z.number().min(1).max(20),
+    wisdom: z.number().min(1).max(20),
+    charisma: z.number().min(1).max(20)
+  }),
+  background: z.string().min(10),
+  appearance: z.string().min(10),
+  personality: z.string().min(10),
+  fears: z.string().min(10),
+  goals: z.string().min(10),
+  equipment: z.array(z.string()),
+  userId: z.string().uuid(),
+  sessionId: z.string().uuid(),
+  isComplete: z.boolean()
+});
+
+const SessionSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(3).max(100),
+  sessionCode: z.string().length(6),
+  storyId: z.string().uuid(),
+  ownerId: z.string().uuid(),
+  currentChapter: z.string(),
+  status: z.enum(["WAITING_PLAYERS", "CREATING_CHARACTERS", "IN_PROGRESS", "COMPLETED"]),
+  maxPlayers: z.number().min(2).max(10),
+  isLocked: z.boolean(),
+  participants: z.array(ParticipantSchema),
+  createdAt: z.string().datetime(),
+  updatedAt: z.string().datetime()
+});
+
+const ErrorSchema = z.object({
+  code: z.number().describe("Código de erro JSON-RPC"),
+  message: z.string().describe("Mensagem de erro"),
+  data: z.any().optional().describe("Dados adicionais do erro")
+});
 ```
 
 ---

@@ -1,6 +1,126 @@
 # 8. Validação com Zod
 
-## 8.1 Schemas de Validação
+## 8.1 Abordagem de Validação e Documentação
+
+Este projeto utiliza **Zod** como fonte única de validação e documentação:
+
+### Fluxo de Integração
+
+```
+Schema Zod (.describe())
+    ↓
+fastify-type-provider-zod (setValidatorCompiler)
+    ↓
+Validação automática de request/response
+    ↓
+@fastify/swagger (serializerCompiler)
+    ↓
+OpenAPI 3.0 gerado automaticamente
+    ↓
+Swagger UI em /docs
+```
+
+### Princípios
+
+1. **Schemas definem tudo**: Validação, tipos TypeScript, e documentação OpenAPI
+2. **`.describe()` vira docs**: Toda string em `.describe()` aparece na documentação
+3. **Validação automática**: Fastify valida entrada/saída antes de executar handlers
+4. **Type-safety**: TypeScript infere tipos dos schemas automaticamente
+5. **Erro 400 automático**: Payloads inválidos retornam erro antes de chegar no handler
+
+### Exemplo Completo
+
+```typescript
+import { z } from "zod";
+import { FastifyPluginAsync } from "fastify";
+import { ZodTypeProvider } from "fastify-type-provider-zod";
+
+// Schema de entrada
+export const CreateCharacterSchema = z.object({
+  name: z.string()
+    .min(2, "Nome muito curto")
+    .max(30, "Nome muito longo")
+    .describe("Nome do personagem D&D"),
+  race: z.enum(["Humano", "Elfo", "Anão", "Halfling"])
+    .describe("Raça do personagem"),
+  class: z.enum(["Guerreiro", "Mago", "Ladino", "Clérigo"])
+    .describe("Classe do personagem"),
+  attributes: z.object({
+    strength: z.number().min(3).max(18).describe("Força"),
+    dexterity: z.number().min(3).max(18).describe("Destreza"),
+    constitution: z.number().min(3).max(18).describe("Constituição"),
+    intelligence: z.number().min(3).max(18).describe("Inteligência"),
+    wisdom: z.number().min(3).max(18).describe("Sabedoria"),
+    charisma: z.number().min(3).max(18).describe("Carisma")
+  }).describe("Atributos D&D (rolagem 4d6 drop lowest)"),
+  background: z.string().min(10).describe("História de background do personagem")
+});
+
+// Schema de resposta
+export const CharacterResponseSchema = z.object({
+  success: z.boolean(),
+  character: z.object({
+    id: z.string().uuid(),
+    name: z.string(),
+    race: z.string(),
+    class: z.string(),
+    attributes: z.object({
+      strength: z.number(),
+      dexterity: z.number(),
+      constitution: z.number(),
+      intelligence: z.number(),
+      wisdom: z.number(),
+      charisma: z.number()
+    }),
+    background: z.string(),
+    createdAt: z.string().datetime()
+  })
+});
+
+// Rota com validação automática
+const characterRoutes: FastifyPluginAsync = async (app) => {
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: "POST",
+    url: "/rpc/characters",
+    schema: {
+      tags: ["Characters"],
+      summary: "Cria novo personagem D&D",
+      description: "Valida atributos, gera ID, persiste no banco",
+      body: CreateCharacterSchema,
+      response: {
+        200: CharacterResponseSchema,
+        400: ErrorSchema // Retorno automático se validação falhar
+      }
+    },
+    handler: async (request, reply) => {
+      // request.body já está validado e tipado!
+      const { name, race, class: className, attributes, background } = request.body;
+
+      // Lógica de negócio...
+      const character = await characterService.create({
+        name,
+        race,
+        class: className,
+        attributes,
+        background
+      });
+
+      return { success: true, character };
+    }
+  });
+};
+```
+
+**Resultado**: A rota acima automaticamente:
+- ✅ Valida `request.body` contra `CreateCharacterSchema`
+- ✅ Retorna erro 400 se dados inválidos
+- ✅ Gera documentação OpenAPI em `/docs`
+- ✅ Infere tipos TypeScript (`request.body` é tipado)
+- ✅ Valida `response` contra `CharacterResponseSchema`
+
+## 8.2 Schemas de Validação do Projeto
+
+Todos os schemas abaixo estão em `src/models/schemas.ts` e são usados diretamente nas rotas Fastify.
 
 ```javascript
 // Schema para usuário
@@ -1057,6 +1177,180 @@ const StartRevoteSchema = z.object({
   tiedOptions: z.array(z.number().int().min(0)).min(2, 'Mínimo 2 opções empatadas'),
   timeoutMinutes: z.number().int().min(1).max(30).default(3)
 });
+```
+
+## 8.3 Boas Práticas de Schemas Zod
+
+### 1. Sempre use `.describe()` para documentação
+
+```typescript
+// ❌ Ruim - sem descrição
+age: z.number().min(18).max(100)
+
+// ✅ Bom - com descrição
+age: z.number()
+  .min(18, "Idade mínima 18 anos")
+  .max(100, "Idade máxima 100 anos")
+  .describe("Idade do personagem em anos")
+```
+
+### 2. Use mensagens de erro customizadas
+
+```typescript
+password: z.string()
+  .min(6, "Senha deve ter no mínimo 6 caracteres")
+  .max(50, "Senha muito longa")
+  .regex(/[A-Z]/, "Senha deve ter ao menos uma letra maiúscula")
+  .describe("Senha do usuário")
+```
+
+### 3. Use `.refine()` para validações complexas
+
+```typescript
+const RegisterSchema = z.object({
+  password: z.string().min(6),
+  confirmPassword: z.string()
+}).refine(data => data.password === data.confirmPassword, {
+  message: "Senhas não coincidem",
+  path: ["confirmPassword"]
+});
+```
+
+### 4. Exporte e reutilize schemas
+
+```typescript
+// src/models/characterSchemas.ts
+export const AttributesSchema = z.object({
+  strength: z.number().min(3).max(18),
+  dexterity: z.number().min(3).max(18),
+  // ...
+});
+
+export const CharacterSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(2).max(30),
+  attributes: AttributesSchema, // Reutilização
+  // ...
+});
+```
+
+### 5. Use `.optional()` e `.default()` apropriadamente
+
+```typescript
+const CreateSessionSchema = z.object({
+  name: z.string().min(1).max(50),
+  maxPlayers: z.number().min(2).max(10).default(5), // Valor padrão
+  isPrivate: z.boolean().optional(), // Campo opcional
+  description: z.string().max(500).optional().default("") // Opcional com padrão
+});
+```
+
+### 6. Valide tipos de enum com `.enum()`
+
+```typescript
+// ❌ Ruim
+status: z.string()
+
+// ✅ Bom
+status: z.enum([
+  "WAITING_PLAYERS",
+  "CREATING_CHARACTERS",
+  "IN_PROGRESS",
+  "COMPLETED"
+]).describe("Status atual da sessão")
+```
+
+### 7. Use `.transform()` para normalização
+
+```typescript
+const UsernameSchema = z.string()
+  .min(3)
+  .max(20)
+  .transform(val => val.toLowerCase().trim())
+  .describe("Nome de usuário (será normalizado para lowercase)");
+```
+
+### 8. Documente arrays e objetos aninhados
+
+```typescript
+equipment: z.array(z.string())
+  .max(10, "Máximo 10 itens de equipamento")
+  .describe("Lista de itens equipados pelo personagem")
+```
+
+## 8.4 Testando Schemas
+
+```typescript
+import { describe, it, expect } from "vitest";
+import { CreateCharacterSchema } from "./characterSchemas";
+
+describe("CreateCharacterSchema", () => {
+  it("valida personagem válido", () => {
+    const valid = {
+      name: "Aragorn",
+      race: "Humano",
+      class: "Guerreiro",
+      attributes: { strength: 16, dexterity: 13, constitution: 15, intelligence: 12, wisdom: 14, charisma: 11 },
+      background: "Soldado experiente..."
+    };
+
+    const result = CreateCharacterSchema.safeParse(valid);
+    expect(result.success).toBe(true);
+  });
+
+  it("rejeita atributos inválidos", () => {
+    const invalid = {
+      name: "Aragorn",
+      race: "Humano",
+      class: "Guerreiro",
+      attributes: { strength: 25, dexterity: 13 }, // strength > 18
+      background: "Soldado..."
+    };
+
+    const result = CreateCharacterSchema.safeParse(invalid);
+    expect(result.success).toBe(false);
+  });
+});
+```
+
+## 8.5 Integração com Fastify
+
+### Setup inicial (server.ts)
+
+```typescript
+import Fastify from "fastify";
+import swagger from "@fastify/swagger";
+import swaggerUI from "@fastify/swagger-ui";
+import {
+  ZodTypeProvider,
+  serializerCompiler,
+  validatorCompiler
+} from "fastify-type-provider-zod";
+
+const app = Fastify().withTypeProvider<ZodTypeProvider>();
+
+// Configurar compiladores Zod
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+// Registrar Swagger
+await app.register(swagger, {
+  openapi: {
+    info: { title: "RPC API", version: "1.0.0" },
+    servers: [{ url: "http://173.249.60.72:8443" }]
+  }
+});
+
+await app.register(swaggerUI, {
+  routePrefix: "/docs"
+});
+
+// Registrar rotas
+await app.register(authRoutes);
+await app.register(characterRoutes);
+await app.register(sessionRoutes);
+
+await app.listen({ port: 8443, host: "0.0.0.0" });
 ```
 
 ---

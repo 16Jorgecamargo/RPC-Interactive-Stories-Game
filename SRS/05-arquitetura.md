@@ -18,7 +18,8 @@ graph TB
     end
 
     subgraph "VPS - Servidor (Docker)"
-        RPCServer[RPC Server + JWT Auth]
+        RPCServer[Fastify Server + Zod]
+        SwaggerUI[Swagger UI /docs]
         AuthService[Auth Service]
         UserService[User Service]
         GameManager[Game Manager]
@@ -27,7 +28,6 @@ graph TB
         CharacterService[Character Service]
         AdminService[Admin Service]
         NotificationService[Notification Service]
-        SwaggerDocs[Swagger Documentation]
     end
 
     subgraph "Persistência VPS"
@@ -44,6 +44,7 @@ graph TB
     ClientApp --> RPCClient
     RPCClient -.->|HTTPS/HTTP| RPCServer
 
+    RPCServer --> SwaggerUI
     RPCServer --> AuthService
     RPCServer --> UserService
     RPCServer --> GameManager
@@ -52,7 +53,6 @@ graph TB
     RPCServer --> CharacterService
     RPCServer --> AdminService
     RPCServer --> NotificationService
-    RPCServer --> SwaggerDocs
 
     AuthService --> UserStore
     UserService --> UserStore
@@ -82,10 +82,26 @@ graph TB
 4. **Domínio**: Acessível via IP público ou domínio
 
 ### Comunicação RPC Remota
+- **Framework**: Fastify com `fastify-type-provider-zod`
+- **Validação**: Schemas Zod para entrada/saída
+- **Documentação**: Swagger UI em `/docs` (gerada automaticamente)
 - **Protocolo**: JSON-RPC 2.0 over HTTP/HTTPS
 - **CORS**: Configurado para aceitar requests do cliente
 - **Autenticação**: JWT tokens para sessões
 - **Long Polling**: Para atualizações em tempo real
+
+### Stack de Autodocumentação
+1. **Zod**: Define schemas de validação com `.describe()`
+2. **fastify-type-provider-zod**: Conecta Zod ao Fastify
+3. **@fastify/swagger**: Gera especificação OpenAPI dos schemas
+4. **@fastify/swagger-ui**: Interface interativa em `/docs`
+
+Benefícios:
+- ✅ Validação automática de request/response
+- ✅ Documentação sempre atualizada com o código
+- ✅ Type-safety no TypeScript
+- ✅ Interface interativa para testes
+- ✅ Fonte única de verdade (schemas)
 
 ## 5.2 Estrutura de Dados Principais
 
@@ -96,8 +112,8 @@ graph TB
   "username": "jogador1",
   "passwordHash": "$2b$10$...",
   "role": "USER", // USER | ADMIN
-  "createdAt": "2025-09-26T10:00:00Z",
-  "lastLogin": "2025-09-26T15:30:00Z"
+  "createdAt": "2024-01-15T10:00:00Z",
+  "lastLogin": "2024-01-15T15:30:00Z"
 }
 ```
 
@@ -125,8 +141,8 @@ graph TB
   "userId": "user_123",
   "sessionId": "session_789",
   "isComplete": true,
-  "createdAt": "2025-09-26T11:00:00Z",
-  "updatedAt": "2025-09-26T11:30:00Z"
+  "createdAt": "2024-01-15T11:00:00Z",
+  "updatedAt": "2024-01-15T11:30:00Z"
 }
 ```
 
@@ -148,8 +164,8 @@ graph TB
   "tags": ["Fantasia", "Exploração", "Mistério"],
   "createdBy": "admin_001",
   "mermaidSource": "flowchart TD\n  A[Início] --> B{Caverna?}...",
-  "createdAt": "2025-09-26T09:00:00Z",
-  "updatedAt": "2025-09-26T10:00:00Z",
+  "createdAt": "2024-01-10T09:00:00Z",
+  "updatedAt": "2024-01-10T10:00:00Z",
   "isActive": true,
   "capitulos": {
     "inicio": {
@@ -187,14 +203,14 @@ graph TB
       "characterId": "char_456",
       "hasCreatedCharacter": true,
       "isOnline": true,
-      "joinedAt": "2025-09-26T12:00:00Z"
+      "joinedAt": "2024-01-15T12:00:00Z"
     },
     {
       "userId": "user_124",
       "characterId": "char_457",
       "hasCreatedCharacter": false,
       "isOnline": true,
-      "joinedAt": "2025-09-26T12:05:00Z"
+      "joinedAt": "2024-01-15T12:05:00Z"
     }
   ],
   "votes": {
@@ -204,9 +220,9 @@ graph TB
   "status": "CREATING_CHARACTERS", // WAITING_PLAYERS | CREATING_CHARACTERS | IN_PROGRESS | COMPLETED
   "isLocked": false,
   "originalParticipants": ["user_123", "user_124"],
-  "createdAt": "2025-09-26T12:00:00Z",
-  "updatedAt": "2025-09-26T12:30:00Z",
-  "lastActivity": "2025-09-26T12:30:00Z",
+  "createdAt": "2024-01-15T12:00:00Z",
+  "updatedAt": "2024-01-15T12:30:00Z",
+  "lastActivity": "2024-01-15T12:30:00Z",
   "startedAt": null,
   "completedAt": null
 }
@@ -229,7 +245,7 @@ graph TB
     "currentChapter": "inicio",
     "chapterTitle": "Entrada da Caverna"
   },
-  "lastActivity": "2025-09-26T12:30:00Z",
+  "lastActivity": "2024-01-15T12:30:00Z",
   "timeAgo": "há 5 minutos",
   "canJoin": true,
   "sessionCode": "ABC123"

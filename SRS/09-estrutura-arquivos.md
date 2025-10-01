@@ -4,7 +4,7 @@
 
 O sistema utiliza **dois repositórios independentes**:
 
-### **🖥️ Repositório Servidor (VPS + Docker)**
+### **Repositório Servidor (VPS + Docker)**
 ```
 historias-interativas-servidor/
 ├── src/
@@ -44,21 +44,22 @@ historias-interativas-servidor/
 │   │   ├── messageStore.js
 │   │   └── eventStore.js
 │   ├── models/
-│   │   ├── User.js
-│   │   ├── Character.js
-│   │   ├── Session.js
-│   │   ├── Story.js
-│   │   ├── Message.js
-│   │   ├── Vote.js
-│   │   └── Update.js
+│   │   ├── schemas.ts           # Schemas Zod centralizados
+│   │   ├── userSchemas.ts
+│   │   ├── characterSchemas.ts
+│   │   ├── sessionSchemas.ts
+│   │   ├── storySchemas.ts
+│   │   ├── messageSchemas.ts
+│   │   ├── voteSchemas.ts
+│   │   └── updateSchemas.ts
 │   ├── utils/
 │   │   ├── jwt.js
 │   │   ├── bcrypt.js
 │   │   ├── validators.js
 │   │   └── logger.js
-│   ├── swagger/
-│   │   ├── swaggerConfig.js
-│   │   └── swaggerSchemas.js
+│   ├── plugins/
+│   │   ├── swagger.ts           # Configuração @fastify/swagger
+│   │   └── typeProvider.ts      # fastify-type-provider-zod
 │   └── shared/
 │       ├── schemas.js
 │       ├── constants.js
@@ -77,7 +78,7 @@ historias-interativas-servidor/
 └── deploy.sh               # Script de deploy VPS
 ```
 
-### **💻 Repositório Cliente (GitHub + Local)**
+### **Repositório Cliente (GitHub + Local)**
 ```
 historias-interativas-cliente/
 ├── src/
@@ -143,20 +144,20 @@ historias-interativas-cliente/
 
 ## 9.2 Descrição dos Componentes
 
-### **🖥️ Servidor (VPS)**
-- **rpc/**: Servidor RPC + CORS para acesso remoto
+### **Servidor (VPS)**
+- **rpc/**: Servidor Fastify + handlers de rotas
 - **services/**: Lógica de negócio completa
 - **stores/**: Persistência de dados (JSON/SQLite)
-- **models/**: Tipos e validações
+- **models/**: Schemas Zod para validação e documentação
 - **utils/**: Autenticação JWT, logging
-- **swagger/**: Documentação automática
+- **plugins/**: Swagger UI e Type Provider Zod
 - **shared/**: Schemas compartilhados
 - **stories/**: Histórias Mermaid do servidor
 - **Dockerfile**: Configuração da imagem Docker
 - **docker-compose.yml**: Orquestração de containers
 - **deploy.sh**: Automação de deploy
 
-### **💻 Cliente (Local)**
+### **Cliente (Local)**
 - **rpc/**: Cliente HTTP para servidor remoto
 - **services/**: Camada de comunicação com servidor
 - **ui/**: Interface HTML/CSS/JS modular
@@ -165,7 +166,28 @@ historias-interativas-cliente/
 - **public/**: Arquivos servidos publicamente
 - **server.js**: Servidor local de desenvolvimento (Express)
 
-## 9.3 Configuração de Ambientes
+## 9.3 Dependências do Servidor
+
+```json
+{
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "@fastify/swagger": "^9.0.0",
+    "@fastify/swagger-ui": "^5.0.0",
+    "fastify-type-provider-zod": "^4.0.0",
+    "zod": "^3.23.0",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "tsx": "^4.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
+```
+
+## 9.4 Configuração de Ambientes
 
 ### **Servidor (.env.production)**
 ```env
@@ -174,6 +196,7 @@ PORT=8443
 JWT_SECRET=your-secret-key
 CORS_ORIGIN=*
 LOG_LEVEL=info
+SWAGGER_ENABLED=true
 ```
 
 ### **Cliente (.env)**
@@ -183,7 +206,47 @@ VITE_WS_URL=ws://173.249.60.72:8443
 DEV_PORT=5173
 ```
 
-## 9.4 Configurações Docker
+## 9.5 Exemplo de Schema Zod
+
+```typescript
+import { z } from "zod";
+
+export const LoginSchema = z.object({
+  username: z.string().min(3).max(20).describe("Nome de usuário"),
+  password: z.string().min(6).describe("Senha do usuário")
+});
+
+export const LoginResponseSchema = z.object({
+  token: z.string().describe("JWT token de autenticação"),
+  user: z.object({
+    id: z.string().uuid(),
+    username: z.string(),
+    role: z.enum(["USER", "ADMIN"])
+  }),
+  expiresIn: z.number().describe("Tempo de expiração em segundos")
+});
+
+export const CharacterSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1).max(50).describe("Nome do personagem"),
+  race: z.enum(["Humano", "Elfo", "Anão", "Halfling"]),
+  class: z.enum(["Guerreiro", "Mago", "Ladino", "Clérigo"]),
+  attributes: z.object({
+    strength: z.number().min(1).max(20),
+    dexterity: z.number().min(1).max(20),
+    constitution: z.number().min(1).max(20),
+    intelligence: z.number().min(1).max(20),
+    wisdom: z.number().min(1).max(20),
+    charisma: z.number().min(1).max(20)
+  }).describe("Atributos D&D do personagem"),
+  background: z.string().min(10).describe("História de background"),
+  userId: z.string().uuid(),
+  sessionId: z.string().uuid(),
+  isComplete: z.boolean()
+});
+```
+
+## 9.6 Configurações Docker
 
 ### **Dockerfile (Servidor)**
 ```dockerfile
@@ -236,7 +299,7 @@ services:
       retries: 3
 ```
 
-## 9.5 Comandos de Execução
+## 9.7 Comandos de Execução
 
 ### **Servidor (VPS)**
 ```bash

@@ -615,4 +615,4 @@ npm start
 
 ---
 
-[← Anterior: Critérios de Aceitação](./14-criterios-aceitacao.md) | [Voltar ao Menu](./README.md)
+[← Anterior: Critérios de Aceitação](./14-criterios-aceitacao.md) | [Voltar ao Menu](../README.md)
