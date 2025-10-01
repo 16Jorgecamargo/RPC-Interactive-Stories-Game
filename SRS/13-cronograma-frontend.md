@@ -28,13 +28,13 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Comunicação com backend via fetch
 
 #### Cards
-- [ ] **FE-RPC-001**: Criar `src/rpc/client.js` com classe RPC Client
-- [ ] **FE-RPC-002**: Implementar método `call(method, params)` usando fetch
+- [x] **FE-RPC-001**: Criar `src/rpc/client.js` com classe RPC Client
+- [x] **FE-RPC-002**: Implementar método `call(method, params)` usando fetch
   - **Depende de**: `BE-SERVER-001`
-- [ ] **FE-RPC-003**: Adicionar tratamento de erros JSON-RPC
-- [ ] **FE-RPC-004**: Implementar retry automático em caso de falha de rede
-- [ ] **FE-RPC-005**: Adicionar timeout de 10s nas requisições
-- [ ] **FE-RPC-006**: Testar chamada para `/health` endpoint
+- [x] **FE-RPC-003**: Adicionar tratamento de erros JSON-RPC
+- [x] **FE-RPC-004**: Implementar retry automático em caso de falha de rede
+- [x] **FE-RPC-005**: Adicionar timeout de 10s nas requisições
+- [x] **FE-RPC-006**: Testar chamada para `/health` endpoint
   - **Depende de**: `BE-SERVER-006`
 
 **Critério de Aceite**: Cliente consegue fazer chamadas RPC para backend
