@@ -324,20 +324,20 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Sistema de chat em tempo real
 
 #### Cards
-- [ ] **BE-CHAT-001**: Criar `MessageSchema` com `characterId`, `message`, `timestamp`
-- [ ] **BE-CHAT-002**: Implementar `src/stores/messageStore.ts`
-- [ ] **BE-CHAT-003**: Implementar `POST /rpc/chat/:sessionId/send` (enviar mensagem)
+- [x] **BE-CHAT-001**: Criar `MessageSchema` com `characterId`, `message`, `timestamp`
+- [x] **BE-CHAT-002**: Implementar `src/stores/messageStore.ts`
+- [x] **BE-CHAT-003**: Implementar `POST /rpc/chat/:sessionId/send` (enviar mensagem)
   - **Depende de**: `BE-CHAT-001`, `BE-CHAT-002`
-- [ ] **BE-CHAT-004**: Implementar `GET /rpc/chat/:sessionId/messages` (histórico)
+- [x] **BE-CHAT-004**: Implementar `GET /rpc/chat/:sessionId/messages` (histórico)
   - **Depende de**: `BE-CHAT-002`
-- [ ] **BE-CHAT-005**: Sanitizar mensagens (evitar XSS)
+- [x] **BE-CHAT-005**: Sanitizar mensagens (evitar XSS)
   - **Depende de**: `BE-CHAT-003`
-- [ ] **BE-CHAT-006**: Limitar tamanho de mensagens (500 caracteres)
+- [x] **BE-CHAT-006**: Limitar tamanho de mensagens (500 caracteres)
   - **Depende de**: `BE-CHAT-001`
-- [ ] **BE-CHAT-007**: Adicionar tipos de mensagem (PLAYER, SYSTEM, VOTING_UPDATE)
+- [x] **BE-CHAT-007**: Adicionar tipos de mensagem (PLAYER, SYSTEM, VOTING_UPDATE)
   - **Depende de**: `BE-CHAT-001`
 
-**Critério de Aceite**: Jogadores enviam e recebem mensagens no chat 
+**Critério de Aceite**: Jogadores enviam e recebem mensagens no chat ✅
 
 ---
 

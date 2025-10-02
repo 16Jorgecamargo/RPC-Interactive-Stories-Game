@@ -80,6 +80,10 @@ export const CharacterSchema = z.object({
 
 export const CreateCharacterSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...' }),
+  sessionId: z.string().optional().openapi({ 
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão (obrigatório se usuário estiver em uma sessão aguardando criação de personagens)'
+  }),
   name: z.string().min(3).max(50).openapi({ example: 'Thorin Escudo de Carvalho' }),
   race: RaceEnum,
   class: ClassEnum,
