@@ -1,0 +1,133 @@
+import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
+import * as sessionService from '../../../services/session_service.js';
+import {
+  CreateSessionSchema,
+  JoinSessionSchema,
+  GetSessionsSchema,
+  GetSessionDetailsSchema,
+  DeleteSessionSchema,
+  LeaveSessionSchema,
+  CreateSessionResponseSchema,
+  JoinSessionResponseSchema,
+  SessionsListSchema,
+  SessionDetailsResponseSchema,
+  DeleteSessionResponseSchema,
+  LeaveSessionResponseSchema,
+} from '../../../models/session_schemas.js';
+
+export async function registerSessionWrappers(app: FastifyInstance) {
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/create',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Criar nova sessão de jogo',
+      description:
+        'Cria uma nova sessão de jogo vinculada a uma história. O criador automaticamente se torna o primeiro participante. Internamente usa JSON-RPC 2.0 (method: "createSession").',
+      body: CreateSessionSchema,
+      response: {
+        200: CreateSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.createSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/join',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Entrar em sessão via código',
+      description:
+        'Permite entrar em uma sessão existente usando o código de 6 caracteres. Valida limite de jogadores e se a sessão está aberta. Internamente usa JSON-RPC 2.0 (method: "joinSession").',
+      body: JoinSessionSchema,
+      response: {
+        200: JoinSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.joinSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/list',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Listar minhas sessões',
+      description:
+        'Retorna todas as sessões onde o usuário é participante, ordenadas por última atualização. Inclui informações da história. Internamente usa JSON-RPC 2.0 (method: "listMySessions").',
+      body: GetSessionsSchema,
+      response: {
+        200: SessionsListSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.listMySessions(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/details',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Obter detalhes de uma sessão',
+      description:
+        'Retorna informações completas sobre uma sessão específica. Apenas participantes podem visualizar. Internamente usa JSON-RPC 2.0 (method: "getSessionDetails").',
+      body: GetSessionDetailsSchema,
+      response: {
+        200: SessionDetailsResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.getSessionDetails(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'DELETE',
+    url: '/rpc/sessions/delete',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Excluir sessão (owner only)',
+      description:
+        'Exclui permanentemente uma sessão. Apenas o criador da sessão pode realizar esta ação. Internamente usa JSON-RPC 2.0 (method: "deleteSession").',
+      body: DeleteSessionSchema,
+      response: {
+        200: DeleteSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.deleteSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/leave',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Sair de uma sessão',
+      description:
+        'Remove o participante de uma sessão. O owner não pode sair, apenas excluir a sessão. Internamente usa JSON-RPC 2.0 (method: "leaveSession").',
+      body: LeaveSessionSchema,
+      response: {
+        200: LeaveSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.leaveSession(request.body);
+      return reply.send(result);
+    },
+  });
+}

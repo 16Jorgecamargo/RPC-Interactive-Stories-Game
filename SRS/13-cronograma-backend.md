@@ -176,26 +176,26 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Criação e gerenciamento de sessões de jogo
 
 #### Cards
-- [ ] **BE-SESSION-001**: Criar `SessionSchema` com estados (WAITING_PLAYERS, etc.)
-- [ ] **BE-SESSION-002**: Implementar `src/stores/sessionStore.ts`
-- [ ] **BE-SESSION-003**: Implementar `POST /rpc/sessions` (criar sessão)
+- [x] **BE-SESSION-001**: Criar `SessionSchema` com estados (WAITING_PLAYERS, etc.)
+- [x] **BE-SESSION-002**: Implementar `src/stores/sessionStore.ts`
+- [x] **BE-SESSION-003**: Implementar `POST /rpc/sessions` (criar sessão)
   - **Depende de**: `BE-SESSION-001`, `BE-SESSION-002`, `BE-STORY-015`
-- [ ] **BE-SESSION-004**: Gerar `sessionCode` de 6 caracteres alfanuméricos
+- [x] **BE-SESSION-004**: Gerar `sessionCode` de 6 caracteres alfanuméricos
   - **Depende de**: `BE-SESSION-003`
-- [ ] **BE-SESSION-005**: Implementar `POST /rpc/sessions/join` (entrar via código)
+- [x] **BE-SESSION-005**: Implementar `POST /rpc/sessions/join` (entrar via código)
   - **Depende de**: `BE-SESSION-004`
-- [ ] **BE-SESSION-006**: Implementar `GET /rpc/sessions` (listar minhas sessões)
+- [x] **BE-SESSION-006**: Implementar `GET /rpc/sessions` (listar minhas sessões)
   - **Depende de**: `BE-SESSION-002`, `BE-AUTH-007`
-- [ ] **BE-SESSION-007**: Implementar `GET /rpc/sessions/:id` (detalhes)
+- [x] **BE-SESSION-007**: Implementar `GET /rpc/sessions/:id` (detalhes)
   - **Depende de**: `BE-SESSION-002`
-- [ ] **BE-SESSION-008**: Implementar `DELETE /rpc/sessions/:id` (excluir, owner only)
+- [x] **BE-SESSION-008**: Implementar `DELETE /rpc/sessions/:id` (excluir, owner only)
   - **Depende de**: `BE-SESSION-007`
-- [ ] **BE-SESSION-009**: Implementar `POST /rpc/sessions/:id/leave` (sair da sessão)
+- [x] **BE-SESSION-009**: Implementar `POST /rpc/sessions/:id/leave` (sair da sessão)
   - **Depende de**: `BE-SESSION-007`
-- [ ] **BE-SESSION-010**: Validar limite de `maxPlayers`
+- [x] **BE-SESSION-010**: Validar limite de `maxPlayers`
   - **Depende de**: `BE-SESSION-003`, `BE-SESSION-005`
 
-**Critério de Aceite**: Usuário consegue criar sessão e outros podem entrar via código
+**Critério de Aceite**: Usuário consegue criar sessão e outros podem entrar via código ✅
 
 ---
 
