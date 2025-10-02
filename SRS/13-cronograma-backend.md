@@ -150,25 +150,25 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Gerenciamento de histórias por admins
 
 #### Cards
-- [ ] **BE-STORY-009**: Criar `StorySchema` com metadados
-- [ ] **BE-STORY-010**: Criar `StoryMetadataSchema` (gênero, dificuldade, etc.)
-- [ ] **BE-STORY-011**: Implementar `src/stores/storyStore.ts`
-- [ ] **BE-STORY-012**: Implementar `POST /rpc/stories` (criar história, admin only)
+- [x] **BE-STORY-009**: Criar `StorySchema` com metadados
+- [x] **BE-STORY-010**: Criar `StoryMetadataSchema` (gênero, dificuldade, etc.)
+- [x] **BE-STORY-011**: Implementar `src/stores/storyStore.ts`
+- [x] **BE-STORY-012**: Implementar `POST /rpc/stories` (criar história, admin only)
   - **Depende de**: `BE-STORY-001`, `BE-STORY-011`, `BE-USER-006`
-- [ ] **BE-STORY-013**: Implementar `POST /rpc/stories/upload-mermaid` (upload arquivo)
+- [x] **BE-STORY-013**: Implementar `POST /rpc/stories/upload-mermaid` (upload arquivo)
   - **Depende de**: `BE-STORY-012`
-- [ ] **BE-STORY-014**: Implementar `GET /rpc/stories` (listar todas, admin)
+- [x] **BE-STORY-014**: Implementar `GET /rpc/stories` (listar todas, admin)
   - **Depende de**: `BE-STORY-011`, `BE-USER-006`
-- [ ] **BE-STORY-015**: Implementar `GET /rpc/stories/catalog` (catálogo público)
+- [x] **BE-STORY-015**: Implementar `GET /rpc/stories/catalog` (catálogo público)
   - **Depende de**: `BE-STORY-011`
-- [ ] **BE-STORY-016**: Implementar `PATCH /rpc/stories/:id` (atualizar)
+- [x] **BE-STORY-016**: Implementar `PATCH /rpc/stories/:id` (atualizar)
   - **Depende de**: `BE-STORY-012`
-- [ ] **BE-STORY-017**: Implementar `DELETE /rpc/stories/:id` (excluir)
+- [x] **BE-STORY-017**: Implementar `DELETE /rpc/stories/:id` (excluir)
   - **Depende de**: `BE-STORY-012`
-- [ ] **BE-STORY-018**: Adicionar campo `isActive` para ativar/desativar histórias
+- [x] **BE-STORY-018**: Adicionar campo `isActive` para ativar/desativar histórias
   - **Depende de**: `BE-STORY-009`
 
-**Critério de Aceite**: Admin consegue criar, editar e gerenciar histórias
+**Critério de Aceite**: Admin consegue criar, editar e gerenciar histórias ✅
 
 ---
 
