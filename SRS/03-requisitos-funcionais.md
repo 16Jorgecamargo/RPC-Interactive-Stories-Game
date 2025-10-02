@@ -96,11 +96,11 @@
 - **Processamento**: Identificação e remoção de personagens vinculados
 - **Saída**: Sessão e personagens removidos com sucesso
 
-## RF17 - Dashboard Adaptativo Pós-Login
-**Descrição**: O sistema deve exibir um dashboard que se adapta ao estado do usuário.
+## RF17 - Home Adaptativo Pós-Login
+**Descrição**: O sistema deve exibir uma tela home que se adapta ao estado do usuário.
 - **Entrada**: Token JWT válido
 - **Processamento**: Verificação de sessões do usuário, geração de interface adaptativa
-- **Saída**: Dashboard com cards de sessões existentes ou botão para criar/entrar
+- **Saída**: Home com cards de sessões existentes ou botões para criar/entrar
 
 ## RF18 - Cards de Sessão com Metadados
 **Descrição**: O sistema deve exibir informações detalhadas sobre cada sessão do usuário.
@@ -144,11 +144,11 @@
 - **Processamento**: Verificação de estado e lista de participantes originais
 - **Saída**: Entrada permitida apenas para jogadores originais (reconexão)
 
-## RF25 - Dashboard Administrativo com Painel de Controle
-**Descrição**: Administradores devem ter acesso a dashboard com botão adicional "Gerenciamento".
+## RF25 - Home Administrativo com Painel de Controle
+**Descrição**: Administradores devem ter acesso a home com botão adicional "Gerenciamento".
 - **Entrada**: Login de usuário com role ADMIN
-- **Processamento**: Verificação de role, geração de dashboard com funcionalidades extras
-- **Saída**: Dashboard padrão + botão "Gerenciamento" para acesso ao painel administrativo
+- **Processamento**: Verificação de role, geração de home com funcionalidades extras
+- **Saída**: Home padrão + botão "Gerenciamento" para acesso ao painel administrativo
 
 ## RF26 - Painel de Controle de Usuários com Ações Detalhadas
 **Descrição**: Sistema deve fornecer painel administrativo para gestão completa de usuários.

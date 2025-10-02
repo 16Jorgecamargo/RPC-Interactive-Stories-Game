@@ -274,10 +274,10 @@ logout(token: string): Promise<{sucesso: boolean}>
 changePassword(currentPassword: string, newPassword: string, token: string): Promise<{sucesso: boolean}>
 ```
 
-### Dashboard e Navegação
+### Home e Navegação
 ```javascript
-// Obter dashboard pós-login
-getDashboard(token: string): Promise<{hasSessions: boolean, sessionCards?: SessionCard[], actions: string[], showWelcome?: boolean}>
+// Obter tela home pós-login
+getHome(token: string): Promise<{hasSessions: boolean, sessionCards?: SessionCard[], actions: string[], showWelcome?: boolean}>
 
 // Obter cards de sessão com metadados
 getSessionCards(token: string): Promise<{sessionCards: SessionCard[]}>
@@ -927,8 +927,8 @@ forceStateChange(sessionId: string, newState: SessionState, token: string): Prom
 
 ### Administração
 ```javascript
-// Obter dashboard administrativo (igual ao comum + botão gerenciamento)
-getAdminDashboard(token: string): Promise<{hasSessions: boolean, sessionCards?: SessionCard[], actions: string[], showWelcome?: boolean, hasManagementAccess: boolean}>
+// Obter home administrativo (igual ao comum + botão gerenciamento)
+getAdminHome(token: string): Promise<{hasSessions: boolean, sessionCards?: SessionCard[], actions: string[], showWelcome?: boolean, hasManagementAccess: boolean}>
 
 // Acessar painel de controle de usuários
 getManagementPanel(token: string): Promise<{users: UserWithStats[]}>

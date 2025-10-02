@@ -80,7 +80,7 @@ async function handleLogin(username, password) {
       localStorage.setItem('expiresIn', response.expiresIn);
       localStorage.setItem('loginTime', Date.now());
 
-      window.location.href = '/dashboard.html';
+      window.location.href = '/home.html';
     } else {
       throw new Error('Token não recebido do servidor');
     }

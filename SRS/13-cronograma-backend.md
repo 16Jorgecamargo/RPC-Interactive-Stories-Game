@@ -501,7 +501,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 ---
 
 ### Sprint 7.3: Estatísticas do Sistema
-**Objetivo**: Dashboard com métricas
+**Objetivo**: Painel com métricas
 
 #### Cards
 - [ ] **BE-ADMIN-012**: Implementar `GET /rpc/admin/stats` (estatísticas gerais)

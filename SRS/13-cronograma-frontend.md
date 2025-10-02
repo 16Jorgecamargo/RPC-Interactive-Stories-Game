@@ -96,21 +96,21 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 
 ## FASE 3: Usuários e Personagens (Frontend)
 
-### Sprint 3.1: Dashboard do Usuário
-**Objetivo**: Tela inicial após login
+### Sprint 3.1: Tela Home do Usuário
+**Objetivo**: Tela inicial após login com sessões e ações
 
 #### Cards
-- [ ] **FE-USER-001**: Criar `public/dashboard.html` com layout básico
-- [ ] **FE-USER-002**: Criar `src/ui/dashboard.js` com lógica do dashboard
-- [ ] **FE-USER-003**: Implementar `getDashboard()` chamando backend
-  - **Depende de**: `BE-USER-002`, `FE-AUTH-016`
-- [ ] **FE-USER-004**: Exibir nome do usuário logado no header
-- [ ] **FE-USER-005**: Mostrar botões: "Criar Sessão", "Entrar em Sessão", "Meus Personagens"
-- [ ] **FE-USER-006**: Listar sessões ativas do usuário (se houver)
+- [x] **FE-USER-001**: Criar `public/home.html` com layout Home simplificado
+- [x] **FE-USER-002**: Criar `src/ui/home.js` com lógica da home
+- [x] **FE-USER-003**: Implementar carregamento via RPC (me + listMySessions)
+  - **Depende de**: `BE-USER-002`, `FE-AUTH-016`, `BE-SESSION-006`
+- [x] **FE-USER-004**: Exibir "Olá, {nome do usuário}" no header com botão Sair
+- [x] **FE-USER-005**: Container de sessões com grid de cards
+- [x] **FE-USER-006**: Container de ações com 2 botões: "Criar Sessão" e "Entrar em Sessão"
   - **Depende de**: `BE-SESSION-006`
-- [ ] **FE-USER-007**: Adicionar menu de navegação (Dashboard, Personagens, Sessões, Logout)
+- [x] **FE-USER-007**: Estados visuais: loading, erro, sem sessões
 
-**Critério de Aceite**: Dashboard exibe informações do usuário e opções de navegação
+**Critério de Aceite**: Tela Home exibe sessões ativas e ações principais ✅
 
 ---
 

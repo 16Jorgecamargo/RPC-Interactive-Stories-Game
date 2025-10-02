@@ -131,8 +131,8 @@ historias-interativas-cliente/
 │   │   │   ├── chatPanel.js
 │   │   │   └── messageList.js
 │   │   ├── admin/
-│   │   │   ├── adminDashboard.html
-│   │   │   ├── adminDashboard.js
+│   │   │   ├── adminHome.html
+│   │   │   ├── adminHome.js
 │   │   │   ├── userManagement.js
 │   │   │   ├── sessionManagement.js
 │   │   │   └── storyManagement.js

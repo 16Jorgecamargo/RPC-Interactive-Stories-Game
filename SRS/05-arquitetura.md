@@ -243,7 +243,7 @@ Benefícios:
 }
 ```
 
-### Card de Sessão (Dashboard)
+### Card de Sessão (Home)
 ```json
 {
   "sessionId": "session_789",

@@ -5,7 +5,7 @@ Sistema distribuído cliente-servidor onde múltiplos jogadores se conectam a um
 
 ## 2.2 Funções do Produto
 - **Autenticação e Autorização**: Login/cadastro com JWT, roles de usuário
-- **Dashboard Adaptativo**: Interface que se adapta ao estado do usuário
+- **Home Adaptativo**: Interface que se adapta ao estado do usuário
 - **Gerenciamento de Histórias**: CRUD completo, import Mermaid com metadados
 - **Gerenciamento de Sessões**: Criar, entrar via código, controle de estados
 - **Sistema de Personagens D&D**: Criação complexa com raça, classe, história
@@ -32,8 +32,8 @@ Sistema distribuído cliente-servidor onde múltiplos jogadores se conectam a um
 
 ## 2.4 Fluxo de Experiência do Usuário
 
-### Dashboard Pós-Login
-Após autenticação, o usuário é direcionado para um dashboard adaptativo:
+### Home Pós-Login
+Após autenticação, o usuário é direcionado para uma tela home adaptativa:
 
 #### Cenário 1: Usuário sem Sessões
 - Tela exibe botão central "Criar ou Entrar em Sessão"

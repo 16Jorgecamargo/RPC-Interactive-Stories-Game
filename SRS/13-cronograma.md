@@ -22,7 +22,7 @@ Este cronograma foi **separado em dois arquivos** para melhor organização:
 - Setup do cliente (Express + HTML/CSS/JS)
 - Cliente RPC HTTP
 - Telas de autenticação (login, registro)
-- Dashboard do usuário
+- Tela Home do usuário
 - CRUD de personagens (criação, edição, listagem)
 - Criação e gerenciamento de sessões
 - Sala de espera com polling
@@ -128,7 +128,7 @@ docs(be-swagger): atualiza descrições dos endpoints [BE-DOC-003]
 # Frontend
 feat(fe-auth): adiciona tela de login [FE-AUTH-001]
 fix(fe-game): corrige atualização de votos [FE-GAME-017]
-style(fe-ui): melhora responsividade do dashboard [FE-STYLE-004]
+style(fe-ui): melhora responsividade da home [FE-STYLE-004]
 ```
 
 ### Priorização de Cards

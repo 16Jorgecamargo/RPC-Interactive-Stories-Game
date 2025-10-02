@@ -103,7 +103,7 @@
 5. Sistema remove a sessão
 6. Sistema confirma exclusão
 
-## UC11 - Acessar Dashboard Adaptativo
+## UC11 - Acessar Home Adaptativo
 **Ator**: Usuário autenticado
 **Pré-condições**: Usuário logado no sistema
 **Fluxo**:
@@ -228,7 +228,7 @@
 **Ator**: Usuário autenticado (participante original)
 **Pré-condições**: Usuário perdeu conexão, sessão em progresso
 **Fluxo**:
-1. Usuário tenta entrar na sessão via código ou dashboard
+1. Usuário tenta entrar na sessão via código ou home
 2. Sistema verifica se usuário é participante original
 3. Sistema valida estado atual da sessão
 4. Sistema retorna estado atual do jogo:
@@ -255,14 +255,14 @@
 5. Sistema notifica todos participantes sobre mudança
 6. Sistema ajusta interface conforme novo estado
 
-## UC21 - Acessar Dashboard Administrativo
+## UC21 - Acessar Home Administrativo
 **Ator**: Administrador
 **Pré-condições**: Usuário com role ADMIN logado
 **Fluxo**:
 1. Admin faz login no sistema
 2. Sistema verifica role do usuário
-3. Sistema retorna dashboard padrão + botão "Gerenciamento"
-4. Dashboard exibe as mesmas funcionalidades de usuário comum
+3. Sistema retorna home padrão + botão "Gerenciamento"
+4. Home exibe as mesmas funcionalidades de usuário comum
 5. Botão adicional "Gerenciamento" fica visível para admin
 6. Admin pode navegar normalmente ou acessar painel administrativo
 
@@ -270,7 +270,7 @@
 **Ator**: Administrador
 **Pré-condições**: Admin logado, acesso ao painel de gerenciamento
 **Fluxo**:
-1. Admin clica no botão "Gerenciamento" do dashboard
+1. Admin clica no botão "Gerenciamento" da home
 2. Sistema exibe painel de controle com lista de usuários
 3. Para cada usuário, sistema mostra:
    - Nome de usuário e role

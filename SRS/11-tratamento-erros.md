@@ -153,7 +153,7 @@
 - Log detalhado de todos os erros
 - Métricas de erro por tipo
 - Alertas para erros críticos
-- Dashboard de saúde do sistema
+- Painel de saúde do sistema
 
 ---
 

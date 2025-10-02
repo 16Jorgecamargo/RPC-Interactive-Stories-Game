@@ -153,7 +153,7 @@
 ### Monitoring em Produção
 - APM (Application Performance Monitoring)
 - Log aggregation (ELK stack ou similar)
-- Dashboards de métricas de negócio
+- Painéis de métricas de negócio
 
 ## 12.8 Deploy Distribuído
 

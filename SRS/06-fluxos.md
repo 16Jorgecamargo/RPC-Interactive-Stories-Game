@@ -184,7 +184,7 @@ sequenceDiagram
     S->>A: {sucesso: true}
 ```
 
-## 6.7 Fluxo de Dashboard Pós-Login
+## 6.7 Fluxo de Home Pós-Login
 
 ```mermaid
 sequenceDiagram
@@ -193,10 +193,10 @@ sequenceDiagram
     participant SS as Session Service
     participant StS as Story Service
 
-    C->>S: RPC: getDashboard(token)
+    C->>S: RPC: getHome(token)
     S->>S: validarJWT(token)
     S->>SS: buscarSessoesDoUsuario(userId)
-    SS->>SS: compilarMetadadosDashboard()
+    SS->>SS: compilarMetadadosHome()
 
     alt Usuário tem sessões
         SS->>S: sessionsWithMetadata
@@ -387,12 +387,12 @@ sequenceDiagram
     S->>S: validarCredenciais(username, password)
     S->>A: {token, user: {role: "ADMIN"}}
 
-    Note over A,S: Dashboard administrativo
-    A->>S: RPC: getAdminDashboard(token)
+    Note over A,S: Home administrativo
+    A->>S: RPC: getAdminHome(token)
     S->>S: validarJWT(token, role=ADMIN)
-    S->>AS: obterDashboardAdmin(userId)
-    AS->>S: dashboardData + hasManagementAccess: true
-    S->>A: {dashboard, hasManagementAccess: true}
+    S->>AS: obterHomeAdmin(userId)
+    AS->>S: homeData + hasManagementAccess: true
+    S->>A: {home, hasManagementAccess: true}
 
     Note over A,S: Acessar painel de gerenciamento
     A->>S: RPC: getManagementPanel(token)

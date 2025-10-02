@@ -398,8 +398,8 @@ const AuthHeaderSchema = z.object({
   authorization: z.string().regex(/^Bearer .+$/)
 });
 
-// Schema para dashboard
-const DashboardSchema = z.object({
+// Schema para home
+const HomeSchema = z.object({
   hasSessions: z.boolean(),
   sessionCards: z.array(z.object({
     sessionId: z.string().uuid(),
@@ -689,8 +689,8 @@ const SessionDeleteConfirmationSchema = z.object({
   })
 });
 
-// Schema para dashboard administrativo
-const AdminDashboardSchema = z.object({
+// Schema para home administrativo
+const AdminHomeSchema = z.object({
   hasSessions: z.boolean(),
   sessionCards: z.array(z.object({
     sessionId: z.string().uuid(),
