@@ -90,6 +90,10 @@ export const SessionSchema = z.object({
     example: '2025-01-15T12:30:00Z',
     description: 'Data de conclusão do jogo',
   }),
+  votes: z.record(z.string(), z.string()).optional().openapi({
+    example: { 'char_123': 'opcao1', 'char_456': 'opcao2' },
+    description: 'Mapa de votos: characterId -> opcaoId',
+  }),
 });
 
 export const CreateSessionSchema = z.object({

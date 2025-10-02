@@ -4,6 +4,7 @@ import { userMethods } from './user_methods.js';
 import { characterMethods } from './character_methods.js';
 import { storyMethods } from './story_methods.js';
 import { sessionMethods } from './session_methods.js';
+import { gameMethods } from './game_methods.js';
 
 export const methodRegistry = {
   ...authMethods,
@@ -12,4 +13,5 @@ export const methodRegistry = {
   ...characterMethods,
   ...storyMethods,
   ...sessionMethods,
+  ...gameMethods,
 };

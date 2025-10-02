@@ -47,6 +47,11 @@ export function findBySessionId(sessionId: string): Character[] {
   return characters.filter((c) => c.sessionId === sessionId);
 }
 
+export function findByUserIdAndSessionId(userId: string, sessionId: string): Character | undefined {
+  const characters = loadCharacters();
+  return characters.find((c) => c.userId === userId && c.sessionId === sessionId);
+}
+
 export function updateCharacter(
   id: string,
   updates: Partial<Omit<Character, 'id' | 'userId' | 'createdAt'>>

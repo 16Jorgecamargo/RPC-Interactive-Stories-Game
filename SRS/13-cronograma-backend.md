@@ -235,20 +235,20 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Exibir e navegar pela história
 
 #### Cards
-- [ ] **BE-GAME-001**: Implementar `GET /rpc/game/:sessionId/state` (capítulo atual)
+- [x] **BE-GAME-001**: Implementar `GET /rpc/game/:sessionId/state` (capítulo atual)
   - **Depende de**: `BE-SESSION-017`, `BE-STORY-005`
-- [ ] **BE-GAME-002**: Retornar `{capitulo: {texto, opcoes}, participants, votos}`
+- [x] **BE-GAME-002**: Retornar `{capitulo: {texto, opcoes}, participants, votos}`
   - **Depende de**: `BE-GAME-001`
-- [ ] **BE-GAME-003**: Implementar lógica de avanço para próximo capítulo
+- [x] **BE-GAME-003**: Implementar lógica de avanço para próximo capítulo
   - **Depende de**: `BE-GAME-002`
-- [ ] **BE-GAME-004**: Detectar capítulos finais (sem opções)
+- [x] **BE-GAME-004**: Detectar capítulos finais (sem opções)
   - **Depende de**: `BE-GAME-003`
-- [ ] **BE-GAME-005**: Marcar sessão como `COMPLETED` ao chegar no fim
+- [x] **BE-GAME-005**: Marcar sessão como `COMPLETED` ao chegar no fim
   - **Depende de**: `BE-GAME-004`, `BE-SESSION-013`
-- [ ] **BE-GAME-006**: Implementar `GET /rpc/game/:sessionId/timeline` (histórico)
+- [x] **BE-GAME-006**: Implementar `GET /rpc/game/:sessionId/timeline` (histórico)
   - **Depende de**: `BE-GAME-003`
 
-**Critério de Aceite**: Jogadores veem capítulo atual e opções disponíveis
+**Critério de Aceite**: Jogadores veem capítulo atual e opções disponíveis ✅
 
 ---
 

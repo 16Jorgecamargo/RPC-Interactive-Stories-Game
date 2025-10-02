@@ -3,6 +3,7 @@ import { verifyToken } from '../utils/jwt.js';
 import * as sessionStore from '../stores/session_store.js';
 import * as storyStore from '../stores/story_store.js';
 import * as characterStore from '../stores/character_store.js';
+import * as gameService from './game_service.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
 import type {
   CreateSession,
@@ -503,6 +504,8 @@ export async function startSession(params: StartSession): Promise<StartSessionRe
       message: 'Erro ao iniciar sessão',
     };
   }
+
+  await gameService.createInitialTimelineEntry(sessionId, session.storyId);
 
   return {
     session: updatedSession,

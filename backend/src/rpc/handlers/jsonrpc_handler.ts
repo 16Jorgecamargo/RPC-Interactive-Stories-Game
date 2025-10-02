@@ -40,7 +40,7 @@ const jsonRpcHandler: FastifyPluginAsync = async (app) => {
         });
       }
 
-      const rpcMethod = methodRegistry[method];
+      const rpcMethod = methodRegistry[method as keyof typeof methodRegistry];
 
       if (!rpcMethod) {
         return reply.code(400).send({
@@ -57,7 +57,7 @@ const jsonRpcHandler: FastifyPluginAsync = async (app) => {
       }
 
       try {
-        const result = await rpcMethod(params || {}, { request, reply });
+        const result = await rpcMethod(params || {});
 
         return reply.code(200).send({
           jsonrpc: '2.0',
