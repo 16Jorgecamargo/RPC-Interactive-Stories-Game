@@ -2,7 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { verifyToken } from '../utils/jwt.js';
 import * as characterStore from '../stores/character_store.js';
 import * as sessionStore from '../stores/session_store.js';
+import * as eventStore from '../stores/event_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import type { GameUpdate } from '../models/update_schemas.js';
 import {
   CreateCharacter,
   GetCharacters,
@@ -79,12 +81,46 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
   if (sessionId) {
     const session = sessionStore.findById(sessionId)!;
     const updatedParticipants = session.participants.map((p) =>
-      p.userId === userId ? { ...p, hasCreatedCharacter: true } : p
+      p.userId === userId ? { ...p, hasCreatedCharacter: true, characterId: created.id } : p
     );
 
-    sessionStore.updateSession(sessionId, {
+    const updatedSession = sessionStore.updateSession(sessionId, {
       participants: updatedParticipants,
     });
+
+    const characterCreatedUpdate: GameUpdate = {
+      id: `update_${uuidv4()}`,
+      type: 'CHARACTER_CREATED',
+      timestamp: new Date().toISOString(),
+      sessionId,
+      data: {
+        characterId: created.id,
+        characterName: created.name,
+        userId,
+        username: decoded.username,
+        race: created.race,
+        class: created.class,
+        isComplete: true,
+      },
+    };
+    eventStore.addUpdate(characterCreatedUpdate);
+
+    if (updatedSession) {
+      const allReady = updatedSession.participants.every((p) => p.hasCreatedCharacter);
+      if (allReady) {
+        const allReadyUpdate: GameUpdate = {
+          id: `update_${uuidv4()}`,
+          type: 'ALL_CHARACTERS_READY',
+          timestamp: new Date().toISOString(),
+          sessionId,
+          data: {
+            canStart: true,
+            participantCount: updatedSession.participants.length,
+          },
+        };
+        eventStore.addUpdate(allReadyUpdate);
+      }
+    }
   }
 
   const { userId: characterUserId, ...response } = created;

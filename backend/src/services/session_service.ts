@@ -4,7 +4,9 @@ import * as sessionStore from '../stores/session_store.js';
 import * as storyStore from '../stores/story_store.js';
 import * as characterStore from '../stores/character_store.js';
 import * as gameService from './game_service.js';
+import * as eventStore from '../stores/event_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import type { GameUpdate } from '../models/update_schemas.js';
 import type {
   CreateSession,
   JoinSession,
@@ -178,6 +180,18 @@ export async function joinSession(params: JoinSession): Promise<JoinSessionRespo
     };
   }
 
+  const joinUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'PLAYER_JOINED',
+    timestamp: now,
+    sessionId: session.id,
+    data: {
+      userId,
+      username: decoded.username,
+    },
+  };
+  eventStore.addUpdate(joinUpdate);
+
   return {
     session: updatedSession,
     message: 'Você entrou na sessão com sucesso',
@@ -335,6 +349,18 @@ export async function leaveSession(params: LeaveSession): Promise<LeaveSessionRe
     };
   }
 
+  const leaveUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'PLAYER_LEFT',
+    timestamp: new Date().toISOString(),
+    sessionId: session.id,
+    data: {
+      userId,
+      username: decoded.username,
+    },
+  };
+  eventStore.addUpdate(leaveUpdate);
+
   return {
     success: true,
     message: 'Você saiu da sessão',
@@ -394,6 +420,19 @@ export async function transitionToCreatingCharacters(
       message: 'Erro ao atualizar estado da sessão',
     };
   }
+
+  const stateChangeUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'SESSION_STATE_CHANGED',
+    timestamp: new Date().toISOString(),
+    sessionId: session.id,
+    data: {
+      oldState: 'WAITING_PLAYERS',
+      newState: 'CREATING_CHARACTERS',
+      isLocked: false,
+    },
+  };
+  eventStore.addUpdate(stateChangeUpdate);
 
   return {
     session: updatedSession,
@@ -514,6 +553,31 @@ export async function startSession(params: StartSession): Promise<StartSessionRe
   }
 
   await gameService.createInitialTimelineEntry(sessionId, session.storyId);
+
+  const stateChangeUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'SESSION_STATE_CHANGED',
+    timestamp: now,
+    sessionId: session.id,
+    data: {
+      oldState: 'CREATING_CHARACTERS',
+      newState: 'IN_PROGRESS',
+      isLocked: true,
+    },
+  };
+  eventStore.addUpdate(stateChangeUpdate);
+
+  const gameStartUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'GAME_STARTED',
+    timestamp: now,
+    sessionId: session.id,
+    data: {
+      redirectTo: 'gameScreen',
+      chapter: session.currentChapter,
+    },
+  };
+  eventStore.addUpdate(gameStartUpdate);
 
   return {
     session: updatedSession,

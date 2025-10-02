@@ -1,6 +1,7 @@
 import { MessageStore } from '../stores/message_store.js';
 import { findById as findSessionById } from '../stores/session_store.js';
 import { findById as findCharacterById } from '../stores/character_store.js';
+import * as eventStore from '../stores/event_store.js';
 import {
   Message,
   SendMessageParams,
@@ -9,6 +10,7 @@ import {
   GetMessagesResponse,
 } from '../models/chat_schemas.js';
 import { v4 as uuidv4 } from 'uuid';
+import type { GameUpdate } from '../models/update_schemas.js';
 
 export class ChatService {
   private messageStore: MessageStore;
@@ -42,6 +44,7 @@ export class ChatService {
 
     const sanitizedMessage = this.sanitizeMessage(message);
 
+    const now = new Date().toISOString();
     const newMessage: Message = {
       id: uuidv4(),
       sessionId,
@@ -49,10 +52,23 @@ export class ChatService {
       characterName: character.name,
       message: sanitizedMessage,
       type: 'PLAYER',
-      timestamp: new Date().toISOString(),
+      timestamp: now,
     };
 
     await this.messageStore.addMessage(newMessage);
+
+    const messageUpdate: GameUpdate = {
+      id: `update_${uuidv4()}`,
+      type: 'NEW_MESSAGE',
+      timestamp: now,
+      sessionId,
+      data: {
+        messageId: newMessage.id,
+        characterName: character.name,
+        mensagem: sanitizedMessage,
+      },
+    };
+    eventStore.addUpdate(messageUpdate);
 
     return {
       success: true,

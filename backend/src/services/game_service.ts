@@ -5,6 +5,7 @@ import * as storyStore from '../stores/story_store.js';
 import * as characterStore from '../stores/character_store.js';
 import * as eventStore from '../stores/event_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import type { GameUpdate } from '../models/update_schemas.js';
 import type {
   GetGameState,
   GetTimeline,
@@ -188,6 +189,21 @@ export async function advanceToNextChapter(
     currentChapter: nextChapterId,
     votes: {},
   });
+
+  const chapterChangedUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'CHAPTER_CHANGED',
+    timestamp: new Date().toISOString(),
+    sessionId,
+    data: {
+      newChapter: {
+        id: nextChapterId,
+        texto: nextChapter.texto,
+        opcoes: nextChapter.opcoes || [],
+      },
+    },
+  };
+  eventStore.addUpdate(chapterChangedUpdate);
 }
 
 export async function completeSession(sessionId: string): Promise<void> {
@@ -211,9 +227,21 @@ export async function completeSession(sessionId: string): Promise<void> {
 
   eventStore.addEvent(timelineEntry);
 
+  const now = new Date().toISOString();
   sessionStore.updateSession(sessionId, {
     status: 'COMPLETED',
   });
+
+  const storyEndedUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'STORY_ENDED',
+    timestamp: now,
+    sessionId,
+    data: {
+      completedAt: now,
+    },
+  };
+  eventStore.addUpdate(storyEndedUpdate);
 }
 
 export function isFinalChapter(storyId: string, chapterId: string): boolean {

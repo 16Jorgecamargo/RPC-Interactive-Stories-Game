@@ -9,6 +9,7 @@ import { authenticate } from './middleware/auth.js';
 import jsonRpcHandler from './handlers/jsonrpc_handler.js';
 import swaggerWrapperHandler from './handlers/swagger_wrapper_handler.js';
 import { registry } from './openapi/registry.js';
+import { startCleanupScheduler } from '../utils/scheduler.js';
 
 dotenv.config();
 
@@ -85,8 +86,11 @@ async function start() {
     await app.ready();
     await app.listen({ port: PORT, host: HOST });
 
+    startCleanupScheduler();
+
     console.log(`🚀 Server running at http://${HOST}:${PORT}`);
     console.log(`📚 Swagger docs available at http://${HOST}:${PORT}/docs`);
+    console.log(`🧹 Cleanup scheduler initialized`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);

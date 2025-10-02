@@ -2,12 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { TimelineEntry } from '../models/game_schemas.js';
+import { GameUpdate } from '../models/update_schemas.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, '../../data');
 const EVENTS_FILE = path.join(DATA_DIR, 'events.json');
+const UPDATES_FILE = path.join(DATA_DIR, 'updates.json');
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -66,4 +68,65 @@ export function clearOldEvents(olderThanDays: number = 30): number {
   const recentEvents = events.filter((e) => new Date(e.timestamp) > cutoffDate);
   saveEvents(recentEvents);
   return initialLength - recentEvents.length;
+}
+
+function loadUpdates(): GameUpdate[] {
+  if (!fs.existsSync(UPDATES_FILE)) {
+    return [];
+  }
+  const data = fs.readFileSync(UPDATES_FILE, 'utf-8');
+  return JSON.parse(data);
+}
+
+function saveUpdates(updates: GameUpdate[]): void {
+  fs.writeFileSync(UPDATES_FILE, JSON.stringify(updates, null, 2));
+}
+
+export function addUpdate(update: GameUpdate): GameUpdate {
+  const updates = loadUpdates();
+  updates.push(update);
+  saveUpdates(updates);
+  return update;
+}
+
+export function findUpdatesBySessionId(
+  sessionId: string,
+  sinceId?: string
+): GameUpdate[] {
+  const updates = loadUpdates();
+  const sessionUpdates = updates
+    .filter((u) => u.sessionId === sessionId)
+    .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+  if (!sinceId) {
+    return sessionUpdates;
+  }
+
+  const sinceIndex = sessionUpdates.findIndex((u) => u.id === sinceId);
+  if (sinceIndex === -1) {
+    return sessionUpdates;
+  }
+
+  return sessionUpdates.slice(sinceIndex + 1);
+}
+
+export function clearOldUpdates(olderThanHours: number = 24): number {
+  const updates = loadUpdates();
+  const cutoffDate = new Date();
+  cutoffDate.setHours(cutoffDate.getHours() - olderThanHours);
+
+  const initialLength = updates.length;
+  const recentUpdates = updates.filter(
+    (u) => new Date(u.timestamp) > cutoffDate
+  );
+  saveUpdates(recentUpdates);
+  return initialLength - recentUpdates.length;
+}
+
+export function deleteUpdatesBySessionId(sessionId: string): number {
+  const updates = loadUpdates();
+  const initialLength = updates.length;
+  const filteredUpdates = updates.filter((u) => u.sessionId !== sessionId);
+  saveUpdates(filteredUpdates);
+  return initialLength - filteredUpdates.length;
 }

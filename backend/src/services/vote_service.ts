@@ -1,9 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
 import { verifyToken } from '../utils/jwt.js';
 import * as sessionStore from '../stores/session_store.js';
 import * as storyStore from '../stores/story_store.js';
 import * as characterStore from '../stores/character_store.js';
+import * as eventStore from '../stores/event_store.js';
 import { advanceToNextChapter } from './game_service.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import type { GameUpdate } from '../models/update_schemas.js';
 import type {
   SubmitVote,
   GetVoteStatus,
@@ -89,6 +92,20 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
   sessionStore.updateSession(sessionId, {
     votes: updatedVotes,
   });
+
+  const voteReceivedUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'VOTE_RECEIVED',
+    timestamp: new Date().toISOString(),
+    sessionId,
+    data: {
+      characterId,
+      characterName: character.name,
+      opcaoId,
+      pendingVotes: getOnlineParticipantsCount(sessionId) - Object.keys(updatedVotes).length,
+    },
+  };
+  eventStore.addUpdate(voteReceivedUpdate);
 
   if (isFirstVote && session.votingTimer) {
     await startVotingTimer(sessionId);

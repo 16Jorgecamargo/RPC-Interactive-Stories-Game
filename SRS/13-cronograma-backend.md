@@ -345,20 +345,20 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Updates em tempo real sem WebSockets
 
 #### Cards
-- [ ] **BE-POLL-001**: Criar `UpdateSchema` com tipos de eventos
-- [ ] **BE-POLL-002**: Implementar `src/stores/eventStore.ts` (fila de eventos)
-- [ ] **BE-POLL-003**: Implementar `GET /rpc/updates/:sessionId?since=lastId` (polling)
+- [x] **BE-POLL-001**: Criar `UpdateSchema` com tipos de eventos
+- [x] **BE-POLL-002**: Implementar `src/stores/eventStore.ts` (fila de eventos)
+- [x] **BE-POLL-003**: Implementar `GET /rpc/updates/:sessionId?since=lastId` (polling)
   - **Depende de**: `BE-POLL-001`, `BE-POLL-002`
-- [ ] **BE-POLL-004**: Retornar eventos desde `lastUpdateId`
+- [x] **BE-POLL-004**: Retornar eventos desde `lastUpdateId`
   - **Depende de**: `BE-POLL-003`
-- [ ] **BE-POLL-005**: Implementar eventos: `PLAYER_JOINED`, `CHARACTER_CREATED`, etc.
+- [x] **BE-POLL-005**: Implementar eventos: `PLAYER_JOINED`, `CHARACTER_CREATED`, etc.
   - **Depende de**: `BE-POLL-001`
-- [ ] **BE-POLL-006**: Implementar `GET /rpc/chat/:sessionId/messages?since=lastId`
+- [x] **BE-POLL-006**: Implementar `GET /rpc/chat/:sessionId/messages?since=lastId`
   - **Depende de**: `BE-CHAT-004`, `BE-POLL-003`
-- [ ] **BE-POLL-007**: Limpar eventos antigos (>24h) periodicamente
+- [x] **BE-POLL-007**: Limpar eventos antigos (>24h) periodicamente
   - **Depende de**: `BE-POLL-002`
 
-**Critério de Aceite**: Cliente recebe atualizações em tempo real via polling
+**Critério de Aceite**: Cliente recebe atualizações em tempo real via polling ✅
 
 ---
 
