@@ -56,6 +56,7 @@ async function start() {
         { name: 'Sessions', description: 'Gerenciamento de sessões de jogo (wrappers para Swagger UI)' },
         { name: 'Game', description: 'Lógica de gameplay e estados de jogo (wrappers para Swagger UI)' },
         { name: 'Vote', description: 'Sistema de votação colaborativa (wrappers para Swagger UI)' },
+        { name: 'Chat', description: 'Sistema de chat em tempo real (wrappers para Swagger UI)' },
       ],
     });
 

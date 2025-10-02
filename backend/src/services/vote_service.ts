@@ -364,11 +364,24 @@ async function handleTie(
       message: 'Empate detectado. Mestre deve escolher a opção vencedora',
       data: { tiedOptions: tiedOptions.map((opt) => ({ id: opt.opcaoId, texto: opt.opcaoTexto })) },
     };
+  } else if (strategy === 'REVOTE') {
+    sessionStore.updateSession(sessionId, {
+      votes: {},
+    });
+
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Empate detectado. Votos limpos para nova votação',
+      data: { 
+        tiedOptions: tiedOptions.map((opt) => ({ id: opt.opcaoId, texto: opt.opcaoTexto })),
+        action: 'REVOTE_STARTED'
+      },
+    };
   } else {
     throw {
       ...JSON_RPC_ERRORS.SERVER_ERROR,
-      message: 'Revote não implementado nesta sprint',
-      data: { tiedOptions },
+      message: 'Estratégia de resolução de empate inválida',
+      data: { strategy, tiedOptions },
     };
   }
 
@@ -471,10 +484,33 @@ export async function resolveTie(params: ResolveTie): Promise<ResolveTieResponse
     const tiedOptions = voteCounts.filter((v) => v.count === maxVotes);
     const randomIndex = Math.floor(Math.random() * tiedOptions.length);
     winningOption = tiedOptions[randomIndex];
+  } else if (resolution === 'REVOTE') {
+    sessionStore.updateSession(sessionId, {
+      votes: {},
+    });
+
+    return {
+      success: true,
+      resolution: 'REVOTE',
+      votingResult: {
+        winningOption: {
+          id: '',
+          texto: 'Nova votação iniciada',
+          voteCount: 0,
+          percentage: 0,
+        },
+        allVotes: voteCounts,
+        decisionMethod: 'TIE_RESOLVED',
+        tieResolution: 'REVOTE',
+        completedAt: new Date().toISOString(),
+      },
+      nextChapterId: session.currentChapter,
+      message: 'Votos limpos. Todos os jogadores devem votar novamente.',
+    };
   } else {
     throw {
       ...JSON_RPC_ERRORS.SERVER_ERROR,
-      message: 'Revote não implementado nesta sprint',
+      message: 'Estratégia de resolução de empate inválida',
       data: { resolution },
     };
   }

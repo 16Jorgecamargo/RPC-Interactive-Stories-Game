@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { verifyToken } from '../utils/jwt.js';
 import * as characterStore from '../stores/character_store.js';
+import * as sessionStore from '../stores/session_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
 import {
   CreateCharacter,
@@ -16,6 +17,48 @@ import {
 
 export async function createCharacter(params: CreateCharacter): Promise<CharacterResponse> {
   const decoded = verifyToken(params.token);
+  const userId = decoded.userId;
+
+  let sessionId: string | null = null;
+
+  if (params.sessionId) {
+    const session = sessionStore.findById(params.sessionId);
+    
+    if (!session) {
+      throw {
+        ...JSON_RPC_ERRORS.SERVER_ERROR,
+        message: 'Sessão não encontrada',
+        data: { sessionId: params.sessionId },
+      };
+    }
+
+    if (session.status !== 'CREATING_CHARACTERS') {
+      throw {
+        ...JSON_RPC_ERRORS.SERVER_ERROR,
+        message: 'A sessão deve estar no estado CREATING_CHARACTERS para criar personagens',
+        data: { currentStatus: session.status },
+      };
+    }
+
+    const isParticipant = session.participants.some((p) => p.userId === userId);
+    if (!isParticipant) {
+      throw {
+        ...JSON_RPC_ERRORS.FORBIDDEN,
+        message: 'Você não é participante desta sessão',
+      };
+    }
+
+    const alreadyHasCharacter = session.participants.find((p) => p.userId === userId)
+      ?.hasCreatedCharacter;
+    if (alreadyHasCharacter) {
+      throw {
+        ...JSON_RPC_ERRORS.SERVER_ERROR,
+        message: 'Você já criou um personagem para esta sessão',
+      };
+    }
+
+    sessionId = params.sessionId;
+  }
 
   const character: Character = {
     id: uuidv4(),
@@ -25,15 +68,27 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
     attributes: params.attributes,
     background: params.background,
     equipment: params.equipment,
-    userId: decoded.userId,
-    sessionId: null,
+    userId,
+    sessionId,
     isComplete: true,
     createdAt: new Date().toISOString(),
   };
 
   const created = characterStore.createCharacter(character);
 
-  const { userId, ...response } = created;
+  if (sessionId) {
+    const session = sessionStore.findById(sessionId)!;
+    const updatedParticipants = session.participants.map((p) =>
+      p.userId === userId ? { ...p, hasCreatedCharacter: true } : p
+    );
+
+    sessionStore.updateSession(sessionId, {
+      participants: updatedParticipants,
+    });
+  }
+
+  const { userId: characterUserId, ...response } = created;
+  void characterUserId;
   return response;
 }
 
@@ -42,7 +97,10 @@ export async function getMyCharacters(params: GetCharacters): Promise<Characters
 
   const characters = characterStore.findByUserId(decoded.userId);
 
-  const charactersWithoutUserId = characters.map(({ userId, ...rest }) => rest);
+  const charactersWithoutUserId = characters.map(({ userId: charUserId, ...rest }) => {
+    void charUserId;
+    return rest;
+  });
 
   return {
     characters: charactersWithoutUserId,
@@ -69,7 +127,8 @@ export async function getCharacter(params: GetCharacter): Promise<CharacterRespo
     };
   }
 
-  const { userId, ...response } = character;
+  const { userId: charUserId2, ...response } = character;
+  void charUserId2;
   return response;
 }
 
@@ -123,7 +182,8 @@ export async function updateCharacter(params: UpdateCharacter): Promise<Characte
     };
   }
 
-  const { userId, ...response } = updated;
+  const { userId: charUserId3, ...response } = updated;
+  void charUserId3;
   return response;
 }
 

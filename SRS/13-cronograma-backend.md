@@ -303,18 +303,18 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Estratégias para resolver empates em votações
 
 #### Cards
-- [ ] **BE-VOTE-016**: Implementar estratégia `REVOTE` (nova votação com opções empatadas)
+- [x] **BE-VOTE-016**: Implementar estratégia `REVOTE` (nova votação com opções empatadas)
   - **Depende de**: `BE-VOTE-007`
-- [ ] **BE-VOTE-017**: Implementar estratégia `RANDOM` (sortear opção aleatória)
+- [x] **BE-VOTE-017**: Implementar estratégia `RANDOM` (sortear opção aleatória)
   - **Depende de**: `BE-VOTE-007`
-- [ ] **BE-VOTE-018**: Implementar estratégia `MASTER_DECIDES` (owner escolhe)
+- [x] **BE-VOTE-018**: Implementar estratégia `MASTER_DECIDES` (owner escolhe)
   - **Depende de**: `BE-VOTE-007`
-- [ ] **BE-VOTE-019**: Implementar `POST /rpc/game/:sessionId/resolve-tie`
+- [x] **BE-VOTE-019**: Implementar `POST /rpc/game/:sessionId/resolve-tie`
   - **Depende de**: `BE-VOTE-016`, `BE-VOTE-017`, `BE-VOTE-018`
-- [ ] **BE-VOTE-020**: Adicionar configuração de estratégia na criação da sessão
+- [x] **BE-VOTE-020**: Adicionar configuração de estratégia na criação da sessão
   - **Depende de**: `BE-SESSION-003`
 
-**Critério de Aceite**: Sistema resolve empates conforme estratégia configurada
+**Critério de Aceite**: Sistema resolve empates conforme estratégia configurada ✅
 
 ---
 
@@ -337,7 +337,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 - [ ] **BE-CHAT-007**: Adicionar tipos de mensagem (PLAYER, SYSTEM, VOTING_UPDATE)
   - **Depende de**: `BE-CHAT-001`
 
-**Critério de Aceite**: Jogadores enviam e recebem mensagens no chat
+**Critério de Aceite**: Jogadores enviam e recebem mensagens no chat 
 
 ---
 

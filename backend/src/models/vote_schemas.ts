@@ -158,7 +158,7 @@ export const ResolveTieSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador (deve ser owner)',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),

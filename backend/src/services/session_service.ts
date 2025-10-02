@@ -43,7 +43,7 @@ function generateSessionCode(): string {
 }
 
 export async function createSession(params: CreateSession): Promise<CreateSessionResponse> {
-  const { token, name, storyId, maxPlayers, votingTimeoutSeconds } = params;
+  const { token, name, storyId, maxPlayers, votingTimeoutSeconds, tieResolutionStrategy } = params;
 
   const decoded = verifyToken(token);
   const userId = decoded.userId;
@@ -89,6 +89,7 @@ export async function createSession(params: CreateSession): Promise<CreateSessio
     currentChapter: story.initialChapter,
     createdAt: now,
     updatedAt: now,
+    tieResolutionStrategy: tieResolutionStrategy || 'RANDOM',
     votingTimer: votingTimeoutSeconds
       ? {
           durationSeconds: votingTimeoutSeconds,
@@ -375,10 +376,10 @@ export async function transitionToCreatingCharacters(
     };
   }
 
-  if (session.participants.length < 2) {
+  if (session.participants.length < 1) {
     throw {
       ...JSON_RPC_ERRORS.SERVER_ERROR,
-      message: 'É necessário pelo menos 2 participantes para iniciar a criação de personagens',
+      message: 'É necessário pelo menos 1 participante para iniciar a criação de personagens',
       data: { currentParticipants: session.participants.length },
     };
   }
