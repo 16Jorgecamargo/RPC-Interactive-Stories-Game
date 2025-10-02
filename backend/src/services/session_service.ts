@@ -43,7 +43,7 @@ function generateSessionCode(): string {
 }
 
 export async function createSession(params: CreateSession): Promise<CreateSessionResponse> {
-  const { token, name, storyId, maxPlayers } = params;
+  const { token, name, storyId, maxPlayers, votingTimeoutSeconds } = params;
 
   const decoded = verifyToken(token);
   const userId = decoded.userId;
@@ -89,6 +89,13 @@ export async function createSession(params: CreateSession): Promise<CreateSessio
     currentChapter: story.initialChapter,
     createdAt: now,
     updatedAt: now,
+    votingTimer: votingTimeoutSeconds
+      ? {
+          durationSeconds: votingTimeoutSeconds,
+          isActive: false,
+          extensionsUsed: 0,
+        }
+      : undefined,
   };
 
   const createdSession = sessionStore.createSession(session);

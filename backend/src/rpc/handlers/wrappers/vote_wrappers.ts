@@ -5,9 +5,15 @@ import {
   SubmitVoteSchema,
   GetVoteStatusSchema,
   ResolveTieSchema,
+  ConfigureVoteTimeoutSchema,
+  GetVoteTimerSchema,
+  ExtendVoteTimerSchema,
   SubmitVoteResponseSchema,
   VoteStatusResponseSchema,
   ResolveTieResponseSchema,
+  ConfigureVoteTimeoutResponseSchema,
+  GetVoteTimerResponseSchema,
+  ExtendVoteTimerResponseSchema,
 } from '../../../models/vote_schemas.js';
 
 export async function registerVoteWrappers(app: FastifyInstance) {
@@ -25,17 +31,8 @@ export async function registerVoteWrappers(app: FastifyInstance) {
       },
     },
     handler: async (request, reply) => {
-      try {
-        const result = await voteService.submitVote(request.body);
-        return reply.send(result);
-      } catch (error: any) {
-        const statusCode = error.code === -32002 ? 403 : error.code === -32001 ? 401 : 400;
-        return reply.code(statusCode).send({
-          code: error.code,
-          message: error.message,
-          data: error.data,
-        } as any);
-      }
+      const result = await voteService.submitVote(request.body);
+      return reply.send(result);
     },
   });
 
@@ -53,17 +50,8 @@ export async function registerVoteWrappers(app: FastifyInstance) {
       },
     },
     handler: async (request, reply) => {
-      try {
-        const result = await voteService.getVotingStatus(request.body);
-        return reply.send(result);
-      } catch (error: any) {
-        const statusCode = error.code === -32002 ? 403 : error.code === -32001 ? 401 : 400;
-        return reply.code(statusCode).send({
-          code: error.code,
-          message: error.message,
-          data: error.data,
-        } as any);
-      }
+      const result = await voteService.getVotingStatus(request.body);
+      return reply.send(result);
     },
   });
 
@@ -81,17 +69,65 @@ export async function registerVoteWrappers(app: FastifyInstance) {
       },
     },
     handler: async (request, reply) => {
-      try {
-        const result = await voteService.resolveTie(request.body);
-        return reply.send(result);
-      } catch (error: any) {
-        const statusCode = error.code === -32002 ? 403 : error.code === -32001 ? 401 : 400;
-        return reply.code(statusCode).send({
-          code: error.code,
-          message: error.message,
-          data: error.data,
-        } as any);
-      }
+      const result = await voteService.resolveTie(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/game/configure-vote-timeout',
+    schema: {
+      tags: ['Vote'],
+      summary: 'Configurar timer de votação',
+      description:
+        'Permite que o mestre configure a duração do timer de votação (1-60 segundos). Apenas o owner da sessão pode configurar.',
+      body: ConfigureVoteTimeoutSchema,
+      response: {
+        200: ConfigureVoteTimeoutResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await voteService.configureVoteTimeout(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/game/vote-timer',
+    schema: {
+      tags: ['Vote'],
+      summary: 'Obter status do timer de votação',
+      description:
+        'Retorna o status atual do timer: tempo restante, se está ativo, timestamps, etc.',
+      body: GetVoteTimerSchema,
+      response: {
+        200: GetVoteTimerResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await voteService.getVoteTimer(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/game/extend-vote-timer',
+    schema: {
+      tags: ['Vote'],
+      summary: 'Estender timer de votação',
+      description:
+        'Permite estender o timer de votação adicionando 1-30 segundos extras. Qualquer participante pode estender.',
+      body: ExtendVoteTimerSchema,
+      response: {
+        200: ExtendVoteTimerResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await voteService.extendVoteTimer(request.body);
+      return reply.send(result);
     },
   });
 }

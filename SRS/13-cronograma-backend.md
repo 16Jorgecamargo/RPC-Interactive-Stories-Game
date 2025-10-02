@@ -280,22 +280,22 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Timeout automático para votações
 
 #### Cards
-- [ ] **BE-VOTE-009**: Adicionar `votingTimer` na sessão
+- [x] **BE-VOTE-009**: Adicionar `votingTimer` na sessão
   - **Depende de**: `BE-SESSION-001`
-- [ ] **BE-VOTE-010**: Implementar `POST /rpc/game/:sessionId/vote-timeout` (configurar)
+- [x] **BE-VOTE-010**: Implementar `POST /rpc/game/:sessionId/vote-timeout` (configurar)
   - **Depende de**: `BE-VOTE-009`
-- [ ] **BE-VOTE-011**: Iniciar timer quando primeiro jogador vota
+- [x] **BE-VOTE-011**: Iniciar timer quando primeiro jogador vota
   - **Depende de**: `BE-VOTE-002`, `BE-VOTE-010`
-- [ ] **BE-VOTE-012**: Implementar `GET /rpc/game/:sessionId/vote-timer` (tempo restante)
+- [x] **BE-VOTE-012**: Implementar `GET /rpc/game/:sessionId/vote-timer` (tempo restante)
   - **Depende de**: `BE-VOTE-011`
-- [ ] **BE-VOTE-013**: Finalizar votação automaticamente após timeout
+- [x] **BE-VOTE-013**: Finalizar votação automaticamente após timeout
   - **Depende de**: `BE-VOTE-011`, `BE-VOTE-005`
-- [ ] **BE-VOTE-014**: Implementar `POST /rpc/game/:sessionId/extend-timer` (estender)
+- [x] **BE-VOTE-014**: Implementar `POST /rpc/game/:sessionId/extend-timer` (estender)
   - **Depende de**: `BE-VOTE-012`
-- [ ] **BE-VOTE-015**: Notificar jogadores quando timer expira
+- [x] **BE-VOTE-015**: Notificar jogadores quando timer expira
   - **Depende de**: `BE-VOTE-013`
 
-**Critério de Aceite**: Votação finaliza automaticamente após X minutos se nem todos votaram
+**Critério de Aceite**: Votação finaliza automaticamente após X minutos se nem todos votaram ✅
 
 ---
 

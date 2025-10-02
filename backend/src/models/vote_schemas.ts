@@ -183,6 +183,100 @@ export const ResolveTieResponseSchema = z.object({
   }),
 });
 
+export const ConfigureVoteTimeoutSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token do jogador (deve ser owner)',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  durationSeconds: z.number().int().min(1).max(60).openapi({
+    example: 30,
+    description: 'Duração do timer em segundos (1-60)',
+  }),
+});
+
+export const GetVoteTimerSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token do jogador',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const ExtendVoteTimerSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token do jogador',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  additionalSeconds: z.number().int().min(1).max(30).openapi({
+    example: 10,
+    description: 'Segundos adicionais para estender (1-30)',
+  }),
+});
+
+export const VoteTimerStatusSchema = z.object({
+  isActive: z.boolean().openapi({
+    example: true,
+    description: 'Se o timer está ativo',
+  }),
+  startedAt: z.string().datetime().optional().openapi({
+    example: '2025-01-15T10:30:00Z',
+    description: 'Timestamp de início do timer',
+  }),
+  expiresAt: z.string().datetime().optional().openapi({
+    example: '2025-01-15T10:30:30Z',
+    description: 'Timestamp de expiração',
+  }),
+  remainingSeconds: z.number().int().openapi({
+    example: 30,
+    description: 'Segundos restantes até expiração',
+  }),
+  durationSeconds: z.number().int().openapi({
+    example: 30,
+    description: 'Duração configurada do timer em segundos',
+  }),
+  extensionsUsed: z.number().int().openapi({
+    example: 0,
+    description: 'Número de extensões já utilizadas',
+  }),
+  hasExpired: z.boolean().openapi({
+    example: false,
+    description: 'Se o timer já expirou',
+  }),
+});
+
+export const ConfigureVoteTimeoutResponseSchema = z.object({
+  success: z.boolean().openapi({ example: true }),
+  timer: VoteTimerStatusSchema,
+  message: z.string().openapi({
+    example: 'Timer de votação configurado com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
+export const GetVoteTimerResponseSchema = z.object({
+  timer: VoteTimerStatusSchema,
+});
+
+export const ExtendVoteTimerResponseSchema = z.object({
+  success: z.boolean().openapi({ example: true }),
+  timer: VoteTimerStatusSchema,
+  message: z.string().openapi({
+    example: 'Timer estendido com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
 export type TieResolutionStrategy = z.infer<typeof TieResolutionStrategyEnum>;
 export type Vote = z.infer<typeof VoteSchema>;
 export type SubmitVote = z.infer<typeof SubmitVoteSchema>;
@@ -194,3 +288,10 @@ export type SubmitVoteResponse = z.infer<typeof SubmitVoteResponseSchema>;
 export type VoteStatusResponse = z.infer<typeof VoteStatusResponseSchema>;
 export type ResolveTie = z.infer<typeof ResolveTieSchema>;
 export type ResolveTieResponse = z.infer<typeof ResolveTieResponseSchema>;
+export type ConfigureVoteTimeout = z.infer<typeof ConfigureVoteTimeoutSchema>;
+export type GetVoteTimer = z.infer<typeof GetVoteTimerSchema>;
+export type ExtendVoteTimer = z.infer<typeof ExtendVoteTimerSchema>;
+export type VoteTimerStatus = z.infer<typeof VoteTimerStatusSchema>;
+export type ConfigureVoteTimeoutResponse = z.infer<typeof ConfigureVoteTimeoutResponseSchema>;
+export type GetVoteTimerResponse = z.infer<typeof GetVoteTimerResponseSchema>;
+export type ExtendVoteTimerResponse = z.infer<typeof ExtendVoteTimerResponseSchema>;

@@ -101,6 +101,30 @@ export const SessionSchema = z.object({
       example: 'RANDOM',
       description: 'Estratégia para resolver empates em votações (padrão: RANDOM)',
     }),
+  votingTimer: z.object({
+    durationSeconds: z.number().int().min(1).max(60).openapi({
+      example: 30,
+      description: 'Duração do timer em segundos (1-60)',
+    }),
+    startedAt: z.string().datetime().optional().openapi({
+      example: '2025-01-15T10:30:00Z',
+      description: 'Timestamp de início do timer (quando primeiro jogador votou)',
+    }),
+    expiresAt: z.string().datetime().optional().openapi({
+      example: '2025-01-15T10:30:30Z',
+      description: 'Timestamp de expiração do timer',
+    }),
+    isActive: z.boolean().openapi({
+      example: false,
+      description: 'Indica se o timer está ativo no momento',
+    }),
+    extensionsUsed: z.number().int().min(0).openapi({
+      example: 0,
+      description: 'Número de vezes que o timer foi estendido',
+    }),
+  }).optional().openapi({
+    description: 'Configuração e estado do timer de votação',
+  }),
 });
 
 export const CreateSessionSchema = z.object({
@@ -125,6 +149,10 @@ export const CreateSessionSchema = z.object({
       example: 'RANDOM',
       description: 'Estratégia para resolver empates em votações (padrão: RANDOM)',
     }),
+  votingTimeoutSeconds: z.number().int().min(1).max(60).optional().default(30).openapi({
+    example: 30,
+    description: 'Tempo limite para votação em segundos (padrão: 30, máx: 60)',
+  }),
 });
 
 export const JoinSessionSchema = z.object({

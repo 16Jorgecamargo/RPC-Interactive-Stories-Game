@@ -84,10 +84,15 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
   }
 
   const updatedVotes = { ...(session.votes || {}), [characterId]: opcaoId };
+  const isFirstVote = Object.keys(session.votes || {}).length === 0;
 
   sessionStore.updateSession(sessionId, {
     votes: updatedVotes,
   });
+
+  if (isFirstVote && session.votingTimer) {
+    await startVotingTimer(sessionId);
+  }
 
   const allVoted = checkAllVoted(sessionId);
 
@@ -504,4 +509,234 @@ export async function resolveTie(params: ResolveTie): Promise<ResolveTieResponse
     nextChapterId,
     message: `Empate resolvido com sucesso usando estratégia ${resolution}`,
   };
+}
+
+export async function configureVoteTimeout(
+  params: import('../models/vote_schemas.js').ConfigureVoteTimeout,
+): Promise<import('../models/vote_schemas.js').ConfigureVoteTimeoutResponse> {
+  const { token, sessionId, durationSeconds } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  if (session.ownerId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Apenas o mestre da sessão pode configurar o timer',
+      data: { sessionId, userId },
+    };
+  }
+
+  sessionStore.updateSession(sessionId, {
+    votingTimer: {
+      durationSeconds,
+      startedAt: undefined,
+      expiresAt: undefined,
+      isActive: false,
+      extensionsUsed: 0,
+    },
+  });
+
+  return {
+    success: true,
+    timer: {
+      isActive: false,
+      durationSeconds,
+      remainingSeconds: durationSeconds,
+      extensionsUsed: 0,
+      hasExpired: false,
+    },
+    message: 'Timer de votação configurado com sucesso',
+  };
+}
+
+export async function getVoteTimer(
+  params: import('../models/vote_schemas.js').GetVoteTimer,
+): Promise<import('../models/vote_schemas.js').GetVoteTimerResponse> {
+  const { token, sessionId } = params;
+
+  verifyToken(token);
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const timer = session.votingTimer;
+
+  if (!timer) {
+    return {
+      timer: {
+        isActive: false,
+        durationSeconds: 30,
+        remainingSeconds: 0,
+        extensionsUsed: 0,
+        hasExpired: false,
+      },
+    };
+  }
+
+  const now = new Date();
+  let remainingSeconds = 0;
+  let hasExpired = false;
+
+  if (timer.isActive && timer.expiresAt) {
+    const expiresAt = new Date(timer.expiresAt);
+    remainingSeconds = Math.max(0, Math.floor((expiresAt.getTime() - now.getTime()) / 1000));
+    hasExpired = remainingSeconds === 0;
+
+    if (hasExpired && timer.isActive) {
+      await finalizeVotingOnTimeout(sessionId);
+    }
+  }
+
+  return {
+    timer: {
+      isActive: timer.isActive,
+      startedAt: timer.startedAt,
+      expiresAt: timer.expiresAt,
+      remainingSeconds,
+      durationSeconds: timer.durationSeconds,
+      extensionsUsed: timer.extensionsUsed,
+      hasExpired,
+    },
+  };
+}
+
+export async function extendVoteTimer(
+  params: import('../models/vote_schemas.js').ExtendVoteTimer,
+): Promise<import('../models/vote_schemas.js').ExtendVoteTimerResponse> {
+  const { token, sessionId, additionalSeconds } = params;
+
+  verifyToken(token);
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const timer = session.votingTimer;
+
+  if (!timer || !timer.isActive) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Timer de votação não está ativo',
+      data: { sessionId },
+    };
+  }
+
+  if (!timer.expiresAt) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Timer não possui data de expiração',
+      data: { sessionId },
+    };
+  }
+
+  const currentExpires = new Date(timer.expiresAt);
+  const newExpires = new Date(currentExpires.getTime() + additionalSeconds * 1000);
+
+  sessionStore.updateSession(sessionId, {
+    votingTimer: {
+      ...timer,
+      expiresAt: newExpires.toISOString(),
+      extensionsUsed: timer.extensionsUsed + 1,
+    },
+  });
+
+  const now = new Date();
+  const remainingSeconds = Math.max(0, Math.floor((newExpires.getTime() - now.getTime()) / 1000));
+
+  return {
+    success: true,
+    timer: {
+      isActive: true,
+      startedAt: timer.startedAt,
+      expiresAt: newExpires.toISOString(),
+      remainingSeconds,
+      durationSeconds: timer.durationSeconds,
+      extensionsUsed: timer.extensionsUsed + 1,
+      hasExpired: false,
+    },
+    message: `Timer estendido em ${additionalSeconds} segundos`,
+  };
+}
+
+export async function startVotingTimer(sessionId: string): Promise<void> {
+  const session = sessionStore.findById(sessionId);
+  if (!session || !session.votingTimer) {
+    return;
+  }
+
+  const timer = session.votingTimer;
+
+  if (timer.isActive) {
+    return;
+  }
+
+  const now = new Date();
+  const expiresAt = new Date(now.getTime() + timer.durationSeconds * 1000);
+
+  sessionStore.updateSession(sessionId, {
+    votingTimer: {
+      ...timer,
+      startedAt: now.toISOString(),
+      expiresAt: expiresAt.toISOString(),
+      isActive: true,
+    },
+  });
+
+  scheduleTimerExpiration(sessionId, expiresAt);
+}
+
+function scheduleTimerExpiration(sessionId: string, expiresAt: Date): void {
+  const now = new Date();
+  const delay = Math.max(0, expiresAt.getTime() - now.getTime());
+
+  setTimeout(async () => {
+    await finalizeVotingOnTimeout(sessionId);
+  }, delay);
+}
+
+async function finalizeVotingOnTimeout(sessionId: string): Promise<void> {
+  const session = sessionStore.findById(sessionId);
+  if (!session || !session.votingTimer || !session.votingTimer.isActive) {
+    return;
+  }
+
+  console.log(`[TIMER] Finalizando votação por timeout na sessão ${sessionId}`);
+
+  try {
+    const result = await finalizeVoting(sessionId);
+
+    sessionStore.updateSession(sessionId, {
+      votingTimer: {
+        ...session.votingTimer,
+        isActive: false,
+      },
+    });
+
+    console.log(
+      `[TIMER] Votação finalizada com sucesso. Próximo capítulo: ${result.nextChapterId}`,
+    );
+  } catch (error) {
+    console.error(`[TIMER] Erro ao finalizar votação por timeout:`, error);
+  }
 }
