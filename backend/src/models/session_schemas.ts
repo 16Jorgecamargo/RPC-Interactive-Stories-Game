@@ -207,6 +207,65 @@ export const LeaveSessionResponseSchema = z.object({
   }),
 });
 
+export const TransitionToCreatingCharactersSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const CanStartSessionSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const StartSessionSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão a ser iniciada',
+  }),
+});
+
+export const TransitionResponseSchema = z.object({
+  session: SessionSchema,
+  message: z.string().openapi({
+    example: 'Estado da sessão atualizado com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
+export const CanStartResponseSchema = z.object({
+  canStart: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a sessão pode ser iniciada',
+  }),
+  missingRequirements: z.array(z.string()).openapi({
+    example: [],
+    description: 'Lista de requisitos faltantes',
+  }),
+  participantsReady: z.number().int().openapi({
+    example: 3,
+    description: 'Número de participantes que criaram personagens',
+  }),
+  totalParticipants: z.number().int().openapi({
+    example: 3,
+    description: 'Total de participantes na sessão',
+  }),
+});
+
+export const StartSessionResponseSchema = z.object({
+  session: SessionSchema,
+  message: z.string().openapi({
+    example: 'Sessão iniciada com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
 export type SessionStatus = z.infer<typeof SessionStatusEnum>;
 export type Participant = z.infer<typeof ParticipantSchema>;
 export type Session = z.infer<typeof SessionSchema>;
@@ -223,3 +282,9 @@ export type SessionsList = z.infer<typeof SessionsListSchema>;
 export type SessionDetailsResponse = z.infer<typeof SessionDetailsResponseSchema>;
 export type DeleteSessionResponse = z.infer<typeof DeleteSessionResponseSchema>;
 export type LeaveSessionResponse = z.infer<typeof LeaveSessionResponseSchema>;
+export type TransitionToCreatingCharacters = z.infer<typeof TransitionToCreatingCharactersSchema>;
+export type CanStartSession = z.infer<typeof CanStartSessionSchema>;
+export type StartSession = z.infer<typeof StartSessionSchema>;
+export type TransitionResponse = z.infer<typeof TransitionResponseSchema>;
+export type CanStartResponse = z.infer<typeof CanStartResponseSchema>;
+export type StartSessionResponse = z.infer<typeof StartSessionResponseSchema>;

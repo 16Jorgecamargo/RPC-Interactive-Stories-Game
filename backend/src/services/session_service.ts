@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { verifyToken } from '../utils/jwt.js';
 import * as sessionStore from '../stores/session_store.js';
 import * as storyStore from '../stores/story_store.js';
+import * as characterStore from '../stores/character_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
 import type {
   CreateSession,
@@ -18,6 +19,12 @@ import type {
   SessionDetailsResponse,
   DeleteSessionResponse,
   LeaveSessionResponse,
+  TransitionToCreatingCharacters,
+  CanStartSession,
+  StartSession,
+  TransitionResponse,
+  CanStartResponse,
+  StartSessionResponse,
 } from '../models/session_schemas.js';
 
 function generateSessionCode(): string {
@@ -322,5 +329,183 @@ export async function leaveSession(params: LeaveSession): Promise<LeaveSessionRe
   return {
     success: true,
     message: 'Você saiu da sessão',
+  };
+}
+
+export async function transitionToCreatingCharacters(
+  params: TransitionToCreatingCharacters,
+): Promise<TransitionResponse> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  if (session.ownerId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Apenas o criador da sessão pode alterar seu estado',
+    };
+  }
+
+  if (session.status !== 'WAITING_PLAYERS') {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Transição de estado inválida',
+      data: {
+        currentState: session.status,
+        allowedState: 'WAITING_PLAYERS',
+      },
+    };
+  }
+
+  if (session.participants.length < 2) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'É necessário pelo menos 2 participantes para iniciar a criação de personagens',
+      data: { currentParticipants: session.participants.length },
+    };
+  }
+
+  const updatedSession = sessionStore.updateSession(sessionId, {
+    status: 'CREATING_CHARACTERS',
+  });
+
+  if (!updatedSession) {
+    throw {
+      ...JSON_RPC_ERRORS.INTERNAL_ERROR,
+      message: 'Erro ao atualizar estado da sessão',
+    };
+  }
+
+  return {
+    session: updatedSession,
+    message: 'Todos os jogadores devem criar seus personagens agora',
+  };
+}
+
+export async function canStartSession(params: CanStartSession): Promise<CanStartResponse> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const isParticipant = session.participants.some((p) => p.userId === userId);
+  if (!isParticipant) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Você não é participante desta sessão',
+    };
+  }
+
+  const missingRequirements: string[] = [];
+
+  if (session.status !== 'CREATING_CHARACTERS') {
+    missingRequirements.push(
+      `Status da sessão deve ser CREATING_CHARACTERS (atual: ${session.status})`,
+    );
+  }
+
+  const participantsWithCharacters = session.participants.filter((p) => p.hasCreatedCharacter);
+  const allHaveCharacters = participantsWithCharacters.length === session.participants.length;
+
+  if (!allHaveCharacters) {
+    const participantsWithoutCharacters = session.participants.filter(
+      (p) => !p.hasCreatedCharacter,
+    );
+    missingRequirements.push(
+      `${participantsWithoutCharacters.length} participante(s) ainda não criaram personagens`,
+    );
+  }
+
+  const canStart = missingRequirements.length === 0;
+
+  return {
+    canStart,
+    missingRequirements,
+    participantsReady: participantsWithCharacters.length,
+    totalParticipants: session.participants.length,
+  };
+}
+
+export async function startSession(params: StartSession): Promise<StartSessionResponse> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  if (session.ownerId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Apenas o criador da sessão pode iniciá-la',
+    };
+  }
+
+  if (session.status !== 'CREATING_CHARACTERS') {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão deve estar no estado CREATING_CHARACTERS para ser iniciada',
+      data: { currentStatus: session.status },
+    };
+  }
+
+  const allHaveCharacters = session.participants.every((p) => p.hasCreatedCharacter);
+  if (!allHaveCharacters) {
+    const participantsWithoutCharacters = session.participants.filter(
+      (p) => !p.hasCreatedCharacter,
+    );
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Todos os participantes devem criar seus personagens antes de iniciar',
+      data: {
+        missingCharacters: participantsWithoutCharacters.length,
+        total: session.participants.length,
+      },
+    };
+  }
+
+  const now = new Date().toISOString();
+  const updatedSession = sessionStore.updateSession(sessionId, {
+    status: 'IN_PROGRESS',
+    isLocked: true,
+    startedAt: now,
+  });
+
+  if (!updatedSession) {
+    throw {
+      ...JSON_RPC_ERRORS.INTERNAL_ERROR,
+      message: 'Erro ao iniciar sessão',
+    };
+  }
+
+  return {
+    session: updatedSession,
+    message: 'Sessão iniciada! A aventura começa agora.',
   };
 }

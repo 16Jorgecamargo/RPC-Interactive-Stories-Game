@@ -14,6 +14,12 @@ import {
   SessionDetailsResponseSchema,
   DeleteSessionResponseSchema,
   LeaveSessionResponseSchema,
+  TransitionToCreatingCharactersSchema,
+  CanStartSessionSchema,
+  StartSessionSchema,
+  TransitionResponseSchema,
+  CanStartResponseSchema,
+  StartSessionResponseSchema,
 } from '../../../models/session_schemas.js';
 
 export async function registerSessionWrappers(app: FastifyInstance) {
@@ -127,6 +133,63 @@ export async function registerSessionWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await sessionService.leaveSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/transition-to-creating-characters',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Iniciar criação de personagens (owner only)',
+      description:
+        'Transiciona sessão de WAITING_PLAYERS para CREATING_CHARACTERS. Requer pelo menos 2 participantes. Internamente usa JSON-RPC 2.0 (method: "transitionToCreatingCharacters").',
+      body: TransitionToCreatingCharactersSchema,
+      response: {
+        200: TransitionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.transitionToCreatingCharacters(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/can-start',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Verificar se sessão pode iniciar',
+      description:
+        'Valida se todos os participantes criaram personagens e se a sessão está no estado correto. Internamente usa JSON-RPC 2.0 (method: "canStartSession").',
+      body: CanStartSessionSchema,
+      response: {
+        200: CanStartResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.canStartSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/start',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Iniciar jogo (owner only)',
+      description:
+        'Inicia o jogo, transicionando de CREATING_CHARACTERS para IN_PROGRESS. Bloqueia entrada de novos jogadores (isLocked=true). Internamente usa JSON-RPC 2.0 (method: "startSession").',
+      body: StartSessionSchema,
+      response: {
+        200: StartSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.startSession(request.body);
       return reply.send(result);
     },
   });

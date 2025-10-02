@@ -203,21 +203,21 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Máquina de estados da sessão
 
 #### Cards
-- [ ] **BE-SESSION-011**: Implementar transição `WAITING_PLAYERS → CREATING_CHARACTERS`
+- [x] **BE-SESSION-011**: Implementar transição `WAITING_PLAYERS → CREATING_CHARACTERS`
   - **Depende de**: `BE-SESSION-001`
-- [ ] **BE-SESSION-012**: Implementar transição `CREATING_CHARACTERS → IN_PROGRESS`
+- [x] **BE-SESSION-012**: Implementar transição `CREATING_CHARACTERS → IN_PROGRESS`
   - **Depende de**: `BE-SESSION-011`
-- [ ] **BE-SESSION-013**: Implementar transição `IN_PROGRESS → COMPLETED`
+- [x] **BE-SESSION-013**: Implementar transição `IN_PROGRESS → COMPLETED`
   - **Depende de**: `BE-SESSION-012`
-- [ ] **BE-SESSION-014**: Validar que todos têm personagens antes de iniciar
+- [x] **BE-SESSION-014**: Validar que todos têm personagens antes de iniciar
   - **Depende de**: `BE-CHAR-004`, `BE-SESSION-011`
-- [ ] **BE-SESSION-015**: Implementar `isLocked` para bloquear entrada em `IN_PROGRESS`
+- [x] **BE-SESSION-015**: Implementar `isLocked` para bloquear entrada em `IN_PROGRESS`
   - **Depende de**: `BE-SESSION-012`
-- [ ] **BE-SESSION-016**: Implementar `GET /rpc/sessions/:id/can-start` (validação)
+- [x] **BE-SESSION-016**: Implementar `GET /rpc/sessions/:id/can-start` (validação)
   - **Depende de**: `BE-SESSION-014`
-- [ ] **BE-SESSION-017**: Implementar `POST /rpc/sessions/:id/start` (iniciar jogo)
+- [x] **BE-SESSION-017**: Implementar `POST /rpc/sessions/:id/start` (iniciar jogo)
   - **Depende de**: `BE-SESSION-016`
-- [ ] **BE-SESSION-018**: Re-habilitar validações de `sessionId` em `character_service.ts`
+- [x] **BE-SESSION-018**: Re-habilitar validações de `sessionId` em `character_service.ts`
   - **Localização**: `src/services/character_service.ts` linhas 95-102 e 145-152
   - **Descrição**: Descomentar validações que bloqueiam edição/exclusão de personagens vinculados a sessões
   - **Lógica necessária**:
@@ -225,7 +225,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
     - Bloquear edição/exclusão se sessão em estado `IN_PROGRESS` ou `COMPLETED`
   - **Depende de**: `BE-SESSION-011`, `BE-SESSION-012`
 
-**Critério de Aceite**: Sessão só inicia quando todos os participantes criaram personagens
+**Critério de Aceite**: Sessão só inicia quando todos os participantes criaram personagens ✅
 
 ---
 

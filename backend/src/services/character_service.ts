@@ -92,14 +92,18 @@ export async function updateCharacter(params: UpdateCharacter): Promise<Characte
     };
   }
 
-  // TODO: Re-enable in Sprint 3.4 with session state checking
-  // (allow editing in CREATING_CHARACTERS, block in IN_PROGRESS/COMPLETED)
-  // if (character.sessionId) {
-  //   throw {
-  //     ...JSON_RPC_ERRORS.SERVER_ERROR,
-  //     message: 'Não é possível editar personagem vinculado a uma sessão',
-  //   };
-  // }
+  if (character.sessionId) {
+    const sessionStore = await import('../stores/session_store.js');
+    const session = sessionStore.findById(character.sessionId);
+
+    if (session && (session.status === 'IN_PROGRESS' || session.status === 'COMPLETED')) {
+      throw {
+        ...JSON_RPC_ERRORS.SERVER_ERROR,
+        message: 'Não é possível editar personagem de sessão em andamento ou finalizada',
+        data: { sessionStatus: session.status },
+      };
+    }
+  }
 
   const updates: Partial<Character> = {};
 
@@ -142,14 +146,18 @@ export async function deleteCharacter(params: DeleteCharacter): Promise<DeleteCh
     };
   }
 
-  // TODO: Re-enable in Sprint 3.4 with session state checking
-  // (allow deleting in CREATING_CHARACTERS, block in IN_PROGRESS/COMPLETED)
-  // if (character.sessionId) {
-  //   throw {
-  //     ...JSON_RPC_ERRORS.SERVER_ERROR,
-  //     message: 'Não é possível excluir personagem vinculado a uma sessão',
-  //   };
-  // }
+  if (character.sessionId) {
+    const sessionStore = await import('../stores/session_store.js');
+    const session = sessionStore.findById(character.sessionId);
+
+    if (session && (session.status === 'IN_PROGRESS' || session.status === 'COMPLETED')) {
+      throw {
+        ...JSON_RPC_ERRORS.SERVER_ERROR,
+        message: 'Não é possível excluir personagem de sessão em andamento ou finalizada',
+        data: { sessionStatus: session.status },
+      };
+    }
+  }
 
   const success = characterStore.deleteCharacter(params.characterId);
 
