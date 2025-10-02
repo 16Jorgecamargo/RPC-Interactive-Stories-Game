@@ -9,7 +9,7 @@ import { authenticate } from './middleware/auth.js';
 import jsonRpcHandler from './handlers/jsonrpc_handler.js';
 import swaggerWrapperHandler from './handlers/swagger_wrapper_handler.js';
 import { registry } from './openapi/registry.js';
-import { startCleanupScheduler } from '../utils/scheduler.js';
+import { startCleanupScheduler, startHeartbeatChecker } from '../utils/scheduler.js';
 
 dotenv.config();
 
@@ -58,6 +58,7 @@ async function start() {
         { name: 'Game', description: 'Lógica de gameplay e estados de jogo (wrappers para Swagger UI)' },
         { name: 'Vote', description: 'Sistema de votação colaborativa (wrappers para Swagger UI)' },
         { name: 'Chat', description: 'Sistema de chat em tempo real (wrappers para Swagger UI)' },
+        { name: 'Updates', description: 'Long polling para atualizações em tempo real (wrappers para Swagger UI)' },
       ],
     });
 
@@ -87,10 +88,12 @@ async function start() {
     await app.listen({ port: PORT, host: HOST });
 
     startCleanupScheduler();
+    startHeartbeatChecker();
 
     console.log(`🚀 Server running at http://${HOST}:${PORT}`);
     console.log(`📚 Swagger docs available at http://${HOST}:${PORT}/docs`);
     console.log(`🧹 Cleanup scheduler initialized`);
+    console.log(`💓 Heartbeat checker initialized`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);

@@ -8,6 +8,7 @@ import { registerSessionWrappers } from './session_wrappers.js';
 import { registerGameWrappers } from './game_wrappers.js';
 import { registerVoteWrappers } from './vote_wrappers.js';
 import { registerChatWrappers } from './chat_wrappers.js';
+import { registerUpdateWrappers } from './update_wrappers.js';
 
 export async function registerAllWrappers(app: FastifyInstance) {
   await registerAuthWrappers(app);
@@ -19,4 +20,5 @@ export async function registerAllWrappers(app: FastifyInstance) {
   await registerGameWrappers(app);
   await registerVoteWrappers(app);
   await registerChatWrappers(app);
+  await registerUpdateWrappers(app);
 }

@@ -10,10 +10,7 @@ import {
 } from '../../../models/update_schemas.js';
 import * as eventStore from '../../../stores/event_store.js';
 import * as sessionStore from '../../../stores/session_store.js';
-import { MessageStore } from '../../../stores/message_store.js';
 import type { Participant } from '../../../models/session_schemas.js';
-
-const messageStore = new MessageStore();
 
 export const updateMethods = {
   checkGameUpdates: async (
@@ -152,6 +149,8 @@ export const updateMethods = {
       };
     }
 
+    const { MessageStore } = await import('../../../stores/message_store.js');
+    const messageStore = new MessageStore();
     const allMessages = await messageStore.getMessagesBySession(sessionId, {
       since: lastMessageId,
     });

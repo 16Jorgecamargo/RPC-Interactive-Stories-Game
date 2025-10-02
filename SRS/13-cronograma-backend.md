@@ -366,18 +366,18 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Heartbeat para saber quem está online
 
 #### Cards
-- [ ] **BE-POLL-008**: Adicionar campo `lastActivity` nos participantes
+- [x] **BE-POLL-008**: Adicionar campo `lastActivity` nos participantes
   - **Depende de**: `BE-SESSION-001`
-- [ ] **BE-POLL-009**: Implementar `POST /rpc/sessions/:sessionId/heartbeat`
+- [x] **BE-POLL-009**: Implementar `POST /rpc/sessions/:sessionId/heartbeat`
   - **Depende de**: `BE-POLL-008`
-- [ ] **BE-POLL-010**: Atualizar `lastActivity` a cada heartbeat
+- [x] **BE-POLL-010**: Atualizar `lastActivity` a cada heartbeat
   - **Depende de**: `BE-POLL-009`
-- [ ] **BE-POLL-011**: Marcar `isOnline: false` se sem heartbeat >5min
+- [x] **BE-POLL-011**: Marcar `isOnline: false` se sem heartbeat >5min
   - **Depende de**: `BE-POLL-010`
-- [ ] **BE-POLL-012**: Notificar quando jogador desconecta/reconecta
+- [x] **BE-POLL-012**: Notificar quando jogador desconecta/reconecta
   - **Depende de**: `BE-POLL-011`, `BE-POLL-005`
 
-**Critério de Aceite**: Sistema identifica jogadores online/offline
+**Critério de Aceite**: Sistema identifica jogadores online/offline ✅
 
 ---
 
