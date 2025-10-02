@@ -1,21 +1,20 @@
+import { z } from 'zod';
 import { GetMeSchema, UpdateProfileSchema, ChangePasswordSchema } from '../../../models/user_schemas.js';
 import * as userService from '../../../services/user_service.js';
 
-type RpcMethod = (params: any) => Promise<any>;
-
-export const userMethods: Record<string, RpcMethod> = {
-  me: async (params) => {
-    const validated = GetMeSchema.parse(params);
+export const userMethods = {
+  me: async (params: unknown) => {
+    const validated = GetMeSchema.parse(params) as z.infer<typeof GetMeSchema>;
     return await userService.getMe(validated);
   },
 
-  updateProfile: async (params) => {
-    const validated = UpdateProfileSchema.parse(params);
+  updateProfile: async (params: unknown) => {
+    const validated = UpdateProfileSchema.parse(params) as z.infer<typeof UpdateProfileSchema>;
     return await userService.updateProfile(validated);
   },
 
-  changePassword: async (params) => {
-    const validated = ChangePasswordSchema.parse(params);
+  changePassword: async (params: unknown) => {
+    const validated = ChangePasswordSchema.parse(params) as z.infer<typeof ChangePasswordSchema>;
     return await userService.changePassword(validated);
   },
 };

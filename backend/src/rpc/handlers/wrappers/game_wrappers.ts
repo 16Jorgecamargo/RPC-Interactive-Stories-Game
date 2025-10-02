@@ -23,17 +23,8 @@ export async function registerGameWrappers(app: FastifyInstance) {
       },
     },
     handler: async (request, reply) => {
-      try {
-        const result = await gameService.getGameState(request.body);
-        return reply.send(result);
-      } catch (error: any) {
-        const statusCode = error.code === -32002 ? 403 : error.code === -32001 ? 401 : 400;
-        return reply.code(statusCode).send({
-          code: error.code,
-          message: error.message,
-          data: error.data,
-        } as any);
-      }
+      const result = await gameService.getGameState(request.body);
+      return reply.send(result);
     },
   });
 
@@ -50,17 +41,8 @@ export async function registerGameWrappers(app: FastifyInstance) {
       },
     },
     handler: async (request, reply) => {
-      try {
-        const result = await gameService.getTimelineHistory(request.body);
-        return reply.send(result);
-      } catch (error: any) {
-        const statusCode = error.code === -32002 ? 403 : error.code === -32001 ? 401 : 400;
-        return reply.code(statusCode).send({
-          code: error.code,
-          message: error.message,
-          data: error.data,
-        } as any);
-      }
+      const result = await gameService.getTimelineHistory(request.body);
+      return reply.send(result);
     },
   });
 }

@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import * as storyService from '../../../services/story_service.js';
 import {
   CreateStorySchema,
@@ -10,46 +11,44 @@ import {
   ToggleStoryStatusSchema,
 } from '../../../models/story_schemas.js';
 
-type RpcMethod = (params: any) => Promise<any>;
-
-export const storyMethods: Record<string, RpcMethod> = {
-  createStory: async (params) => {
-    const validated = CreateStorySchema.parse(params);
+export const storyMethods = {
+  createStory: async (params: unknown) => {
+    const validated = CreateStorySchema.parse(params) as z.infer<typeof CreateStorySchema>;
     return await storyService.createStory(validated);
   },
 
-  uploadMermaid: async (params) => {
-    const validated = UploadMermaidSchema.parse(params);
+  uploadMermaid: async (params: unknown) => {
+    const validated = UploadMermaidSchema.parse(params) as z.infer<typeof UploadMermaidSchema>;
     return await storyService.uploadMermaid(validated);
   },
 
-  listStories: async (params) => {
-    const validated = GetStoriesSchema.parse(params);
+  listStories: async (params: unknown) => {
+    const validated = GetStoriesSchema.parse(params) as z.infer<typeof GetStoriesSchema>;
     return await storyService.listAllStories(validated);
   },
 
-  getStoryCatalog: async (params) => {
-    const validated = GetStoryCatalogSchema.parse(params);
+  getStoryCatalog: async (params: unknown) => {
+    const validated = GetStoryCatalogSchema.parse(params) as z.infer<typeof GetStoryCatalogSchema>;
     return await storyService.getPublicCatalog(validated);
   },
 
-  getStory: async (params) => {
-    const validated = GetStorySchema.parse(params);
+  getStory: async (params: unknown) => {
+    const validated = GetStorySchema.parse(params) as z.infer<typeof GetStorySchema>;
     return await storyService.getStory(validated);
   },
 
-  updateStory: async (params) => {
-    const validated = UpdateStorySchema.parse(params);
+  updateStory: async (params: unknown) => {
+    const validated = UpdateStorySchema.parse(params) as z.infer<typeof UpdateStorySchema>;
     return await storyService.updateStory(validated);
   },
 
-  deleteStory: async (params) => {
-    const validated = DeleteStorySchema.parse(params);
+  deleteStory: async (params: unknown) => {
+    const validated = DeleteStorySchema.parse(params) as z.infer<typeof DeleteStorySchema>;
     return await storyService.deleteStory(validated);
   },
 
-  toggleStoryStatus: async (params) => {
-    const validated = ToggleStoryStatusSchema.parse(params);
+  toggleStoryStatus: async (params: unknown) => {
+    const validated = ToggleStoryStatusSchema.parse(params) as z.infer<typeof ToggleStoryStatusSchema>;
     return await storyService.toggleStoryStatus(validated);
   },
 };

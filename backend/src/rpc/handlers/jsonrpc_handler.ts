@@ -57,7 +57,7 @@ const jsonRpcHandler: FastifyPluginAsync = async (app) => {
       }
 
       try {
-        const result = await rpcMethod(params || {});
+        const result = await rpcMethod((params || {}) as never);
 
         return reply.code(200).send({
           jsonrpc: '2.0',

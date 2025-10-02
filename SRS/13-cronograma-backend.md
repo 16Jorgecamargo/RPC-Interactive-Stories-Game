@@ -387,15 +387,15 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Identificar nós de combate em histórias
 
 #### Cards
-- [ ] **BE-COMBAT-001**: Estender parser Mermaid para detectar `[COMBATE]`
+- [x] **BE-COMBAT-001**: Estender parser Mermaid para detectar `[COMBATE]`
   - **Depende de**: `BE-STORY-008`
-- [ ] **BE-COMBAT-002**: Criar `CombatStateSchema` com iniciativa
-- [ ] **BE-COMBAT-003**: Implementar `POST /rpc/combat/:sessionId/initiate`
+- [x] **BE-COMBAT-002**: Criar `CombatStateSchema` com iniciativa
+- [x] **BE-COMBAT-003**: Implementar `POST /rpc/combat/:sessionId/initiate`
   - **Depende de**: `BE-COMBAT-001`, `BE-COMBAT-002`
-- [ ] **BE-COMBAT-004**: Gerar inimigos baseado em metadados do nó
+- [x] **BE-COMBAT-004**: Gerar inimigos baseado em metadados do nó
   - **Depende de**: `BE-COMBAT-003`
 
-**Critério de Aceite**: Parser detecta nós de combate e inicia combate
+**Critério de Aceite**: Parser detecta nós de combate e inicia combate ✅
 
 ---
 

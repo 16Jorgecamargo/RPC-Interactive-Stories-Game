@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import * as sessionService from '../../../services/session_service.js';
 import {
   CreateSessionSchema,
@@ -11,51 +12,49 @@ import {
   StartSessionSchema,
 } from '../../../models/session_schemas.js';
 
-type RpcMethod = (params: any) => Promise<any>;
-
-export const sessionMethods: Record<string, RpcMethod> = {
-  createSession: async (params) => {
-    const validated = CreateSessionSchema.parse(params);
+export const sessionMethods = {
+  createSession: async (params: unknown) => {
+    const validated = CreateSessionSchema.parse(params) as z.infer<typeof CreateSessionSchema>;
     return await sessionService.createSession(validated);
   },
 
-  joinSession: async (params) => {
-    const validated = JoinSessionSchema.parse(params);
+  joinSession: async (params: unknown) => {
+    const validated = JoinSessionSchema.parse(params) as z.infer<typeof JoinSessionSchema>;
     return await sessionService.joinSession(validated);
   },
 
-  listMySessions: async (params) => {
-    const validated = GetSessionsSchema.parse(params);
+  listMySessions: async (params: unknown) => {
+    const validated = GetSessionsSchema.parse(params) as z.infer<typeof GetSessionsSchema>;
     return await sessionService.listMySessions(validated);
   },
 
-  getSessionDetails: async (params) => {
-    const validated = GetSessionDetailsSchema.parse(params);
+  getSessionDetails: async (params: unknown) => {
+    const validated = GetSessionDetailsSchema.parse(params) as z.infer<typeof GetSessionDetailsSchema>;
     return await sessionService.getSessionDetails(validated);
   },
 
-  deleteSession: async (params) => {
-    const validated = DeleteSessionSchema.parse(params);
+  deleteSession: async (params: unknown) => {
+    const validated = DeleteSessionSchema.parse(params) as z.infer<typeof DeleteSessionSchema>;
     return await sessionService.deleteSession(validated);
   },
 
-  leaveSession: async (params) => {
-    const validated = LeaveSessionSchema.parse(params);
+  leaveSession: async (params: unknown) => {
+    const validated = LeaveSessionSchema.parse(params) as z.infer<typeof LeaveSessionSchema>;
     return await sessionService.leaveSession(validated);
   },
 
-  transitionToCreatingCharacters: async (params) => {
-    const validated = TransitionToCreatingCharactersSchema.parse(params);
+  transitionToCreatingCharacters: async (params: unknown) => {
+    const validated = TransitionToCreatingCharactersSchema.parse(params) as z.infer<typeof TransitionToCreatingCharactersSchema>;
     return await sessionService.transitionToCreatingCharacters(validated);
   },
 
-  canStartSession: async (params) => {
-    const validated = CanStartSessionSchema.parse(params);
+  canStartSession: async (params: unknown) => {
+    const validated = CanStartSessionSchema.parse(params) as z.infer<typeof CanStartSessionSchema>;
     return await sessionService.canStartSession(validated);
   },
 
-  startSession: async (params) => {
-    const validated = StartSessionSchema.parse(params);
+  startSession: async (params: unknown) => {
+    const validated = StartSessionSchema.parse(params) as z.infer<typeof StartSessionSchema>;
     return await sessionService.startSession(validated);
   },
 };

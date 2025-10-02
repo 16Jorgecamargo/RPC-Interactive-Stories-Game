@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 import { Message } from '../models/chat_schemas.js';
 
@@ -8,91 +8,90 @@ interface MessagesData {
   messages: Message[];
 }
 
-export class MessageStore {
-  private data: MessagesData;
-
-  constructor() {
-    this.data = this.load();
-  }
-
-  private load(): MessagesData {
-    try {
-      const raw = readFileSync(MESSAGES_FILE, 'utf-8');
-      return JSON.parse(raw);
-    } catch (error) {
+function loadMessages(): MessagesData {
+  try {
+    if (!existsSync(MESSAGES_FILE)) {
       return { messages: [] };
     }
+    const raw = readFileSync(MESSAGES_FILE, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return { messages: [] };
   }
+}
 
-  private save(): void {
-    writeFileSync(MESSAGES_FILE, JSON.stringify(this.data, null, 2), 'utf-8');
+function saveMessages(data: MessagesData): void {
+  writeFileSync(MESSAGES_FILE, JSON.stringify(data, null, 2), 'utf-8');
+}
+
+export function addMessage(message: Message): Message {
+  const data = loadMessages();
+  data.messages.push(message);
+  saveMessages(data);
+  return message;
+}
+
+export function getMessagesBySession(
+  sessionId: string,
+  options?: {
+    limit?: number;
+    since?: string;
   }
+): Message[] {
+  const data = loadMessages();
+  let messages = data.messages.filter(
+    (msg) => msg.sessionId === sessionId
+  );
 
-  async addMessage(message: Message): Promise<Message> {
-    this.data.messages.push(message);
-    this.save();
-    return message;
-  }
-
-  async getMessagesBySession(
-    sessionId: string,
-    options?: {
-      limit?: number;
-      since?: string;
+  if (options?.since) {
+    const sinceIndex = messages.findIndex((msg) => msg.id === options.since);
+    if (sinceIndex !== -1) {
+      messages = messages.slice(sinceIndex + 1);
     }
-  ): Promise<Message[]> {
-    let messages = this.data.messages.filter(
-      (msg) => msg.sessionId === sessionId
-    );
-
-    if (options?.since) {
-      const sinceIndex = messages.findIndex((msg) => msg.id === options.since);
-      if (sinceIndex !== -1) {
-        messages = messages.slice(sinceIndex + 1);
-      }
-    }
-
-    messages.sort(
-      (a, b) =>
-        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-    );
-
-    if (options?.limit) {
-      messages = messages.slice(-options.limit);
-    }
-
-    return messages;
   }
 
-  async getMessageById(messageId: string): Promise<Message | null> {
-    return this.data.messages.find((msg) => msg.id === messageId) || null;
+  messages.sort(
+    (a, b) =>
+      new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
+
+  if (options?.limit) {
+    messages = messages.slice(-options.limit);
   }
 
-  async countMessagesBySession(sessionId: string): Promise<number> {
-    return this.data.messages.filter((msg) => msg.sessionId === sessionId)
-      .length;
-  }
+  return messages;
+}
 
-  async addSystemMessage(
-    sessionId: string,
-    message: string,
-    messageId?: string
-  ): Promise<Message> {
-    const systemMessage: Message = {
-      id: messageId || `msg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-      sessionId,
-      message,
-      type: 'SYSTEM',
-      timestamp: new Date().toISOString(),
-    };
+export function getMessageById(messageId: string): Message | null {
+  const data = loadMessages();
+  return data.messages.find((msg) => msg.id === messageId) || null;
+}
 
-    return this.addMessage(systemMessage);
-  }
+export function countMessagesBySession(sessionId: string): number {
+  const data = loadMessages();
+  return data.messages.filter((msg) => msg.sessionId === sessionId).length;
+}
 
-  async deleteMessagesBySession(sessionId: string): Promise<void> {
-    this.data.messages = this.data.messages.filter(
-      (msg) => msg.sessionId !== sessionId
-    );
-    this.save();
-  }
+export function addSystemMessage(
+  sessionId: string,
+  message: string,
+  messageId?: string
+): Message {
+  const systemMessage: Message = {
+    id: messageId || `msg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+    sessionId,
+    message,
+    type: 'SYSTEM',
+    timestamp: new Date().toISOString(),
+  };
+
+  return addMessage(systemMessage);
+}
+
+export function deleteMessagesBySession(sessionId: string): void {
+  const data = loadMessages();
+  data.messages = data.messages.filter(
+    (msg) => msg.sessionId !== sessionId
+  );
+  saveMessages(data);
 }

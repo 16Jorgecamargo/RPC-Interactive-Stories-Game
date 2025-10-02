@@ -1,37 +1,20 @@
-import { RegisterSchema, LoginSchema } from '../../../models/auth_schemas.js';
-import { JSON_RPC_ERRORS } from '../../../models/jsonrpc_schemas.js';
+import { z } from 'zod';
 import * as authService from '../../../services/auth_service.js';
+import {
+  RegisterSchema,
+  LoginSchema,
+  type RegisterResponse,
+  type LoginResponse,
+} from '../../../models/auth_schemas.js';
 
-type RpcMethod = (params: any, context?: any) => Promise<any>;
-
-export const authMethods: Record<string, RpcMethod> = {
-  register: async (params) => {
-    const validated = RegisterSchema.parse(params);
+export const authMethods = {
+  register: async (params: unknown): Promise<RegisterResponse> => {
+    const validated = RegisterSchema.parse(params) as z.infer<typeof RegisterSchema>;
     return await authService.register(validated);
   },
 
-  login: async (params) => {
-    const validated = LoginSchema.parse(params);
+  login: async (params: unknown): Promise<LoginResponse> => {
+    const validated = LoginSchema.parse(params) as z.infer<typeof LoginSchema>;
     return await authService.login(validated);
-  },
-
-  me: async (params, context) => {
-    if (!params?.token) {
-      throw {
-        ...JSON_RPC_ERRORS.UNAUTHORIZED,
-        message: 'Token não fornecido',
-      };
-    }
-    return await authService.me(params.token);
-  },
-
-  validateToken: async (params) => {
-    if (!params?.token) {
-      throw {
-        ...JSON_RPC_ERRORS.INVALID_PARAMS,
-        message: 'Token é obrigatório',
-      };
-    }
-    return await authService.validateToken({ token: params.token });
   },
 };

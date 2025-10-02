@@ -1,7 +1,5 @@
-type RpcMethod = (params: any, context?: any) => Promise<any>;
-
-export const healthMethods: Record<string, RpcMethod> = {
-  health: async () => {
+export const healthMethods = {
+  health: async (params: unknown) => {
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),
