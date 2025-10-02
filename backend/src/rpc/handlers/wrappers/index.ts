@@ -6,6 +6,7 @@ import { registerCharacterWrappers } from './character_wrappers.js';
 import { registerStoryWrappers } from './story_wrappers.js';
 import { registerSessionWrappers } from './session_wrappers.js';
 import { registerGameWrappers } from './game_wrappers.js';
+import { registerVoteWrappers } from './vote_wrappers.js';
 
 export async function registerAllWrappers(app: FastifyInstance) {
   await registerAuthWrappers(app);
@@ -15,4 +16,5 @@ export async function registerAllWrappers(app: FastifyInstance) {
   await registerStoryWrappers(app);
   await registerSessionWrappers(app);
   await registerGameWrappers(app);
+  await registerVoteWrappers(app);
 }

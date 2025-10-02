@@ -94,6 +94,13 @@ export const SessionSchema = z.object({
     example: { 'char_123': 'opcao1', 'char_456': 'opcao2' },
     description: 'Mapa de votos: characterId -> opcaoId',
   }),
+  tieResolutionStrategy: z
+    .enum(['REVOTE', 'RANDOM', 'MASTER_DECIDES'])
+    .optional()
+    .openapi({
+      example: 'RANDOM',
+      description: 'Estratégia para resolver empates em votações (padrão: RANDOM)',
+    }),
 });
 
 export const CreateSessionSchema = z.object({
@@ -110,6 +117,14 @@ export const CreateSessionSchema = z.object({
     example: 4,
     description: 'Número máximo de jogadores (padrão: 4)',
   }),
+  tieResolutionStrategy: z
+    .enum(['REVOTE', 'RANDOM', 'MASTER_DECIDES'])
+    .optional()
+    .default('RANDOM')
+    .openapi({
+      example: 'RANDOM',
+      description: 'Estratégia para resolver empates em votações (padrão: RANDOM)',
+    }),
 });
 
 export const JoinSessionSchema = z.object({

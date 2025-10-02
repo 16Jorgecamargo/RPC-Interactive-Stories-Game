@@ -256,23 +256,23 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Votação colaborativa para decisões
 
 #### Cards
-- [ ] **BE-VOTE-001**: Criar `VoteSchema` vinculando `characterId + opcaoId`
-- [ ] **BE-VOTE-002**: Implementar `POST /rpc/game/:sessionId/vote` (registrar voto)
+- [x] **BE-VOTE-001**: Criar `VoteSchema` vinculando `characterId + opcaoId`
+- [x] **BE-VOTE-002**: Implementar `POST /rpc/game/:sessionId/vote` (registrar voto)
   - **Depende de**: `BE-VOTE-001`, `BE-GAME-001`
-- [ ] **BE-VOTE-003**: Armazenar votos em `session.votes: Map<characterId, opcaoId>`
+- [x] **BE-VOTE-003**: Armazenar votos em `session.votes: Map<characterId, opcaoId>`
   - **Depende de**: `BE-VOTE-002`
-- [ ] **BE-VOTE-004**: Implementar `GET /rpc/game/:sessionId/votes` (status votação)
+- [x] **BE-VOTE-004**: Implementar `GET /rpc/game/:sessionId/votes` (status votação)
   - **Depende de**: `BE-VOTE-003`
-- [ ] **BE-VOTE-005**: Calcular vencedor por maioria simples
+- [x] **BE-VOTE-005**: Calcular vencedor por maioria simples
   - **Depende de**: `BE-VOTE-004`
-- [ ] **BE-VOTE-006**: Detectar quando todos votaram (finalizar automático)
+- [x] **BE-VOTE-006**: Detectar quando todos votaram (finalizar automático)
   - **Depende de**: `BE-VOTE-005`
-- [ ] **BE-VOTE-007**: Implementar tratamento de empates (revote ou random)
+- [x] **BE-VOTE-007**: Implementar tratamento de empates (revote ou random)
   - **Depende de**: `BE-VOTE-005`
-- [ ] **BE-VOTE-008**: Avançar para próximo capítulo após resolução
+- [x] **BE-VOTE-008**: Avançar para próximo capítulo após resolução
   - **Depende de**: `BE-VOTE-006`, `BE-GAME-003`
 
-**Critério de Aceite**: Jogadores votam e sistema avança automaticamente quando todos votaram
+**Critério de Aceite**: Jogadores votam e sistema avança automaticamente quando todos votaram ✅
 
 ---
 

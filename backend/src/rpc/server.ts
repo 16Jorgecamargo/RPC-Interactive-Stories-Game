@@ -54,6 +54,8 @@ async function start() {
         { name: 'Characters', description: 'Gerenciamento de personagens D&D (wrappers para Swagger UI)' },
         { name: 'Stories', description: 'Gerenciamento de histórias interativas (wrappers para Swagger UI)' },
         { name: 'Sessions', description: 'Gerenciamento de sessões de jogo (wrappers para Swagger UI)' },
+        { name: 'Game', description: 'Lógica de gameplay e estados de jogo (wrappers para Swagger UI)' },
+        { name: 'Vote', description: 'Sistema de votação colaborativa (wrappers para Swagger UI)' },
       ],
     });
 

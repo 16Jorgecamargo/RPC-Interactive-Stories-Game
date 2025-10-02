@@ -5,6 +5,7 @@ import { characterMethods } from './character_methods.js';
 import { storyMethods } from './story_methods.js';
 import { sessionMethods } from './session_methods.js';
 import { gameMethods } from './game_methods.js';
+import { voteMethods } from './vote_methods.js';
 
 export const methodRegistry = {
   ...authMethods,
@@ -14,4 +15,5 @@ export const methodRegistry = {
   ...storyMethods,
   ...sessionMethods,
   ...gameMethods,
+  ...voteMethods,
 };

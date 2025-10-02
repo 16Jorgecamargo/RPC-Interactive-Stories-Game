@@ -7,6 +7,7 @@ import { registerCharacterPaths } from './paths/character_paths.js';
 import { registerStoryPaths } from './paths/story_paths.js';
 import { registerSessionPaths } from './paths/session_paths.js';
 import { registerGamePaths } from './paths/game_paths.js';
+import { registerVotePaths } from './paths/vote_paths.js';
 
 export const registry = new OpenAPIRegistry();
 
@@ -25,3 +26,4 @@ registerCharacterPaths(registry);
 registerStoryPaths(registry);
 registerSessionPaths(registry);
 registerGamePaths(registry);
+registerVotePaths(registry);
