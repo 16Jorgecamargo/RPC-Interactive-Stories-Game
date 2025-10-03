@@ -399,22 +399,27 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 
 ---
 
-### Sprint 6.2: Iniciativa e Turnos
+### Sprint 6.2: Iniciativa e Turnos ✅
 **Objetivo**: Ordem de combate
 
 #### Cards
-- [ ] **BE-COMBAT-005**: Implementar `POST /rpc/combat/:sessionId/roll-initiative`
+- [x] **BE-COMBAT-005**: Implementar `POST /rpc/combat/roll-initiative`
   - **Depende de**: `BE-COMBAT-003`, `BE-CHAR-001`
-- [ ] **BE-COMBAT-006**: Rolar D20 + modificadores de Destreza
+  - **Implementado**: `RollInitiativeSchema`, `rollInitiative()` service, RPC method e wrapper
+- [x] **BE-COMBAT-006**: Rolar D20 + modificadores de Destreza
   - **Depende de**: `BE-COMBAT-005`
-- [ ] **BE-COMBAT-007**: Ordenar participantes por iniciativa
+  - **Implementado**: Cálculo `d20Roll + dexterityModifier` no service
+- [x] **BE-COMBAT-007**: Ordenar participantes por iniciativa
   - **Depende de**: `BE-COMBAT-006`
-- [ ] **BE-COMBAT-008**: Implementar sistema de turnos com timer
+  - **Implementado**: Ordenação por iniciativa (decrescente) com desempate favorecendo jogadores
+- [x] **BE-COMBAT-008**: Implementar sistema de turnos
   - **Depende de**: `BE-COMBAT-007`
-- [ ] **BE-COMBAT-009**: Implementar `GET /rpc/combat/:sessionId/current-turn`
+  - **Implementado**: `turnOrder[]` e `currentTurnIndex` no CombatState
+- [x] **BE-COMBAT-009**: Implementar `POST /rpc/combat/current-turn`
   - **Depende de**: `BE-COMBAT-008`
+  - **Implementado**: `GetCurrentTurnSchema`, `getCurrentTurn()` service, RPC method e wrapper
 
-**Critério de Aceite**: Combate segue ordem de iniciativa
+**Critério de Aceite**: Combate segue ordem de iniciativa com D20 + modificadores ✅
 
 ---
 
@@ -538,28 +543,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 
 ---
 
-### Sprint 8.2: Testes Automatizados
-**Objetivo**: Cobertura de testes
-
-#### Cards
-- [ ] **BE-TEST-001**: Configurar Vitest para testes unitários
-- [ ] **BE-TEST-002**: Escrever testes para schemas Zod (validações)
-- [ ] **BE-TEST-003**: Escrever testes para utils (JWT, bcrypt)
-  - **Depende de**: `BE-AUTH-002`, `BE-AUTH-003`
-- [ ] **BE-TEST-004**: Escrever testes para parser Mermaid
-  - **Depende de**: `BE-STORY-007`
-- [ ] **BE-TEST-005**: Escrever testes de integração para rotas (auth, users)
-  - **Depende de**: `BE-AUTH-009`, `BE-USER-007`
-- [ ] **BE-TEST-006**: Escrever testes de integração para gameplay (vote, chat)
-  - **Depende de**: `BE-VOTE-008`, `BE-CHAT-007`
-- [ ] **BE-TEST-007**: Configurar CI/CD com GitHub Actions (opcional)
-- [ ] **BE-TEST-008**: Alcançar >70% de cobertura de código
-
-**Critério de Aceite**: Testes passam com boa cobertura
-
----
-
-### Sprint 8.3: Otimizações e Refatoração
+### Sprint 8.2: Otimizações e Refatoração
 **Objetivo**: Melhorar performance e qualidade do código
 
 #### Cards
@@ -622,7 +606,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 - **FASE 5 (Chat/Real-time)**: 19 cards
 - **FASE 6 (Combate)**: 20 cards
 - **FASE 7 (Admin)**: 16 cards
-- **FASE 8 (Docs/Testes)**: 21 cards
+- **FASE 8 (Docs/Testes)**: 20 cards
 - **FASE 9 (Deploy)**: 13 cards
 
 **TOTAL: ~196 cards backend**

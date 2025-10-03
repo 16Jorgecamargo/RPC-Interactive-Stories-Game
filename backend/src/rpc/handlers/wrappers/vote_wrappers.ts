@@ -21,7 +21,7 @@ export async function registerVoteWrappers(app: FastifyInstance) {
     method: 'POST',
     url: '/rpc/game/vote',
     schema: {
-      tags: ['Voting'],
+      tags: ['Vote'],
       summary: 'Registrar voto em opção',
       description:
         'Permite que um jogador vote em uma opção do capítulo atual. Se todos votarem, a votação é finalizada automaticamente.',
@@ -40,7 +40,7 @@ export async function registerVoteWrappers(app: FastifyInstance) {
     method: 'POST',
     url: '/rpc/game/vote-status',
     schema: {
-      tags: ['Voting'],
+      tags: ['Vote'],
       summary: 'Obter status da votação',
       description:
         'Retorna o status atual da votação: total de votos, participantes pendentes, contagem por opção.',
@@ -59,7 +59,7 @@ export async function registerVoteWrappers(app: FastifyInstance) {
     method: 'POST',
     url: '/rpc/game/resolve-tie',
     schema: {
-      tags: ['Voting'],
+      tags: ['Vote'],
       summary: 'Resolver empate em votação',
       description:
         'Permite que o mestre da sessão resolva um empate manualmente usando uma estratégia (RANDOM, MASTER_DECIDES).',

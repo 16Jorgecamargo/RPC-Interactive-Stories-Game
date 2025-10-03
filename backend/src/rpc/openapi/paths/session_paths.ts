@@ -6,12 +6,18 @@ import {
   GetSessionDetailsSchema,
   DeleteSessionSchema,
   LeaveSessionSchema,
+  TransitionToCreatingCharactersSchema,
+  CanStartSessionSchema,
+  StartSessionSchema,
   CreateSessionResponseSchema,
   JoinSessionResponseSchema,
   SessionsListSchema,
   SessionDetailsResponseSchema,
   DeleteSessionResponseSchema,
   LeaveSessionResponseSchema,
+  TransitionResponseSchema,
+  CanStartResponseSchema,
+  StartSessionResponseSchema,
 } from '../../../models/session_schemas.js';
 
 export function registerSessionPaths(registry: OpenAPIRegistry) {
@@ -183,6 +189,93 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: LeaveSessionResponseSchema,
+          },
+        },
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/sessions/transition-to-creating-characters',
+    tags: ['Sessions'],
+    summary: 'Iniciar criação de personagens (owner only)',
+    description:
+      'Transiciona sessão de WAITING_PLAYERS para CREATING_CHARACTERS. Requer pelo menos 2 participantes. Wrapper REST que internamente chama o método RPC "transitionToCreatingCharacters".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: TransitionToCreatingCharactersSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Transição realizada com sucesso',
+        content: {
+          'application/json': {
+            schema: TransitionResponseSchema,
+          },
+        },
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/sessions/can-start',
+    tags: ['Sessions'],
+    summary: 'Verificar se sessão pode iniciar',
+    description:
+      'Valida se todos os participantes criaram personagens e se a sessão está no estado correto. Wrapper REST que internamente chama o método RPC "canStartSession".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: CanStartSessionSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Verificação realizada com sucesso',
+        content: {
+          'application/json': {
+            schema: CanStartResponseSchema,
+          },
+        },
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/sessions/start',
+    tags: ['Sessions'],
+    summary: 'Iniciar jogo (owner only)',
+    description:
+      'Inicia o jogo, transicionando de CREATING_CHARACTERS para IN_PROGRESS. Bloqueia entrada de novos jogadores (isLocked=true). Wrapper REST que internamente chama o método RPC "startSession".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: StartSessionSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Sessão iniciada com sucesso',
+        content: {
+          'application/json': {
+            schema: StartSessionResponseSchema,
           },
         },
       },

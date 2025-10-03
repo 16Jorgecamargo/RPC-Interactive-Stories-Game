@@ -220,3 +220,230 @@ export async function getCombatState(params: { token: string; sessionId: string 
     combatState,
   };
 }
+
+export async function rollInitiative(params: {
+  token: string;
+  sessionId: string;
+  characterId: string;
+}): Promise<{
+  success: boolean;
+  roll: {
+    characterId: string;
+    characterName: string;
+    d20Roll: number;
+    dexterityModifier: number;
+    total: number;
+  };
+  allRolled: boolean;
+  turnOrder?: string[];
+}> {
+  const { token, sessionId, characterId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = await sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const combatState = combatStore.findBySessionId(sessionId);
+  if (!combatState) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Nenhum combate ativo nesta sessão',
+      data: { sessionId },
+    };
+  }
+
+  if (!combatState.isActive) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Combate não está ativo',
+      data: { sessionId },
+    };
+  }
+
+  const character = characterStore.findById(characterId);
+  if (!character) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem não encontrado',
+      data: { characterId },
+    };
+  }
+
+  if (character.userId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Este personagem não pertence a você',
+      data: { characterId, userId },
+    };
+  }
+
+  const participant = combatState.participants.find(
+    (p) => p.characterId === characterId
+  );
+
+  if (!participant) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem não está participando deste combate',
+      data: { characterId, sessionId },
+    };
+  }
+
+  if (participant.initiative !== undefined) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Este personagem já rolou iniciativa',
+      data: { characterId, initiative: participant.initiative },
+    };
+  }
+
+  const d20Roll = Math.floor(Math.random() * 20) + 1;
+  const dexterityModifier = Math.floor((character.attributes.dexterity - 10) / 2);
+  const total = d20Roll + dexterityModifier;
+
+  participant.initiative = total;
+
+  const allParticipantsRolled = combatState.participants.every(
+    (p) => p.initiative !== undefined
+  );
+
+  let turnOrder: string[] | undefined;
+
+  if (allParticipantsRolled) {
+    combatState.enemies.forEach((enemy) => {
+      if (enemy.initiative === undefined) {
+        const enemyD20 = Math.floor(Math.random() * 20) + 1;
+        const enemyDexMod = 1;
+        enemy.initiative = enemyD20 + enemyDexMod;
+      }
+    });
+
+    const allEntities: Array<{ id: string; initiative: number; type: string }> = [
+      ...combatState.participants.map((p) => ({
+        id: p.characterId,
+        initiative: p.initiative!,
+        type: 'player',
+      })),
+      ...combatState.enemies.map((e) => ({
+        id: e.id,
+        initiative: e.initiative!,
+        type: 'enemy',
+      })),
+    ];
+
+    allEntities.sort((a, b) => {
+      if (b.initiative !== a.initiative) {
+        return b.initiative - a.initiative;
+      }
+      return a.type === 'player' ? -1 : 1;
+    });
+
+    combatState.turnOrder = allEntities.map((e) => e.id);
+    combatState.currentTurnIndex = 0;
+    turnOrder = combatState.turnOrder;
+
+    const initiativeUpdate: GameUpdate = {
+      id: `update_${uuidv4()}`,
+      type: 'COMBAT_STARTED',
+      timestamp: new Date().toISOString(),
+      sessionId,
+      data: {
+        message: 'Todas as iniciativas foram roladas! Combate começou!',
+        turnOrder: combatState.turnOrder,
+      },
+    };
+    eventStore.addUpdate(initiativeUpdate);
+  }
+
+  combatStore.update(combatState.sessionId, combatState);
+
+  return {
+    success: true,
+    roll: {
+      characterId,
+      characterName: character.name,
+      d20Roll,
+      dexterityModifier,
+      total,
+    },
+    allRolled: allParticipantsRolled,
+    turnOrder,
+  };
+}
+
+export async function getCurrentTurn(params: {
+  token: string;
+  sessionId: string;
+}): Promise<{
+  currentTurn: {
+    entityId: string;
+    entityName: string;
+    entityType: 'PLAYER' | 'ENEMY';
+    turnIndex: number;
+    totalTurns: number;
+  } | null;
+}> {
+  const { token, sessionId } = params;
+
+  verifyToken(token);
+
+  const session = await sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const combatState = combatStore.findBySessionId(sessionId);
+  if (!combatState || !combatState.isActive) {
+    return { currentTurn: null };
+  }
+
+  if (combatState.turnOrder.length === 0) {
+    return { currentTurn: null };
+  }
+
+  const currentEntityId = combatState.turnOrder[combatState.currentTurnIndex];
+
+  const participant = combatState.participants.find(
+    (p) => p.characterId === currentEntityId
+  );
+
+  if (participant) {
+    return {
+      currentTurn: {
+        entityId: currentEntityId,
+        entityName: participant.characterName,
+        entityType: 'PLAYER',
+        turnIndex: combatState.currentTurnIndex,
+        totalTurns: combatState.turnOrder.length,
+      },
+    };
+  }
+
+  const enemy = combatState.enemies.find((e) => e.id === currentEntityId);
+
+  if (enemy) {
+    return {
+      currentTurn: {
+        entityId: currentEntityId,
+        entityName: enemy.name,
+        entityType: 'ENEMY',
+        turnIndex: combatState.currentTurnIndex,
+        totalTurns: combatState.turnOrder.length,
+      },
+    };
+  }
+
+  return { currentTurn: null };
+}

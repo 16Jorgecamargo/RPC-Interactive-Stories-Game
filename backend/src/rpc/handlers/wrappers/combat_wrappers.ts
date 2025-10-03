@@ -4,8 +4,12 @@ import * as combatService from '../../../services/combat_service.js';
 import {
   InitiateCombatSchema,
   GetCombatStateSchema,
+  RollInitiativeSchema,
+  GetCurrentTurnSchema,
   InitiateCombatResponseSchema,
   GetCombatStateResponseSchema,
+  RollInitiativeResponseSchema,
+  GetCurrentTurnResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export async function registerCombatWrappers(app: FastifyInstance) {
@@ -41,6 +45,42 @@ export async function registerCombatWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await combatService.getCombatState(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/combat/roll-initiative',
+    schema: {
+      tags: ['Combat'],
+      summary: 'Rolar iniciativa',
+      description: 'Rola D20 + modificador de Destreza para determinar a ordem de turnos. Quando todos os participantes rolam, inimigos rolam automaticamente e a ordem de turnos é estabelecida.',
+      body: RollInitiativeSchema,
+      response: {
+        200: RollInitiativeResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await combatService.rollInitiative(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/combat/current-turn',
+    schema: {
+      tags: ['Combat'],
+      summary: 'Obter turno atual',
+      description: 'Retorna informações sobre o turno atual do combate: qual entidade (jogador ou inimigo) deve agir, índice do turno e total de participantes.',
+      body: GetCurrentTurnSchema,
+      response: {
+        200: GetCurrentTurnResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await combatService.getCurrentTurn(request.body);
       return reply.send(result);
     },
   });

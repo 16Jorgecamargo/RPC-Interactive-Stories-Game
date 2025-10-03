@@ -4,6 +4,10 @@ import {
   InitiateCombatResponseSchema,
   GetCombatStateSchema,
   GetCombatStateResponseSchema,
+  RollInitiativeSchema,
+  RollInitiativeResponseSchema,
+  GetCurrentTurnSchema,
+  GetCurrentTurnResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export function registerCombatPaths(registry: OpenAPIRegistry) {
@@ -61,6 +65,74 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: GetCombatStateResponseSchema,
+          },
+        },
+      },
+      400: {
+        description: 'Erro na requisição',
+      },
+      401: {
+        description: 'Token inválido',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/combat/roll-initiative',
+    tags: ['Combat'],
+    summary: 'Rolar iniciativa',
+    description: 'Rola D20 + modificador de Destreza para determinar a ordem de turnos. Quando todos os participantes rolam, inimigos rolam automaticamente e a ordem de turnos é estabelecida. Wrapper REST que internamente chama o método RPC "rollInitiative".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: RollInitiativeSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Iniciativa rolada com sucesso',
+        content: {
+          'application/json': {
+            schema: RollInitiativeResponseSchema,
+          },
+        },
+      },
+      400: {
+        description: 'Erro na requisição',
+      },
+      401: {
+        description: 'Token inválido',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/combat/current-turn',
+    tags: ['Combat'],
+    summary: 'Obter turno atual',
+    description: 'Retorna informações sobre o turno atual do combate: qual entidade (jogador ou inimigo) deve agir, índice do turno e total de participantes. Wrapper REST que internamente chama o método RPC "getCurrentTurn".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetCurrentTurnSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Turno atual retornado com sucesso',
+        content: {
+          'application/json': {
+            schema: GetCurrentTurnResponseSchema,
           },
         },
       },
