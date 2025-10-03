@@ -510,18 +510,23 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Visualizar e administrar sessões
 
 #### Cards
-- [ ] **BE-ADMIN-007**: Implementar `GET /rpc/admin/sessions` (listar todas)
+- [x] **BE-ADMIN-007**: Implementar `POST /rpc/admin/sessions` (listar todas)
   - **Depende de**: `BE-USER-006`
-- [ ] **BE-ADMIN-008**: Adicionar filtros (status, owner, história)
+  - **Implementado**: `GetAllSessionsSchema`, `getAllSessions()` service, RPC method, wrapper e OpenAPI path
+- [x] **BE-ADMIN-008**: Adicionar filtros (status, owner, história)
   - **Depende de**: `BE-ADMIN-007`
-- [ ] **BE-ADMIN-009**: Implementar `GET /rpc/admin/sessions/:id` (detalhes completos)
+  - **Implementado**: Filtros opcionais por `status`, `ownerId` e `storyId` no schema e service
+- [x] **BE-ADMIN-009**: Implementar `POST /rpc/admin/sessions/detail` (detalhes completos)
   - **Depende de**: `BE-ADMIN-007`
-- [ ] **BE-ADMIN-010**: Implementar `DELETE /rpc/admin/sessions/:id` (excluir sessão)
+  - **Implementado**: `GetSessionDetailSchema`, `getSessionDetail()` service incluindo votos
+- [x] **BE-ADMIN-010**: Implementar `POST /rpc/admin/sessions/delete` (excluir sessão)
   - **Depende de**: `BE-ADMIN-009`
-- [ ] **BE-ADMIN-011**: Implementar `POST /rpc/admin/sessions/:id/force-state` (forçar estado)
+  - **Implementado**: `DeleteSessionSchema`, `deleteSession()` service com exclusão em cascata de personagens
+- [x] **BE-ADMIN-011**: Implementar `POST /rpc/admin/sessions/force-state` (forçar estado)
   - **Depende de**: `BE-ADMIN-009`, `BE-SESSION-011`
+  - **Implementado**: `ForceSessionStateSchema`, `forceSessionState()` service alterando status diretamente
 
-**Critério de Aceite**: Admin visualiza e gerencia todas as sessões
+**Critério de Aceite**: Admin visualiza e gerencia todas as sessões com filtros e controle total de estado ✅
 
 ---
 

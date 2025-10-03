@@ -142,9 +142,137 @@ export const DemoteUserResponseSchema = z.object({
 export type GetAllUsers = z.infer<typeof GetAllUsersSchema>;
 export type UserWithStats = z.infer<typeof UserWithStatsSchema>;
 export type GetAllUsersResponse = z.infer<typeof GetAllUsersResponseSchema>;
+export const GetAllSessionsSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+  status: z.enum(['WAITING_PLAYERS', 'CREATING_CHARACTERS', 'IN_PROGRESS', 'COMPLETED']).optional().openapi({
+    example: 'IN_PROGRESS',
+    description: 'Filtrar por status da sessão',
+  }),
+  ownerId: z.string().uuid().optional().openapi({
+    example: 'user_123e4567-e89b-12d3-a456-426614174000',
+    description: 'Filtrar por ID do dono da sessão',
+  }),
+  storyId: z.string().uuid().optional().openapi({
+    example: 'story_123e4567-e89b-12d3-a456-426614174000',
+    description: 'Filtrar por ID da história',
+  }),
+});
+
+export const SessionDetailSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string(),
+  storyId: z.string().uuid(),
+  storyName: z.string(),
+  ownerId: z.string().uuid(),
+  ownerUsername: z.string(),
+  status: z.enum(['WAITING_PLAYERS', 'CREATING_CHARACTERS', 'IN_PROGRESS', 'COMPLETED']),
+  currentChapter: z.string(),
+  participantIds: z.array(z.string().uuid()),
+  participantCount: z.number().int().min(0),
+  maxPlayers: z.number().int().min(1).max(10),
+  createdAt: z.string().datetime(),
+  isLocked: z.boolean(),
+});
+
+export const GetAllSessionsResponseSchema = z.object({
+  sessions: z.array(SessionDetailSchema).openapi({
+    description: 'Lista de sessões com detalhes',
+  }),
+  total: z.number().int().min(0).openapi({
+    example: 25,
+    description: 'Total de sessões encontradas',
+  }),
+});
+
+export const GetSessionDetailSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const GetSessionDetailResponseSchema = SessionDetailSchema.extend({
+  votes: z.record(z.string()).openapi({
+    description: 'Mapa de votos: characterId -> optionId',
+  }),
+});
+
+export const DeleteSessionSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão a ser excluída',
+  }),
+});
+
+export const DeleteSessionResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a exclusão foi bem-sucedida',
+  }),
+  message: z.string().openapi({
+    example: 'Sessão excluída com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+  charactersDeleted: z.number().int().min(0).openapi({
+    example: 4,
+    description: 'Número de personagens excluídos',
+  }),
+});
+
+export const ForceSessionStateSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  newStatus: z.enum(['WAITING_PLAYERS', 'CREATING_CHARACTERS', 'IN_PROGRESS', 'COMPLETED']).openapi({
+    example: 'IN_PROGRESS',
+    description: 'Novo status da sessão',
+  }),
+});
+
+export const ForceSessionStateResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a mudança foi bem-sucedida',
+  }),
+  message: z.string().openapi({
+    example: 'Estado da sessão alterado com sucesso',
+    description: 'Mensagem de confirmação',
+  }),
+  session: z.object({
+    id: z.string(),
+    name: z.string(),
+    status: z.enum(['WAITING_PLAYERS', 'CREATING_CHARACTERS', 'IN_PROGRESS', 'COMPLETED']),
+  }),
+});
+
 export type DeleteUser = z.infer<typeof DeleteUserSchema>;
 export type DeleteUserResponse = z.infer<typeof DeleteUserResponseSchema>;
 export type PromoteUser = z.infer<typeof PromoteUserSchema>;
 export type PromoteUserResponse = z.infer<typeof PromoteUserResponseSchema>;
 export type DemoteUser = z.infer<typeof DemoteUserSchema>;
 export type DemoteUserResponse = z.infer<typeof DemoteUserResponseSchema>;
+export type GetAllSessions = z.infer<typeof GetAllSessionsSchema>;
+export type SessionDetail = z.infer<typeof SessionDetailSchema>;
+export type GetAllSessionsResponse = z.infer<typeof GetAllSessionsResponseSchema>;
+export type GetSessionDetail = z.infer<typeof GetSessionDetailSchema>;
+export type GetSessionDetailResponse = z.infer<typeof GetSessionDetailResponseSchema>;
+export type DeleteSession = z.infer<typeof DeleteSessionSchema>;
+export type DeleteSessionResponse = z.infer<typeof DeleteSessionResponseSchema>;
+export type ForceSessionState = z.infer<typeof ForceSessionStateSchema>;
+export type ForceSessionStateResponse = z.infer<typeof ForceSessionStateResponseSchema>;

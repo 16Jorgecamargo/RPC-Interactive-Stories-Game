@@ -8,6 +8,14 @@ import {
   PromoteUserResponseSchema,
   DemoteUserSchema,
   DemoteUserResponseSchema,
+  GetAllSessionsSchema,
+  GetSessionDetailSchema,
+  DeleteSessionSchema,
+  ForceSessionStateSchema,
+  GetAllSessionsResponseSchema,
+  GetSessionDetailResponseSchema,
+  DeleteSessionResponseSchema,
+  ForceSessionStateResponseSchema,
 } from '../../../models/admin_schemas.js';
 
 export function registerAdminPaths(registry: OpenAPIRegistry) {
@@ -135,6 +143,142 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: DemoteUserResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/sessions',
+    tags: ['Admin'],
+    summary: 'Listar todas as sessões',
+    description: 'Retorna lista completa de sessões do sistema com detalhes (nome da história, dono, participantes, etc.). Suporta filtros opcionais por **status**, **ownerId** e **storyId**. Apenas administradores podem acessar. Wrapper REST que internamente chama o método RPC "getAllSessions".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetAllSessionsSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Lista de sessões retornada com sucesso',
+        content: {
+          'application/json': {
+            schema: GetAllSessionsResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/sessions/detail',
+    tags: ['Admin'],
+    summary: 'Obter detalhes completos da sessão',
+    description: 'Retorna todos os detalhes de uma sessão específica incluindo votos atuais e informações completas. Wrapper REST que internamente chama o método RPC "getSessionDetail".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetSessionDetailSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Detalhes da sessão retornados com sucesso',
+        content: {
+          'application/json': {
+            schema: GetSessionDetailResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/sessions/delete',
+    tags: ['Admin'],
+    summary: 'Excluir sessão',
+    description: 'Exclui permanentemente uma sessão e todos os personagens relacionados em cascata. A resposta inclui o número de personagens excluídos. Wrapper REST que internamente chama o método RPC "deleteSession".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: DeleteSessionSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Sessão excluída com sucesso',
+        content: {
+          'application/json': {
+            schema: DeleteSessionResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/sessions/force-state',
+    tags: ['Admin'],
+    summary: 'Forçar mudança de estado',
+    description: 'Força mudança do status de uma sessão para qualquer estado válido (WAITING_PLAYERS, CREATING_CHARACTERS, IN_PROGRESS, COMPLETED). Útil para corrigir sessões travadas ou em estado inconsistente. Wrapper REST que internamente chama o método RPC "forceSessionState".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: ForceSessionStateSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Estado da sessão alterado com sucesso',
+        content: {
+          'application/json': {
+            schema: ForceSessionStateResponseSchema,
           },
         },
       },

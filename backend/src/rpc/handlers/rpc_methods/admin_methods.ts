@@ -4,6 +4,10 @@ import {
   DeleteUserSchema,
   PromoteUserSchema,
   DemoteUserSchema,
+  GetAllSessionsSchema,
+  GetSessionDetailSchema,
+  DeleteSessionSchema,
+  ForceSessionStateSchema,
   type GetAllUsers,
   type GetAllUsersResponse,
   type DeleteUser,
@@ -33,5 +37,25 @@ export const adminMethods = {
   demoteUser: async (params: unknown): Promise<DemoteUserResponse> => {
     const validated = DemoteUserSchema.parse(params) as DemoteUser;
     return await adminService.demoteUser(validated);
+  },
+
+  getAllSessions: async (params: unknown) => {
+    const validated = GetAllSessionsSchema.parse(params);
+    return await adminService.getAllSessions(validated);
+  },
+
+  getSessionDetail: async (params: unknown) => {
+    const validated = GetSessionDetailSchema.parse(params);
+    return await adminService.getSessionDetail(validated);
+  },
+
+  deleteSession: async (params: unknown) => {
+    const validated = DeleteSessionSchema.parse(params);
+    return await adminService.deleteSession(validated);
+  },
+
+  forceSessionState: async (params: unknown) => {
+    const validated = ForceSessionStateSchema.parse(params);
+    return await adminService.forceSessionState(validated);
   },
 };

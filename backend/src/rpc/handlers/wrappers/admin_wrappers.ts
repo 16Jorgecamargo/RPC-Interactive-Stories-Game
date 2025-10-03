@@ -10,6 +10,14 @@ import {
   DeleteUserResponseSchema,
   PromoteUserResponseSchema,
   DemoteUserResponseSchema,
+  GetAllSessionsSchema,
+  GetSessionDetailSchema,
+  DeleteSessionSchema,
+  ForceSessionStateSchema,
+  GetAllSessionsResponseSchema,
+  GetSessionDetailResponseSchema,
+  DeleteSessionResponseSchema,
+  ForceSessionStateResponseSchema,
 } from '../../../models/admin_schemas.js';
 
 export async function registerAdminWrappers(app: FastifyInstance) {
@@ -81,6 +89,78 @@ export async function registerAdminWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await adminService.demoteUser(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/sessions',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Listar todas as sessões',
+      description: 'Retorna lista de todas as sessões do sistema com detalhes. Suporta filtros por status, ownerId e storyId. Requer privilégios de admin.',
+      body: GetAllSessionsSchema,
+      response: {
+        200: GetAllSessionsResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.getAllSessions(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/sessions/detail',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Obter detalhes completos da sessão',
+      description: 'Retorna todos os detalhes de uma sessão específica incluindo votos atuais. Requer privilégios de admin.',
+      body: GetSessionDetailSchema,
+      response: {
+        200: GetSessionDetailResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.getSessionDetail(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/sessions/delete',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Excluir sessão',
+      description: 'Exclui uma sessão e todos os personagens relacionados em cascata. Requer privilégios de admin.',
+      body: DeleteSessionSchema,
+      response: {
+        200: DeleteSessionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.deleteSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/sessions/force-state',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Forçar mudança de estado',
+      description: 'Força mudança do status de uma sessão para qualquer estado válido. Útil para corrigir sessões travadas. Requer privilégios de admin.',
+      body: ForceSessionStateSchema,
+      response: {
+        200: ForceSessionStateResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.forceSessionState(request.body);
       return reply.send(result);
     },
   });
