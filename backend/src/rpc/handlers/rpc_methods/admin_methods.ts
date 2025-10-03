@@ -8,6 +8,8 @@ import {
   GetSessionDetailSchema,
   DeleteSessionSchema,
   ForceSessionStateSchema,
+  GetSystemStatsSchema,
+  GetStoryUsageSchema,
   type GetAllUsers,
   type GetAllUsersResponse,
   type DeleteUser,
@@ -57,5 +59,15 @@ export const adminMethods = {
   forceSessionState: async (params: unknown) => {
     const validated = ForceSessionStateSchema.parse(params);
     return await adminService.forceSessionState(validated);
+  },
+
+  getSystemStats: async (params: unknown) => {
+    const validated = GetSystemStatsSchema.parse(params);
+    return await adminService.getSystemStats(validated);
+  },
+
+  getStoryUsage: async (params: unknown) => {
+    const validated = GetStoryUsageSchema.parse(params);
+    return await adminService.getStoryUsage(validated);
   },
 };

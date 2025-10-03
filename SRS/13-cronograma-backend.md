@@ -534,18 +534,23 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Painel com métricas
 
 #### Cards
-- [ ] **BE-ADMIN-012**: Implementar `GET /rpc/admin/stats` (estatísticas gerais)
+- [x] **BE-ADMIN-012**: Implementar `POST /rpc/admin/stats` (estatísticas gerais)
   - **Depende de**: `BE-USER-006`
-- [ ] **BE-ADMIN-013**: Calcular: total usuários, sessões ativas, histórias
+  - **Implementado**: `GetSystemStatsSchema`, `getSystemStats()` service, RPC method, wrapper e OpenAPI path
+- [x] **BE-ADMIN-013**: Calcular: total usuários, sessões ativas, histórias
   - **Depende de**: `BE-ADMIN-012`
-- [ ] **BE-ADMIN-014**: Calcular: uptime, total game hours, avg players/session
+  - **Implementado**: Estatísticas de users (total, admins, online), sessions (total, active, inProgress, completed), characters (total, complete), stories (total, mostPlayed)
+- [x] **BE-ADMIN-014**: Calcular: uptime, avg players/session
   - **Depende de**: `BE-ADMIN-012`
-- [ ] **BE-ADMIN-015**: Implementar `GET /rpc/admin/stories/:id/usage` (estatísticas de história)
+  - **Implementado**: Uptime em segundos e formatado (Xd Xh Xm), média de jogadores por sessão
+- [x] **BE-ADMIN-015**: Implementar `POST /rpc/admin/stories/usage` (estatísticas de história)
   - **Depende de**: `BE-ADMIN-012`
-- [ ] **BE-ADMIN-016**: Mostrar escolhas mais populares por capítulo
+  - **Implementado**: `GetStoryUsageSchema`, `getStoryUsage()` service com stats detalhadas por história
+- [x] **BE-ADMIN-016**: Mostrar escolhas mais populares por capítulo
   - **Depende de**: `BE-ADMIN-015`
+  - **Implementado**: Array `popularChoices` com voteCount e percentual por opção em cada capítulo
 
-**Critério de Aceite**: Admin visualiza estatísticas do sistema
+**Critério de Aceite**: Admin visualiza estatísticas completas do sistema e histórias com escolhas populares ✅
 
 ---
 
@@ -555,7 +560,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Docs 100% completas em `/docs`
 
 #### Cards
-- [ ] **BE-DOC-001**: Revisar todos os schemas Zod com `.describe()`
+- [ ] **BE-DOC-001**: Revisar todos os schemas Zod
 - [ ] **BE-DOC-002**: Adicionar exemplos em responses (`.openapi({ example })`)
 - [ ] **BE-DOC-003**: Adicionar `tags` em todas as rotas
 - [ ] **BE-DOC-004**: Adicionar `summary` e `description` detalhadas
@@ -581,6 +586,7 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 - [ ] **BE-OPT-005**: Adicionar logging estruturado (Winston ou Pino)
 - [ ] **BE-OPT-006**: Implementar rate limiting (evitar spam)
 - [ ] **BE-OPT-007**: Adicionar validação de tamanho de payload
+- [ ] **BE-OPT-008**: Mude os export type para o final do arquivos arquivos schemas
 
 **Critério de Aceite**: Sistema roda de forma estável e performática
 

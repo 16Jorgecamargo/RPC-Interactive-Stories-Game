@@ -267,6 +267,103 @@ export type PromoteUser = z.infer<typeof PromoteUserSchema>;
 export type PromoteUserResponse = z.infer<typeof PromoteUserResponseSchema>;
 export type DemoteUser = z.infer<typeof DemoteUserSchema>;
 export type DemoteUserResponse = z.infer<typeof DemoteUserResponseSchema>;
+export const GetSystemStatsSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+});
+
+export const SystemStatsSchema = z.object({
+  users: z.object({
+    total: z.number().int().min(0).openapi({ example: 150, description: 'Total de usuários' }),
+    admins: z.number().int().min(0).openapi({ example: 3, description: 'Total de administradores' }),
+    online: z.number().int().min(0).openapi({ example: 42, description: 'Usuários online (últimos 5min)' }),
+  }),
+  sessions: z.object({
+    total: z.number().int().min(0).openapi({ example: 87, description: 'Total de sessões criadas' }),
+    active: z.number().int().min(0).openapi({ example: 15, description: 'Sessões ativas (não completadas)' }),
+    inProgress: z.number().int().min(0).openapi({ example: 8, description: 'Sessões em andamento' }),
+    completed: z.number().int().min(0).openapi({ example: 72, description: 'Sessões completadas' }),
+    avgPlayersPerSession: z.number().openapi({ example: 3.5, description: 'Média de jogadores por sessão' }),
+  }),
+  characters: z.object({
+    total: z.number().int().min(0).openapi({ example: 245, description: 'Total de personagens criados' }),
+    complete: z.number().int().min(0).openapi({ example: 220, description: 'Personagens completos' }),
+  }),
+  stories: z.object({
+    total: z.number().int().min(0).openapi({ example: 5, description: 'Total de histórias' }),
+    mostPlayed: z.object({
+      id: z.string(),
+      title: z.string(),
+      playCount: z.number().int().min(0),
+    }).optional().openapi({ description: 'História mais jogada' }),
+  }),
+  system: z.object({
+    uptime: z.number().openapi({ example: 86400, description: 'Tempo de atividade em segundos' }),
+    uptimeFormatted: z.string().openapi({ example: '1d 0h 0m', description: 'Uptime formatado' }),
+  }),
+});
+
+export const GetSystemStatsResponseSchema = z.object({
+  stats: SystemStatsSchema,
+  generatedAt: z.string().datetime().openapi({
+    example: '2025-10-02T15:30:00Z',
+    description: 'Momento em que as estatísticas foram geradas',
+  }),
+});
+
+export const GetStoryUsageSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token (deve ser admin)',
+  }),
+  storyId: z.string().uuid().openapi({
+    example: 'story_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da história',
+  }),
+});
+
+export const ChapterChoiceStatsSchema = z.object({
+  chapterId: z.string().openapi({
+    example: 'inicio',
+    description: 'ID do capítulo',
+  }),
+  chapterText: z.string().openapi({
+    example: 'Você chega em uma caverna misteriosa...',
+    description: 'Texto do capítulo',
+  }),
+  choices: z.array(z.object({
+    optionId: z.string(),
+    optionText: z.string(),
+    voteCount: z.number().int().min(0),
+    percentage: z.number().min(0).max(100),
+  })).openapi({
+    description: 'Estatísticas de cada escolha',
+  }),
+  totalVotes: z.number().int().min(0).openapi({
+    example: 45,
+    description: 'Total de votos neste capítulo',
+  }),
+});
+
+export const GetStoryUsageResponseSchema = z.object({
+  story: z.object({
+    id: z.string(),
+    title: z.string(),
+  }),
+  usage: z.object({
+    totalSessions: z.number().int().min(0).openapi({ example: 25, description: 'Sessões usando esta história' }),
+    completedSessions: z.number().int().min(0).openapi({ example: 18, description: 'Sessões completadas' }),
+    inProgressSessions: z.number().int().min(0).openapi({ example: 7, description: 'Sessões em andamento' }),
+    totalPlayers: z.number().int().min(0).openapi({ example: 78, description: 'Total de jogadores únicos' }),
+    avgPlayersPerSession: z.number().openapi({ example: 3.12, description: 'Média de jogadores' }),
+  }),
+  popularChoices: z.array(ChapterChoiceStatsSchema).openapi({
+    description: 'Escolhas mais populares por capítulo',
+  }),
+});
+
 export type GetAllSessions = z.infer<typeof GetAllSessionsSchema>;
 export type SessionDetail = z.infer<typeof SessionDetailSchema>;
 export type GetAllSessionsResponse = z.infer<typeof GetAllSessionsResponseSchema>;
@@ -276,3 +373,9 @@ export type DeleteSession = z.infer<typeof DeleteSessionSchema>;
 export type DeleteSessionResponse = z.infer<typeof DeleteSessionResponseSchema>;
 export type ForceSessionState = z.infer<typeof ForceSessionStateSchema>;
 export type ForceSessionStateResponse = z.infer<typeof ForceSessionStateResponseSchema>;
+export type GetSystemStats = z.infer<typeof GetSystemStatsSchema>;
+export type SystemStats = z.infer<typeof SystemStatsSchema>;
+export type GetSystemStatsResponse = z.infer<typeof GetSystemStatsResponseSchema>;
+export type GetStoryUsage = z.infer<typeof GetStoryUsageSchema>;
+export type ChapterChoiceStats = z.infer<typeof ChapterChoiceStatsSchema>;
+export type GetStoryUsageResponse = z.infer<typeof GetStoryUsageResponseSchema>;

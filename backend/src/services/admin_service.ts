@@ -16,6 +16,8 @@ import type {
   UserWithStats,
 } from '../models/admin_schemas.js';
 
+const serverStartTime = Date.now();
+
 function verifyAdmin(token: string): string {
   const decoded = verifyToken(token);
   const userId = decoded.userId;
@@ -356,5 +358,199 @@ export async function forceSessionState(params: import('../models/admin_schemas.
       name: updatedSession.name,
       status: updatedSession.status,
     },
+  };
+}
+
+function formatUptime(seconds: number): string {
+  const days = Math.floor(seconds / 86400);
+  const hours = Math.floor((seconds % 86400) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (days > 0) {
+    return `${days}d ${hours}h ${minutes}m`;
+  } else if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  } else {
+    return `${minutes}m`;
+  }
+}
+
+export async function getSystemStats(params: import('../models/admin_schemas.js').GetSystemStats): Promise<import('../models/admin_schemas.js').GetSystemStatsResponse> {
+  const { token } = params;
+
+  verifyAdmin(token);
+
+  const allUsers = userStore.getAllUsers();
+  const allSessions = sessionStore.findAll();
+  const allCharacters = characterStore.findAll();
+  const allStories = storyStore.findAll();
+
+  const now = new Date();
+  const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
+
+  const onlineUsers = allSessions.filter((session) => {
+    return session.participants.some((p) => {
+      const lastActivity = p.lastActivity ? new Date(p.lastActivity) : new Date(p.joinedAt);
+      return lastActivity >= fiveMinutesAgo;
+    });
+  }).length;
+
+  const activeSessions = allSessions.filter(
+    (s) => s.status !== 'COMPLETED'
+  );
+
+  const inProgressSessions = allSessions.filter(
+    (s) => s.status === 'IN_PROGRESS'
+  );
+
+  const completedSessions = allSessions.filter(
+    (s) => s.status === 'COMPLETED'
+  );
+
+  const completeCharacters = allCharacters.filter((c) => c.isComplete);
+
+  const totalPlayers = allSessions.reduce((sum, s) => sum + s.participants.length, 0);
+  const avgPlayersPerSession = allSessions.length > 0 ? totalPlayers / allSessions.length : 0;
+
+  const storyPlayCounts = new Map<string, number>();
+  allSessions.forEach((session) => {
+    const count = storyPlayCounts.get(session.storyId) || 0;
+    storyPlayCounts.set(session.storyId, count + 1);
+  });
+
+  let mostPlayedStory;
+  if (storyPlayCounts.size > 0) {
+    let maxCount = 0;
+    let maxStoryId = '';
+    storyPlayCounts.forEach((count, storyId) => {
+      if (count > maxCount) {
+        maxCount = count;
+        maxStoryId = storyId;
+      }
+    });
+    const story = allStories.find((s) => s.id === maxStoryId);
+    if (story) {
+      mostPlayedStory = {
+        id: story.id,
+        title: story.title,
+        playCount: maxCount,
+      };
+    }
+  }
+
+  const uptimeSeconds = Math.floor((Date.now() - serverStartTime) / 1000);
+
+  return {
+    stats: {
+      users: {
+        total: allUsers.length,
+        admins: allUsers.filter((u) => u.role === 'ADMIN').length,
+        online: onlineUsers,
+      },
+      sessions: {
+        total: allSessions.length,
+        active: activeSessions.length,
+        inProgress: inProgressSessions.length,
+        completed: completedSessions.length,
+        avgPlayersPerSession: Math.round(avgPlayersPerSession * 100) / 100,
+      },
+      characters: {
+        total: allCharacters.length,
+        complete: completeCharacters.length,
+      },
+      stories: {
+        total: allStories.length,
+        mostPlayed: mostPlayedStory,
+      },
+      system: {
+        uptime: uptimeSeconds,
+        uptimeFormatted: formatUptime(uptimeSeconds),
+      },
+    },
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+export async function getStoryUsage(params: import('../models/admin_schemas.js').GetStoryUsage): Promise<import('../models/admin_schemas.js').GetStoryUsageResponse> {
+  const { token, storyId } = params;
+
+  verifyAdmin(token);
+
+  const story = storyStore.findById(storyId);
+  if (!story) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'História não encontrada',
+      data: { storyId },
+    };
+  }
+
+  const storySessions = sessionStore.findAll().filter((s) => s.storyId === storyId);
+
+  const completedSessions = storySessions.filter((s) => s.status === 'COMPLETED');
+  const inProgressSessions = storySessions.filter((s) => s.status === 'IN_PROGRESS');
+
+  const uniquePlayers = new Set<string>();
+  storySessions.forEach((session) => {
+    session.participants.forEach((p) => uniquePlayers.add(p.userId));
+  });
+
+  const totalPlayers = storySessions.reduce((sum, s) => sum + s.participants.length, 0);
+  const avgPlayersPerSession = storySessions.length > 0 ? totalPlayers / storySessions.length : 0;
+
+  const chapterVotes = new Map<string, Map<string, number>>();
+
+  storySessions.forEach((session) => {
+    if (session.votes) {
+      Object.values(session.votes).forEach((optionId) => {
+        const chapterId = session.currentChapter;
+        if (!chapterVotes.has(chapterId)) {
+          chapterVotes.set(chapterId, new Map());
+        }
+        const chapterMap = chapterVotes.get(chapterId)!;
+        chapterMap.set(optionId, (chapterMap.get(optionId) || 0) + 1);
+      });
+    }
+  });
+
+  const popularChoices: import('../models/admin_schemas.js').ChapterChoiceStats[] = [];
+
+  chapterVotes.forEach((optionCounts, chapterId) => {
+    const chapter = story.capitulos.get(chapterId);
+    if (chapter) {
+      const totalVotes = Array.from(optionCounts.values()).reduce((sum, count) => sum + count, 0);
+      
+      const choices = Array.from(optionCounts.entries()).map(([optionId, count]) => {
+        const option = chapter.opcoes.find((o) => o.id === optionId);
+        return {
+          optionId,
+          optionText: option?.texto || 'Desconhecida',
+          voteCount: count,
+          percentage: Math.round((count / totalVotes) * 10000) / 100,
+        };
+      }).sort((a, b) => b.voteCount - a.voteCount);
+
+      popularChoices.push({
+        chapterId,
+        chapterText: chapter.texto.substring(0, 100) + (chapter.texto.length > 100 ? '...' : ''),
+        choices,
+        totalVotes,
+      });
+    }
+  });
+
+  return {
+    story: {
+      id: story.id,
+      title: story.title,
+    },
+    usage: {
+      totalSessions: storySessions.length,
+      completedSessions: completedSessions.length,
+      inProgressSessions: inProgressSessions.length,
+      totalPlayers: uniquePlayers.size,
+      avgPlayersPerSession: Math.round(avgPlayersPerSession * 100) / 100,
+    },
+    popularChoices: popularChoices.sort((a, b) => b.totalVotes - a.totalVotes),
   };
 }

@@ -14,10 +14,14 @@ import {
   GetSessionDetailSchema,
   DeleteSessionSchema,
   ForceSessionStateSchema,
+  GetSystemStatsSchema,
+  GetStoryUsageSchema,
   GetAllSessionsResponseSchema,
   GetSessionDetailResponseSchema,
   DeleteSessionResponseSchema,
   ForceSessionStateResponseSchema,
+  GetSystemStatsResponseSchema,
+  GetStoryUsageResponseSchema,
 } from '../../../models/admin_schemas.js';
 
 export async function registerAdminWrappers(app: FastifyInstance) {
@@ -161,6 +165,42 @@ export async function registerAdminWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await adminService.forceSessionState(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/stats',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Obter estatísticas do sistema',
+      description: 'Retorna estatísticas completas do sistema: usuários, sessões, personagens, histórias e uptime. Requer privilégios de admin.',
+      body: GetSystemStatsSchema,
+      response: {
+        200: GetSystemStatsResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.getSystemStats(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/admin/stories/usage',
+    schema: {
+      tags: ['Admin'],
+      summary: 'Obter estatísticas de uso de história',
+      description: 'Retorna estatísticas detalhadas de uma história: sessões, jogadores e escolhas mais populares por capítulo. Requer privilégios de admin.',
+      body: GetStoryUsageSchema,
+      response: {
+        200: GetStoryUsageResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await adminService.getStoryUsage(request.body);
       return reply.send(result);
     },
   });

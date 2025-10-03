@@ -12,10 +12,14 @@ import {
   GetSessionDetailSchema,
   DeleteSessionSchema,
   ForceSessionStateSchema,
+  GetSystemStatsSchema,
+  GetStoryUsageSchema,
   GetAllSessionsResponseSchema,
   GetSessionDetailResponseSchema,
   DeleteSessionResponseSchema,
   ForceSessionStateResponseSchema,
+  GetSystemStatsResponseSchema,
+  GetStoryUsageResponseSchema,
 } from '../../../models/admin_schemas.js';
 
 export function registerAdminPaths(registry: OpenAPIRegistry) {
@@ -279,6 +283,74 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: ForceSessionStateResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/stats',
+    tags: ['Admin'],
+    summary: 'Obter estatísticas do sistema',
+    description: 'Retorna estatísticas completas do sistema incluindo: **usuários** (total, admins, online), **sessões** (total, ativas, em andamento, completadas, média de jogadores), **personagens** (total, completos), **histórias** (total, mais jogada), **uptime** do servidor. Wrapper REST que internamente chama o método RPC "getSystemStats".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetSystemStatsSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Estatísticas retornadas com sucesso',
+        content: {
+          'application/json': {
+            schema: GetSystemStatsResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou ausente',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/admin/stories/usage',
+    tags: ['Admin'],
+    summary: 'Obter estatísticas de uso de história',
+    description: 'Retorna estatísticas detalhadas de uma história específica: total de sessões (completadas e em andamento), total de jogadores únicos, média de jogadores por sessão, e **escolhas mais populares por capítulo** com percentuais de votos. Wrapper REST que internamente chama o método RPC "getStoryUsage".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: GetStoryUsageSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Estatísticas da história retornadas com sucesso',
+        content: {
+          'application/json': {
+            schema: GetStoryUsageResponseSchema,
           },
         },
       },
