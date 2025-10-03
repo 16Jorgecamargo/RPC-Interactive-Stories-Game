@@ -8,6 +8,8 @@ import {
   RollInitiativeResponseSchema,
   GetCurrentTurnSchema,
   GetCurrentTurnResponseSchema,
+  PerformAttackSchema,
+  PerformAttackResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export function registerCombatPaths(registry: OpenAPIRegistry) {
@@ -133,6 +135,40 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: GetCurrentTurnResponseSchema,
+          },
+        },
+      },
+      400: {
+        description: 'Erro na requisição',
+      },
+      401: {
+        description: 'Token inválido',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/combat/attack',
+    tags: ['Combat'],
+    summary: 'Realizar ataque',
+    description: 'Executa um ataque no combate com mecânica D&D: rola D20 + modificador vs Armor Class do alvo. **Natural 20** = crítico (dano dobrado). **Natural 1** = falha crítica (atacante recebe 1d4 de dano). Em caso de acerto, rola dado de dano baseado na classe do personagem (Warrior: 1d10, Rogue/Cleric: 1d8, Mage: 1d6). Wrapper REST que internamente chama o método RPC "performAttack".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: PerformAttackSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Ataque executado com sucesso',
+        content: {
+          'application/json': {
+            schema: PerformAttackResponseSchema,
           },
         },
       },

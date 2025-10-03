@@ -237,6 +237,115 @@ export const GetCurrentTurnResponseSchema = z.object({
 });
 
 export type Enemy = z.infer<typeof EnemySchema>;
+export const PerformAttackSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  characterId: z.string().uuid().openapi({
+    example: 'char_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID do personagem atacante',
+  }),
+  targetId: z.string().openapi({
+    example: 'enemy_goblin_1',
+    description: 'ID do alvo (pode ser personagem ou inimigo)',
+  }),
+});
+
+export const AttackRollSchema = z.object({
+  d20Roll: z.number().int().min(1).max(20).openapi({
+    example: 15,
+    description: 'Resultado do D20',
+  }),
+  modifier: z.number().int().openapi({
+    example: 3,
+    description: 'Modificador de ataque baseado em atributos',
+  }),
+  total: z.number().int().openapi({
+    example: 18,
+    description: 'Total do ataque (D20 + modificador)',
+  }),
+  targetAC: z.number().int().openapi({
+    example: 13,
+    description: 'Armor Class do alvo',
+  }),
+  hit: z.boolean().openapi({
+    example: true,
+    description: 'Indica se o ataque acertou',
+  }),
+  critical: z.boolean().openapi({
+    example: false,
+    description: 'Indica se foi crítico (natural 20)',
+  }),
+  criticalFail: z.boolean().openapi({
+    example: false,
+    description: 'Indica se foi falha crítica (natural 1)',
+  }),
+});
+
+export const DamageRollSchema = z.object({
+  diceRoll: z.number().int().min(0).openapi({
+    example: 8,
+    description: 'Resultado do dado de dano',
+  }),
+  modifier: z.number().int().openapi({
+    example: 3,
+    description: 'Modificador de dano baseado em atributos',
+  }),
+  total: z.number().int().min(0).openapi({
+    example: 11,
+    description: 'Dano total causado',
+  }),
+  wasCritical: z.boolean().openapi({
+    example: false,
+    description: 'Se true, dano foi dobrado por crítico',
+  }),
+});
+
+export const PerformAttackResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a ação foi executada com sucesso',
+  }),
+  attackRoll: AttackRollSchema,
+  damage: DamageRollSchema.nullable().openapi({
+    description: 'Dano causado (null se errou o ataque)',
+  }),
+  criticalFailDamage: z.number().int().min(0).optional().openapi({
+    example: 2,
+    description: 'Dano que o atacante levou por falha crítica (d20 = 1)',
+  }),
+  attacker: z.object({
+    id: z.string(),
+    name: z.string(),
+    hpBefore: z.number().int(),
+    hpAfter: z.number().int(),
+  }).openapi({
+    description: 'Informações do atacante (HP pode mudar em falha crítica)',
+  }),
+  target: z.object({
+    id: z.string(),
+    name: z.string(),
+    hpBefore: z.number().int(),
+    hpAfter: z.number().int(),
+    isDead: z.boolean(),
+  }).openapi({
+    description: 'Informações do alvo',
+  }),
+  combatEnded: z.boolean().openapi({
+    example: false,
+    description: 'Indica se o combate terminou após este ataque',
+  }),
+  winningSide: z.enum(['PLAYERS', 'ENEMIES', 'NONE']).optional().openapi({
+    example: 'NONE',
+    description: 'Lado vencedor se combate terminou',
+  }),
+});
+
 export type CombatParticipant = z.infer<typeof CombatParticipantSchema>;
 export type CombatState = z.infer<typeof CombatStateSchema>;
 export type InitiateCombat = z.infer<typeof InitiateCombatSchema>;
@@ -249,3 +358,7 @@ export type RollInitiativeResponse = z.infer<typeof RollInitiativeResponseSchema
 export type GetCurrentTurn = z.infer<typeof GetCurrentTurnSchema>;
 export type CurrentTurn = z.infer<typeof CurrentTurnSchema>;
 export type GetCurrentTurnResponse = z.infer<typeof GetCurrentTurnResponseSchema>;
+export type PerformAttack = z.infer<typeof PerformAttackSchema>;
+export type AttackRoll = z.infer<typeof AttackRollSchema>;
+export type DamageRoll = z.infer<typeof DamageRollSchema>;
+export type PerformAttackResponse = z.infer<typeof PerformAttackResponseSchema>;

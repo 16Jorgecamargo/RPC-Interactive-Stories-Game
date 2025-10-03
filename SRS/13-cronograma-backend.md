@@ -427,20 +427,29 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Mecânica de ataque D&D
 
 #### Cards
-- [ ] **BE-COMBAT-010**: Implementar `POST /rpc/combat/:sessionId/attack`
+- [x] **BE-COMBAT-010**: Implementar `POST /rpc/combat/attack`
   - **Depende de**: `BE-COMBAT-009`
-- [ ] **BE-COMBAT-011**: Rolar D20 vs Armor Class (acerto/erro)
+  - **Implementado**: `PerformAttackSchema`, `performAttack()` service, RPC method, wrapper e OpenAPI path
+- [x] **BE-COMBAT-011**: Rolar D20 vs Armor Class (acerto/erro)
   - **Depende de**: `BE-COMBAT-010`
-- [ ] **BE-COMBAT-012**: Rolar dado de dano em caso de acerto
+  - **Implementado**: Lógica de rolagem D20 + modificador de Força vs AC do alvo
+- [x] **BE-COMBAT-012**: Rolar dado de dano em caso de acerto
   - **Depende de**: `BE-COMBAT-011`
-- [ ] **BE-COMBAT-013**: Aplicar dano ao HP do alvo
+  - **Implementado**: Dano baseado na classe (Warrior: 1d10, Rogue/Cleric: 1d8, Mage: 1d6) + modificador de Força
+- [x] **BE-COMBAT-013**: Aplicar dano ao HP do alvo
   - **Depende de**: `BE-COMBAT-012`
-- [ ] **BE-COMBAT-014**: Detectar morte (HP ≤ 0)
+  - **Implementado**: Redução de HP do alvo, atualização do combat state
+- [x] **BE-COMBAT-014**: Detectar morte (HP ≤ 0)
   - **Depende de**: `BE-COMBAT-013`
-- [ ] **BE-COMBAT-015**: Implementar crítico (natural 20) com dano dobrado
+  - **Implementado**: Flag `isDead` ativada quando HP chega a 0, verificação de fim de combate
+- [x] **BE-COMBAT-015**: Implementar crítico (natural 20) com dano dobrado
   - **Depende de**: `BE-COMBAT-011`
+  - **Implementado**: Natural 20 dobra o dano total (dado + modificador) × 2
+- [x] **BE-COMBAT-016**: Implementar falha crítica (natural 1) com dano ao atacante
+  - **Depende de**: `BE-COMBAT-011`
+  - **Implementado**: Natural 1 causa 1d4 de dano ao próprio atacante
 
-**Critério de Aceite**: Jogadores atacam inimigos e causam dano
+**Critério de Aceite**: Jogadores atacam inimigos e causam dano. Críticos dobram dano. Falhas críticas causam dano ao atacante ✅
 
 ---
 

@@ -6,10 +6,12 @@ import {
   GetCombatStateSchema,
   RollInitiativeSchema,
   GetCurrentTurnSchema,
+  PerformAttackSchema,
   InitiateCombatResponseSchema,
   GetCombatStateResponseSchema,
   RollInitiativeResponseSchema,
   GetCurrentTurnResponseSchema,
+  PerformAttackResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export async function registerCombatWrappers(app: FastifyInstance) {
@@ -81,6 +83,24 @@ export async function registerCombatWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await combatService.getCurrentTurn(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/combat/attack',
+    schema: {
+      tags: ['Combat'],
+      summary: 'Realizar ataque',
+      description: 'Executa um ataque no combate: rola D20 vs AC do alvo. Natural 20 = crítico (dano dobrado). Natural 1 = falha crítica (atacante recebe 1d4 de dano). Em caso de acerto, rola dado de dano baseado na classe do personagem.',
+      body: PerformAttackSchema,
+      response: {
+        200: PerformAttackResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await combatService.performAttack(request.body);
       return reply.send(result);
     },
   });

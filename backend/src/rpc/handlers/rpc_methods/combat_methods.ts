@@ -4,6 +4,7 @@ import {
   GetCombatStateSchema,
   RollInitiativeSchema,
   GetCurrentTurnSchema,
+  PerformAttackSchema,
   type InitiateCombat,
   type GetCombatState,
   type InitiateCombatResponse,
@@ -12,6 +13,8 @@ import {
   type RollInitiativeResponse,
   type GetCurrentTurn,
   type GetCurrentTurnResponse,
+  type PerformAttack,
+  type PerformAttackResponse,
 } from '../../../models/combat_schemas.js';
 
 export const combatMethods = {
@@ -33,5 +36,10 @@ export const combatMethods = {
   getCurrentTurn: async (params: unknown): Promise<GetCurrentTurnResponse> => {
     const validated = GetCurrentTurnSchema.parse(params) as GetCurrentTurn;
     return await combatService.getCurrentTurn(validated);
+  },
+
+  performAttack: async (params: unknown): Promise<PerformAttackResponse> => {
+    const validated = PerformAttackSchema.parse(params) as PerformAttack;
+    return await combatService.performAttack(validated);
   },
 };

@@ -447,3 +447,228 @@ export async function getCurrentTurn(params: {
 
   return { currentTurn: null };
 }
+
+export async function performAttack(params: import('../models/combat_schemas.js').PerformAttack): Promise<import('../models/combat_schemas.js').PerformAttackResponse> {
+  const { token, sessionId, characterId, targetId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const character = characterStore.findById(characterId);
+  if (!character || character.userId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Personagem não pertence a você',
+      data: { characterId, userId },
+    };
+  }
+
+  const combatState = combatStore.findBySessionId(sessionId);
+  if (!combatState || !combatState.isActive) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não há combate ativo nesta sessão',
+      data: { sessionId },
+    };
+  }
+
+  const currentEntityId = combatState.turnOrder[combatState.currentTurnIndex];
+  if (currentEntityId !== characterId) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não é o turno deste personagem',
+      data: { characterId, currentTurn: currentEntityId },
+    };
+  }
+
+  const attacker = combatState.participants.find((p) => p.characterId === characterId);
+  if (!attacker) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Atacante não encontrado no combate',
+      data: { characterId },
+    };
+  }
+
+  if (attacker.isDead) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem está morto e não pode atacar',
+      data: { characterId },
+    };
+  }
+
+  let target: Enemy | CombatParticipant | undefined = combatState.enemies.find((e) => e.id === targetId);
+
+  if (!target) {
+    target = combatState.participants.find((p) => p.characterId === targetId);
+  }
+
+  if (!target) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Alvo não encontrado no combate',
+      data: { targetId },
+    };
+  }
+
+  if (target.isDead) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Alvo já está morto',
+      data: { targetId },
+    };
+  }
+
+  const d20Roll = Math.floor(Math.random() * 20) + 1;
+  const attackModifier = Math.floor((character.attributes.strength - 10) / 2);
+  const attackTotal = d20Roll + attackModifier;
+  const targetAC = ('ac' in target) ? target.ac : 10;
+
+  const isCritical = d20Roll === 20;
+  const isCriticalFail = d20Roll === 1;
+  const hit = isCritical || (attackTotal >= targetAC && !isCriticalFail);
+
+  const attackRoll = {
+    d20Roll,
+    modifier: attackModifier,
+    total: attackTotal,
+    targetAC,
+    hit,
+    critical: isCritical,
+    criticalFail: isCriticalFail,
+  };
+
+  let damage: import('../models/combat_schemas.js').DamageRoll | null = null;
+  let criticalFailDamage: number | undefined = undefined;
+  const attackerHpBefore = attacker.hp;
+  const targetHpBefore = target.hp;
+
+  if (isCriticalFail) {
+    criticalFailDamage = Math.floor(Math.random() * 4) + 1;
+    attacker.hp = Math.max(0, attacker.hp - criticalFailDamage);
+    
+    if (attacker.hp === 0) {
+      attacker.isDead = true;
+    }
+  } else if (hit) {
+    const damageModifier = Math.floor((character.attributes.strength - 10) / 2);
+    
+    let damageDice: number;
+    switch (character.class) {
+      case 'Warrior':
+        damageDice = Math.floor(Math.random() * 10) + 1;
+        break;
+      case 'Rogue':
+        damageDice = Math.floor(Math.random() * 8) + 1;
+        break;
+      case 'Mage':
+        damageDice = Math.floor(Math.random() * 6) + 1;
+        break;
+      case 'Cleric':
+        damageDice = Math.floor(Math.random() * 8) + 1;
+        break;
+      default:
+        damageDice = Math.floor(Math.random() * 6) + 1;
+    }
+
+    let totalDamage = damageDice + damageModifier;
+    
+    if (isCritical) {
+      totalDamage *= 2;
+    }
+
+    totalDamage = Math.max(1, totalDamage);
+
+    damage = {
+      diceRoll: damageDice,
+      modifier: damageModifier,
+      total: totalDamage,
+      wasCritical: isCritical,
+    };
+
+    target.hp = Math.max(0, target.hp - totalDamage);
+
+    if (target.hp === 0) {
+      target.isDead = true;
+    }
+  }
+
+  combatState.currentTurnIndex = (combatState.currentTurnIndex + 1) % combatState.turnOrder.length;
+
+  const allEnemiesDead = combatState.enemies.every((e) => e.isDead);
+  const allPlayersDead = combatState.participants.every((p) => p.isDead);
+
+  let combatEnded = false;
+  let winningSide: 'PLAYERS' | 'ENEMIES' | 'NONE' = 'NONE';
+
+  if (allEnemiesDead) {
+    combatState.isActive = false;
+    combatState.winningSide = 'PLAYERS';
+    combatEnded = true;
+    winningSide = 'PLAYERS';
+  } else if (allPlayersDead) {
+    combatState.isActive = false;
+    combatState.winningSide = 'ENEMIES';
+    combatEnded = true;
+    winningSide = 'ENEMIES';
+  }
+
+  combatStore.update(sessionId, combatState);
+
+  const targetName = ('name' in target) ? target.name : target.characterName;
+
+  const update: GameUpdate = {
+    id: uuidv4(),
+    sessionId,
+    type: 'ATTACK_MADE',
+    timestamp: new Date().toISOString(),
+    data: {
+      attackerId: characterId,
+      attackerName: character.name,
+      targetId,
+      targetName,
+      hit,
+      critical: isCritical,
+      criticalFail: isCriticalFail,
+      damage: damage?.total || 0,
+      criticalFailDamage,
+      targetDied: target.isDead,
+      combatEnded,
+      winningSide: combatEnded ? winningSide : undefined,
+    },
+  };
+
+  eventStore.addUpdate(update);
+
+  return {
+    success: true,
+    attackRoll,
+    damage,
+    criticalFailDamage,
+    attacker: {
+      id: characterId,
+      name: character.name,
+      hpBefore: attackerHpBefore,
+      hpAfter: attacker.hp,
+    },
+    target: {
+      id: targetId,
+      name: targetName,
+      hpBefore: targetHpBefore,
+      hpAfter: target.hp,
+      isDead: target.isDead,
+    },
+    combatEnded,
+    winningSide: combatEnded ? winningSide : undefined,
+  };
+}
