@@ -13,16 +13,39 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+let storiesCache: Story[] | null = null;
+const storyIndexById = new Map<string, Story>();
+
 function loadStories(): Story[] {
+  if (storiesCache !== null) {
+    return storiesCache;
+  }
+
   if (!fs.existsSync(STORIES_FILE)) {
+    storiesCache = [];
     return [];
   }
+
   const data = fs.readFileSync(STORIES_FILE, 'utf-8');
-  return JSON.parse(data);
+  const stories: Story[] = JSON.parse(data);
+  storiesCache = stories;
+
+  storyIndexById.clear();
+  for (const story of stories) {
+    storyIndexById.set(story.id, story);
+  }
+
+  return stories;
 }
 
 function saveStories(stories: Story[]): void {
   fs.writeFileSync(STORIES_FILE, JSON.stringify(stories, null, 2));
+  storiesCache = stories;
+
+  storyIndexById.clear();
+  for (const story of stories) {
+    storyIndexById.set(story.id, story);
+  }
 }
 
 export function createStory(story: Story): Story {
@@ -33,8 +56,8 @@ export function createStory(story: Story): Story {
 }
 
 export function findById(id: string): Story | undefined {
-  const stories = loadStories();
-  return stories.find((s) => s.id === id);
+  loadStories();
+  return storyIndexById.get(id);
 }
 
 export function findAll(): Story[] {

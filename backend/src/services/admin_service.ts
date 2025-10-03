@@ -14,6 +14,19 @@ import type {
   DemoteUser,
   DemoteUserResponse,
   UserWithStats,
+  GetAllSessions,
+  GetAllSessionsResponse,
+  GetSessionDetail,
+  GetSessionDetailResponse,
+  DeleteSession,
+  DeleteSessionResponse,
+  ForceSessionState,
+  ForceSessionStateResponse,
+  GetSystemStats,
+  GetSystemStatsResponse,
+  GetStoryUsage,
+  GetStoryUsageResponse,
+  ChapterChoiceStats,
 } from '../models/admin_schemas.js';
 
 const serverStartTime = Date.now();
@@ -214,7 +227,7 @@ export async function demoteUser(params: DemoteUser): Promise<DemoteUserResponse
   };
 }
 
-export async function getAllSessions(params: import('../models/admin_schemas.js').GetAllSessions): Promise<import('../models/admin_schemas.js').GetAllSessionsResponse> {
+export async function getAllSessions(params: GetAllSessions): Promise<GetAllSessionsResponse> {
   const { token, status, ownerId, storyId } = params;
 
   verifyAdmin(token);
@@ -263,7 +276,7 @@ export async function getAllSessions(params: import('../models/admin_schemas.js'
   };
 }
 
-export async function getSessionDetail(params: import('../models/admin_schemas.js').GetSessionDetail): Promise<import('../models/admin_schemas.js').GetSessionDetailResponse> {
+export async function getSessionDetail(params: GetSessionDetail): Promise<GetSessionDetailResponse> {
   const { token, sessionId } = params;
 
   verifyAdmin(token);
@@ -298,7 +311,7 @@ export async function getSessionDetail(params: import('../models/admin_schemas.j
   };
 }
 
-export async function deleteSession(params: import('../models/admin_schemas.js').DeleteSession): Promise<import('../models/admin_schemas.js').DeleteSessionResponse> {
+export async function deleteSession(params: DeleteSession): Promise<DeleteSessionResponse> {
   const { token, sessionId } = params;
 
   verifyAdmin(token);
@@ -327,7 +340,7 @@ export async function deleteSession(params: import('../models/admin_schemas.js')
   };
 }
 
-export async function forceSessionState(params: import('../models/admin_schemas.js').ForceSessionState): Promise<import('../models/admin_schemas.js').ForceSessionStateResponse> {
+export async function forceSessionState(params: ForceSessionState): Promise<ForceSessionStateResponse> {
   const { token, sessionId, newStatus } = params;
 
   verifyAdmin(token);
@@ -375,7 +388,7 @@ function formatUptime(seconds: number): string {
   }
 }
 
-export async function getSystemStats(params: import('../models/admin_schemas.js').GetSystemStats): Promise<import('../models/admin_schemas.js').GetSystemStatsResponse> {
+export async function getSystemStats(params: GetSystemStats): Promise<GetSystemStatsResponse> {
   const { token } = params;
 
   verifyAdmin(token);
@@ -471,7 +484,7 @@ export async function getSystemStats(params: import('../models/admin_schemas.js'
   };
 }
 
-export async function getStoryUsage(params: import('../models/admin_schemas.js').GetStoryUsage): Promise<import('../models/admin_schemas.js').GetStoryUsageResponse> {
+export async function getStoryUsage(params: GetStoryUsage): Promise<GetStoryUsageResponse> {
   const { token, storyId } = params;
 
   verifyAdmin(token);
@@ -513,15 +526,15 @@ export async function getStoryUsage(params: import('../models/admin_schemas.js')
     }
   });
 
-  const popularChoices: import('../models/admin_schemas.js').ChapterChoiceStats[] = [];
+  const popularChoices: ChapterChoiceStats[] = [];
 
   chapterVotes.forEach((optionCounts, chapterId) => {
-    const chapter = story.capitulos.get(chapterId);
+    const chapter = story.capitulos[chapterId];
     if (chapter) {
       const totalVotes = Array.from(optionCounts.values()).reduce((sum, count) => sum + count, 0);
       
       const choices = Array.from(optionCounts.entries()).map(([optionId, count]) => {
-        const option = chapter.opcoes.find((o) => o.id === optionId);
+        const option = chapter.opcoes?.find((o: { id: string; texto: string; proximo: string }) => o.id === optionId);
         return {
           optionId,
           optionText: option?.texto || 'Desconhecida',

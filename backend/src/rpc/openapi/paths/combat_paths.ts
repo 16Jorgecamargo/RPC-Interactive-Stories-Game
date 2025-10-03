@@ -40,10 +40,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - sessão no estado errado ou capítulo não é de combate',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -73,10 +82,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - combate não encontrado',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Combate não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -107,10 +125,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - personagem já rolou iniciativa ou combate não iniciado',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário',
+      },
+      404: {
+        description: 'Combate ou personagem não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -141,10 +168,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - ordem de turnos não estabelecida',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Combate não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -175,10 +211,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - não é o turno do personagem, personagem morto ou alvo inválido',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário ou não é o turno do personagem',
+      },
+      404: {
+        description: 'Combate, personagem ou alvo não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -209,10 +254,19 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         },
       },
       400: {
-        description: 'Erro na requisição',
+        description: 'Erro na requisição - personagem não está morto, limite de tentativas atingido ou não é o turno do personagem',
       },
       401: {
-        description: 'Token inválido',
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário ou não é o turno do personagem',
+      },
+      404: {
+        description: 'Combate ou personagem não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

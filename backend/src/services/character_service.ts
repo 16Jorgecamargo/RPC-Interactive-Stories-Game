@@ -4,6 +4,7 @@ import * as characterStore from '../stores/character_store.js';
 import * as sessionStore from '../stores/session_store.js';
 import * as eventStore from '../stores/event_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import { logInfo, logWarning } from '../utils/logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
 import {
   CreateCharacter,
@@ -21,12 +22,19 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
   const decoded = verifyToken(params.token);
   const userId = decoded.userId;
 
+  logInfo('[CHARACTER] Iniciando criação de personagem', { 
+    userId, 
+    characterName: params.name, 
+    sessionId: params.sessionId 
+  });
+
   let sessionId: string | null = null;
 
   if (params.sessionId) {
     const session = sessionStore.findById(params.sessionId);
     
     if (!session) {
+      logWarning('[CHARACTER] Sessão não encontrada', { sessionId: params.sessionId, userId });
       throw {
         ...JSON_RPC_ERRORS.SERVER_ERROR,
         message: 'Sessão não encontrada',
@@ -35,6 +43,11 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
     }
 
     if (session.status !== 'CREATING_CHARACTERS') {
+      logWarning('[CHARACTER] Sessão em estado inválido', { 
+        sessionId: params.sessionId, 
+        currentStatus: session.status,
+        userId 
+      });
       throw {
         ...JSON_RPC_ERRORS.SERVER_ERROR,
         message: 'A sessão deve estar no estado CREATING_CHARACTERS para criar personagens',
@@ -78,6 +91,13 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
 
   const created = characterStore.createCharacter(character);
 
+  logInfo('[CHARACTER] Personagem criado com sucesso', { 
+    characterId: created.id, 
+    characterName: created.name,
+    userId,
+    sessionId 
+  });
+
   if (sessionId) {
     const session = sessionStore.findById(sessionId)!;
     const updatedParticipants = session.participants.map((p) =>
@@ -86,6 +106,12 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
 
     const updatedSession = sessionStore.updateSession(sessionId, {
       participants: updatedParticipants,
+    });
+
+    logInfo('[CHARACTER] Participante atualizado na sessão', { 
+      sessionId, 
+      userId, 
+      characterId: created.id 
     });
 
     const characterCreatedUpdate: GameUpdate = {
@@ -131,11 +157,18 @@ export async function createCharacter(params: CreateCharacter): Promise<Characte
 export async function getMyCharacters(params: GetCharacters): Promise<CharactersList> {
   const decoded = verifyToken(params.token);
 
+  logInfo('[CHARACTER] Buscando personagens do usuário', { userId: decoded.userId });
+
   const characters = characterStore.findByUserId(decoded.userId);
 
   const charactersWithoutUserId = characters.map(({ userId: charUserId, ...rest }) => {
     void charUserId;
     return rest;
+  });
+
+  logInfo('[CHARACTER] Personagens encontrados', { 
+    userId: decoded.userId, 
+    total: characters.length 
   });
 
   return {
@@ -147,9 +180,17 @@ export async function getMyCharacters(params: GetCharacters): Promise<Characters
 export async function getCharacter(params: GetCharacter): Promise<CharacterResponse> {
   const decoded = verifyToken(params.token);
 
+  logInfo('[CHARACTER] Buscando personagem', { 
+    characterId: params.characterId, 
+    userId: decoded.userId 
+  });
+
   const character = characterStore.findById(params.characterId);
 
   if (!character) {
+    logWarning('[CHARACTER] Personagem não encontrado', { 
+      characterId: params.characterId 
+    });
     throw {
       ...JSON_RPC_ERRORS.NOT_FOUND,
       message: 'Personagem não encontrado',
@@ -157,11 +198,21 @@ export async function getCharacter(params: GetCharacter): Promise<CharacterRespo
   }
 
   if (character.userId !== decoded.userId) {
+    logWarning('[CHARACTER] Acesso negado ao personagem', { 
+      characterId: params.characterId, 
+      userId: decoded.userId, 
+      ownerId: character.userId 
+    });
     throw {
       ...JSON_RPC_ERRORS.UNAUTHORIZED,
       message: 'Você não tem permissão para visualizar este personagem',
     };
   }
+
+  logInfo('[CHARACTER] Personagem encontrado', { 
+    characterId: character.id, 
+    characterName: character.name 
+  });
 
   const { userId: charUserId2, ...response } = character;
   void charUserId2;
@@ -171,9 +222,17 @@ export async function getCharacter(params: GetCharacter): Promise<CharacterRespo
 export async function updateCharacter(params: UpdateCharacter): Promise<CharacterResponse> {
   const decoded = verifyToken(params.token);
 
+  logInfo('[CHARACTER] Atualizando personagem', { 
+    characterId: params.characterId, 
+    userId: decoded.userId 
+  });
+
   const character = characterStore.findById(params.characterId);
 
   if (!character) {
+    logWarning('[CHARACTER] Personagem não encontrado para atualização', { 
+      characterId: params.characterId 
+    });
     throw {
       ...JSON_RPC_ERRORS.NOT_FOUND,
       message: 'Personagem não encontrado',
@@ -181,6 +240,10 @@ export async function updateCharacter(params: UpdateCharacter): Promise<Characte
   }
 
   if (character.userId !== decoded.userId) {
+    logWarning('[CHARACTER] Acesso negado para atualização', { 
+      characterId: params.characterId, 
+      userId: decoded.userId 
+    });
     throw {
       ...JSON_RPC_ERRORS.UNAUTHORIZED,
       message: 'Você não tem permissão para editar este personagem',
@@ -212,11 +275,19 @@ export async function updateCharacter(params: UpdateCharacter): Promise<Characte
   const updated = characterStore.updateCharacter(params.characterId, updates);
 
   if (!updated) {
+    logWarning('[CHARACTER] Erro ao atualizar personagem', { 
+      characterId: params.characterId 
+    });
     throw {
       ...JSON_RPC_ERRORS.INTERNAL_ERROR,
       message: 'Erro ao atualizar personagem',
     };
   }
+
+  logInfo('[CHARACTER] Personagem atualizado com sucesso', { 
+    characterId: updated.id, 
+    characterName: updated.name 
+  });
 
   const { userId: charUserId3, ...response } = updated;
   void charUserId3;
@@ -225,6 +296,11 @@ export async function updateCharacter(params: UpdateCharacter): Promise<Characte
 
 export async function deleteCharacter(params: DeleteCharacter): Promise<DeleteCharacterResponse> {
   const decoded = verifyToken(params.token);
+
+  logInfo('[CHARACTER] Deletando personagem', { 
+    characterId: params.characterId, 
+    userId: decoded.userId 
+  });
 
   const character = characterStore.findById(params.characterId);
 
@@ -258,11 +334,19 @@ export async function deleteCharacter(params: DeleteCharacter): Promise<DeleteCh
   const success = characterStore.deleteCharacter(params.characterId);
 
   if (!success) {
+    logWarning('[CHARACTER] Erro ao excluir personagem', { 
+      characterId: params.characterId 
+    });
     throw {
       ...JSON_RPC_ERRORS.INTERNAL_ERROR,
       message: 'Erro ao excluir personagem',
     };
   }
+
+  logInfo('[CHARACTER] Personagem excluído com sucesso', { 
+    characterId: params.characterId, 
+    userId: decoded.userId 
+  });
 
   return {
     success: true,

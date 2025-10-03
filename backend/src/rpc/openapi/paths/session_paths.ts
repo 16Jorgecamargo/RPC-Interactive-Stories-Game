@@ -47,6 +47,18 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - história não encontrada ou maxPlayers inválido',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -75,6 +87,21 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
             schema: JoinSessionResponseSchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - código inválido, sessão bloqueada ou limite de jogadores atingido',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Sessão bloqueada para novos participantes',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -105,6 +132,12 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -133,6 +166,18 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
             schema: SessionDetailsResponseSchema,
           },
         },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -163,6 +208,18 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Apenas o owner pode excluir a sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -191,6 +248,21 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
             schema: LeaveSessionResponseSchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - owner não pode sair da sessão',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Owner não pode sair, apenas excluir a sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -221,6 +293,21 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - sessão no estado errado ou menos de 2 participantes',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Apenas o owner pode iniciar a transição',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -250,6 +337,18 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -278,6 +377,21 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
             schema: StartSessionResponseSchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - nem todos os participantes criaram personagens ou sessão no estado errado',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Apenas o owner pode iniciar a sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

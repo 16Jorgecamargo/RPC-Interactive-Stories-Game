@@ -39,6 +39,12 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -67,6 +73,18 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
             schema: CharacterResponseSchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - atributos inválidos ou sessão não encontrada',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -97,6 +115,12 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -125,6 +149,18 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
             schema: CharacterResponseSchema,
           },
         },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário',
+      },
+      404: {
+        description: 'Personagem não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -155,6 +191,21 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - personagem vinculado a sessão não pode ser editado',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário',
+      },
+      404: {
+        description: 'Personagem não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -183,6 +234,21 @@ export function registerCharacterPaths(registry: OpenAPIRegistry) {
             schema: DeleteCharacterResponseSchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - personagem vinculado a sessão não pode ser excluído',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Personagem não pertence ao usuário',
+      },
+      404: {
+        description: 'Personagem não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

@@ -66,7 +66,7 @@ export const ChapterSchema = z.object({
 });
 
 export const StorySchema = z.object({
-  id: z.string().uuid().openapi({
+  id: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID único da história',
   }),
@@ -103,7 +103,7 @@ export const StorySchema = z.object({
     example: true,
     description: 'Indica se a história está ativa e disponível no catálogo',
   }),
-  createdBy: z.string().uuid().openapi({
+  createdBy: z.string().openapi({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do admin que criou a história',
   }),
@@ -149,14 +149,14 @@ export const GetStoryCatalogSchema = z.object({
 
 export const GetStorySchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
   }),
 });
 
 export const UpdateStorySchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token do admin' }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
   }),
   title: z.string().min(3).max(100).optional().openapi({ example: 'Novo Título' }),
@@ -169,14 +169,14 @@ export const UpdateStorySchema = z.object({
 
 export const DeleteStorySchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token do admin' }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
   }),
 });
 
 export const ToggleStoryStatusSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token do admin' }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
   }),
   isActive: z.boolean().openapi({

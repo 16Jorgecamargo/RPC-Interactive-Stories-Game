@@ -11,15 +11,15 @@ export const MessageTypeEnum = z
   });
 
 export const MessageSchema = z.object({
-  id: z.string().uuid().openapi({
+  id: z.string().openapi({
     example: 'msg_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID único da mensagem',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  characterId: z.string().uuid().optional().openapi({
+  characterId: z.string().optional().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem que enviou (null para mensagens SYSTEM)',
   }),
@@ -73,7 +73,7 @@ export const GetMessagesSchema = z.object({
     example: 50,
     description: 'Número máximo de mensagens a retornar (padrão: 50)',
   }),
-  since: z.string().uuid().optional().openapi({
+  since: z.string().optional().openapi({
     example: 'msg_123e4567-e89b-12d3-a456-426614174000',
     description: 'Retornar apenas mensagens após este ID (para polling)',
   }),

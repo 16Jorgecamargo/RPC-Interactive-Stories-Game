@@ -47,11 +47,12 @@ export async function createStory(params: CreateStory): Promise<Story> {
   let parsedStory;
   try {
     parsedStory = parseMermaidToStory(params.mermaidSource);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
     throw {
       code: -32000,
-      message: `Erro ao parsear código Mermaid: ${error.message}`,
-      data: { details: error.message },
+      message: `Erro ao parsear código Mermaid: ${errorMessage}`,
+      data: { details: errorMessage },
     };
   }
 
@@ -164,11 +165,12 @@ export async function updateStory(params: UpdateStory): Promise<Story> {
       updates.mermaidSource = params.mermaidSource;
       updates.capitulos = parsedStory.capitulos;
       updates.initialChapter = parsedStory.initialChapter;
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
       throw {
         code: -32000,
-        message: `Erro ao parsear novo código Mermaid: ${error.message}`,
-        data: { details: error.message },
+        message: `Erro ao parsear novo código Mermaid: ${errorMessage}`,
+        data: { details: errorMessage },
       };
     }
   }

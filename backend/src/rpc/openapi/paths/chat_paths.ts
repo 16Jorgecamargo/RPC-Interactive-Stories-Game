@@ -38,6 +38,15 @@ export function registerChatPaths(registry: OpenAPIRegistry) {
       401: {
         description: 'Token inválido ou expirado',
       },
+      403: {
+        description: 'Personagem não pertence ao usuário ou à sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -87,11 +96,20 @@ export function registerChatPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação',
+      },
       401: {
         description: 'Token inválido ou expirado',
       },
       403: {
         description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

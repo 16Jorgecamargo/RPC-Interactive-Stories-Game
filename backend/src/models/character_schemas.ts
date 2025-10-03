@@ -59,7 +59,7 @@ export const BackgroundSchema = z.object({
 });
 
 export const CharacterSchema = z.object({
-  id: z.string().uuid().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
+  id: z.string().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
   name: z.string().min(3).max(50).openapi({ example: 'Thorin Escudo de Carvalho' }),
   race: RaceEnum,
   class: ClassEnum,
@@ -68,7 +68,7 @@ export const CharacterSchema = z.object({
   equipment: z.array(z.string()).openapi({
     example: ['Espada longa', 'Escudo de aço', 'Armadura de placas', 'Poção de cura'],
   }),
-  userId: z.string().uuid().openapi({ example: 'user_123e4567-e89b-12d3-a456-426614174000' }),
+  userId: z.string().openapi({ example: 'user_123e4567-e89b-12d3-a456-426614174000' }),
   sessionId: z
     .string()
     .uuid()
@@ -96,7 +96,7 @@ export const CreateCharacterSchema = z.object({
 
 export const UpdateCharacterSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...' }),
-  characterId: z.string().uuid().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
+  characterId: z.string().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
   name: z.string().min(3).max(50).optional().openapi({ example: 'Thorin Filho do Ferro' }),
   race: RaceEnum.optional(),
   class: ClassEnum.optional(),
@@ -113,12 +113,12 @@ export const GetCharactersSchema = z.object({
 
 export const GetCharacterSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...' }),
-  characterId: z.string().uuid().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
+  characterId: z.string().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
 });
 
 export const DeleteCharacterSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...' }),
-  characterId: z.string().uuid().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
+  characterId: z.string().openapi({ example: 'char_123e4567-e89b-12d3-a456-426614174000' }),
 });
 
 export const CharacterResponseSchema = CharacterSchema.omit({ userId: true });

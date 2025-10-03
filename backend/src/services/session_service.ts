@@ -6,6 +6,7 @@ import * as characterStore from '../stores/character_store.js';
 import * as gameService from './game_service.js';
 import * as eventStore from '../stores/event_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import { logInfo, logWarning } from '../utils/logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
 import type {
   CreateSession,
@@ -103,6 +104,14 @@ export async function createSession(params: CreateSession): Promise<CreateSessio
 
   const createdSession = sessionStore.createSession(session);
 
+  logInfo('[SESSION] Sessão criada', { 
+    sessionId: createdSession.id, 
+    sessionCode: createdSession.sessionCode,
+    ownerId: userId, 
+    storyId,
+    name
+  });
+
   return {
     session: createdSession,
     message: 'Sessão criada com sucesso',
@@ -191,6 +200,14 @@ export async function joinSession(params: JoinSession): Promise<JoinSessionRespo
     },
   };
   eventStore.addUpdate(joinUpdate);
+
+  logInfo('[SESSION] Jogador entrou na sessão', { 
+    sessionId: session.id, 
+    sessionCode: session.sessionCode,
+    userId,
+    username: decoded.username,
+    totalParticipants: updatedParticipants.length
+  });
 
   return {
     session: updatedSession,

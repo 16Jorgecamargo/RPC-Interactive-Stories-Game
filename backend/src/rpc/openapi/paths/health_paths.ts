@@ -17,6 +17,9 @@ export function registerHealthPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 }

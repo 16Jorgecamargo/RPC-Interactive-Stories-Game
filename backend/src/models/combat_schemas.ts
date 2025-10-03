@@ -35,7 +35,7 @@ export const EnemySchema = z.object({
 });
 
 export const CombatParticipantSchema = z.object({
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem',
   }),
@@ -66,7 +66,7 @@ export const CombatParticipantSchema = z.object({
 });
 
 export const CombatStateSchema = z.object({
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -107,7 +107,7 @@ export const InitiateCombatSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -130,7 +130,7 @@ export const GetCombatStateSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -147,18 +147,18 @@ export const RollInitiativeSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem que está rolando iniciativa',
   }),
 });
 
 export const InitiativeRollSchema = z.object({
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem',
   }),
@@ -201,7 +201,7 @@ export const GetCurrentTurnSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -242,11 +242,11 @@ export const PerformAttackSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem atacante',
   }),
@@ -352,15 +352,15 @@ export const AttemptReviveSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem a ser revivido',
   }),
-  reviverId: z.string().uuid().openapi({
+  reviverId: z.string().openapi({
     example: 'char_456e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem que está tentando reviver (deve estar vivo)',
   }),

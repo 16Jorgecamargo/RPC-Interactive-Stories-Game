@@ -11,7 +11,7 @@ export const TieResolutionStrategyEnum = z
   });
 
 export const VoteSchema = z.object({
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem que está votando',
   }),
@@ -26,11 +26,11 @@ export const SubmitVoteSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem votante',
   }),
@@ -45,7 +45,7 @@ export const GetVoteStatusSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -188,7 +188,7 @@ export const ConfigureVoteTimeoutSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador (deve ser owner)',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -203,7 +203,7 @@ export const GetVoteTimerSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -214,7 +214,7 @@ export const ExtendVoteTimerSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),

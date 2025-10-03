@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as eventStore from '../stores/event_store.js';
 import * as sessionStore from '../stores/session_store.js';
+import { logInfo, logError } from './logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
 import type { Participant } from '../models/session_schemas.js';
 
@@ -12,43 +13,43 @@ const HEARTBEAT_CHECK_INTERVAL_MS = 60 * 1000;
 const OFFLINE_THRESHOLD_MS = 5 * 60 * 1000;
 
 export function startCleanupScheduler() {
-  console.log('[Scheduler] Iniciando limpeza periódica de dados antigos...');
+  logInfo('[SCHEDULER] Iniciando limpeza periódica de dados antigos');
 
   setInterval(() => {
     try {
       const deletedUpdates = eventStore.clearOldUpdates(OLD_UPDATES_HOURS);
       if (deletedUpdates > 0) {
-        console.log(`[Scheduler] ${deletedUpdates} updates antigos removidos`);
+        logInfo('[SCHEDULER] Updates antigos removidos', { count: deletedUpdates });
       }
 
       const deletedEvents = eventStore.clearOldEvents(OLD_EVENTS_DAYS);
       if (deletedEvents > 0) {
-        console.log(`[Scheduler] ${deletedEvents} eventos antigos removidos`);
+        logInfo('[SCHEDULER] Eventos antigos removidos', { count: deletedEvents });
       }
     } catch (error) {
-      console.error('[Scheduler] Erro ao limpar dados antigos:', error);
+      logError(error, { context: 'cleanup scheduler' });
     }
   }, CLEANUP_INTERVAL_MS);
 
-  console.log(
-    `[Scheduler] Limpeza agendada a cada ${CLEANUP_INTERVAL_MS / 1000 / 60} minutos`
-  );
+  logInfo('[SCHEDULER] Limpeza agendada', {
+    intervalMinutes: CLEANUP_INTERVAL_MS / 1000 / 60,
+  });
 }
 
 export function startHeartbeatChecker() {
-  console.log('[Scheduler] Iniciando verificação de heartbeat...');
+  logInfo('[SCHEDULER] Iniciando verificação de heartbeat');
 
   setInterval(() => {
     try {
       checkOfflinePlayers();
     } catch (error) {
-      console.error('[Scheduler] Erro ao verificar heartbeat:', error);
+      logError(error, { context: 'heartbeat checker' });
     }
   }, HEARTBEAT_CHECK_INTERVAL_MS);
 
-  console.log(
-    `[Scheduler] Heartbeat verificado a cada ${HEARTBEAT_CHECK_INTERVAL_MS / 1000} segundos`
-  );
+  logInfo('[SCHEDULER] Heartbeat verificado', {
+    intervalSeconds: HEARTBEAT_CHECK_INTERVAL_MS / 1000,
+  });
 }
 
 function checkOfflinePlayers() {
@@ -103,9 +104,10 @@ function checkOfflinePlayers() {
         eventStore.addUpdate(update);
       });
 
-      console.log(
-        `[Scheduler] ${updates.length} jogador(es) marcado(s) como offline na sessão ${session.id}`
-      );
+      logInfo('[SCHEDULER] Jogadores marcados como offline', {
+        sessionId: session.id,
+        count: updates.length,
+      });
     }
   });
 }

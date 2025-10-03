@@ -6,6 +6,7 @@ import * as characterStore from '../stores/character_store.js';
 import * as eventStore from '../stores/event_store.js';
 import { advanceToNextChapter } from './game_service.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import { logInfo, logWarning } from '../utils/logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
 import type {
   SubmitVote,
@@ -25,8 +26,16 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
   const decoded = verifyToken(token);
   const userId = decoded.userId;
 
+  logInfo('[VOTE] Registrando voto', { 
+    sessionId, 
+    characterId, 
+    opcaoId, 
+    userId 
+  });
+
   const session = sessionStore.findById(sessionId);
   if (!session) {
+    logWarning('[VOTE] Sessão não encontrada', { sessionId });
     throw {
       ...JSON_RPC_ERRORS.SERVER_ERROR,
       message: 'Sessão não encontrada',
@@ -35,6 +44,10 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
   }
 
   if (session.status !== 'IN_PROGRESS') {
+    logWarning('[VOTE] Sessão não está em andamento', { 
+      sessionId, 
+      status: session.status 
+    });
     throw {
       ...JSON_RPC_ERRORS.SERVER_ERROR,
       message: 'Sessão não está em andamento',
@@ -117,9 +130,18 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
   let nextChapterId: string | undefined;
 
   if (allVoted) {
+    logInfo('[VOTE] Todos votaram, finalizando votação', { sessionId });
     const result = await finalizeVoting(sessionId);
     votingResult = result.votingResult;
     nextChapterId = result.nextChapterId;
+  } else {
+    const pendingVotes = getOnlineParticipantsCount(sessionId) - Object.keys(updatedVotes).length;
+    logInfo('[VOTE] Voto registrado com sucesso', { 
+      sessionId, 
+      characterId, 
+      opcaoId,
+      pendingVotes 
+    });
   }
 
   return {

@@ -2,8 +2,10 @@ import { OpenAPIRegistry } from '@asteasolutions/zod-to-openapi';
 import {
   RegisterSchema,
   LoginSchema,
+  ValidateTokenSchema,
   RegisterResponseSchema,
   LoginResponseSchema,
+  ValidateTokenResponseSchema,
   UserResponseSchema,
 } from '../../../models/auth_schemas.js';
 
@@ -32,6 +34,12 @@ export function registerAuthPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - username já existe ou senhas não coincidem',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -59,6 +67,12 @@ export function registerAuthPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Credenciais inválidas - username ou senha incorretos',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -77,6 +91,45 @@ export function registerAuthPaths(registry: OpenAPIRegistry) {
             schema: UserResponseSchema,
           },
         },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/auth/validate',
+    tags: ['Auth'],
+    summary: 'Validar token JWT',
+    description: 'Verifica se um token JWT é válido e retorna os dados do usuário se válido. Wrapper REST que internamente chama o método RPC "validateToken".',
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: ValidateTokenSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Token validado com sucesso',
+        content: {
+          'application/json': {
+            schema: ValidateTokenResponseSchema,
+          },
+        },
+      },
+      400: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

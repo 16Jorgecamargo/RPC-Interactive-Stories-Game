@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { Session } from '../models/session_schemas.js';
+import { logInfo, logDebug } from '../utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,19 +14,61 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+let sessionsCache: Session[] | null = null;
+const sessionIndexById = new Map<string, Session>();
+const sessionIndexByCode = new Map<string, Session>();
+
 function loadSessions(): Session[] {
+  if (sessionsCache !== null) {
+    logDebug('[SESSION_STORE] Usando cache de sessões');
+    return sessionsCache;
+  }
+
   if (!fs.existsSync(SESSIONS_FILE)) {
+    logInfo('[SESSION_STORE] Arquivo de sessões não existe, criando novo');
+    sessionsCache = [];
     return [];
   }
+
+  const startTime = Date.now();
   const data = fs.readFileSync(SESSIONS_FILE, 'utf-8');
-  return JSON.parse(data);
+  const sessions: Session[] = JSON.parse(data);
+  sessionsCache = sessions;
+
+  sessionIndexById.clear();
+  sessionIndexByCode.clear();
+  for (const session of sessions) {
+    sessionIndexById.set(session.id, session);
+    sessionIndexByCode.set(session.sessionCode, session);
+  }
+
+  logInfo('[SESSION_STORE] Sessões carregadas do disco', { 
+    count: sessions.length, 
+    duration: `${Date.now() - startTime}ms` 
+  });
+  return sessions;
 }
 
 function saveSessions(sessions: Session[]): void {
+  const startTime = Date.now();
   fs.writeFileSync(SESSIONS_FILE, JSON.stringify(sessions, null, 2));
+  sessionsCache = sessions;
+
+  sessionIndexById.clear();
+  sessionIndexByCode.clear();
+  for (const session of sessions) {
+    sessionIndexById.set(session.id, session);
+    sessionIndexByCode.set(session.sessionCode, session);
+  }
+  
+  logInfo('[SESSION_STORE] Sessões salvas no disco', { 
+    count: sessions.length, 
+    duration: `${Date.now() - startTime}ms` 
+  });
 }
 
 export function createSession(session: Session): Session {
+  logInfo('[SESSION_STORE] Criando nova sessão', { sessionId: session.id, sessionCode: session.sessionCode });
   const sessions = loadSessions();
   sessions.push(session);
   saveSessions(sessions);
@@ -33,13 +76,13 @@ export function createSession(session: Session): Session {
 }
 
 export function findById(id: string): Session | undefined {
-  const sessions = loadSessions();
-  return sessions.find((s) => s.id === id);
+  loadSessions();
+  return sessionIndexById.get(id);
 }
 
 export function findByCode(sessionCode: string): Session | undefined {
-  const sessions = loadSessions();
-  return sessions.find((s) => s.sessionCode === sessionCode);
+  loadSessions();
+  return sessionIndexByCode.get(sessionCode);
 }
 
 export function findByUserId(userId: string): Session[] {
@@ -55,10 +98,12 @@ export function updateSession(
   id: string,
   updates: Partial<Omit<Session, 'id' | 'sessionCode' | 'createdAt'>>,
 ): Session | null {
+  logDebug('[SESSION_STORE] Atualizando sessão', { sessionId: id, fields: Object.keys(updates) });
   const sessions = loadSessions();
   const index = sessions.findIndex((s) => s.id === id);
 
   if (index === -1) {
+    logInfo('[SESSION_STORE] Sessão não encontrada para atualização', { sessionId: id });
     return null;
   }
 
@@ -69,6 +114,7 @@ export function updateSession(
   };
 
   saveSessions(sessions);
+  logInfo('[SESSION_STORE] Sessão atualizada com sucesso', { sessionId: id });
   return sessions[index];
 }
 

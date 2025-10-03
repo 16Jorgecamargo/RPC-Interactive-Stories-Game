@@ -5,11 +5,11 @@ import { ChapterSchema } from './story_schemas.js';
 extendZodWithOpenApi(z);
 
 export const ParticipantInfoSchema = z.object({
-  userId: z.string().uuid().openapi({
+  userId: z.string().openapi({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário',
   }),
-  characterId: z.string().uuid().optional().openapi({
+  characterId: z.string().optional().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem criado',
   }),
@@ -36,7 +36,7 @@ export const ParticipantInfoSchema = z.object({
 });
 
 export const VoteInfoSchema = z.object({
-  characterId: z.string().uuid().openapi({
+  characterId: z.string().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem que votou',
   }),
@@ -51,7 +51,7 @@ export const VoteInfoSchema = z.object({
 });
 
 export const GameStateSchema = z.object({
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -82,11 +82,11 @@ export const GameStateSchema = z.object({
 });
 
 export const TimelineEntrySchema = z.object({
-  id: z.string().uuid().openapi({
+  id: z.string().openapi({
     example: 'event_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do evento',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -121,7 +121,7 @@ export const GetGameStateSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -132,7 +132,7 @@ export const GetTimelineSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),

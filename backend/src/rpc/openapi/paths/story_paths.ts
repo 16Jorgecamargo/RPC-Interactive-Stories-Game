@@ -42,6 +42,18 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - Mermaid inválido ou mal formatado',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -70,6 +82,18 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
             schema: StorySchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - Mermaid inválido ou mal formatado',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -100,6 +124,15 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -128,6 +161,12 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
             schema: PublicCatalogSchema,
           },
         },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -158,6 +197,15 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -186,6 +234,21 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
             schema: StorySchema,
           },
         },
+      },
+      400: {
+        description: 'Erro de validação - Mermaid inválido se foi atualizado',
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -216,6 +279,18 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -244,6 +319,18 @@ export function registerStoryPaths(registry: OpenAPIRegistry) {
             schema: ToggleStoryStatusResponseSchema,
           },
         },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

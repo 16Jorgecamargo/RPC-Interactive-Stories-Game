@@ -11,11 +11,11 @@ export const SessionStatusEnum = z
   });
 
 export const ParticipantSchema = z.object({
-  userId: z.string().uuid().openapi({
+  userId: z.string().openapi({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário participante',
   }),
-  characterId: z.string().uuid().optional().openapi({
+  characterId: z.string().optional().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem criado (opcional até criação)',
   }),
@@ -38,7 +38,7 @@ export const ParticipantSchema = z.object({
 });
 
 export const SessionSchema = z.object({
-  id: z.string().uuid().openapi({
+  id: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID único da sessão',
   }),
@@ -50,11 +50,11 @@ export const SessionSchema = z.object({
     example: 'ABC123',
     description: 'Código de 6 caracteres para entrada',
   }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da história sendo jogada',
   }),
-  ownerId: z.string().uuid().openapi({
+  ownerId: z.string().openapi({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do criador/mestre da sessão',
   }),
@@ -133,7 +133,7 @@ export const CreateSessionSchema = z.object({
     example: 'Aventura na Caverna',
     description: 'Nome da sessão',
   }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da história a ser jogada',
   }),
@@ -169,7 +169,7 @@ export const GetSessionsSchema = z.object({
 
 export const GetSessionDetailsSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -177,7 +177,7 @@ export const GetSessionDetailsSchema = z.object({
 
 export const DeleteSessionSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão a ser excluída',
   }),
@@ -185,7 +185,7 @@ export const DeleteSessionSchema = z.object({
 
 export const LeaveSessionSchema = z.object({
   token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão para sair',
   }),
@@ -229,7 +229,7 @@ export const SessionsListSchema = z.object({
 export const SessionDetailsResponseSchema = z.object({
   session: SessionSchema,
   story: z.object({
-    id: z.string().uuid(),
+    id: z.string(),
     title: z.string(),
     description: z.string(),
     genre: z.string(),

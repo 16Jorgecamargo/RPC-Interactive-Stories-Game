@@ -11,8 +11,8 @@ export const GetAllUsersSchema = z.object({
 });
 
 export const UserWithStatsSchema = z.object({
-  id: z.string().uuid().openapi({
-    example: 'user_123e4567-e89b-12d3-a456-426614174000',
+  id: z.string().openapi({
+    example: '123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário',
   }),
   username: z.string().openapi({
@@ -58,8 +58,8 @@ export const DeleteUserSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  userId: z.string().uuid().openapi({
-    example: 'user_123e4567-e89b-12d3-a456-426614174000',
+  userId: z.string().openapi({
+    example: '123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário a ser excluído',
   }),
 });
@@ -90,8 +90,8 @@ export const PromoteUserSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  userId: z.string().uuid().openapi({
-    example: 'user_123e4567-e89b-12d3-a456-426614174000',
+  userId: z.string().openapi({
+    example: '123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário a ser promovido',
   }),
 });
@@ -117,7 +117,7 @@ export const DemoteUserSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  userId: z.string().uuid().openapi({
+  userId: z.string().openapi({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário a ter admin removido',
   }),
@@ -139,9 +139,6 @@ export const DemoteUserResponseSchema = z.object({
   }),
 });
 
-export type GetAllUsers = z.infer<typeof GetAllUsersSchema>;
-export type UserWithStats = z.infer<typeof UserWithStatsSchema>;
-export type GetAllUsersResponse = z.infer<typeof GetAllUsersResponseSchema>;
 export const GetAllSessionsSchema = z.object({
   token: z.string().openapi({
     example: 'eyJhbGc...',
@@ -151,26 +148,26 @@ export const GetAllSessionsSchema = z.object({
     example: 'IN_PROGRESS',
     description: 'Filtrar por status da sessão',
   }),
-  ownerId: z.string().uuid().optional().openapi({
-    example: 'user_123e4567-e89b-12d3-a456-426614174000',
+  ownerId: z.string().optional().openapi({
+    example: '123e4567-e89b-12d3-a456-426614174000',
     description: 'Filtrar por ID do dono da sessão',
   }),
-  storyId: z.string().uuid().optional().openapi({
+  storyId: z.string().optional().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
     description: 'Filtrar por ID da história',
   }),
 });
 
 export const SessionDetailSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   name: z.string(),
-  storyId: z.string().uuid(),
+  storyId: z.string(),
   storyName: z.string(),
-  ownerId: z.string().uuid(),
+  ownerId: z.string(),
   ownerUsername: z.string(),
   status: z.enum(['WAITING_PLAYERS', 'CREATING_CHARACTERS', 'IN_PROGRESS', 'COMPLETED']),
   currentChapter: z.string(),
-  participantIds: z.array(z.string().uuid()),
+  participantIds: z.array(z.string()),
   participantCount: z.number().int().min(0),
   maxPlayers: z.number().int().min(1).max(10),
   createdAt: z.string().datetime(),
@@ -192,7 +189,7 @@ export const GetSessionDetailSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -209,7 +206,7 @@ export const DeleteSessionSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão a ser excluída',
   }),
@@ -235,7 +232,7 @@ export const ForceSessionStateSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -261,12 +258,6 @@ export const ForceSessionStateResponseSchema = z.object({
   }),
 });
 
-export type DeleteUser = z.infer<typeof DeleteUserSchema>;
-export type DeleteUserResponse = z.infer<typeof DeleteUserResponseSchema>;
-export type PromoteUser = z.infer<typeof PromoteUserSchema>;
-export type PromoteUserResponse = z.infer<typeof PromoteUserResponseSchema>;
-export type DemoteUser = z.infer<typeof DemoteUserSchema>;
-export type DemoteUserResponse = z.infer<typeof DemoteUserResponseSchema>;
 export const GetSystemStatsSchema = z.object({
   token: z.string().openapi({
     example: 'eyJhbGc...',
@@ -318,7 +309,7 @@ export const GetStoryUsageSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token (deve ser admin)',
   }),
-  storyId: z.string().uuid().openapi({
+  storyId: z.string().openapi({
     example: 'story_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da história',
   }),
@@ -364,6 +355,15 @@ export const GetStoryUsageResponseSchema = z.object({
   }),
 });
 
+export type GetAllUsers = z.infer<typeof GetAllUsersSchema>;
+export type UserWithStats = z.infer<typeof UserWithStatsSchema>;
+export type GetAllUsersResponse = z.infer<typeof GetAllUsersResponseSchema>;
+export type DeleteUser = z.infer<typeof DeleteUserSchema>;
+export type DeleteUserResponse = z.infer<typeof DeleteUserResponseSchema>;
+export type PromoteUser = z.infer<typeof PromoteUserSchema>;
+export type PromoteUserResponse = z.infer<typeof PromoteUserResponseSchema>;
+export type DemoteUser = z.infer<typeof DemoteUserSchema>;
+export type DemoteUserResponse = z.infer<typeof DemoteUserResponseSchema>;
 export type GetAllSessions = z.infer<typeof GetAllSessionsSchema>;
 export type SessionDetail = z.infer<typeof SessionDetailSchema>;
 export type GetAllSessionsResponse = z.infer<typeof GetAllSessionsResponseSchema>;

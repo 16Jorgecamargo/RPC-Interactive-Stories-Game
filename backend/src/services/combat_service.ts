@@ -5,6 +5,7 @@ import * as storyStore from '../stores/story_store.js';
 import * as eventStore from '../stores/event_store.js';
 import { verifyToken } from '../utils/jwt.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
+import { logInfo, logWarning } from '../utils/logger.js';
 import type { CombatState, Enemy, CombatParticipant, InitiateCombat, InitiateCombatResponse } from '../models/combat_schemas.js';
 import type { GameUpdate } from '../models/update_schemas.js';
 import { v4 as uuidv4 } from 'uuid';
@@ -71,14 +72,21 @@ export async function initiateCombat(params: InitiateCombat): Promise<InitiateCo
 
     const decoded = verifyToken(token);
     if (!decoded) {
+      logWarning('[COMBAT] Token inválido', { sessionId });
       throw {
         ...JSON_RPC_ERRORS.UNAUTHORIZED,
         message: 'Token inválido ou expirado',
       };
     }
 
+    logInfo('[COMBAT] Iniciando combate', { 
+      sessionId, 
+      userId: decoded.userId 
+    });
+
     const session = await sessionStore.findById(sessionId);
     if (!session) {
+      logWarning('[COMBAT] Sessão não encontrada', { sessionId });
       throw {
         ...JSON_RPC_ERRORS.SERVER_ERROR,
         message: 'Sessão não encontrada',
@@ -87,6 +95,10 @@ export async function initiateCombat(params: InitiateCombat): Promise<InitiateCo
     }
 
     if (session.status !== 'IN_PROGRESS') {
+      logWarning('[COMBAT] Sessão não está em progresso', { 
+        sessionId, 
+        status: session.status 
+      });
       throw {
         ...JSON_RPC_ERRORS.SERVER_ERROR,
         message: 'Apenas sessões em progresso podem iniciar combate',
@@ -173,6 +185,13 @@ export async function initiateCombat(params: InitiateCombat): Promise<InitiateCo
     };
 
     const savedCombat = combatStore.create(combatState);
+
+    logInfo('[COMBAT] Combate criado com sucesso', { 
+      sessionId, 
+      chapterId: session.currentChapter,
+      enemyCount: enemies.length,
+      participantCount: participants.length 
+    });
 
     const combatUpdate: GameUpdate = {
       id: `update_${uuidv4()}`,

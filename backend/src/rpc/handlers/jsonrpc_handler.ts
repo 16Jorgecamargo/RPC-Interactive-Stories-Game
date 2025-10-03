@@ -8,6 +8,7 @@ import {
   type JsonRpcRequest,
 } from '../../models/jsonrpc_schemas.js';
 import { methodRegistry } from './rpc_methods/index.js';
+import { logRPCCall, logError } from '../../utils/logger.js';
 
 const jsonRpcHandler: FastifyPluginAsync = async (app) => {
   app.withTypeProvider<ZodTypeProvider>().route({
@@ -57,48 +58,58 @@ const jsonRpcHandler: FastifyPluginAsync = async (app) => {
       }
 
       try {
+        const startTime = Date.now();
+        logRPCCall(method, params);
+
         const result = await rpcMethod((params || {}) as never);
+
+        const duration = Date.now() - startTime;
+        logRPCCall(method, params, duration);
 
         return reply.code(200).send({
           jsonrpc: '2.0',
           id,
           result,
         });
-      } catch (error: any) {
-        if (error.code && error.message) {
-          const statusCode = error.code === -32001 ? 401 : 400;
+      } catch (error: unknown) {
+        const err = error as { code?: number; message?: string; data?: unknown; name?: string; errors?: unknown };
+
+        if (err.code && err.message) {
+          const statusCode = err.code === -32001 ? 401 : 400;
+          logError(error, { method, statusCode, errorCode: err.code });
           return reply.code(statusCode).send({
             jsonrpc: '2.0',
             id,
             error: {
-              code: error.code,
-              message: error.message,
-              data: error.data,
+              code: err.code,
+              message: err.message,
+              data: err.data,
             },
           });
         }
 
-        if (error.name === 'ZodError') {
+        if (err.name === 'ZodError') {
+          logError(error, { method, type: 'validation' });
           return reply.code(400).send({
             jsonrpc: '2.0',
             id,
             error: {
               ...JSON_RPC_ERRORS.INVALID_PARAMS,
               data: {
-                validationErrors: error.errors,
+                validationErrors: err.errors,
               },
             },
           });
         }
 
-        app.log.error(error);
+        logError(error, { method, type: 'internal' });
         return reply.code(500).send({
           jsonrpc: '2.0',
           id,
           error: {
             ...JSON_RPC_ERRORS.INTERNAL_ERROR,
             data: {
-              message: error.message || 'Erro interno do servidor',
+              message: err.message || 'Erro interno do servidor',
             },
           },
         });

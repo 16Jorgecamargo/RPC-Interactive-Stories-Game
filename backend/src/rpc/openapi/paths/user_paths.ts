@@ -38,6 +38,12 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
       401: {
         description: 'Token inválido ou expirado',
       },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -73,6 +79,12 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
       401: {
         description: 'Token inválido ou expirado',
       },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -107,6 +119,12 @@ export function registerUserPaths(registry: OpenAPIRegistry) {
       },
       401: {
         description: 'Token inválido ou senha atual incorreta',
+      },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

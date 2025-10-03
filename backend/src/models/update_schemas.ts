@@ -29,7 +29,7 @@ export const UpdateTypeEnum = z.enum([
 });
 
 export const GameUpdateSchema = z.object({
-  id: z.string().uuid().openapi({
+  id: z.string().openapi({
     example: 'update_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID único da atualização',
   }),
@@ -38,7 +38,7 @@ export const GameUpdateSchema = z.object({
     example: '2025-01-15T10:30:00Z',
     description: 'Momento em que a atualização ocorreu',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -56,11 +56,11 @@ export const CheckGameUpdatesSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  lastUpdateId: z.string().uuid().optional().openapi({
+  lastUpdateId: z.string().optional().openapi({
     example: 'update_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da última atualização recebida (retorna apenas atualizações posteriores)',
   }),
@@ -70,7 +70,7 @@ export const GameUpdatesResponseSchema = z.object({
   updates: z.array(GameUpdateSchema).openapi({
     description: 'Lista de atualizações desde lastUpdateId',
   }),
-  lastUpdateId: z.string().uuid().optional().openapi({
+  lastUpdateId: z.string().optional().openapi({
     example: 'update_789e4567-e89b-12d3-a456-426614174000',
     description: 'ID da última atualização na lista (usar em próximo poll)',
   }),
@@ -85,7 +85,7 @@ export const UpdatePlayerStatusSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
@@ -111,11 +111,11 @@ export const CheckMessagesSchema = z.object({
     example: 'eyJhbGc...',
     description: 'JWT token do jogador',
   }),
-  sessionId: z.string().uuid().openapi({
+  sessionId: z.string().openapi({
     example: 'session_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da sessão',
   }),
-  lastMessageId: z.string().uuid().optional().openapi({
+  lastMessageId: z.string().optional().openapi({
     example: 'msg_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID da última mensagem recebida (retorna apenas mensagens posteriores)',
   }),

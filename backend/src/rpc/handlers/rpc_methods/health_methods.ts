@@ -1,5 +1,5 @@
 export const healthMethods = {
-  health: async (params: unknown) => {
+  health: async (_params: unknown) => {
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),

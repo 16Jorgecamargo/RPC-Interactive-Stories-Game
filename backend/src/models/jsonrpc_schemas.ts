@@ -35,15 +35,15 @@ export const HealthResponseSchema = z.object({
 });
 
 export const JSON_RPC_ERRORS = {
-  PARSE_ERROR: { code: -32700, message: 'Parse error' },
-  INVALID_REQUEST: { code: -32600, message: 'Invalid Request' },
-  METHOD_NOT_FOUND: { code: -32601, message: 'Method not found' },
-  INVALID_PARAMS: { code: -32602, message: 'Invalid params' },
-  INTERNAL_ERROR: { code: -32603, message: 'Internal error' },
-  SERVER_ERROR: { code: -32000, message: 'Server error' },
-  UNAUTHORIZED: { code: -32001, message: 'Unauthorized' },
-  FORBIDDEN: { code: -32002, message: 'Forbidden' },
-  NOT_FOUND: { code: -32003, message: 'Not found' },
+  PARSE_ERROR: { code: -32700, message: 'Erro de análise' },
+  INVALID_REQUEST: { code: -32600, message: 'Requisição inválida' },
+  METHOD_NOT_FOUND: { code: -32601, message: 'Método não encontrado' },
+  INVALID_PARAMS: { code: -32602, message: 'Parâmetros inválidos' },
+  INTERNAL_ERROR: { code: -32603, message: 'Erro interno' },
+  SERVER_ERROR: { code: -32000, message: 'Erro do servidor' },
+  UNAUTHORIZED: { code: -32001, message: 'Não autorizado' },
+  FORBIDDEN: { code: -32002, message: 'Proibido' },
+  NOT_FOUND: { code: -32003, message: 'Não encontrado' },
 } as const;
 
 export type JsonRpcRequest = z.infer<typeof JsonRpcRequestSchema>;

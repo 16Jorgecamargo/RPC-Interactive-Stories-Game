@@ -54,6 +54,9 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
       403: {
         description: 'Acesso negado - apenas administradores',
       },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -82,11 +85,20 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - admin não pode excluir a própria conta',
+      },
       401: {
         description: 'Token inválido ou ausente',
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -116,11 +128,20 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - usuário já é administrador',
+      },
       401: {
         description: 'Token inválido ou ausente',
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -150,11 +171,20 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - admin não pode remover os próprios privilégios ou usuário não é admin',
+      },
       401: {
         description: 'Token inválido ou ausente',
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'Usuário não encontrado',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -184,11 +214,17 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação',
+      },
       401: {
         description: 'Token inválido ou ausente',
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -224,6 +260,12 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
       403: {
         description: 'Acesso negado - apenas administradores',
       },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -258,6 +300,12 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
       403: {
         description: 'Acesso negado - apenas administradores',
       },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -286,11 +334,20 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
           },
         },
       },
+      400: {
+        description: 'Erro de validação - estado inválido',
+      },
       401: {
         description: 'Token inválido ou ausente',
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });
@@ -326,6 +383,9 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
       403: {
         description: 'Acesso negado - apenas administradores',
       },
+      500: {
+        description: 'Erro interno do servidor',
+      },
     },
   });
 
@@ -359,6 +419,12 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
       },
       403: {
         description: 'Acesso negado - apenas administradores',
+      },
+      404: {
+        description: 'História não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
       },
     },
   });

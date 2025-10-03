@@ -577,18 +577,26 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Melhorar performance e qualidade do código
 
 #### Cards
-- [ ] **BE-OPT-001**: Implementar cache para histórias (evitar re-parse)
+- [x] **BE-OPT-001**: Implementar cache para histórias (evitar re-parse)
   - **Depende de**: `BE-STORY-007`
-- [ ] **BE-OPT-002**: Adicionar índices nos stores (busca rápida por ID)
-- [ ] **BE-OPT-003**: Otimizar polling (evitar loops vazios)
+  - **Implementado**: Sistema de cache genérico com TTL e cleanup automático
+- [x] **BE-OPT-002**: Adicionar índices nos stores (busca rápida por ID)
+  - **Implementado**: Índices em memória (Map) para story_store e session_store com cache de dados
+- [x] **BE-OPT-003**: Otimizar polling (evitar loops vazios)
   - **Depende de**: `BE-POLL-003`
-- [ ] **BE-OPT-004**: Refatorar código duplicado (DRY)
-- [ ] **BE-OPT-005**: Adicionar logging estruturado (Winston ou Pino)
-- [ ] **BE-OPT-006**: Implementar rate limiting (evitar spam)
-- [ ] **BE-OPT-007**: Adicionar validação de tamanho de payload
-- [ ] **BE-OPT-008**: Mude os export type para o final do arquivos arquivos schemas
+  - **Implementado**: Verificação de cache antes de consultas no update_service
+- [x] **BE-OPT-004**: Refatorar código duplicado (DRY)
+  - **Implementado**: Criado `validation.ts` com funções reutilizáveis: `validateToken()`, `validateAdmin()`, `validateOwnership()`, `validateSessionParticipant()`, `validateResourceExists()`
+- [x] **BE-OPT-005**: Adicionar logging estruturado (Winston ou Pino)
+  - **Implementado**: Logger estruturado com Pino, pino-pretty para dev, redação de dados sensíveis
+- [x] **BE-OPT-006**: Implementar rate limiting (evitar spam)
+  - **Implementado**: Sistema de rate limiting com três limitadores: global (100 req/min), strict (30 req/min), auth (10 req/5min). Middleware integrado no servidor com headers de limite
+- [x] **BE-OPT-007**: Adicionar validação de tamanho de payload
+  - **Implementado**: Validação recursiva de payload com limites configuráveis (tamanho total, comprimento de string, tamanho de array, profundidade de objeto). Middleware `preHandler` com retorno 413 para payloads inválidos
+- [x] **BE-OPT-008**: Mude os export type para o final do arquivos arquivos schemas
+  - **Implementado**: Todos os arquivos schemas já possuem export type no final
 
-**Critério de Aceite**: Sistema roda de forma estável e performática
+**Critério de Aceite**: Sistema roda de forma estável e performática ✅
 
 ---
 

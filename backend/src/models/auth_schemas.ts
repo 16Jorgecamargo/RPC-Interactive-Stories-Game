@@ -60,7 +60,21 @@ export const RegisterResponseSchema = z.object({
     .openapi({ example: 'Usuário já existe', description: 'Mensagem de erro' }),
 });
 
+export const ValidateTokenSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
+    description: 'JWT token para validação',
+  }),
+});
+
+export const ValidateTokenResponseSchema = z.object({
+  valid: z.boolean().openapi({ example: true, description: 'Se o token é válido' }),
+  user: UserResponseSchema.optional().openapi({ description: 'Dados do usuário (se válido)' }),
+});
+
 export type User = z.infer<typeof UserSchema>;
 export type UserResponse = z.infer<typeof UserResponseSchema>;
 export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 export type RegisterResponse = z.infer<typeof RegisterResponseSchema>;
+export type ValidateToken = z.infer<typeof ValidateTokenSchema>;
+export type ValidateTokenResponse = z.infer<typeof ValidateTokenResponseSchema>;
