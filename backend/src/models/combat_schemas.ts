@@ -347,6 +347,78 @@ export const PerformAttackResponseSchema = z.object({
 });
 
 export type CombatParticipant = z.infer<typeof CombatParticipantSchema>;
+export const AttemptReviveSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token',
+  }),
+  sessionId: z.string().uuid().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  characterId: z.string().uuid().openapi({
+    example: 'char_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID do personagem a ser revivido',
+  }),
+  reviverId: z.string().uuid().openapi({
+    example: 'char_456e4567-e89b-12d3-a456-426614174000',
+    description: 'ID do personagem que está tentando reviver (deve estar vivo)',
+  }),
+});
+
+export const ReviveRollSchema = z.object({
+  dice1: z.number().int().min(1).max(10).openapi({
+    example: 7,
+    description: 'Resultado do primeiro d10',
+  }),
+  dice2: z.number().int().min(1).max(10).openapi({
+    example: 5,
+    description: 'Resultado do segundo d10',
+  }),
+  total: z.number().int().min(2).max(20).openapi({
+    example: 12,
+    description: 'Soma dos dois d10',
+  }),
+  success: z.boolean().openapi({
+    example: true,
+    description: 'true se total ≥ 11',
+  }),
+});
+
+export const AttemptReviveResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a ação foi executada (não confundir com sucesso da ressurreição)',
+  }),
+  reviveRoll: ReviveRollSchema,
+  revived: z.boolean().openapi({
+    example: true,
+    description: 'Indica se o personagem foi revivido',
+  }),
+  attemptsUsed: z.number().int().min(1).max(3).openapi({
+    example: 1,
+    description: 'Número de tentativas usadas até agora',
+  }),
+  attemptsRemaining: z.number().int().min(0).max(3).openapi({
+    example: 2,
+    description: 'Tentativas restantes',
+  }),
+  permanentlyDead: z.boolean().openapi({
+    example: false,
+    description: 'true se atingiu 3 falhas e não pode mais ser revivido',
+  }),
+  character: z.object({
+    id: z.string(),
+    name: z.string(),
+    hp: z.number().int(),
+    maxHp: z.number().int(),
+    isDead: z.boolean(),
+    reviveAttempts: z.number().int(),
+  }).openapi({
+    description: 'Estado atual do personagem após tentativa',
+  }),
+});
+
 export type CombatState = z.infer<typeof CombatStateSchema>;
 export type InitiateCombat = z.infer<typeof InitiateCombatSchema>;
 export type InitiateCombatResponse = z.infer<typeof InitiateCombatResponseSchema>;
@@ -362,3 +434,6 @@ export type PerformAttack = z.infer<typeof PerformAttackSchema>;
 export type AttackRoll = z.infer<typeof AttackRollSchema>;
 export type DamageRoll = z.infer<typeof DamageRollSchema>;
 export type PerformAttackResponse = z.infer<typeof PerformAttackResponseSchema>;
+export type AttemptRevive = z.infer<typeof AttemptReviveSchema>;
+export type ReviveRoll = z.infer<typeof ReviveRollSchema>;
+export type AttemptReviveResponse = z.infer<typeof AttemptReviveResponseSchema>;

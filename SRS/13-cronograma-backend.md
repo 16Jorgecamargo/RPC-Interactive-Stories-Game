@@ -457,18 +457,23 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Mecânica de revival
 
 #### Cards
-- [ ] **BE-COMBAT-016**: Implementar `POST /rpc/combat/:sessionId/revive`
+- [x] **BE-COMBAT-017**: Implementar `POST /rpc/combat/revive`
   - **Depende de**: `BE-COMBAT-014`
-- [ ] **BE-COMBAT-017**: Rolar 2d10, sucesso se soma ≥ 11
-  - **Depende de**: `BE-COMBAT-016`
-- [ ] **BE-COMBAT-018**: Limitar a 3 tentativas de ressurreição
+  - **Implementado**: `AttemptReviveSchema`, `attemptRevive()` service, RPC method, wrapper e OpenAPI path
+- [x] **BE-COMBAT-018**: Rolar 2d10, sucesso se soma ≥ 11
   - **Depende de**: `BE-COMBAT-017`
-- [ ] **BE-COMBAT-019**: Marcar personagem como `PERMANENTLY_DEAD` após 3 falhas
+  - **Implementado**: Lógica de rolagem 2d10 com validação `total >= 11`
+- [x] **BE-COMBAT-019**: Limitar a 3 tentativas de ressurreição
   - **Depende de**: `BE-COMBAT-018`
-- [ ] **BE-COMBAT-020**: Implementar `GET /rpc/combat/:sessionId/state`
-  - **Depende de**: `BE-COMBAT-002`
+  - **Implementado**: Campo `reviveAttempts` em CombatParticipant com limite de 3
+- [x] **BE-COMBAT-020**: Marcar personagem como permanentemente morto após 3 falhas
+  - **Depende de**: `BE-COMBAT-019`
+  - **Implementado**: Flag `permanentlyDead` quando `reviveAttempts >= 3` e tentativa falha
+- [x] **BE-COMBAT-021**: Personagem revive com 50% HP
+  - **Depende de**: `BE-COMBAT-018`
+  - **Implementado**: `hp = Math.floor(maxHp * 0.5)` em caso de sucesso
 
-**Critério de Aceite**: Personagens podem ser revividos com 2d10
+**Critério de Aceite**: Personagens podem ser revividos com 2d10. Máximo de 3 tentativas. Revivem com 50% HP ✅
 
 ---
 

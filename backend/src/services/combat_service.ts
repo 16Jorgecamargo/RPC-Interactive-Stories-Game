@@ -672,3 +672,150 @@ export async function performAttack(params: import('../models/combat_schemas.js'
     winningSide: combatEnded ? winningSide : undefined,
   };
 }
+
+export async function attemptRevive(params: import('../models/combat_schemas.js').AttemptRevive): Promise<import('../models/combat_schemas.js').AttemptReviveResponse> {
+  const { token, sessionId, characterId, reviverId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const reviverCharacter = characterStore.findById(reviverId);
+  if (!reviverCharacter || reviverCharacter.userId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Personagem revivedor não pertence a você',
+      data: { reviverId, userId },
+    };
+  }
+
+  const targetCharacter = characterStore.findById(characterId);
+  if (!targetCharacter) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem alvo não encontrado',
+      data: { characterId },
+    };
+  }
+
+  const combatState = combatStore.findBySessionId(sessionId);
+  if (!combatState || !combatState.isActive) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não há combate ativo nesta sessão',
+      data: { sessionId },
+    };
+  }
+
+  const reviver = combatState.participants.find((p) => p.characterId === reviverId);
+  if (!reviver) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem revivedor não está no combate',
+      data: { reviverId },
+    };
+  }
+
+  if (reviver.isDead) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem revivedor está morto e não pode reviver outros',
+      data: { reviverId },
+    };
+  }
+
+  const target = combatState.participants.find((p) => p.characterId === characterId);
+  if (!target) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem alvo não está no combate',
+      data: { characterId },
+    };
+  }
+
+  if (!target.isDead) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem alvo não está morto',
+      data: { characterId },
+    };
+  }
+
+  if (target.reviveAttempts >= 3) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Personagem já usou todas as 3 tentativas de ressurreição e está permanentemente morto',
+      data: { characterId, reviveAttempts: target.reviveAttempts },
+    };
+  }
+
+  const dice1 = Math.floor(Math.random() * 10) + 1;
+  const dice2 = Math.floor(Math.random() * 10) + 1;
+  const total = dice1 + dice2;
+  const reviveSuccess = total >= 11;
+
+  target.reviveAttempts += 1;
+
+  const attemptsRemaining = 3 - target.reviveAttempts;
+  const permanentlyDead = target.reviveAttempts >= 3 && !reviveSuccess;
+
+  if (reviveSuccess) {
+    target.isDead = false;
+    target.hp = Math.floor(target.maxHp * 0.5);
+  }
+
+  combatStore.update(sessionId, combatState);
+
+  const update: GameUpdate = {
+    id: uuidv4(),
+    sessionId,
+    type: reviveSuccess ? 'CHARACTER_REVIVED' : 'REVIVE_FAILED',
+    timestamp: new Date().toISOString(),
+    data: {
+      characterId,
+      characterName: targetCharacter.name,
+      reviverId,
+      reviverName: reviverCharacter.name,
+      dice1,
+      dice2,
+      total,
+      success: reviveSuccess,
+      attemptsUsed: target.reviveAttempts,
+      attemptsRemaining,
+      permanentlyDead,
+      hpRestored: reviveSuccess ? target.hp : 0,
+    },
+  };
+
+  eventStore.addUpdate(update);
+
+  return {
+    success: true,
+    reviveRoll: {
+      dice1,
+      dice2,
+      total,
+      success: reviveSuccess,
+    },
+    revived: reviveSuccess,
+    attemptsUsed: target.reviveAttempts,
+    attemptsRemaining,
+    permanentlyDead,
+    character: {
+      id: characterId,
+      name: targetCharacter.name,
+      hp: target.hp,
+      maxHp: target.maxHp,
+      isDead: target.isDead,
+      reviveAttempts: target.reviveAttempts,
+    },
+  };
+}

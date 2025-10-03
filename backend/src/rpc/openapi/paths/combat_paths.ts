@@ -10,6 +10,8 @@ import {
   GetCurrentTurnResponseSchema,
   PerformAttackSchema,
   PerformAttackResponseSchema,
+  AttemptReviveSchema,
+  AttemptReviveResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export function registerCombatPaths(registry: OpenAPIRegistry) {
@@ -169,6 +171,40 @@ export function registerCombatPaths(registry: OpenAPIRegistry) {
         content: {
           'application/json': {
             schema: PerformAttackResponseSchema,
+          },
+        },
+      },
+      400: {
+        description: 'Erro na requisição',
+      },
+      401: {
+        description: 'Token inválido',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/combat/revive',
+    tags: ['Combat'],
+    summary: 'Tentar reviver personagem',
+    description: 'Tenta ressuscitar um personagem morto no combate. Rola **2d10**, sucesso se soma **≥ 11**. Em caso de sucesso, personagem revive com **50% do HP máximo**. Máximo de **3 tentativas** por personagem. Após 3 falhas, personagem fica **permanentemente morto** e não pode mais ser revivido. Wrapper REST que internamente chama o método RPC "attemptRevive".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: AttemptReviveSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Tentativa de ressurreição executada',
+        content: {
+          'application/json': {
+            schema: AttemptReviveResponseSchema,
           },
         },
       },

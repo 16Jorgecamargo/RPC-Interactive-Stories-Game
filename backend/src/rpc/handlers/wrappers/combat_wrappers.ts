@@ -7,11 +7,13 @@ import {
   RollInitiativeSchema,
   GetCurrentTurnSchema,
   PerformAttackSchema,
+  AttemptReviveSchema,
   InitiateCombatResponseSchema,
   GetCombatStateResponseSchema,
   RollInitiativeResponseSchema,
   GetCurrentTurnResponseSchema,
   PerformAttackResponseSchema,
+  AttemptReviveResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export async function registerCombatWrappers(app: FastifyInstance) {
@@ -101,6 +103,24 @@ export async function registerCombatWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await combatService.performAttack(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/combat/revive',
+    schema: {
+      tags: ['Combat'],
+      summary: 'Tentar reviver personagem',
+      description: 'Tenta ressuscitar um personagem morto rolando 2d10. Sucesso se soma ≥ 11. Personagem revive com 50% do HP máximo. Máximo de 3 tentativas por personagem. Após 3 falhas, personagem fica permanentemente morto.',
+      body: AttemptReviveSchema,
+      response: {
+        200: AttemptReviveResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await combatService.attemptRevive(request.body);
       return reply.send(result);
     },
   });
