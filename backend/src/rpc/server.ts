@@ -60,6 +60,7 @@ async function start() {
         { name: 'Chat', description: 'Sistema de chat em tempo real (wrappers para Swagger UI)' },
         { name: 'Updates', description: 'Long polling para atualizações em tempo real (wrappers para Swagger UI)' },
         { name: 'Combat', description: 'Sistema de combate D&D (wrappers para Swagger UI)' },
+        { name: 'Admin', description: 'Painel administrativo - gerenciamento de usuários e sistema (apenas admins)' },
       ],
     });
 

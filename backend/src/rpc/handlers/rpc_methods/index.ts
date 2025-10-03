@@ -9,6 +9,7 @@ import { voteMethods } from './vote_methods.js';
 import { chatMethods } from './chat_methods.js';
 import { updateMethods } from './update_methods.js';
 import { combatMethods } from './combat_methods.js';
+import { adminMethods } from './admin_methods.js';
 
 export const methodRegistry = {
   ...authMethods,
@@ -22,4 +23,5 @@ export const methodRegistry = {
   ...chatMethods,
   ...updateMethods,
   ...combatMethods,
+  ...adminMethods,
 };

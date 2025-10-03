@@ -483,20 +483,26 @@ Este cronograma contém **apenas cards de backend** (servidor, API, lógica de n
 **Objetivo**: Visualizar e administrar usuários
 
 #### Cards
-- [ ] **BE-ADMIN-001**: Implementar `GET /rpc/admin/users` (listar todos, admin only)
+- [x] **BE-ADMIN-001**: Implementar `POST /rpc/admin/users` (listar todos, admin only)
   - **Depende de**: `BE-USER-006`
-- [ ] **BE-ADMIN-002**: Adicionar estatísticas (total sessões, personagens)
+  - **Implementado**: `GetAllUsersSchema`, `getAllUsers()` service, RPC method, wrapper e OpenAPI path
+- [x] **BE-ADMIN-002**: Adicionar estatísticas (total sessões, personagens, sessões ativas)
   - **Depende de**: `BE-ADMIN-001`
-- [ ] **BE-ADMIN-003**: Implementar `DELETE /rpc/admin/users/:id` (excluir usuário)
+  - **Implementado**: Campo `stats` em `UserWithStatsSchema` com totalSessions, totalCharacters, activeSessions
+- [x] **BE-ADMIN-003**: Implementar `POST /rpc/admin/users/delete` (excluir usuário)
   - **Depende de**: `BE-ADMIN-001`
-- [ ] **BE-ADMIN-004**: Confirmar exclusão com dialog (cascade info)
+  - **Implementado**: `DeleteUserSchema`, `deleteUser()` service com exclusão em cascata
+- [x] **BE-ADMIN-004**: Retornar informações de exclusão em cascata
   - **Depende de**: `BE-ADMIN-003`
-- [ ] **BE-ADMIN-005**: Implementar `POST /rpc/admin/users/:id/promote` (tornar admin)
+  - **Implementado**: Campo `cascadeInfo` em response com sessionsDeleted e charactersDeleted
+- [x] **BE-ADMIN-005**: Implementar `POST /rpc/admin/users/promote` (tornar admin)
   - **Depende de**: `BE-ADMIN-001`
-- [ ] **BE-ADMIN-006**: Implementar `POST /rpc/admin/users/:id/demote` (remover admin)
+  - **Implementado**: `PromoteUserSchema`, `promoteUser()` service alterando role para ADMIN
+- [x] **BE-ADMIN-006**: Implementar `POST /rpc/admin/users/demote` (remover admin)
   - **Depende de**: `BE-ADMIN-001`
+  - **Implementado**: `DemoteUserSchema`, `demoteUser()` service alterando role para USER
 
-**Critério de Aceite**: Admin visualiza e gerencia todos os usuários
+**Critério de Aceite**: Admin visualiza e gerencia todos os usuários com estatísticas e ações de promover/remover privilégios ✅
 
 ---
 

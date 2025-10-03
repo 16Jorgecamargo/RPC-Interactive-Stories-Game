@@ -93,3 +93,17 @@ export function updatePassword(userId: string, newPasswordHash: string): boolean
 export function getAllUsers(): User[] {
   return loadUsers();
 }
+
+export function deleteUser(userId: string): boolean {
+  const users = loadUsers();
+  const index = users.findIndex((u) => u.id === userId);
+
+  if (index === -1) {
+    return false;
+  }
+
+  users.splice(index, 1);
+  saveUsers(users);
+
+  return true;
+}
