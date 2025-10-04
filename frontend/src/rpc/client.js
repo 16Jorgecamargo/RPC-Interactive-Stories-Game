@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://localhost:8443';
+const SERVER_URL = window.ENV?.SERVER_URL || 'http://173.249.60.72:8443';
 const TIMEOUT_MS = 10000;
 const MAX_RETRIES = 3;
 

@@ -1,7 +1,6 @@
 import RpcClient from '../../rpc/client.js';
 
-const SERVER_URL = 'http://localhost:8443';
-const rpcClient = new RpcClient(SERVER_URL);
+const rpcClient = new RpcClient();
 
 const form = document.getElementById('registerForm');
 const usernameInput = document.getElementById('username');
