@@ -1,0 +1,28 @@
+import { FastifyInstance } from 'fastify';
+import { registerAuthWrappers } from './auth_wrappers.js';
+import { registerHealthWrappers } from './health_wrappers.js';
+import { registerUserWrappers } from './user_wrappers.js';
+import { registerCharacterWrappers } from './character_wrappers.js';
+import { registerStoryWrappers } from './story_wrappers.js';
+import { registerSessionWrappers } from './session_wrappers.js';
+import { registerGameWrappers } from './game_wrappers.js';
+import { registerVoteWrappers } from './vote_wrappers.js';
+import { registerChatWrappers } from './chat_wrappers.js';
+import { registerUpdateWrappers } from './update_wrappers.js';
+import { registerCombatWrappers } from './combat_wrappers.js';
+import { registerAdminWrappers } from './admin_wrappers.js';
+
+export async function registerAllWrappers(app: FastifyInstance) {
+  await registerAuthWrappers(app);
+  await registerHealthWrappers(app);
+  await registerUserWrappers(app);
+  await registerCharacterWrappers(app);
+  await registerStoryWrappers(app);
+  await registerSessionWrappers(app);
+  await registerGameWrappers(app);
+  await registerVoteWrappers(app);
+  await registerChatWrappers(app);
+  await registerUpdateWrappers(app);
+  await registerCombatWrappers(app);
+  await registerAdminWrappers(app);
+}

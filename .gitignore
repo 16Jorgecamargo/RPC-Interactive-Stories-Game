@@ -134,3 +134,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+.github/
+github/
+.playwright-mcp/
+.claude/
+CLAUDE.md
+telasHTML/

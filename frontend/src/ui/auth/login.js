@@ -2,7 +2,7 @@ import RpcClient from '../../rpc/client.js';
 
 const rpcClient = new RpcClient();
 
-const form = document.getElementById('loginForm');
+const form = document.querySelector('form');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const loginButton = document.getElementById('loginButton');
@@ -99,7 +99,6 @@ async function handleLogin(username, password) {
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const username = usernameInput.value.trim();
   const password = passwordInput.value;
 

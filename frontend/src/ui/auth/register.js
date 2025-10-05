@@ -1,4 +1,5 @@
 import RpcClient from '../../rpc/client.js';
+import { dialogManager } from '../shared/dialog.js';
 
 const rpcClient = new RpcClient();
 
@@ -24,7 +25,11 @@ function clearError() {
 
 function setLoading(isLoading) {
   registerBtn.disabled = isLoading;
-  loading.classList.toggle('show', isLoading);
+  const buttonText = document.getElementById('buttonText');
+  if (buttonText) {
+    buttonText.style.display = isLoading ? 'none' : 'inline';
+  }
+  loading.style.display = isLoading ? 'inline-block' : 'none';
 }
 
 function validateForm() {
@@ -80,23 +85,26 @@ function calculatePasswordStrength(password) {
 function updatePasswordStrength() {
   const password = passwordInput.value;
 
+  if (!passwordStrength || !passwordStrengthBar) return;
+
   if (password.length === 0) {
-    passwordStrength.classList.remove('show');
+    passwordStrength.style.display = 'none';
     return;
   }
 
-  passwordStrength.classList.add('show');
+  passwordStrength.style.display = 'block';
 
   const strength = calculatePasswordStrength(password);
 
-  passwordStrengthBar.classList.remove('weak', 'medium', 'strong');
-
   if (strength === 1) {
-    passwordStrengthBar.classList.add('weak');
+    passwordStrengthBar.style.width = '33%';
+    passwordStrengthBar.style.backgroundColor = '#8B0000';
   } else if (strength === 2) {
-    passwordStrengthBar.classList.add('medium');
+    passwordStrengthBar.style.width = '66%';
+    passwordStrengthBar.style.backgroundColor = '#DAA520';
   } else if (strength >= 3) {
-    passwordStrengthBar.classList.add('strong');
+    passwordStrengthBar.style.width = '100%';
+    passwordStrengthBar.style.backgroundColor = '#228B22';
   }
 }
 
@@ -122,20 +130,91 @@ async function handleRegister(event) {
     });
 
     if (result.success) {
-      alert('Conta criada com sucesso! Redirecionando para o login...');
-      window.location.href = '/login.html';
+      setLoading(false);
+
+      // Mostrar dialog de sucesso
+      dialogManager.showSuccess({
+        title: '🎉 Cadastro Concluído!',
+        message: `Bem-vindo à guilda, ${username}! Sua conta foi criada com sucesso. Você será redirecionado automaticamente para fazer login.`,
+        showConfetti: true,
+        showContinue: true,
+        continueText: '🚪 Fazer Login Agora',
+        continueCallback: async () => {
+          // Fazer login automático
+          try {
+            const loginResult = await rpcClient.call('login', {
+              username,
+              password
+            });
+
+            if (loginResult.token) {
+              localStorage.setItem('token', loginResult.token);
+
+              // Salvar dados adicionais do login
+              if (loginResult.expiresIn) {
+                localStorage.setItem('expiresIn', loginResult.expiresIn);
+              }
+              localStorage.setItem('loginTime', Date.now());
+
+              // Buscar dados do usuário
+              try {
+                const userResult = await rpcClient.call('me', {
+                  token: loginResult.token
+                });
+
+                if (userResult.user || userResult) {
+                  const userData = userResult.user || userResult;
+                  localStorage.setItem('user', JSON.stringify(userData));
+                }
+              } catch (meError) {
+                console.error('Erro ao buscar dados do usuário:', meError);
+                // Se houver erro ao buscar dados, salvar dados básicos
+                localStorage.setItem('user', JSON.stringify({ username }));
+              }
+
+              window.location.href = '/home.html';
+            }
+          } catch (loginError) {
+            console.error('Erro no login automático:', loginError);
+            // Se o login automático falhar, redirecionar para a página de login
+            window.location.href = '/login.html';
+          }
+        }
+      });
     }
   } catch (error) {
+    setLoading(false);
+
+    let errorTitle = 'Erro no Cadastro';
+    let errorMessage = 'Não foi possível criar sua conta. Tente novamente.';
+
     if (error.code === -32000 && error.message.includes('já existe')) {
-      showError('Este nome de usuário já está em uso');
+      errorTitle = 'Nome de Usuário Indisponível';
+      errorMessage = `O nome "${username}" já está em uso. Por favor, escolha outro nome de aventureiro.`;
       usernameInput.classList.add('error');
     } else if (error.code === -32602) {
-      showError('Dados inválidos. Verifique os campos e tente novamente.');
-    } else {
-      showError(error.message || 'Erro ao criar conta. Tente novamente.');
+      errorTitle = 'Dados Inválidos';
+      errorMessage = 'Os dados fornecidos são inválidos. Verifique os campos e tente novamente.';
+    } else if (error.message) {
+      errorMessage = error.message;
     }
-  } finally {
-    setLoading(false);
+
+    // Mostrar dialog de erro
+    dialogManager.showError({
+      title: errorTitle,
+      message: errorMessage,
+      showRetry: true,
+      retryCallback: () => {
+        // Focar no primeiro campo com erro
+        if (usernameInput.classList.contains('error')) {
+          usernameInput.focus();
+        } else if (passwordInput.classList.contains('error')) {
+          passwordInput.focus();
+        } else {
+          usernameInput.focus();
+        }
+      }
+    });
   }
 }
 

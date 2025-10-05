@@ -2,8 +2,6 @@ import RpcClient from '../rpc/client.js';
 import { getToken } from '../utils/auth.js';
 
 const rpcClient = new RpcClient();
-const SESSIONS_PER_PAGE = 6;
-let currentPage = 1;
 let allSessions = [];
 
 export async function loadHome() {
@@ -44,7 +42,7 @@ export function renderHomeData(data) {
 
   if (data.hasSessions) {
     noSessionsElement.style.display = 'none';
-    renderSessionsPage(currentPage);
+    renderAllSessions();
   } else if (noSessionsElement) {
     noSessionsElement.style.display = 'block';
     const sessionsListElement = document.getElementById('sessionsList');
@@ -54,18 +52,12 @@ export function renderHomeData(data) {
   }
 }
 
-function renderSessionsPage(page) {
+function renderAllSessions() {
   const sessionsListElement = document.getElementById('sessionsList');
-  const paginationElement = document.getElementById('pagination');
-  
+
   if (!sessionsListElement) return;
 
-  const totalPages = Math.ceil(allSessions.length / SESSIONS_PER_PAGE);
-  const startIndex = (page - 1) * SESSIONS_PER_PAGE;
-  const endIndex = startIndex + SESSIONS_PER_PAGE;
-  const sessionsToShow = allSessions.slice(startIndex, endIndex);
-
-  sessionsListElement.innerHTML = sessionsToShow
+  sessionsListElement.innerHTML = allSessions
     .map(
       (session) => `
     <div class="session-card" data-session-id="${session.id}">
@@ -121,52 +113,7 @@ function renderSessionsPage(page) {
     )
     .join('');
 
-  if (paginationElement && totalPages > 1) {
-    paginationElement.style.display = 'flex';
-    paginationElement.innerHTML = `
-      <button class="pagination-btn" id="prevPage" ${page === 1 ? 'disabled' : ''}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </button>
-      <span class="pagination-info">Página ${page} de ${totalPages}</span>
-      <button class="pagination-btn" id="nextPage" ${page === totalPages ? 'disabled' : ''}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
-    `;
-
-    attachPaginationListeners();
-  } else if (paginationElement) {
-    paginationElement.style.display = 'none';
-  }
-
   attachSessionCardListeners();
-}
-
-function attachPaginationListeners() {
-  const prevBtn = document.getElementById('prevPage');
-  const nextBtn = document.getElementById('nextPage');
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderSessionsPage(currentPage);
-      }
-    });
-  }
-
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
-      const totalPages = Math.ceil(allSessions.length / SESSIONS_PER_PAGE);
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderSessionsPage(currentPage);
-      }
-    });
-  }
 }
 
 function getStatusLabel(status) {

@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - RPC Interactive Stories</title>
+  <title>Taverna do Aventureiro</title>
   <script src="/config.js"></script>
   <link rel="stylesheet" href="/src/styles/home.css">
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <div class="header">
-      <div class="greeting">
-        Olá, <span class="username" id="username">Usuário</span>!
-      </div>
-      <button class="logout-btn" id="logoutBtn">Sair</button>
+      <h1>🏰 Taverna do Aventureiro</h1>
+      <p>
+        Bem-vindo de volta, <strong><span class="username" id="username">Aventureiro</span></strong>! ⚔️
+      </p>
+      <button class="logout-btn" id="logoutBtn">🚪 Sair</button>
     </div>
 
     <div class="sessions-container">
-      <h2 class="sessions-title">Minhas Sessões</h2>
+      <h2 class="sessions-title">🎮 Suas Aventuras</h2>
 
       <div id="loadingMessage" class="loading">
-        Carregando sessões...
+        Carregando aventuras...
       </div>
 
       <div id="errorMessage" class="error-message" style="display: none;">
@@ -28,9 +30,9 @@
       </div>
 
       <div id="noSessions" class="no-sessions" style="display: none;">
-        <div class="no-sessions-icon">📝</div>
-        <h3>Você ainda não tem sessões</h3>
-        <p>Crie uma nova sessão ou entre em uma existente usando o código</p>
+        <div class="no-sessions-icon">🎭</div>
+        <h3>Nenhuma Aventura em Andamento</h3>
+        <p>Parece que você ainda não está participando de nenhuma história épica.<br>Que tal começar uma nova aventura?</p>
       </div>
 
       <div id="sessionsList" class="sessions-grid"></div>
@@ -39,8 +41,8 @@
     </div>
 
     <div class="actions-container">
-      <button class="btn btn-primary" id="createSessionBtn">+ Criar Sessão</button>
-      <button class="btn btn-success" id="joinSessionBtn">Entrar em Sessão</button>
+      <button class="btn btn-primary" id="createSessionBtn">⚔️ Criar Nova Sessão</button>
+      <button class="btn btn-success" id="joinSessionBtn">🗝️ Entrar via Código</button>
     </div>
   </div>
 

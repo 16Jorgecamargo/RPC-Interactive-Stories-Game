@@ -28,7 +28,7 @@ class RpcClient {
         body: JSON.stringify(payload),
         signal: controller.signal
       });
-
+      
       clearTimeout(timeoutId);
 
       if (!response.ok) {

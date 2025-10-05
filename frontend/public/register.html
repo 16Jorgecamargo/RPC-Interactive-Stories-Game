@@ -1,72 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - RPC Interactive Stories</title>
-  <script src="/config.js"></script>
-  <link rel="stylesheet" href="/src/styles/register.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Aventureiro</title>
+    <script src="/config.js"></script>
+    <link rel="stylesheet" href="/src/styles/register.css">
 </head>
 <body>
-  <div class="register-container">
-    <h1>Criar Conta</h1>
-    <p class="subtitle">Junte-se às aventuras interativas</p>
+    <div class="container">
+        <div class="card">
+            <div class="text-center mb-20">
+                <h1>📜 Registro de Aventureiro</h1>
+                <p style="color: var(--primary-gold); font-style: italic; font-size: 0.85rem; margin-bottom: 0;">
+                    "Junte-se à guilda dos contadores de histórias"
+                </p>
+            </div>
 
-    <form id="registerForm">
-      <div class="form-group">
-        <label for="username">Nome de Usuário</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Digite seu nome de usuário"
-          minlength="3"
-          maxlength="20"
-          required
-        >
-        <p class="password-hint">Mínimo 3 caracteres</p>
-      </div>
+            <form id="registerForm" class="fade-in">
+                <div id="errorMessage" class="error-message" style="text-align: center; margin-bottom: 15px; color: var(--dark-red); font-weight: 600;"></div>
+                
+                <div class="input-group">
+                    <label for="username">👤 Nome do Aventureiro</label>
+                    <input type="text" id="username" name="username" placeholder="Escolha seu nome de usuário" required>
+                    <small style="color: var(--silver); font-size: 0.7rem; display: block; margin-top: 3px;">
+                        * Mínimo 3 caracteres
+                    </small>
+                </div>
 
-      <div class="form-group">
-        <label for="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Digite sua senha"
-          minlength="6"
-          required
-        >
-        <div class="password-strength">
-          <div class="password-strength-bar"></div>
+                <div class="input-group">
+                    <label for="password">🗝️ Palavra Secreta</label>
+                    <input type="password" id="password" name="password" placeholder="Crie uma senha forte" required>
+                    <div class="password-strength" style="margin-top: 5px; height: 3px; background-color: rgba(192, 192, 192, 0.3); border-radius: 2px; overflow: hidden; display: none;">
+                        <div class="password-strength-bar" style="height: 100%; transition: all 0.3s ease; width: 0;"></div>
+                    </div>
+                    <small style="color: var(--silver); font-size: 0.7rem; display: block; margin-top: 3px;">
+                        * Mínimo 6 caracteres
+                    </small>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">🔒 Confirmar Palavra Secreta</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme sua senha" required>
+                </div>
+
+                <div class="text-center mt-20">
+                    <button type="submit" id="registerBtn" class="btn" style="width: 100%; margin-bottom: 10px;">
+                        <span id="buttonText">⚔️ Tornar-se Aventureiro</span>
+                        <span id="loading" class="loading-spinner" style="display: none;"></span>
+                    </button>
+
+                    <p style="color: var(--parchment); margin: 8px 0; font-size: 0.85rem;">
+                        Já possui uma conta?
+                    </p>
+
+                    <a href="login.html" class="btn btn-secondary" style="width: 100%;">
+                        🚪 Retornar ao Portal
+                    </a>
+                </div>
+            </form>
         </div>
-        <p class="password-hint">Mínimo 6 caracteres</p>
-      </div>
-
-      <div class="form-group">
-        <label for="confirmPassword">Confirmar Senha</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          placeholder="Digite sua senha novamente"
-          minlength="6"
-          required
-        >
-      </div>
-
-      <div class="error-message" id="errorMessage"></div>
-
-      <button type="submit" id="registerBtn">Criar Conta</button>
-
-      <div class="loading" id="loading">Criando sua conta</div>
-    </form>
-
-    <div class="login-link">
-      Já tem uma conta? <a href="/login.html">Fazer login</a>
     </div>
-  </div>
 
-  <script type="module" src="/src/ui/auth/register.js"></script>
+    <script type="module" src="/src/ui/auth/register.js"></script>
 </body>
 </html>
