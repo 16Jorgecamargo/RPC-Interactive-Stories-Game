@@ -153,5 +153,24 @@ function attachSessionCardListeners() {
 
 async function handleEnterSession(sessionId) {
   console.log('Entrando na sessão:', sessionId);
-  alert('Funcionalidade será implementada nas próximas sprints!');
+  console.log('Funcionalidade será implementada nas próximas sprints!');
 }
+
+function initializeActionButtons() {
+  const createSessionBtn = document.getElementById('createSessionBtn');
+  const joinSessionBtn = document.getElementById('joinSessionBtn');
+
+  if (createSessionBtn) {
+    createSessionBtn.addEventListener('click', () => {
+      window.location.href = '/session-create.html';
+    });
+  }
+
+  if (joinSessionBtn) {
+    joinSessionBtn.addEventListener('click', () => {
+      console.log('Funcionalidade de entrar via código será implementada na Sprint 4.2!');
+    });
+  }
+}
+
+initializeActionButtons();

@@ -179,21 +179,38 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Criar nova sessão de jogo
 
 #### Cards
-- [ ] **FE-SESSION-001**: Criar `public/session-create.html` com formulário
-  - **TODO**: Adicionar `requireAuth()` no início do script
-- [ ] **FE-SESSION-002**: Criar `src/ui/sessions/create.js` com lógica de criação
-- [ ] **FE-SESSION-003**: Implementar `getStoryCatalog()` para listar histórias disponíveis
-  - **Depende de**: `BE-STORY-015`, `FE-AUTH-016`
-- [ ] **FE-SESSION-004**: Criar dropdown para selecionar história
-- [ ] **FE-SESSION-005**: Adicionar campo para nome da sessão
-- [ ] **FE-SESSION-006**: Adicionar campo para número máximo de jogadores
-- [ ] **FE-SESSION-007**: Implementar `createSession(data)` chamando backend
-  - **Depende de**: `BE-SESSION-003`, `FE-AUTH-016`
-- [ ] **FE-SESSION-008**: Exibir código da sessão após criação
-  - **Depende de**: `BE-SESSION-004`
-- [ ] **FE-SESSION-009**: Redirecionar para sala de espera após criação
+- [x] **FE-SESSION-001**: Criar `public/session-create.html` com formulário baseado em `telasHTML/sessionForm.html`
+  - Implementado com `requireAuth()` no início do script
+  - Botão "Escolher História" (funcionalidade para implementar depois)
+  - Radio buttons para modo de desempate (Aleatório/Revotação)
+  - Range slider para tempo de votação (10-60s)
+  - Input number para número de jogadores (2-10)
+- [x] **FE-SESSION-002**: Criar `src/ui/sessions/create.js` com lógica de criação
+  - Implementado com validações completas
+  - Integração com DialogManager para feedback visual
+- [x] **FE-SESSION-003**: Implementar botão para escolher história (catálogo será implementado depois)
+  - Botão "Escolher História" criado
+  - Alert temporário até implementação do catálogo
+- [x] **FE-SESSION-004**: Criar botão para selecionar história
+  - Implementado com campo hidden para storyId
+- [x] **FE-SESSION-005**: Adicionar campo para nome da sessão
+  - Campo com validação (3-100 caracteres)
+- [x] **FE-SESSION-006**: Adicionar campos de configuração da sessão
+  - Número máximo de jogadores: input number (2-10, padrão 4)
+  - Modo de desempate: radio buttons (RANDOM/REVOTE)
+  - Tempo de votação: range slider (10-60s, padrão 30s)
+- [x] **FE-SESSION-007**: Implementar `createSession(data)` chamando backend
+  - Método RPC 'createSession' integrado
+  - Validações de todos os campos
+- [x] **FE-SESSION-008**: Exibir código da sessão após criação
+  - Dialog de sucesso com confetti
+  - Dialog de erro com opção de retry
+  - Exibição do código da sessão no dialog de sucesso
+- [x] **FE-SESSION-009**: Redirecionar para sala de espera após criação
+  - Redirecionamento implementado (waiting-room.html)
+  - Opção de retornar para home
 
-**Critério de Aceite**: Usuário cria sessão, recebe código, e entra na sala de espera
+**Critério de Aceite**: Usuário cria sessão, recebe código, e entra na sala de espera ✅
 
 ---
 
