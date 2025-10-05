@@ -242,7 +242,7 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
   - **Depende de**: `BE-SESSION-007`, `FE-AUTH-016`
 - [ ] **FE-SESSION-019**: Exibir código da sessão (para compartilhar)
 - [ ] **FE-SESSION-020**: Listar participantes com status (criou personagem ou não)
-- [ ] **FE-SESSION-021**: Exibir botão "Criar Personagem" se usuário não tem personagem
+- [ ] **FE-SESSION-021**: Exibir botão "Criar Personagem" se usuário não criou o personagem (a tela de criar vai ser implementada depois)
 - [ ] **FE-SESSION-022**: Redirecionar para criação de personagem ao clicar no botão
 - [ ] **FE-SESSION-023**: Polling de atualizações para detectar novos participantes
   - **Depende de**: `BE-POLL-003`, `FE-RPC-002`

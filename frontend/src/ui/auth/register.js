@@ -1,5 +1,5 @@
 import RpcClient from '../../rpc/client.js';
-import { dialogManager } from '../shared/dialog.js';
+import { dialogManager } from '../dialogs/index.js';
 
 const rpcClient = new RpcClient();
 

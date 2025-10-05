@@ -1,6 +1,6 @@
 import RpcClient from '../../rpc/client.js';
 import { getToken, requireAuth } from '../../utils/auth.js';
-import { dialogManager } from '../shared/dialog.js';
+import { dialogManager } from '../dialogs/index.js';
 
 requireAuth();
 
@@ -90,8 +90,35 @@ function setLoading(isLoading) {
   }
 }
 
-function handleChooseStory() {
-  console.log('Funcionalidade de catálogo de histórias será implementada em breve!');
+async function handleChooseStory() {
+  try {
+    const result = await client.call('getStoryCatalog', { token });
+
+    if (!result || !result.stories || result.stories.length === 0) {
+      dialogManager.showError({
+        title: '📚 Catálogo Vazio',
+        message: 'Não há histórias disponíveis no momento. Entre em contato com o administrador.',
+      });
+      return;
+    }
+
+    dialogManager.showStoryCatalog({
+      stories: result.stories,
+      onSelectStory: (storyId, storyTitle) => {
+        elements.storyId.value = storyId;
+        elements.selectedStoryName.textContent = storyTitle;
+        updateSessionSummary();
+      },
+    });
+  } catch (error) {
+    console.error('Erro ao carregar histórias:', error);
+    dialogManager.showError({
+      title: '❌ Erro ao Carregar Histórias',
+      message: error.message || 'Não foi possível carregar o catálogo de histórias. Tente novamente.',
+      showRetry: true,
+      retryCallback: handleChooseStory,
+    });
+  }
 }
 
 async function handleSubmit(event) {

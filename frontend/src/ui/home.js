@@ -1,5 +1,6 @@
 import RpcClient from '../rpc/client.js';
 import { getToken } from '../utils/auth.js';
+import { dialogManager } from './dialogs/index.js';
 
 const rpcClient = new RpcClient();
 let allSessions = [];
@@ -168,7 +169,7 @@ function initializeActionButtons() {
 
   if (joinSessionBtn) {
     joinSessionBtn.addEventListener('click', () => {
-      console.log('Funcionalidade de entrar via código será implementada na Sprint 4.2!');
+      dialogManager.showJoinSession();
     });
   }
 }
