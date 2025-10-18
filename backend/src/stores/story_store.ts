@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const DATA_DIR = path.join(__dirname, '../../data');
 const STORIES_FILE = path.join(DATA_DIR, 'stories.json');
+const STORIES_DIR = path.join(__dirname, '../../stories');
 
 if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -16,26 +17,59 @@ if (!fs.existsSync(DATA_DIR)) {
 let storiesCache: Story[] | null = null;
 const storyIndexById = new Map<string, Story>();
 
+function loadStoriesFromFolders(): Story[] {
+  if (!fs.existsSync(STORIES_DIR)) {
+    return [];
+  }
+
+  const storyFolders = fs.readdirSync(STORIES_DIR, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
+
+  const stories: Story[] = [];
+
+  for (const folderName of storyFolders) {
+    const storyJsonPath = path.join(STORIES_DIR, folderName, 'story.json');
+
+    if (fs.existsSync(storyJsonPath)) {
+      try {
+        const storyData = JSON.parse(fs.readFileSync(storyJsonPath, 'utf-8'));
+        stories.push(storyData);
+      } catch (error) {
+        console.error(`Erro ao carregar história de ${folderName}:`, error);
+      }
+    }
+  }
+
+  return stories;
+}
+
 function loadStories(): Story[] {
   if (storiesCache !== null) {
     return storiesCache;
   }
 
-  if (!fs.existsSync(STORIES_FILE)) {
-    storiesCache = [];
-    return [];
+  const folderStories = loadStoriesFromFolders();
+
+  let fileStories: Story[] = [];
+  if (fs.existsSync(STORIES_FILE)) {
+    try {
+      const data = fs.readFileSync(STORIES_FILE, 'utf-8');
+      fileStories = JSON.parse(data);
+    } catch (error) {
+      console.error('Erro ao carregar stories.json:', error);
+      fileStories = [];
+    }
   }
 
-  const data = fs.readFileSync(STORIES_FILE, 'utf-8');
-  const stories: Story[] = JSON.parse(data);
-  storiesCache = stories;
+  storiesCache = [...folderStories, ...fileStories];
 
   storyIndexById.clear();
-  for (const story of stories) {
+  for (const story of storiesCache) {
     storyIndexById.set(story.id, story);
   }
 
-  return stories;
+  return storiesCache;
 }
 
 function saveStories(stories: Story[]): void {
@@ -97,4 +131,9 @@ export function deleteStory(id: string): boolean {
   stories.splice(index, 1);
   saveStories(stories);
   return true;
+}
+
+export function reloadStories(): void {
+  storiesCache = null;
+  loadStories();
 }

@@ -245,3 +245,16 @@ export async function toggleStoryStatus(
     newStatus: params.isActive,
   };
 }
+
+export async function reloadStoryCatalog(params: { token: string }): Promise<{ success: boolean; total: number; message: string }> {
+  validateAdmin(params.token);
+
+  storyStore.reloadStories();
+  const stories = storyStore.findAll();
+
+  return {
+    success: true,
+    total: stories.length,
+    message: `Catálogo de histórias recarregado com sucesso. ${stories.length} história(s) encontrada(s).`,
+  };
+}

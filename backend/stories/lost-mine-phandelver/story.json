@@ -1,0 +1,1312 @@
+{
+  "id": "lost-mine-phandelver",
+  "title": "A Mina Perdida de Phandelver",
+  "description": "Uma aventura clássica de D&D de goblins, conspirações secretas e minas perdidas na Costa da Espada.",
+  "metadata": {
+    "genre": "Fantasia",
+    "setting": "Forgotten Realms - Costa da Espada",
+    "synopsis": "Na Trilha Triboar, uma escolta simples de suprimentos se envolve em uma conspiração envolvendo a Aranha Negra, os Redbrands e a mina perdida de Wave Echo Cave—uma mina de imenso poder e riquezas.",
+    "recommendedPlayers": {
+      "min": 3,
+      "max": 6,
+      "optimal": 4
+    },
+    "levelRange": {
+      "start": 1,
+      "end": 5
+    },
+    "estimatedDuration": "12-16 horas",
+    "difficulty": "Médio",
+    "tags": [
+      "Exploração",
+      "Combate",
+      "Investigação",
+      "Dungeon Crawl",
+      "Intriga Política",
+      "Dragão"
+    ],
+    "author": "Wizards of the Coast",
+    "version": "D&D 5e Starter Set"
+  },
+  "initialChapter": "intro",
+  "capitulos": {
+    "intro": {
+      "texto": "Você foi contratado por Gundren Rockseeker, um anão prospector, para escoltar uma carroça de suprimentos até o assentamento turbulento de Phandalin, vários dias de viagem ao sudeste da cidade de Neverwinter. Gundren foi na frente com um guerreiro chamado Sildar Hallwinter para cuidar de negócios na cidade enquanto você segue com os suprimentos. Você passou os últimos dias seguindo a Estrada Alta ao sul de Neverwinter, e recentemente virou para o leste ao longo da Trilha Triboar. O tempo está ameno, e a jornada tem sido agradável até agora. Gundren prometeu a cada um de vocês 10 peças de ouro ao entregar a carroça em segurança na Provisões Barthen em Phandalin.\n\nAo contornar uma curva na trilha, você avista dois cavalos mortos espalhados cerca de quinze metros à frente, bloqueando o caminho. Cada um tem várias flechas com penas pretas cravadas nele. As florestas pressionam perto da trilha aqui, com um barranco íngreme e moitas densas de ambos os lados.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "investigate_horses",
+          "texto": "Investigar os cavalos mortos com cuidado",
+          "proximo": "ambush_investigation"
+        },
+        {
+          "id": "proceed_cautiously",
+          "texto": "Prosseguir com cautela em direção aos cavalos",
+          "proximo": "ambush_alert"
+        },
+        {
+          "id": "charge_forward",
+          "texto": "Correr para frente para verificar a cena rapidamente",
+          "proximo": "ambush_surprise"
+        }
+      ]
+    },
+    "ambush_investigation": {
+      "texto": "Você se aproxima com cuidado. Os cavalos parecem ser cavalos de tração que faziam parte da comitiva de Gundren. Um teste de Percepção bem-sucedido (CD 12) revela que os cavalos foram mortos por flechas de goblin, e pegadas de goblin levam para os arbustos de ambos os lados da estrada. Você também nota uma bolsa de couro caída na grama perto dos cavalos.\n\nEnquanto examina a cena, você ouve farfalhar nos arbustos!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "prepare_for_combat",
+          "texto": "Preparar armas e se preparar para emboscada",
+          "proximo": "goblin_ambush_prepared"
+        },
+        {
+          "id": "take_cover",
+          "texto": "Se abrigar atrás da carroça",
+          "proximo": "goblin_ambush_cover"
+        },
+        {
+          "id": "grab_satchel",
+          "texto": "Pegar rapidamente a bolsa",
+          "proximo": "goblin_ambush_satchel"
+        }
+      ]
+    },
+    "ambush_alert": {
+      "texto": "Você prossegue com cautela. Aqueles com Percepção passiva 12 ou superior notam movimento nos arbustos à frente. Quatro goblins saltam de esconderijos de ambos os lados da estrada, gritando e atacando com arcos grosseiros e lâminas enferrujadas!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight_goblins",
+          "texto": "Lutar contra os goblins",
+          "proximo": "combat_goblin_ambush"
+        }
+      ]
+    },
+    "ambush_surprise": {
+      "texto": "Você corre para frente sem cautela. De repente, quatro goblins saltam dos arbustos de ambos os lados da estrada! Você é surpreendido enquanto eles soltam flechas e carregam com lâminas enferrujadas. (Os membros do grupo são surpreendidos e não podem agir no primeiro round de combate.)",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight_surprised",
+          "texto": "Defendam-se!",
+          "proximo": "combat_goblin_ambush_surprise"
+        }
+      ]
+    },
+    "goblin_ambush_prepared": {
+      "texto": "Sua prontidão compensa! Quando os goblins armam sua emboscada, vocês estão prontos para eles. Rolem iniciativa!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight",
+          "texto": "Lutar contra os goblins",
+          "proximo": "combat_goblin_ambush"
+        }
+      ]
+    },
+    "goblin_ambush_cover": {
+      "texto": "Você mergulha atrás da carroça quando flechas de goblin passam zunindo! Você tem três quartos de cobertura (+5 CA) no primeiro round de combate.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight",
+          "texto": "Retornar fogo de cobertura",
+          "proximo": "combat_goblin_ambush"
+        }
+      ]
+    },
+    "goblin_ambush_satchel": {
+      "texto": "Você pega a bolsa enquanto flechas voam sobre sua cabeça! Dentro você encontra um mapa mostrando a localização da Caverna Eco de Onda e uma nota de Gundren mencionando seus irmãos e 'o Pacto Phandelver.' Não há tempo para ler mais—os goblins estão atacando!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight",
+          "texto": "Lutar contra os goblins",
+          "proximo": "combat_goblin_ambush"
+        }
+      ]
+    },
+    "combat_goblin_ambush": {
+      "texto": "Quatro goblins atacam! Eles usam Fuga Astuta para se esconder e hostilizá-los com táticas de ataque e fuga. Os goblins gritam uns com os outros em sua linguagem durante a luta.",
+      "isCombat": true,
+      "monsterId": "goblin",
+      "monsterCount": 4,
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Continuar após derrotar os goblins",
+          "proximo": "post_ambush"
+        }
+      ]
+    },
+    "combat_goblin_ambush_surprise": {
+      "texto": "Quatro goblins atacam com surpresa! Eles conseguem um round completo de ataques antes que vocês possam reagir. Os goblins usam sua característica Fuga Astuta para se esconder após atacar.",
+      "isCombat": true,
+      "monsterId": "goblin",
+      "monsterCount": 4,
+      "surpriseRound": true,
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Continuar após derrotar os goblins",
+          "proximo": "post_ambush"
+        }
+      ]
+    },
+    "post_ambush": {
+      "texto": "Com os goblins derrotados, vocês podem revistar a área. Os corpos dos goblins carregam algumas moedas de cobre e armas grosseiras. A bolsa de couro perto dos cavalos contém documentos importantes—um mapa da região com um local marcado como 'Caverna Eco de Onda,' e uma nota de Gundren para seus irmãos sobre 'o Pacto Phandelver.'\n\nUma trilha clara de pegadas de goblin leva para o noroeste, na floresta. As pegadas sugerem que os goblins arrastaram algo pesado para longe do local da emboscada.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "follow_trail",
+          "texto": "Seguir a trilha dos goblins na floresta",
+          "proximo": "trail_to_hideout"
+        },
+        {
+          "id": "continue_to_phandalin",
+          "texto": "Continuar para Phandalin com a carroça",
+          "proximo": "arrive_phandalin"
+        },
+        {
+          "id": "split_party",
+          "texto": "Dividir o grupo (alguns seguem a trilha, outros guardam a carroça)",
+          "proximo": "split_decision"
+        }
+      ]
+    },
+    "trail_to_hideout": {
+      "texto": "A trilha serpenteia pela floresta por cerca de cinco milhas e eventualmente leva à entrada de uma caverna. Um riacho raso flui da boca da caverna, que é protegida por espessos arbustos de urze. Vocês podem ouvir vozes de goblins dentro, falando em sua linguagem áspera.\n\nUma inspeção cuidadosa revela que os goblins prepararam duas armadilhas perto da entrada: uma armadilha de laço para capturar intrusos, e uma represa que pode liberar uma enxurrada de água pela passagem.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "sneak_in",
+          "texto": "Tentar passar pelas armadilhas furtivamente (teste de Furtividade)",
+          "proximo": "hideout_sneak"
+        },
+        {
+          "id": "trigger_traps",
+          "texto": "Deliberadamente ativar as armadilhas primeiro",
+          "proximo": "hideout_trap_triggered"
+        },
+        {
+          "id": "climb_around",
+          "texto": "Escalar as paredes para contornar a entrada da caverna",
+          "proximo": "hideout_climb"
+        },
+        {
+          "id": "frontal_assault",
+          "texto": "Carregar com armas em punho",
+          "proximo": "hideout_alert"
+        }
+      ]
+    },
+    "hideout_sneak": {
+      "texto": "Vocês evitam cuidadosamente o laço e marcam a armadilha da inundação para mais tarde. Movendo-se silenciosamente pela passagem do riacho, vocês ouvem vozes de goblins à frente. A caverna abre para um covil onde seis goblins estão descansando ao redor de uma fogueira, assando carne estranha. Dois lobos acorrentados rosnam suavemente no canto.\n\nSe vocês rolarem 15 ou mais em Furtividade, os goblins não os notam. Caso contrário, eles os avistam e dão o alarme!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "surprise_attack",
+          "texto": "Lançar um ataque surpresa aos goblins",
+          "proximo": "combat_goblin_den_surprise"
+        },
+        {
+          "id": "observe",
+          "texto": "Observar silenciosamente e procurar por cativos",
+          "proximo": "hideout_observe"
+        },
+        {
+          "id": "retreat",
+          "texto": "Recuar e planejar uma abordagem melhor",
+          "proximo": "hideout_entrance_return"
+        }
+      ]
+    },
+    "combat_goblin_den_surprise": {
+      "texto": "Vocês pegam os goblins completamente desprevenidos! Seis goblins se apressam para pegar suas armas enquanto dois lobos se esforçam contra suas correntes, latindo furiosamente.",
+      "isCombat": true,
+      "monsterId": "goblin",
+      "monsterCount": 6,
+      "additionalMonsters": [
+        {
+          "monsterId": "wolf",
+          "count": 2
+        }
+      ],
+      "surpriseRound": true,
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Continuar mais fundo na caverna",
+          "proximo": "hideout_depths"
+        }
+      ]
+    },
+    "hideout_observe": {
+      "texto": "Vocês observam cuidadosamente das sombras. Os goblins estão discutindo algo em linguagem goblin. Aqueles que entendem a linguagem aprendem que 'Klarg' é o chefe e que eles capturaram 'um anão e um humano' que estão sendo mantidos no 'covil norte.'\n\nOs goblins parecem alheios à presença de vocês por enquanto.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "attack_now",
+          "texto": "Atacar enquanto têm surpresa",
+          "proximo": "combat_goblin_den_surprise"
+        },
+        {
+          "id": "sneak_past",
+          "texto": "Tentar passar furtivamente para encontrar os cativos",
+          "proximo": "hideout_sneak_past"
+        },
+        {
+          "id": "free_wolves",
+          "texto": "Soltar os lobos para causar caos",
+          "proximo": "hideout_wolf_chaos"
+        }
+      ]
+    },
+    "hideout_depths": {
+      "texto": "Além do covil dos goblins, duas passagens levam mais fundo na caverna. A passagem oriental sobe e vocês ouvem vozes roucas falando em goblin. A passagem setentrional é mais quieta, mas vocês notam pegadas frescas de botas humanas na lama.\n\nUma placa pintada em script goblin rude aponta para o leste com as palavras 'Domínio de Klarg.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "go_east",
+          "texto": "Ir para o leste em direção ao domínio de Klarg",
+          "proximo": "klarg_chamber"
+        },
+        {
+          "id": "go_north",
+          "texto": "Seguir a passagem setentrional (em direção aos cativos)",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "split_up",
+          "texto": "Dividir o grupo para cobrir ambas as áreas",
+          "proximo": "hideout_split"
+        }
+      ]
+    },
+    "klarg_chamber": {
+      "texto": "A passagem abre para uma câmara natural grande com teto alto suportado por pilares de pedra. Uma ponte rudimentar de pranchas de madeira atravessa um abismo escuro. Do outro lado, vocês veem um bugbear massivo deitado em um trono rude feito de troncos e peles. Ele usa um tapa-olho cravejado de joias e segura uma maça massiva. Este deve ser Klarg!\n\nDois goblins estão de guarda perto dele, e um lobo sarnento dorme aos seus pés. Klarg está comendo carne assada e ainda não os notou.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "parley",
+          "texto": "Tentar parlamentar com Klarg",
+          "proximo": "klarg_negotiate"
+        },
+        {
+          "id": "sneak_attack",
+          "texto": "Atravessar a ponte furtivamente para um ataque surpresa",
+          "proximo": "klarg_surprise"
+        },
+        {
+          "id": "ranged_attack",
+          "texto": "Atacar à distância antes de atravessar",
+          "proximo": "combat_klarg_ranged"
+        },
+        {
+          "id": "destroy_bridge",
+          "texto": "Destruir a ponte para prender Klarg",
+          "proximo": "klarg_bridge_destroyed"
+        }
+      ]
+    },
+    "klarg_negotiate": {
+      "texto": "Vocês se adiantam e chamam Klarg. O olho do bugbear se estreita ao avistá-los. 'Ah, mais carne para a panela!' ele ruge em Comum quebrado. 'Vocês querem passagem segura? Vocês dão tesouro para Klarg. Ou vocês lutam com Klarg e morrem!'\n\nKlarg exige 50 peças de ouro ou equivalente em tesouro para deixá-los passar. Um teste de Intimidação bem-sucedido (CD 15) pode fazê-lo reconsiderar. Um teste de Persuasão bem-sucedido (CD 18) pode convencê-lo a trair seu empregador, 'a Aranha Negra.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "pay_klarg",
+          "texto": "Pagar 50 peças de ouro para Klarg",
+          "proximo": "klarg_paid"
+        },
+        {
+          "id": "intimidate_klarg",
+          "texto": "Tentar intimidar Klarg",
+          "proximo": "klarg_intimidate_check"
+        },
+        {
+          "id": "persuade_klarg",
+          "texto": "Tentar convencer Klarg a trair a Aranha Negra",
+          "proximo": "klarg_persuade_check"
+        },
+        {
+          "id": "attack_klarg",
+          "texto": "Atacar enquanto ele fala",
+          "proximo": "combat_klarg_normal"
+        }
+      ]
+    },
+    "klarg_surprise": {
+      "texto": "Você se esgueira silenciosamente pela ponte de madeira. Faça um teste de Furtividade contestado pela Percepção passiva de Klarg (10). Sucesso significa que você o pega completamente desprevenido!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "attack",
+          "texto": "Lançar seu ataque surpresa",
+          "proximo": "combat_klarg_boss_surprise"
+        }
+      ]
+    },
+    "combat_klarg_boss_surprise": {
+      "texto": "Vocês pegam Klarg completamente de surpresa! O chefe bugbear ruge em fúria enquanto pega sua maça estrela. Seus guardas goblins correm para defendê-lo, e o lobo acorda com um rosnado.",
+      "isCombat": true,
+      "monsterId": "klarg-bugbear-boss",
+      "monsterCount": 1,
+      "additionalMonsters": [
+        {
+          "monsterId": "goblin",
+          "count": 2
+        },
+        {
+          "monsterId": "wolf",
+          "count": 1
+        }
+      ],
+      "surpriseRound": true,
+      "loot": [
+        "Morningstar +1",
+        "50 gold pieces",
+        "Jeweled eye patch (worth 25 gp)",
+        "Letter from 'The Black Spider' mentioning Cragmaw Castle and Wave Echo Cave"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Revistar a câmara de Klarg e continuar",
+          "proximo": "klarg_defeated"
+        }
+      ]
+    },
+    "combat_klarg_normal": {
+      "texto": "Klarg ruge em fúria e se levanta, pegando sua maça estrela! 'Vocês morrerão agora!' ele berra. Seus guardas goblins correm para frente e o lobo salta sobre vocês com presas arreganhadas.",
+      "isCombat": true,
+      "monsterId": "klarg-bugbear-boss",
+      "monsterCount": 1,
+      "additionalMonsters": [
+        {
+          "monsterId": "goblin",
+          "count": 2
+        },
+        {
+          "monsterId": "wolf",
+          "count": 1
+        }
+      ],
+      "loot": [
+        "Morningstar +1",
+        "50 gold pieces",
+        "Jeweled eye patch (worth 25 gp)",
+        "Letter from 'The Black Spider' mentioning Cragmaw Castle and Wave Echo Cave"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Revistar a câmara de Klarg e continuar",
+          "proximo": "klarg_defeated"
+        }
+      ]
+    },
+    "klarg_defeated": {
+      "texto": "Com Klarg derrotado, vocês procuram em sua câmara. Entre as peles e ossos, vocês encontram uma maça estrela +1, 50 peças de ouro, e um tapa-olho cravejado de joias que vale 25 po. Mais importante, vocês descobrem uma carta amassada:\n\n'Klarg,\nTraga o anão e seu companheiro humano para o Castelo Cragmaw. A Aranha Negra deseja questioná-los sobre a Caverna Eco de Onda. Não falhe comigo.\n—Rei Grol'\n\nAgora vocês sabem que Gundren Rockseeker foi capturado e levado para o Castelo Cragmaw, onde quer que seja.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "find_captives",
+          "texto": "Procurar por quaisquer cativos restantes no esconderijo",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "leave_hideout",
+          "texto": "Deixar o esconderijo e ir para Phandalin",
+          "proximo": "arrive_phandalin"
+        }
+      ]
+    },
+    "captive_chamber": {
+      "texto": "A passagem setentrional leva a uma pequena câmara na caverna. Aqui vocês encontram Sildar Hallwinter, gravemente ferido e amarrado. O guerreiro humano é um membro da Aliança dos Lordes e estava viajando com Gundren Rockseeker.\n\n'Obrigado aos deuses que vocês vieram!' Sildar ofega enquanto vocês o libertam. 'Os goblins levaram Gundren para o Castelo Cragmaw há dias. Eu temo pela vida dele. Nós devemos ir para Phandalin—coisas sombrias estão acontecendo lá. Uma gangue chamada Redbrands tomou conta da cidade, e eu suspeito que eles estão conectados com quem contratou esses goblins.'\n\nSildar pode contar a vocês que ele está procurando por um mago desaparecido chamado Iarno Albrek, que foi enviado para Phandalin pela Aliança dos Lordes mas não reportou de volta há semanas.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "rest_and_heal",
+          "texto": "Descansar e cuidar dos ferimentos de Sildar",
+          "proximo": "hideout_rest"
+        },
+        {
+          "id": "leave_immediately",
+          "texto": "Deixar o esconderijo imediatamente com Sildar",
+          "proximo": "journey_to_phandalin"
+        }
+      ]
+    },
+    "journey_to_phandalin": {
+      "texto": "Vocês deixam o Esconderijo Cragmaw e voltam para a carroça. A jornada para Phandalin leva mais meia dia. Ao se aproximarem, vocês veem um pequeno assentamento fronteiriço de construções de madeira rústicas. Cerca de cinquenta moradias simples estão espalhadas de ambos os lados de uma trilha de carroças que corre da Trilha Triboar até o coração da cidade.\n\nSildar conta mais sobre Phandalin: 'Esta cidade era apenas ruínas há alguns anos. Colonos das cidades do sul a reconstruíram recentemente. Gundren e seus irmãos descobriram algo importante perto daqui—a localização da Caverna Eco de Onda, uma mina perdida por séculos. Mas alguém mais quer isso também.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "deliver_wagon",
+          "texto": "Entregar a carroça nas Provisões Barthen primeiro",
+          "proximo": "barthens_provisions"
+        },
+        {
+          "id": "investigate_redbrands",
+          "texto": "Ir direto investigar os Redbrands",
+          "proximo": "redbrand_introduction"
+        },
+        {
+          "id": "visit_townmaster",
+          "texto": "Reportar ao Salão do Mestre da Cidade",
+          "proximo": "townmaster_hall"
+        },
+        {
+          "id": "rest_at_inn",
+          "texto": "Descansar na Estalagem Stonehill e coletar informações",
+          "proximo": "stonehill_inn"
+        }
+      ]
+    },
+    "arrive_phandalin": {
+      "texto": "Você chega a Phandalin, um pequeno assentamento fronteiriço de construções de madeira rústicas. Cerca de cinquenta moradias simples estão espalhadas nas duas margens de uma trilha de carroça. A cidade foi abandonada e em ruínas por séculos após ser saqueada por orcs, mas colonos a reconstruíram recentemente.\n\nVocê percebe que muitos moradores parecem nervosos e evitam fazer contato visual. Um grupo de homens rudes em capas escarlates se reúne perto da praça da cidade, assediando os transeuntes.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "deliver_wagon",
+          "texto": "Entregar a carroça para Barthen's Provisions",
+          "proximo": "barthens_provisions"
+        },
+        {
+          "id": "confront_redcloaks",
+          "texto": "Confrontar os homens de capas vermelhas",
+          "proximo": "redbrand_confrontation"
+        },
+        {
+          "id": "stonehill_inn",
+          "texto": "Ir para a Estalagem Stonehill para reunir informações",
+          "proximo": "stonehill_inn"
+        }
+      ]
+    },
+    "barthens_provisions": {
+      "texto": "Barthen's Provisions é o maior posto comercial em Phandalin. O dono, Elmar Barthen, é um humano magro na casa dos cinquenta anos com uma mente afiada para negócios. Ele fica encantado ao ver a carroça e paga o prometido de 10 peças de ouro para cada um.\n\n'Estou preocupado com Gundren,' Barthen diz. 'Ele deveria ter chegado há dias. Se algo aconteceu com ele...' Ele para, então adiciona: 'Os Redbrands estão aterrorizando esta cidade há meses. Eles trabalham para alguém que chamam de Glasstaff, embora ninguém saiba quem é. O Mestre da Cidade, Harbin Wester, é covarde demais para enfrentá-los. Se você está procurando ajudar Phandalin, lidar com os Redbrands seria um bom começo.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "ask_about_gundren",
+          "texto": "Perguntar sobre os negócios de Gundren em Phandalin",
+          "proximo": "barthen_gundren_info"
+        },
+        {
+          "id": "ask_about_redbrands",
+          "texto": "Perguntar sobre os Redbrands",
+          "proximo": "barthen_redbrand_info"
+        },
+        {
+          "id": "leave_shop",
+          "texto": "Sair da loja e explorar Phandalin",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "stonehill_inn": {
+      "texto": "A Estalagem Stonehill é uma hospedaria modesta com seis quartos para alugar. O proprietário, Toblen Stonehill, é um halfling amigável que parece ansioso para conversar. A sala comum está movimentada com moradores locais, e você ouve várias conversas:\n\n1. Um grupo de fazendeiros reclamando que os Redbrands estão roubando seus bens\n2. Alguém mencionando mortos-vivos estranhos perto do Poço Velha Coruja\n3. Rumores de um dragão na cidade arruinada de Thundertree\n4. Sussurros sobre 'Glasstaff' e o esconderijo dos Redbrands debaixo do Mansão Tresendar\n\nToblen oferece quartos por 5 peças de prata cada um e refeições substanciais por 5 peças de cobre.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "talk_to_toblen",
+          "texto": "Conversar com Toblen sobre eventos recentes",
+          "proximo": "toblen_conversation"
+        },
+        {
+          "id": "eavesdrop_farmers",
+          "texto": "Ouvir as reclamações dos fazendeiros",
+          "proximo": "farmer_quest"
+        },
+        {
+          "id": "ask_about_dragon",
+          "texto": "Perguntar sobre os rumores do dragão",
+          "proximo": "dragon_rumor"
+        },
+        {
+          "id": "rent_rooms",
+          "texto": "Alugar quartos e descansar",
+          "proximo": "phandalin_rested"
+        }
+      ]
+    },
+    "redbrand_confrontation": {
+      "texto": "Quatro rufiões Redbrand em capas escarlates se aproximam de você, zombando. O líder deles, um homem oleoso com um nariz torto, diz: 'Ora, ora. Carne fresca. Este é território Redbrand, estranhos. Paguem o pedágio—10 peças de ouro cada um—ou aprendam o que acontece com aqueles que não respeitam nossa autoridade.'\n\nOs moradores próximos desviam os olhos rapidamente e se apressam para longe. Está claro que esses bandidos aterrorizaram Phandalin por algum tempo.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "pay_toll",
+          "texto": "Pagar o pedágio de 10 peças de ouro para evitar problemas",
+          "proximo": "redbrands_paid"
+        },
+        {
+          "id": "refuse_toll",
+          "texto": "Recusar a pagar e manter sua posição",
+          "proximo": "redbrand_fight_start"
+        },
+        {
+          "id": "intimidate_redbrands",
+          "texto": "Tentar intimidar os Redbrands",
+          "proximo": "redbrand_intimidate"
+        },
+        {
+          "id": "walk_away",
+          "texto": "Ir embora sem se envolver",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "redbrand_fight_start": {
+      "texto": "'Grande erro!' o líder Redbrand rosna. Ele e seus companheiros sacam suas espadas longas e atacam. Os poucos moradores na rua se dispersam, não querendo se envolver.",
+      "isCombat": true,
+      "monsterId": "redbrand-ruffian",
+      "monsterCount": 4,
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Ficar vitorioso sobre os Redbrands",
+          "proximo": "redbrand_victory"
+        }
+      ]
+    },
+    "redbrand_victory": {
+      "texto": "Com os Redbrands derrotados, moradores gratos emergem de suas casas. Uma mulher idosa se aproxima de você: 'Obrigada, estranhos! Esses rufiões nos atormentaram por meses. Eles tomaram o Mansão Tresendar na borda leste da cidade—é o quartel-general deles. O líder deles se chama Glasstaff. Se vocês realmente querem ajudar Phandalin, precisarão lidar com eles na fonte.'\n\nRevistando os Redbrands, vocês encontram armas grosseiras, algumas peças de prata, e uma nota: 'Tragam qualquer encrenqueiro para o esconderijo. Glasstaff quer eles para interrogatório.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "go_to_manor",
+          "texto": "Ir para o Mansão Tresendar imediatamente",
+          "proximo": "tresendar_manor_approach"
+        },
+        {
+          "id": "gather_information",
+          "texto": "Reunir mais informações sobre os Redbrands primeiro",
+          "proximo": "redbrand_investigation"
+        },
+        {
+          "id": "rest_first",
+          "texto": "Descansar e se preparar antes de assaltar o mansão",
+          "proximo": "phandalin_rested"
+        }
+      ]
+    },
+    "tresendar_manor_approach": {
+      "texto": "O Mansão Tresendar é uma estrutura de pedra na borda leste da cidade, construída em um afloramento rochoso. O mansão é uma ruína—o telhado se foi, o andar superior está destruído, e as paredes estão desmoronando. No entanto, vocês notam pegadas frescas levando a uma porta escondida nas fundações.\n\nVocês encontraram a entrada para o esconderijo dos Redbrands!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "sneak_in",
+          "texto": "Entrar furtivamente no esconderijo",
+          "proximo": "redbrand_hideout_sneak"
+        },
+        {
+          "id": "burst_in",
+          "texto": "Irromper pela porta, armas em punho",
+          "proximo": "redbrand_hideout_alert"
+        },
+        {
+          "id": "scout_perimeter",
+          "texto": "Explorar o perímetro em busca de outras entradas",
+          "proximo": "redbrand_hideout_scout"
+        }
+      ]
+    },
+    "redbrand_hideout_sneak": {
+      "texto": "Vocês se esgueiram silenciosamente pela porta escondida. A passagem além é talhada em pedra sólida e leva para baixo na escuridão. Luz de tochas tremeluz à frente, e vocês ouvem vozes rudes falando Comum.\n\nO túnel se abre em um complexo de porão. Ao sul, vocês ouvem o som de água borbulhando. Ao leste, luz de tochas e vozes. Ao norte, vocês veem celas com barras de ferro—uma prisão improvisada.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "check_prison",
+          "texto": "Verificar as celas da prisão ao norte",
+          "proximo": "redbrand_prison"
+        },
+        {
+          "id": "follow_voices",
+          "texto": "Seguir as vozes para o leste",
+          "proximo": "redbrand_common_room"
+        },
+        {
+          "id": "investigate_water",
+          "texto": "Investigar o som de água ao sul",
+          "proximo": "redbrand_cistern"
+        }
+      ]
+    },
+    "redbrand_prison": {
+      "texto": "A prisão consiste em duas celas com barras de ferro enferrujadas. Em uma cela, vocês encontram uma família aterrorizada—uma mulher chamada Mirna Dendrar e seus dois filhos. Eles foram capturados pelos Redbrands há três dias quando Mirna tentou enfrentar os bandidos.\n\n'Por favor, ajudem-nos!' Mirna implora. 'Os Redbrands disseram que vão nos vender para escravistas. Eles mataram meu marido quando ele resistiu.'\n\nMirna menciona que sua família tinha um herança escondida em sua antiga casa na cidade arruinada de Thundertree—um local que ela revelará se vocês resgatarem sua família.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "free_family",
+          "texto": "Libertar a família e escoltá-la para a segurança",
+          "proximo": "family_rescued"
+        },
+        {
+          "id": "promise_return",
+          "texto": "Prometer retornar por eles depois de lidar com os Redbrands",
+          "proximo": "redbrand_hideout_depths"
+        }
+      ]
+    },
+    "redbrand_common_room": {
+      "texto": "Vocês espiam uma câmara grande iluminada por braseiros. Três rufiões Redbrand estão jogando dados em uma mesa, bebendo cerveja e rindo. Eles estão armados mas ainda não os notaram.\n\nUma porta ao norte parece levar mais fundo no complexo. Ao leste, vocês veem o que parece ser um depósito.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "surprise_attack",
+          "texto": "Lançar um ataque surpresa nos Redbrands jogando",
+          "proximo": "combat_redbrand_gamblers"
+        },
+        {
+          "id": "sneak_past",
+          "texto": "Tentar passar furtivamente enquanto eles estão distraídos",
+          "proximo": "redbrand_sneak_past_gamblers"
+        },
+        {
+          "id": "bluff_way_in",
+          "texto": "Fingir ser recrutas novos",
+          "proximo": "redbrand_bluff"
+        }
+      ]
+    },
+    "combat_redbrand_gamblers": {
+      "texto": "Vocês irrompem na sala! Os três Redbrands se atrapalham para pegar suas armas, derrubando canecas de cerveja e moedas de ouro. 'Invasores!' um grita. 'Alertem Glasstaff!'",
+      "isCombat": true,
+      "monsterId": "redbrand-ruffian",
+      "monsterCount": 3,
+      "loot": [
+        "30 peças de prata",
+        "Dados de jogo",
+        "Chaves das celas da prisão"
+      ],
+      "opcoes": [
+        {
+          "id": "continue_north",
+          "texto": "Continuar ao norte no esconderijo",
+          "proximo": "redbrand_nothic_cave"
+        },
+        {
+          "id": "search_storeroom",
+          "texto": "Procurar no depósito ao leste",
+          "proximo": "redbrand_storeroom"
+        }
+      ]
+    },
+    "redbrand_nothic_cave": {
+      "texto": "A passagem se abre em uma caverna natural com uma fissura profunda dividindo o chão. Do outro lado, vocês veem uma criatura como nada que já encontraram—uma coisa encurvada e de pele acinzentada com um olho enorme que brilha com uma luz sinistra. Esta é uma nothic, uma criatura mágica deformada.\n\nA nothic fala em uma voz rouca: 'Ah, mentes frescas para saquear! Contem-me seus segredos, e talvez eu os deixe passar. Ou deem-me tesouro. Eu tenho fome de ambos conhecimento e coisas brilhantes.'\n\nA nothic parece disposta a barganhar, mas está claramente perigosa.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "bargain_with_nothic",
+          "texto": "Tentar barganhar com a nothic",
+          "proximo": "nothic_bargain"
+        },
+        {
+          "id": "attack_nothic",
+          "texto": "Atacar a nothic antes que ela possa usar seus poderes",
+          "proximo": "combat_nothic"
+        },
+        {
+          "id": "offer_treasure",
+          "texto": "Oferecer tesouro à nothic em troca de informação",
+          "proximo": "nothic_bribe"
+        }
+      ]
+    },
+    "combat_nothic": {
+      "texto": "A nothic grita enquanto vocês atacam! Seu olho enorme brilha com energia necrótica enquanto ela lança seu Olhar Podre sobre vocês. A criatura é surpreendentemente rápida apesar de sua postura desajeitada.",
+      "isCombat": true,
+      "monsterId": "nothic",
+      "monsterCount": 1,
+      "loot": [
+        "157 peças de prata escondidas na fissura",
+        "Poção de cura",
+        "Pergaminho antigo (feitiço)"
+      ],
+      "opcoes": [
+        {
+          "id": "continue",
+          "texto": "Cruzar a fissura e continuar mais fundo",
+          "proximo": "glasstaff_approach"
+        }
+      ]
+    },
+    "nothic_bribe": {
+      "texto": "O olho da nothic brilha com avareza. 'Yesss, tesouro brilhante! A nothic aceita!' Ela exige pelo menos 25 peças de ouro em valor de tesouro ou itens mágicos.\n\nEm troca, a nothic revela: 'Glasstaff está nos quartos do mago além da porta ao norte. Ele está empacotando para fugir—Aranha Negra o convocou. Glasstaff é o mago desaparecido Iarno Albrek. Ele traiu os Lordes' Alliance e agora serve à Aranha Negra. A nothic sabe disso porque a nothic sabe muitos segredos!'\n\nA nothic permite que vocês passem sem lutar.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "go_to_glasstaff",
+          "texto": "Ir aos quartos de Glasstaff imediatamente",
+          "proximo": "glasstaff_chamber"
+        },
+        {
+          "id": "attack_nothic_anyway",
+          "texto": "Atacar a nothic apesar da barganha",
+          "proximo": "combat_nothic"
+        }
+      ]
+    },
+    "glasstaff_chamber": {
+      "texto": "Vocês entram em uma câmara bem mobiliada que serve tanto como estúdio de mago quanto quarto de dormir. Livros arcanos forram as prateleiras, e uma cama elegante fica em um canto. Um homem em vestes está em uma mesa, enfiando papéis e pergaminhos em uma sacola de couro. Ele usa um cajado de vidro em seu cinto—este deve ser Glasstaff, também conhecido como Iarno Albrek!\n\nGlasstaff olha para cima em alarme enquanto vocês entram. 'Como vocês passaram pelos meus guardas?' Sua mão se move em direção ao cajado.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "demand_surrender",
+          "texto": "Exigir que Glasstaff se renda",
+          "proximo": "glasstaff_surrender_check"
+        },
+        {
+          "id": "attack_glasstaff",
+          "texto": "Atacar antes que ele possa lançar feitiços",
+          "proximo": "combat_glasstaff"
+        },
+        {
+          "id": "question_glasstaff",
+          "texto": "Questioná-lo sobre a Aranha Negra",
+          "proximo": "glasstaff_interrogation"
+        }
+      ]
+    },
+    "combat_glasstaff": {
+      "texto": "Glasstaff agarra seu cajado e começa a lançar feitiços! 'Seus tolos! Vocês nunca vão parar a Aranha Negra!' Seu Cajado de Defesa brilha enquanto ele prepara defesas mágicas.",
+      "isCombat": true,
+      "monsterId": "glasstaff",
+      "monsterCount": 1,
+      "loot": [
+        "Cajado de Defesa",
+        "Anel de Proteção",
+        "Poção de Invisibilidade",
+        "Livro de feitiços com vários feitiços de mago",
+        "Carta da Aranha Negra detalhando planos para encontrar a Caverna Eco de Onda",
+        "250 peças de ouro"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Procurar nos quartos de Glasstaff",
+          "proximo": "glasstaff_defeated"
+        }
+      ]
+    },
+    "glasstaff_defeated": {
+      "texto": "Com Glasstaff derrotado, vocês procuram em seus quartos completamente. Vocês encontram:\n\n1. Uma carta de 'A Aranha Negra' ordenando Glasstaff capturar Gundren Rockseeker e descobrir a localização da Caverna Eco de Onda\n2. Correspondência mencionando Castelo Cragmaw como base de operações da Aranha Negra\n3. Mapas mostrando a região ao redor de Phandalin, com vários locais marcados: Poço Velha Coruja, Thundertree, e Monte Tor\n4. Um livro de feitiços contendo feitiços úteis de mago\n5. Um Cajado de Defesa e Anel de Proteção\n6. 250 peças de ouro\n\nMais importante, vocês aprendem que Gundren Rockseeker provavelmente está sendo mantido no Castelo Cragmaw, e alguém chamado Aranha Negra está orquestrando tudo. A Aranha Negra busca a Caverna Eco de Onda por suas riquezas lendárias e magia.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "free_prisoners",
+          "texto": "Libertar quaisquer prisioneiros e limpar o esconderijo",
+          "proximo": "redbrand_hideout_cleared"
+        },
+        {
+          "id": "return_to_phandalin",
+          "texto": "Retornar a Phandalin com as evidências",
+          "proximo": "phandalin_liberated"
+        }
+      ]
+    },
+    "phandalin_liberated": {
+      "texto": "Com os Redbrands derrotados e Glasstaff capturado ou morto, Phandalin finalmente está livre da tirania. Os moradores emergem de suas casas, celebrando. Sildar Hallwinter (se resgatado) agradece e promete o apoio dos Lordes' Alliance.\n\nVárias oportunidades se apresentam agora:\n\n1. Irmã Garaele no Santuário da Sorte precisa de ajuda para contatar uma banshee\n2. Daran Edermath, um aventureiro aposentado, quer ajuda para limpar o Poço Velha Coruja\n3. O anão Quelline Alderleaf menciona que seu filho viu um túnel secreto na floresta\n4. Mais urgentemente: Gundren Rockseeker ainda está cativo no Castelo Cragmaw\n\nVocês também ouviram rumores de um dragão em Thundertree e orcs em Monte Tor.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "find_cragmaw_castle",
+          "texto": "Focar em encontrar o Castelo Cragmaw para resgatar Gundren",
+          "proximo": "cragmaw_castle_search"
+        },
+        {
+          "id": "investigate_thundertree",
+          "texto": "Investigar o rumor do dragão em Thundertree",
+          "proximo": "thundertree_approach"
+        },
+        {
+          "id": "visit_old_owl_well",
+          "texto": "Verificar o problema dos mortos-vivos no Poço Velha Coruja",
+          "proximo": "old_owl_well"
+        },
+        {
+          "id": "help_sister_garaele",
+          "texto": "Ajudar Irmã Garaele a contatar a banshee",
+          "proximo": "banshee_quest"
+        }
+      ]
+    },
+    "cragmaw_castle_search": {
+      "texto": "O Castelo Cragmaw é a fortaleza do Rei Grol, líder dos goblins Cragmaw. Encontrá-lo não será fácil—está escondido fundo na floresta, e os goblins mantiveram sua localização em segredo.\n\nVocês podem:\n1. Seguir a trilha de goblins capturados (requer interrogatório bem-sucedido ou rastreamento)\n2. Perguntar a Reidoth o druida em Thundertree (ele conhece bem a floresta)\n3. Procurar na natureza sistematicamente (consome tempo e é perigoso)\n\nApós alguma investigação, vocês descobrem que o Castelo Cragmaw fica cerca de 20 milhas ao nordeste de Phandalin, escondido na floresta densa.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "approach_castle",
+          "texto": "Viajar para o Castelo Cragmaw",
+          "proximo": "cragmaw_castle_arrival"
+        }
+      ]
+    },
+    "cragmaw_castle_arrival": {
+      "texto": "Vocês emergem da floresta para ver as ruínas de um antigo castelo de pedra, parcialmente coberto por vegetação. Sete torres em ruínas de tamanhos e alturas diferentes se projetam das paredes da antiga fortaleza. Sentinelas goblins patrulham as ameias.\n\nO castelo parece ter múltiplos pontos de entrada possíveis:\n1. O portão principal (fortemente guardado)\n2. Uma torre desmoronada no lado norte (dificuldade de escalada)\n3. Um túnel de drenagem antigo sob o muro sul (estreito e escuro)\n4. A porta da frente (ousado mas perigoso)",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "sneak_drainage",
+          "texto": "Entrar furtivamente pelo túnel de drenagem",
+          "proximo": "cragmaw_castle_sneak"
+        },
+        {
+          "id": "climb_tower",
+          "texto": "Escalar a torre desmoronada",
+          "proximo": "cragmaw_castle_climb"
+        },
+        {
+          "id": "frontal_assault",
+          "texto": "Lançar um assalto frontal no portão principal",
+          "proximo": "cragmaw_castle_assault"
+        }
+      ]
+    },
+    "cragmaw_castle_sneak": {
+      "texto": "Vocês rastejam pelo túnel de drenagem, emergindo na área de cozinha antiga do castelo. O lugar fede a comida podre e sujeira goblin. Vocês podem ouvir sons de atividade mais fundo no castelo—vozes goblins, o clangor de armaduras, e em algum lugar, um humano gemendo de dor.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "search_for_gundren",
+          "texto": "Procurar sistematicamente por Gundren",
+          "proximo": "cragmaw_castle_exploration"
+        }
+      ]
+    },
+    "cragmaw_castle_exploration": {
+      "texto": "Movendo-se cuidadosamente pelo castelo em ruínas, vocês encontram várias câmaras:\n\n1. O Salão do Banquete: Quatro hobgoblins jogam dados\n2. O Alojamento: Seis goblins dormem\n3. A Sala de Troféus: Um doppelganger disfarçado!\n4. A Torre: Um owlbear em uma jaula\n5. O Salão do Trono: Rei Grol com seu lobo\n\nVocês também descobrem que Gundren Rockseeker está sendo mantido em uma cela trancada perto do salão do trono, guardado pelo próprio Rei Grol.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight_king_grol",
+          "texto": "Confrontar o Rei Grol diretamente",
+          "proximo": "combat_king_grol"
+        },
+        {
+          "id": "stealth_rescue",
+          "texto": "Tentar um resgate furtivo de Gundren",
+          "proximo": "gundren_stealth_rescue"
+        },
+        {
+          "id": "cause_distraction",
+          "texto": "Liberar o owlbear para causar caos",
+          "proximo": "cragmaw_owlbear_chaos"
+        }
+      ]
+    },
+    "combat_king_grol": {
+      "texto": "Vocês entram no salão do trono. O Rei Grol, um bugbear maciço em armadura grosseira, senta em um trono feito de ossos. Seu lobo de estimação está aos seus pés, e um conselheiro doppelganger sussurra em seu ouvido.\n\n'Então, os intrometidos vieram!' Grol ruge. 'A Aranha Negra vai me recompensar bem pelas suas cabeças!' Ele saca sua maça e ataca!",
+      "isCombat": true,
+      "monsterId": "bugbear-chief-mosk",
+      "monsterCount": 1,
+      "additionalMonsters": [
+        {
+          "monsterId": "wolf",
+          "count": 1
+        },
+        {
+          "monsterId": "doppelganger",
+          "count": 1
+        }
+      ],
+      "loot": [
+        "Mapa de Gundren para a Caverna Eco de Onda",
+        "Chave da cela de Gundren",
+        "150 peças de ouro",
+        "Coroa (vale 200 po)"
+      ],
+      "opcoes": [
+        {
+          "id": "free_gundren",
+          "texto": "Libertar Gundren Rockseeker",
+          "proximo": "gundren_rescued"
+        }
+      ]
+    },
+    "gundren_rescued": {
+      "texto": "Vocês abrem a cela de Gundren. O anão está machucado e surrado mas vivo. 'Graças a Moradin vocês vieram!' ele ofega. 'O Rei Grol estava prestes a me enviar para a Aranha Negra. Escutem—meus irmãos Nundro e Tharden já estão na Caverna Eco de Onda. Nós a encontramos! Mas as forças da Aranha Negra estão lá também. Ele é um elfo negro chamado Nezznar, e ele fará qualquer coisa para reivindicar a Forja de Feitiços dentro da caverna.'\n\nGundren puxa um mapa (se vocês não o encontraram antes): 'Isto mostra o caminho para a Caverna Eco de Onda. Fica cerca de 15 milhas a leste de Phandalin. Mas tenham cuidado—a Aranha Negra tem forças por toda a mina, e meus irmãos podem estar em perigo. A caverna foi perdida por 500 anos por boas razões—está cheia de perigos tanto antigos quanto novos.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "return_to_phandalin_first",
+          "texto": "Retornar a Phandalin para descansar e reabastecer",
+          "proximo": "pre_wave_echo_cave_preparation"
+        },
+        {
+          "id": "go_immediately",
+          "texto": "Ir para a Caverna Eco de Onda imediatamente",
+          "proximo": "wave_echo_cave_approach"
+        }
+      ]
+    },
+    "thundertree_approach": {
+      "texto": "As ruínas de Thundertree ficam cerca de 30 milhas ao noroeste de Phandalin. Uma vez uma vila próspera, foi abandonada há 30 anos quando erupções do Monte Hotenow próximo devastaram a área. As ruínas estão agora cobertas por vegetação e rumoradas como assombradas.\n\nEnquanto vocês se aproximam, veem construções desmoronadas cobertas de vinhas e zumbis de cinzas cambaleando pelas ruas. Ao longe, empoleirado no topo da torre mais alta, vocês avistam algo grande e verde—um dragão!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "find_reidoth",
+          "texto": "Procurar por Reidoth o druida (vive aqui)",
+          "proximo": "reidoth_encounter"
+        },
+        {
+          "id": "confront_dragon",
+          "texto": "Aproximar-se da torre do dragão",
+          "proximo": "venomfang_encounter"
+        },
+        {
+          "id": "search_ruins",
+          "texto": "Procurar nas ruínas por tesouros e sobreviventes",
+          "proximo": "thundertree_exploration"
+        }
+      ]
+    },
+    "venomfang_encounter": {
+      "texto": "Vocês se aproximam da torre onde o dragão habita. O jovem dragão verde chamado Venomfang se enrosca no topo de uma pilha de tesouro na câmara superior da torre arruinada. Suas escamas brilham como esmeraldas, e gás venenoso sai de suas narinas.\n\n'Ahh, visitantes,' o dragão sibila. 'Que delicioso. Digam-me, criaturinhas, por que eu não deveria simplesmente devorá-los e adicionar seus ossos à minha coleção?'\n\nVenomfang é inteligente e astuto. Ele pode ser barganhado, embora dragões verdes sejam notoriamente traiçoeiros.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight_dragon",
+          "texto": "Atacar o dragão",
+          "proximo": "combat_venomfang"
+        },
+        {
+          "id": "negotiate_dragon",
+          "texto": "Tentar negociar com Venomfang",
+          "proximo": "venomfang_negotiation"
+        },
+        {
+          "id": "flee_dragon",
+          "texto": "Fugir antes que o dragão ataque",
+          "proximo": "thundertree_ruins"
+        }
+      ]
+    },
+    "combat_venomfang": {
+      "texto": "Venomfang ruge em fúria! O jovem dragão verde voa dentro da torre, suas asas batendo contra as paredes desmoronando. 'Você ousa me desafiar? Vou dissolver sua carne com veneno e me banquetear com seus ossos!'",
+      "isCombat": true,
+      "monsterId": "young-green-dragon-venomfang",
+      "monsterCount": 1,
+      "loot": [
+        "800 peças de prata",
+        "150 peças de ouro",
+        "5 gemas (valem 50 po cada)",
+        "Espada longa mágica +1",
+        "Poção de cura maior",
+        "Pergaminho de Bola de Fogo"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Reivindicar o tesouro do dragão",
+          "proximo": "dragon_slayers"
+        }
+      ]
+    },
+    "dragon_slayers": {
+      "texto": "Com Venomfang derrotado, vocês mataram um dragão! Este feito será cantado em tavernas por toda a Costa da Espada. Vocês reivindicam o tesouro do dragão e se tornam heróis locais.\n\nReidoth o druida emerge do esconderijo: 'Notável! Venho tentando afugentar esse wyrm há meses. Vocês fizeram um grande serviço à região. Como agradecimento, posso contar que o Castelo Cragmaw fica ao nordeste daqui, cerca de 20 milhas. Também posso guiá-los para a Caverna Eco de Onda quando estiverem prontos.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "return_to_phandalin",
+          "texto": "Retornar a Phandalin com notícias de sua vitória",
+          "proximo": "phandalin_heroes"
+        },
+        {
+          "id": "continue_quests",
+          "texto": "Continuar explorando a região",
+          "proximo": "region_exploration"
+        }
+      ]
+    },
+    "pre_wave_echo_cave_preparation": {
+      "texto": "De volta a Phandalin, vocês se preparam para o confronto final. Gundren fornece informações críticas:\n\n'A Caverna Eco de Onda é o local da Forja de Feitiços, uma oficina mágica onde conjuradores humanos e ferreiros anões trabalharam juntos séculos atrás. A caverna foi perdida quando orcs atacaram, provocando uma explosão mágica que matou todos e fez a mina desmoronar. Meus irmãos e eu a reencontramos, mas a Aranha Negra quer reivindicar seu poder para si.'\n\nGundren avisa sobre os perigos:\n- Mortos-vivos da batalha antiga ainda assombram a mina\n- Monstros perigosos se mudaram para os túneis\n- As forças da Aranha Negra (elfos negros e seus servos) controlam áreas-chave\n- Nezznar em si é um mago poderoso\n\nVocês deveriam estar pelo menos no nível 4 antes de entrar na Caverna Eco de Onda.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "depart_for_cave",
+          "texto": "Partir para a Caverna Eco de Onda",
+          "proximo": "wave_echo_cave_approach"
+        },
+        {
+          "id": "complete_other_quests",
+          "texto": "Completar outras missões primeiro para ganhar experiência",
+          "proximo": "region_exploration"
+        }
+      ]
+    },
+    "wave_echo_cave_approach": {
+      "texto": "A entrada para a Caverna Eco de Onda está escondida nas colinas a leste de Phandalin. Usando o mapa de Gundren, vocês encontram uma rachadura em uma encosta que leva para a escuridão. O ar fluindo da caverna é quente e carrega um cheiro estranho mineral.\n\nEnquanto descem, vocês começam a ouvir o que deu nome à mina—um som rítmico estrondoso, como o eco de ondas poderosas quebrando contra uma costa distante. Gundren explica: 'O som vem da ressonância mágica da Forja de Feitiços. Tem ecoado por esses túneis por quinhentos anos.'\n\nVocês alcançaram o limiar da lendária Caverna Eco de Onda.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "enter_cave",
+          "texto": "Entrar na Caverna Eco de Onda",
+          "proximo": "wave_echo_cave_entrance"
+        }
+      ]
+    },
+    "wave_echo_cave_entrance": {
+      "texto": "O túnel se abre em passagens de pedra trabalhada—isto é claramente uma mina anã. Equipamentos de mineração estão abandonados, e restos esqueléticos espalham o chão, remanescentes da batalha que destruiu este lugar há 500 anos.\n\nA passagem se divide: norte em direção ao que parecem túneis de mineração antigos, leste em direção a uma câmara maior onde vocês ouvem sons de raspagem, e sul onde vocês veem um brilho esverdeado fraco.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "go_north",
+          "texto": "Explorar os túneis de mineração ao norte",
+          "proximo": "wave_echo_mining_tunnels"
+        },
+        {
+          "id": "go_east",
+          "texto": "Investigar a câmara ao leste",
+          "proximo": "wave_echo_ochre_jelly"
+        },
+        {
+          "id": "go_south",
+          "texto": "Seguir o brilho verde ao sul",
+          "proximo": "wave_echo_fungi_cavern"
+        }
+      ]
+    },
+    "wave_echo_ochre_jelly": {
+      "texto": "Vocês entram em uma câmara grande cheia de equipamentos de mineração antigos. De repente, uma geleia ocre maciça goteja do teto! A criatura ácida tem se alimentado do equipamento de metal por anos.",
+      "isCombat": true,
+      "monsterId": "ochre-jelly",
+      "monsterCount": 1,
+      "opcoes": [
+        {
+          "id": "continue",
+          "texto": "Continuar explorando a mina",
+          "proximo": "wave_echo_cave_depths"
+        }
+      ]
+    },
+    "wave_echo_cave_depths": {
+      "texto": "Enquanto vocês se aprofundam na Caverna Eco de Onda, encontram:\n\n1. Câmaras infestadas de stirges pingando sangue\n2. Uma caverna de fungos brilhantes (inofensivos mas bonitos)\n3. Uma sala de forja antiga com guardiões wraith\n4. A área de alojamento onde bugbears aliados à Aranha Negra patrulham\n5. Um templo a Dumathoin com guardiões espectrais\n\nVocês também encontram o irmão de Gundren, Nundro, aprisionado e ferido mas vivo. Ele conta que Tharden foi morto pelas forças da Aranha Negra, e que Nezznar está na Forja de Feitiços, tentando desvendar seus segredos.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "free_nundro",
+          "texto": "Libertar Nundro e enviá-lo para a segurança",
+          "proximo": "nundro_freed"
+        },
+        {
+          "id": "push_to_forge",
+          "texto": "Empurrar diretamente para a Forja de Feitiços",
+          "proximo": "forge_of_spells_approach"
+        }
+      ]
+    },
+    "forge_of_spells_approach": {
+      "texto": "Vocês se aproximam da Forja de Feitiços, o coração da Caverna Eco de Onda. O som estrondoso é mais alto aqui, reverberando por seus próprios ossos. A passagem se abre em uma caverna maciça com um braseiro brilhante no centro—a lendária Forja de Feitiços, onde itens mágicos eram outrora criados.\n\nParado diante da forja está um elfo negro em vestes negras, estudando as chamas mágicas. Este é Nezznar a Aranha Negra! Ele está flanqueado por duas aranhas gigantes e tem vários guardas bugbear.\n\nNezznar olha para cima enquanto vocês entram. 'Então, os intrometidos finalmente chegaram. Tarde demais, receio. Já desvendei os segredos da forja. Agora, vocês morrerão aqui na escuridão, assim como todos os outros que se colocaram no meu caminho.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight_black_spider",
+          "texto": "Lutar com Nezznar e suas forças",
+          "proximo": "combat_black_spider_final"
+        },
+        {
+          "id": "negotiate",
+          "texto": "Tentar negociar com a Aranha Negra",
+          "proximo": "black_spider_negotiation"
+        }
+      ]
+    },
+    "combat_black_spider_final": {
+      "texto": "A batalha final começa! Nezznar ergue seu Cajado Aranha e começa a lançar feitiços. Suas aranhas gigantes rastejam pelas paredes da caverna, e os bugbears carregam com armas erguidas. A Forja de Feitiços pulsa com energia mágica, o som estrondoso alcançando um crescendo!",
+      "isCombat": true,
+      "monsterId": "black-spider",
+      "monsterCount": 1,
+      "additionalMonsters": [
+        {
+          "monsterId": "giant-spider",
+          "count": 2
+        },
+        {
+          "monsterId": "bugbear",
+          "count": 2
+        }
+      ],
+      "loot": [
+        "Cajado Aranha (item mágico raro)",
+        "Livro de feitiços da Aranha Negra",
+        "300 peças de ouro",
+        "4 gemas (valem 100 po cada)",
+        "Lightbringer (maça mágica)",
+        "Acesso à Forja de Feitiços"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Ficar vitorioso na Forja de Feitiços",
+          "proximo": "epilogue"
+        }
+      ]
+    },
+    "epilogue": {
+      "texto": "Com a Aranha Negra derrotada, a Caverna Eco de Onda finalmente está segura. Os irmãos Rockseeker (Gundren e Nundro) agradecem profusamente e oferecem uma parceria nos lucros da mina.\n\nA Forja de Feitiços pode uma vez mais ser usada para criar itens mágicos, e os tesouros da Caverna Eco de Onda trarão prosperidade a Phandalin. Sildar Hallwinter reporta seus feitos aos Lordes' Alliance, e vocês se tornam heróis da Costa da Espada.\n\nSua aventura na Mina Perdida de Phandelver concluiu, mas muitas aventuras mais aguardam nos Reinos Esquecidos!\n\n**Parabéns! Você completou A Mina Perdida de Phandelver!**\n\nPossíveis resultados de epílogo baseados em suas escolhas:\n- Se você salvou a família Dendrar: Eles se estabelecem em Phandalin e se tornam amigos\n- Se você derrotou Venomfang: Você é conhecido como matadores de dragão\n- Se você se aliou aos Lordes' Alliance: Você ganha patronos poderosos\n- Se você limpou todas as missões secundárias: Phandalin prospera sob sua proteção\n\nOs personagens agora devem estar por volta do nível 5 e prontos para grandes aventuras!",
+      "isCombat": false,
+      "opcoes": []
+    },
+    "split_decision": {
+      "texto": "Vocês decidem dividir o grupo. Parte do grupo continuará para Phandalin com a carroça enquanto outros investigam a trilha dos goblins. Esta é uma decisão arriscada que poderia deixar ambos os grupos vulneráveis.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "continue_split",
+          "texto": "Proceder com a divisão",
+          "proximo": "trail_to_hideout"
+        },
+        {
+          "id": "reconsider",
+          "texto": "Reconsiderar e ficar juntos",
+          "proximo": "post_ambush"
+        }
+      ]
+    },
+    "hideout_trap_triggered": {
+      "texto": "Vocês deliberadamente ativam as armadilhas. A armadilha de laço não pega nada já que vocês estão preparados, e vocês liberam a represa de uma distância segura. Água corre pela passagem, lavando detritos. Agora os goblins dentro sabem que alguém está aqui!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "rush_in",
+          "texto": "Correr para dentro enquanto eles estão confusos",
+          "proximo": "hideout_alert"
+        }
+      ]
+    },
+    "hideout_climb": {
+      "texto": "Vocês escalam as paredes íngremes ao redor da entrada da caverna, contornando as armadilhas completamente. Isso os leva a uma passagem superior que conecta ao covil dos goblins de cima. Vocês têm a vantagem da surpresa e terreno elevado.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "drop_down",
+          "texto": "Saltar sobre os goblins de cima",
+          "proximo": "combat_goblin_den_surprise"
+        }
+      ]
+    },
+    "hideout_alert": {
+      "texto": "Vocês correm para dentro da caverna! Os goblins estão prontos para vocês, armas em punho. Esta será uma luta difícil sem surpresa do seu lado.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "fight",
+          "texto": "Lutar contra os goblins alertados",
+          "proximo": "combat_goblin_den_alert"
+        }
+      ]
+    },
+    "combat_goblin_den_alert": {
+      "texto": "Seis goblins e dois lobos atacam! Eles estão prontos para vocês e usam o terreno a seu favor.",
+      "isCombat": true,
+      "monsterId": "goblin",
+      "monsterCount": 6,
+      "additionalMonsters": [
+        {
+          "monsterId": "wolf",
+          "count": 2
+        }
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Continuar mais fundo na caverna",
+          "proximo": "hideout_depths"
+        }
+      ]
+    },
+    "hideout_sneak_past": {
+      "texto": "Vocês tentam passar furtivamente pelos goblins. Façam um teste de Furtividade (CD 13) para evitar detecção enquanto se movem em direção à passagem setentrional onde acreditam que os cativos estão sendo mantidos.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Passar furtivamente com sucesso (se teste de Furtividade for bem-sucedido)",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "failure",
+          "texto": "Ser detectado (se teste de Furtividade falhar)",
+          "proximo": "combat_goblin_den_alert"
+        }
+      ]
+    },
+    "hideout_wolf_chaos": {
+      "texto": "Vocês soltam os lobos acorrentados! As feras imediatamente atacam os goblins mais próximos, criando caos no covil. Os goblins se apressam para se defender, dando a vocês uma oportunidade de passar furtivamente ou se juntar à batalha.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "slip_past",
+          "texto": "Passar furtivamente durante o caos",
+          "proximo": "hideout_depths"
+        },
+        {
+          "id": "join_fight",
+          "texto": "Atacar os goblins enquanto eles estão distraídos",
+          "proximo": "combat_goblin_den_surprise"
+        }
+      ]
+    },
+    "hideout_split": {
+      "texto": "Dividir o grupo em um ambiente perigoso como este é arriscado. Cada grupo será mais vulnerável a ataques.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "proceed_split",
+          "texto": "Proceder com a divisão",
+          "proximo": "hideout_depths"
+        },
+        {
+          "id": "stay_together",
+          "texto": "Decidir ficar juntos afinal",
+          "proximo": "hideout_depths"
+        }
+      ]
+    },
+    "family_rescued": {
+      "texto": "Vocês escoltam Mirna e seus filhos para fora do esconderijo e para a segurança. Ela está incrivelmente grata: 'Obrigada! Minha família uma vez teve uma casa em Thundertree, antes de ser destruída. Escondido debaixo da loja do herbalista estava um colar de esmeraldas—o herança da minha família. Se vocês algum dia viajarem para lá, é seu se puderem encontrá-lo. Considerem como pagamento por salvar nossas vidas.'\n\nA família retorna a Phandalin em segurança.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "return_to_hideout",
+          "texto": "Retornar ao esconderijo para terminá-lo de limpar",
+          "proximo": "redbrand_hideout_depths"
+        },
+        {
+          "id": "continue_to_phandalin",
+          "texto": "Continuar para Phandalin com a família",
+          "proximo": "arrive_phandalin"
+        }
+      ]
+    },
+    "hideout_rest": {
+      "texto": "Vocês fazem um descanso curto para cuidar de ferimentos e se recuperar. Sildar compartilha o que sabe sobre Phandalin e a conspiração. Quando estiverem prontos, podem continuar sua jornada.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "continue",
+          "texto": "Deixar o esconderijo e ir para Phandalin",
+          "proximo": "journey_to_phandalin"
+        }
+      ]
+    },
+    "hideout_entrance_return": {
+      "texto": "Vocês recuam de volta para a entrada da caverna para reavaliar sua abordagem.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "try_again",
+          "texto": "Tentar uma abordagem diferente",
+          "proximo": "trail_to_hideout"
+        }
+      ]
+    }
+  },
+  "isActive": true,
+  "createdBy": "system",
+  "createdAt": "2025-01-20T00:00:00Z",
+  "mermaidSource": ""
+}
