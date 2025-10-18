@@ -1,4 +1,3 @@
-// Componente de Card de História para o Catálogo
 export function createStoryCardHTML(story, onSelectCallback) {
   const genreColors = {
     'Fantasia': '#9B59B6',

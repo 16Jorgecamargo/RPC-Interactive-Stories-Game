@@ -132,7 +132,6 @@ async function handleRegister(event) {
     if (result.success) {
       setLoading(false);
 
-      // Mostrar dialog de sucesso
       dialogManager.showSuccess({
         title: '🎉 Cadastro Concluído!',
         message: `Bem-vindo à guilda, ${username}! Sua conta foi criada com sucesso. Você será redirecionado automaticamente para fazer login.`,
@@ -140,7 +139,6 @@ async function handleRegister(event) {
         showContinue: true,
         continueText: '🚪 Fazer Login Agora',
         continueCallback: async () => {
-          // Fazer login automático
           try {
             const loginResult = await rpcClient.call('login', {
               username,
@@ -150,13 +148,11 @@ async function handleRegister(event) {
             if (loginResult.token) {
               localStorage.setItem('token', loginResult.token);
 
-              // Salvar dados adicionais do login
               if (loginResult.expiresIn) {
                 localStorage.setItem('expiresIn', loginResult.expiresIn);
               }
               localStorage.setItem('loginTime', Date.now());
 
-              // Buscar dados do usuário
               try {
                 const userResult = await rpcClient.call('me', {
                   token: loginResult.token
@@ -168,7 +164,6 @@ async function handleRegister(event) {
                 }
               } catch (meError) {
                 console.error('Erro ao buscar dados do usuário:', meError);
-                // Se houver erro ao buscar dados, salvar dados básicos
                 localStorage.setItem('user', JSON.stringify({ username }));
               }
 
@@ -176,7 +171,6 @@ async function handleRegister(event) {
             }
           } catch (loginError) {
             console.error('Erro no login automático:', loginError);
-            // Se o login automático falhar, redirecionar para a página de login
             window.location.href = '/login.html';
           }
         }
@@ -199,13 +193,11 @@ async function handleRegister(event) {
       errorMessage = error.message;
     }
 
-    // Mostrar dialog de erro
     dialogManager.showError({
       title: errorTitle,
       message: errorMessage,
       showRetry: true,
       retryCallback: () => {
-        // Focar no primeiro campo com erro
         if (usernameInput.classList.contains('error')) {
           usernameInput.focus();
         } else if (passwordInput.classList.contains('error')) {

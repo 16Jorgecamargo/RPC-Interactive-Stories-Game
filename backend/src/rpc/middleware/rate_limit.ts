@@ -6,6 +6,11 @@ export async function rateLimitMiddleware(
   request: FastifyRequest,
   reply: FastifyReply
 ): Promise<void> {
+  // Ignorar requisições OPTIONS (CORS preflight) no rate limiting
+  if (request.method === 'OPTIONS') {
+    return;
+  }
+  
   const identifier = request.ip || 'unknown';
   
   const isAuthEndpoint = 

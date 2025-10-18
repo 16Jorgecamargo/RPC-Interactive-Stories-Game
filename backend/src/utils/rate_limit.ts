@@ -107,10 +107,13 @@ class RateLimiter {
   }
 }
 
-export const globalRateLimiter = new RateLimiter(60000, 100);
+// Rate limiter global: 1000 req/min (suporta até 30+ usuários simultâneos)
+export const globalRateLimiter = new RateLimiter(60000, 1000);
 
-export const strictRateLimiter = new RateLimiter(60000, 30);
+// Rate limiter estrito: 100 req/min (para endpoints sensíveis)
+export const strictRateLimiter = new RateLimiter(60000, 100);
 
+// Rate limiter auth: 10 req/5min (previne brute force)
 export const authRateLimiter = new RateLimiter(300000, 10);
 
 export function createRateLimiter(windowMs: number, maxRequests: number): RateLimiter {

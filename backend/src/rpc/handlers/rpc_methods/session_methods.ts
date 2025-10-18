@@ -10,6 +10,8 @@ import {
   TransitionToCreatingCharactersSchema,
   CanStartSessionSchema,
   StartSessionSchema,
+  EnterRoomSchema,
+  LeaveRoomSchema,
 } from '../../../models/session_schemas.js';
 
 export const sessionMethods = {
@@ -56,5 +58,15 @@ export const sessionMethods = {
   startSession: async (params: unknown) => {
     const validated = StartSessionSchema.parse(params) as z.infer<typeof StartSessionSchema>;
     return await sessionService.startSession(validated);
+  },
+
+  enterRoom: async (params: unknown) => {
+    const validated = EnterRoomSchema.parse(params) as z.infer<typeof EnterRoomSchema>;
+    return await sessionService.enterRoom(validated);
+  },
+
+  leaveRoom: async (params: unknown) => {
+    const validated = LeaveRoomSchema.parse(params) as z.infer<typeof LeaveRoomSchema>;
+    return await sessionService.leaveRoom(validated);
   },
 };

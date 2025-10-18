@@ -1,16 +1,19 @@
 import { v4 as uuidv4 } from 'uuid';
 import * as eventStore from '../stores/event_store.js';
 import * as sessionStore from '../stores/session_store.js';
+import * as messageStore from '../stores/message_store.js';
+import * as userStore from '../stores/user_store.js';
 import { logInfo, logError } from './logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
+import type { Message } from '../models/chat_schemas.js';
 import type { Participant } from '../models/session_schemas.js';
 
 const CLEANUP_INTERVAL_MS = 60 * 60 * 1000;
 const OLD_UPDATES_HOURS = 24;
 const OLD_EVENTS_DAYS = 30;
 
-const HEARTBEAT_CHECK_INTERVAL_MS = 60 * 1000;
-const OFFLINE_THRESHOLD_MS = 5 * 60 * 1000;
+const HEARTBEAT_CHECK_INTERVAL_MS = 30 * 1000; // Reduzido para 30s
+const OFFLINE_THRESHOLD_MS = 60 * 1000; // Reduzido para 60s (1 minuto)
 
 export function startCleanupScheduler() {
   logInfo('[SCHEDULER] Iniciando limpeza periódica de dados antigos');
@@ -80,13 +83,18 @@ function checkOfflinePlayers() {
         participant.isOnline = false;
         hasChanges = true;
 
+        // Busca username do usuário
+        const user = userStore.findById(participant.userId);
+        const username = user?.username || 'Jogador';
+
         const disconnectUpdate: GameUpdate = {
           id: `update_${uuidv4()}`,
-          type: 'PLAYER_LEFT',
+          type: 'PLAYER_ROOM_LEFT',
           timestamp: new Date().toISOString(),
           sessionId: session.id,
           data: {
             userId: participant.userId,
+            username: username,
             reason: 'timeout',
             lastActivity: participant.lastActivity,
           },

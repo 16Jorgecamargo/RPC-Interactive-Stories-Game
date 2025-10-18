@@ -18,6 +18,9 @@ import {
   TransitionResponseSchema,
   CanStartResponseSchema,
   StartSessionResponseSchema,
+  EnterRoomSchema,
+  LeaveRoomSchema,
+  RoomActionResponseSchema,
 } from '../../../models/session_schemas.js';
 
 export function registerSessionPaths(registry: OpenAPIRegistry) {
@@ -386,6 +389,88 @@ export function registerSessionPaths(registry: OpenAPIRegistry) {
       },
       403: {
         description: 'Apenas o owner pode iniciar a sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/sessions/enter-room',
+    tags: ['Sessions'],
+    summary: 'Entrar na sala de espera',
+    description:
+      'Marca jogador como online e envia evento PLAYER_ROOM_JOINED + mensagem de chat. Use ao clicar no botão "Entrar na Sala" no /home. Wrapper REST que internamente chama o método RPC "enterRoom".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: EnterRoomSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Entrou na sala com sucesso',
+        content: {
+          'application/json': {
+            schema: RoomActionResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
+      },
+      404: {
+        description: 'Sessão não encontrada',
+      },
+      500: {
+        description: 'Erro interno do servidor',
+      },
+    },
+  });
+
+  registry.registerPath({
+    method: 'post',
+    path: '/rpc/sessions/leave-room',
+    tags: ['Sessions'],
+    summary: 'Sair da sala de espera (voltar à taverna)',
+    description:
+      'Marca jogador como offline e envia evento PLAYER_ROOM_LEFT + mensagem de chat. Use ao clicar no botão "Voltar para Taverna" na waiting-room. Wrapper REST que internamente chama o método RPC "leaveRoom".',
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: LeaveRoomSchema,
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: 'Saiu da sala com sucesso',
+        content: {
+          'application/json': {
+            schema: RoomActionResponseSchema,
+          },
+        },
+      },
+      401: {
+        description: 'Token inválido ou expirado',
+      },
+      403: {
+        description: 'Usuário não é participante da sessão',
       },
       404: {
         description: 'Sessão não encontrada',

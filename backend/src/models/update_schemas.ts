@@ -4,8 +4,10 @@ import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi';
 extendZodWithOpenApi(z);
 
 export const UpdateTypeEnum = z.enum([
-  'PLAYER_JOINED',
-  'PLAYER_LEFT',
+  'PLAYER_SESSION_JOINED',    // Jogador entra na sessão (join por código ou createSession)
+  'PLAYER_SESSION_LEFT',      // Jogador sai permanentemente da sessão (botão sair ou delete)
+  'PLAYER_ROOM_JOINED',       // Jogador entra na sala de espera (botão "Entrar" ou primeiro acesso)
+  'PLAYER_ROOM_LEFT',         // Jogador sai da sala (botão "Voltar à Taverna" ou fica offline)
   'CHARACTER_CREATED',
   'CHARACTER_UPDATED',
   'ALL_CHARACTERS_READY',
@@ -14,6 +16,7 @@ export const UpdateTypeEnum = z.enum([
   'CHAPTER_CHANGED',
   'STORY_ENDED',
   'NEW_MESSAGE',
+  'CHAT_MESSAGE',
   'SESSION_DELETED',
   'GAME_STARTED',
   'COMBAT_STARTED',

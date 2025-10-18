@@ -218,14 +218,14 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Entrar em sessão via código
 
 #### Cards
-- [ ] **FE-SESSION-010**: Criar `public/session-join.html` com campo de código
+- [x] **FE-SESSION-010**: Criar `public/session-join.html` com campo de código
   - **TODO**: Adicionar `requireAuth()` no início do script
-- [ ] **FE-SESSION-011**: Criar `src/ui/sessions/join.js` com lógica de entrada
-- [ ] **FE-SESSION-012**: Implementar `joinSession(code)` chamando backend
+- [x] **FE-SESSION-011**: Criar `src/ui/sessions/join.js` com lógica de entrada
+- [x] **FE-SESSION-012**: Implementar `joinSession(code)` chamando backend
   - **Depende de**: `BE-SESSION-005`, `FE-AUTH-016`
-- [ ] **FE-SESSION-013**: Validar formato do código (6 caracteres alfanuméricos)
-- [ ] **FE-SESSION-014**: Exibir erro se código inválido ou sessão cheia
-- [ ] **FE-SESSION-015**: Redirecionar para sala de espera após entrada bem-sucedida
+- [x] **FE-SESSION-013**: Validar formato do código (6 caracteres alfanuméricos)
+- [x] **FE-SESSION-014**: Exibir erro se código inválido ou sessão cheia
+- [x] **FE-SESSION-015**: Redirecionar para sala de espera após entrada bem-sucedida
 
 **Critério de Aceite**: Usuário entra em sessão via código
 
@@ -235,23 +235,23 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Visualizar participantes e aguardar início
 
 #### Cards
-- [ ] **FE-SESSION-016**: Criar `public/waiting-room.html` com layout da sala
+- [x] **FE-SESSION-016**: Criar `public/waiting-room.html` com layout da sala
   - **TODO**: Adicionar `requireAuth()` no início do script
-- [ ] **FE-SESSION-017**: Criar `src/ui/sessions/waitingRoom.js` com lógica da sala
-- [ ] **FE-SESSION-018**: Implementar `getWaitingRoomState(sessionId)` chamando backend
+- [x] **FE-SESSION-017**: Criar `src/ui/sessions/waitingRoom.js` com lógica da sala
+- [x] **FE-SESSION-018**: Implementar `getWaitingRoomState(sessionId)` chamando backend
   - **Depende de**: `BE-SESSION-007`, `FE-AUTH-016`
-- [ ] **FE-SESSION-019**: Exibir código da sessão (para compartilhar)
-- [ ] **FE-SESSION-020**: Listar participantes com status (criou personagem ou não)
-- [ ] **FE-SESSION-021**: Exibir botão "Criar Personagem" se usuário não criou o personagem (a tela de criar vai ser implementada depois)
-- [ ] **FE-SESSION-022**: Redirecionar para criação de personagem ao clicar no botão
-- [ ] **FE-SESSION-023**: Polling de atualizações para detectar novos participantes
+- [x] **FE-SESSION-019**: Exibir código da sessão (para compartilhar)
+- [x] **FE-SESSION-020**: Listar participantes com status (criou personagem ou não)
+- [x] **FE-SESSION-021**: Exibir botão "Criar Personagem" se usuário não criou o personagem (a tela de criar vai ser implementada depois)
+- [x] **FE-SESSION-022**: Redirecionar para criação de personagem ao clicar no botão
+- [x] **FE-SESSION-023**: Polling de atualizações para detectar novos participantes
   - **Depende de**: `BE-POLL-003`, `FE-RPC-002`
-- [ ] **FE-SESSION-024**: Exibir botão "Iniciar Jogo" (apenas para owner)
-- [ ] **FE-SESSION-025**: Desabilitar botão "Iniciar" até todos criarem personagens
+- [x] **FE-SESSION-024**: Exibir botão "Iniciar Jogo" (apenas para owner)
+- [x] **FE-SESSION-025**: Desabilitar botão "Iniciar" até todos criarem personagens
   - **Depende de**: `BE-SESSION-016`
-- [ ] **FE-SESSION-026**: Implementar `startGame(sessionId)` chamando backend
+- [x] **FE-SESSION-026**: Implementar `startGame(sessionId)` chamando backend
   - **Depende de**: `BE-SESSION-017`, `FE-AUTH-016`
-- [ ] **FE-SESSION-027**: Redirecionar para tela de jogo ao iniciar
+- [x] **FE-SESSION-027**: Redirecionar para tela de jogo ao iniciar
 
 **Critério de Aceite**: Sala de espera atualiza em tempo real e permite iniciar jogo quando todos prontos
 
@@ -261,15 +261,15 @@ Este cronograma contém **apenas cards de frontend** (cliente, UI, integração 
 **Objetivo**: Ver minhas sessões ativas
 
 #### Cards
-- [ ] **FE-SESSION-028**: Criar `public/sessions.html` com lista de sessões
+- [x] **FE-SESSION-028**: Aplicar em `public/home.html` com lista de sessões
   - **TODO**: Adicionar `requireAuth()` no início do script
-- [ ] **FE-SESSION-029**: Criar `src/ui/sessions/list.js` com lógica de listagem
-- [ ] **FE-SESSION-030**: Implementar `getMySessions()` chamando backend
+- [x] **FE-SESSION-029**: aplicar `src/ui/home.js` com lógica de listagem
+- [x] **FE-SESSION-030**: Implementar `getMySessions()` chamando backend
   - **Depende de**: `BE-SESSION-006`, `FE-AUTH-016`
-- [ ] **FE-SESSION-031**: Exibir cards com nome, história, status, jogadores
-- [ ] **FE-SESSION-032**: Adicionar badges de status (WAITING, CREATING, IN_PROGRESS, COMPLETED)
-- [ ] **FE-SESSION-033**: Adicionar botão "Entrar" para reconectar em sessão ativa
-- [ ] **FE-SESSION-034**: Adicionar botão "Excluir" (apenas para owner)
+- [x] **FE-SESSION-031**: Exibir cards com nome, história, status, jogadores
+- [x] **FE-SESSION-032**: Adicionar badges de status (WAITING, CREATING, IN_PROGRESS, COMPLETED)
+- [x] **FE-SESSION-033**: Adicionar botão "Entrar" para reconectar em sessão ativa
+- [x] **FE-SESSION-034**: Adicionar botão "Excluir" (apenas para owner)
   - **Depende de**: `BE-SESSION-008`
 
 **Critério de Aceite**: Usuário visualiza e gerencia suas sessões

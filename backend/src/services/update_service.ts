@@ -5,6 +5,7 @@ import * as sessionStore from '../stores/session_store.js';
 import * as messageStore from '../stores/message_store.js';
 import type { Participant } from '../models/session_schemas.js';
 import type { GameUpdate } from '../models/update_schemas.js';
+import type { Message } from '../models/chat_schemas.js';
 
 export async function checkGameUpdates(params: {
   token: string;
@@ -89,7 +90,7 @@ export async function updatePlayerStatus(params: {
   if (wasOffline) {
     const reconnectUpdate: GameUpdate = {
       id: `update_${crypto.randomUUID()}`,
-      type: 'PLAYER_JOINED',
+      type: 'PLAYER_ROOM_JOINED',
       timestamp: now,
       sessionId: session.id,
       data: {

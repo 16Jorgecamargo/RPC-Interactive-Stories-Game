@@ -3,11 +3,14 @@ import { verifyToken } from '../utils/jwt.js';
 import * as sessionStore from '../stores/session_store.js';
 import * as storyStore from '../stores/story_store.js';
 import * as characterStore from '../stores/character_store.js';
+import * as userStore from '../stores/user_store.js';
 import * as gameService from './game_service.js';
 import * as eventStore from '../stores/event_store.js';
+import * as messageStore from '../stores/message_store.js';
 import { JSON_RPC_ERRORS } from '../models/jsonrpc_schemas.js';
 import { logInfo, logWarning } from '../utils/logger.js';
 import type { GameUpdate } from '../models/update_schemas.js';
+import type { Message } from '../models/chat_schemas.js';
 import type {
   CreateSession,
   JoinSession,
@@ -151,8 +154,43 @@ export async function joinSession(params: JoinSession): Promise<JoinSessionRespo
 
   const isAlreadyParticipant = session.participants.some((p) => p.userId === userId);
   if (isAlreadyParticipant) {
+    const now = new Date().toISOString();
+    const updatedParticipants = session.participants.map((p) =>
+      p.userId === userId
+        ? { ...p, isOnline: true, lastActivity: now }
+        : p
+    );
+    
+    const updatedSession = sessionStore.updateSession(session.id, {
+      participants: updatedParticipants,
+    });
+
+    if (!updatedSession) {
+      throw {
+        ...JSON_RPC_ERRORS.INTERNAL_ERROR,
+        message: 'Erro ao atualizar status online',
+      };
+    }
+
+    const story = storyStore.findById(session.storyId);
+    const owner = userStore.findById(session.ownerId);
+    const myParticipant = updatedSession.participants.find((p) => p.userId === userId);
+    let myCharacterName = null;
+
+    if (myParticipant?.characterId) {
+      const character = characterStore.findById(myParticipant.characterId);
+      myCharacterName = character?.name || null;
+    }
+
     return {
-      session,
+      session: {
+        ...updatedSession,
+        storyTitle: story?.title || 'História não encontrada',
+        storyGenre: story?.metadata.genre || 'Desconhecido',
+        storySynopsis: story?.metadata.synopsis || null,
+        myCharacterName,
+        ownerUsername: owner?.username || 'Desconhecido',
+      },
       message: 'Você já está nesta sessão',
     };
   }
@@ -191,7 +229,7 @@ export async function joinSession(params: JoinSession): Promise<JoinSessionRespo
 
   const joinUpdate: GameUpdate = {
     id: `update_${uuidv4()}`,
-    type: 'PLAYER_JOINED',
+    type: 'PLAYER_SESSION_JOINED',
     timestamp: now,
     sessionId: session.id,
     data: {
@@ -201,16 +239,33 @@ export async function joinSession(params: JoinSession): Promise<JoinSessionRespo
   };
   eventStore.addUpdate(joinUpdate);
 
-  logInfo('[SESSION] Jogador entrou na sessão', { 
-    sessionId: session.id, 
+  logInfo('[SESSION] Jogador entrou na sessão', {
+    sessionId: session.id,
     sessionCode: session.sessionCode,
     userId,
     username: decoded.username,
     totalParticipants: updatedParticipants.length
   });
 
+  const story = storyStore.findById(session.storyId);
+  const owner = userStore.findById(session.ownerId);
+  const myParticipant = updatedSession.participants.find((p) => p.userId === userId);
+  let myCharacterName = null;
+
+  if (myParticipant?.characterId) {
+    const character = characterStore.findById(myParticipant.characterId);
+    myCharacterName = character?.name || null;
+  }
+
   return {
-    session: updatedSession,
+    session: {
+      ...updatedSession,
+      storyTitle: story?.title || 'História não encontrada',
+      storyGenre: story?.metadata.genre || 'Desconhecido',
+      storySynopsis: story?.metadata.synopsis || null,
+      myCharacterName,
+      ownerUsername: owner?.username || 'Desconhecido',
+    },
     message: 'Você entrou na sessão com sucesso',
   };
 }
@@ -225,10 +280,27 @@ export async function listMySessions(params: GetSessions): Promise<SessionsList>
 
   const sessionsWithStory = sessions.map((session) => {
     const story = storyStore.findById(session.storyId);
+    const owner = userStore.findById(session.ownerId);
+
+    const myParticipant = session.participants.find((p) => p.userId === userId);
+    let myCharacterName = null;
+
+    if (myParticipant?.characterId) {
+      const character = characterStore.findById(myParticipant.characterId);
+      myCharacterName = character?.name || null;
+    }
+
+    // Contar jogadores online
+    const onlineCount = session.participants.filter((p) => p.isOnline).length;
+
     return {
       ...session,
       storyTitle: story?.title || 'História não encontrada',
       storyGenre: story?.metadata.genre || 'Desconhecido',
+      storySynopsis: story?.metadata.synopsis || null,
+      myCharacterName,
+      ownerUsername: owner?.username || 'Desconhecido',
+      onlineCount,
     };
   });
 
@@ -265,6 +337,17 @@ export async function getSessionDetails(params: GetSessionDetails): Promise<Sess
     };
   }
 
+  const now = new Date().toISOString();
+  const updatedParticipants = session.participants.map((p) =>
+    p.userId === userId
+      ? { ...p, isOnline: true, lastActivity: now }
+      : p
+  );
+  
+  const updatedSession = sessionStore.updateSession(sessionId, {
+    participants: updatedParticipants,
+  });
+
   const story = storyStore.findById(session.storyId);
   if (!story) {
     throw {
@@ -274,8 +357,29 @@ export async function getSessionDetails(params: GetSessionDetails): Promise<Sess
     };
   }
 
+  const sessionToReturn = updatedSession || session;
+  
+  const enrichedParticipants = sessionToReturn.participants.map((p) => {
+    const user = userStore.findById(p.userId);
+    let characterName: string | undefined = undefined;
+    
+    if (p.characterId) {
+      const character = characterStore.findById(p.characterId);
+      characterName = character?.name || undefined;
+    }
+    
+    return {
+      ...p,
+      username: user?.username || 'Desconhecido',
+      characterName,
+    };
+  });
+
   return {
-    session,
+    session: {
+      ...sessionToReturn,
+      participants: enrichedParticipants,
+    },
     story: {
       id: story.id,
       title: story.title,
@@ -366,10 +470,12 @@ export async function leaveSession(params: LeaveSession): Promise<LeaveSessionRe
     };
   }
 
+  const now = new Date().toISOString();
+  
   const leaveUpdate: GameUpdate = {
     id: `update_${uuidv4()}`,
-    type: 'PLAYER_LEFT',
-    timestamp: new Date().toISOString(),
+    type: 'PLAYER_SESSION_LEFT',
+    timestamp: now,
     sessionId: session.id,
     data: {
       userId,
@@ -599,5 +705,132 @@ export async function startSession(params: StartSession): Promise<StartSessionRe
   return {
     session: updatedSession,
     message: 'Sessão iniciada! A aventura começa agora.',
+  };
+}
+
+export async function enterRoom(params: {
+  token: string;
+  sessionId: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const participant = session.participants.find((p) => p.userId === userId);
+  if (!participant) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Você não participa desta sessão',
+      data: { sessionId, userId },
+    };
+  }
+
+  // Marca como online e atualiza lastActivity
+  const now = new Date().toISOString();
+  const wasOffline = !participant.isOnline;
+  
+  participant.isOnline = true;
+  participant.lastActivity = now;
+
+  await sessionStore.updateSession(session.id, {
+    participants: session.participants,
+  });
+
+  // Envia evento PLAYER_ROOM_JOINED
+  const roomJoinUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'PLAYER_ROOM_JOINED',
+    timestamp: now,
+    sessionId: session.id,
+    data: {
+      userId,
+      username: decoded.username,
+      wasOffline,
+    },
+  };
+  eventStore.addUpdate(roomJoinUpdate);
+
+  logInfo('[SESSION] Jogador entrou na sala de espera', {
+    sessionId: session.id,
+    userId,
+    username: decoded.username,
+    wasOffline,
+  });
+
+  return {
+    success: true,
+    message: 'Você entrou na sala',
+  };
+}
+
+export async function leaveRoom(params: {
+  token: string;
+  sessionId: string;
+}): Promise<{ success: boolean; message: string }> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  const participant = session.participants.find((p) => p.userId === userId);
+  if (!participant) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Você não participa desta sessão',
+      data: { sessionId, userId },
+    };
+  }
+
+  // Marca como offline
+  const now = new Date().toISOString();
+  participant.isOnline = false;
+  participant.lastActivity = now;
+
+  await sessionStore.updateSession(session.id, {
+    participants: session.participants,
+  });
+
+  // Envia evento PLAYER_ROOM_LEFT
+  const roomLeaveUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'PLAYER_ROOM_LEFT',
+    timestamp: now,
+    sessionId: session.id,
+    data: {
+      userId,
+      username: decoded.username,
+      reason: 'voluntary',
+    },
+  };
+  eventStore.addUpdate(roomLeaveUpdate);
+
+  logInfo('[SESSION] Jogador saiu da sala de espera', {
+    sessionId: session.id,
+    userId,
+    username: decoded.username,
+  });
+
+  return {
+    success: true,
+    message: 'Você voltou para a taverna',
   };
 }

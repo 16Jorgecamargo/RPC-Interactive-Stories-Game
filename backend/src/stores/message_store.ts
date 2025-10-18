@@ -80,6 +80,8 @@ export function addSystemMessage(
   const systemMessage: Message = {
     id: messageId || `msg_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
     sessionId,
+    userId: 'system',
+    username: 'Sistema',
     message,
     type: 'SYSTEM',
     timestamp: new Date().toISOString(),

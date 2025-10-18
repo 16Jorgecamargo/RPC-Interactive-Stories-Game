@@ -63,7 +63,7 @@ export const adminMethods = {
     return await adminService.getSessionDetail(validated);
   },
 
-  deleteSession: async (params: unknown): Promise<DeleteSessionResponse> => {
+  adminDeleteSession: async (params: unknown): Promise<DeleteSessionResponse> => {
     const validated = DeleteSessionSchema.parse(params) as DeleteSession;
     return await adminService.deleteSession(validated);
   },

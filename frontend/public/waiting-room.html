@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Espera - RPC Interactive Stories</title>
+    <script src="/config.js"></script>
+    <link rel="stylesheet" href="/src/styles/waiting-room.css">
+    <link rel="stylesheet" href="/src/styles/tab-blocked-modal.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card session-header">
+            <h1 id="storyName">Carregando...</h1>
+            <p id="sessionInfo">Sala de Espera</p>
+            <button class="btn btn-secondary" id="leaveBtn">
+                🏠 Voltar para Taverna
+            </button>
+        </div>
+
+        <div class="grid grid-2" style="flex: 1; display: flex; gap: 20px; align-items: stretch;">
+            <!-- Lista de Participantes -->
+            <div class="card participants-column">
+                <h2 style="margin-bottom: 10px; flex-shrink: 0;">👥 Aventureiros na Taverna</h2>
+                <div class="participants-list" id="participantsList">
+                    <!-- Participantes carregados dinamicamente -->
+                </div>
+
+                <!-- Slots Vazios -->
+                <div id="emptySlots" class="card" style="background: rgba(192, 192, 192, 0.1); border: 2px dashed var(--silver); text-align: center; padding: 15px; margin-top: 10px; flex-shrink: 0; display: none;">
+                    <div style="color: var(--silver); font-style: italic;">
+                        🔮 Aguardando mais aventureiros...
+                        <br><small id="slotsCount"></small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat da Party -->
+            <div class="card chat-card controls-column">
+                <h4 style="margin-bottom: 10px; flex-shrink: 0;">💬 Chat da Party</h4>
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Mensagens carregadas dinamicamente -->
+                </div>
+
+                <div class="chat-input" style="display: flex; gap: 10px; flex-shrink: 0;">
+                    <input type="text" id="messageInput" placeholder="Digite sua mensagem..." onkeypress="handleEnter(event)">
+                    <button class="btn" id="sendMessageBtn" style="padding: 10px 15px;">📤</button>
+                </div>
+
+                <!-- Botão de Iniciar (apenas para owner) -->
+                <div id="ownerControls" style="display: none; margin-top: 10px; flex-shrink: 0;">
+                    <button class="btn btn-success" id="startBtn" style="width: 100%; padding: 15px; font-size: 1.1rem;">
+                        🎆 Iniciar Aventura
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog do Personagem -->
+    <div id="characterDialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog">
+            <button class="dialog-close" onclick="closeCharacterDialog()">✕</button>
+            <div class="dialog-header">
+                <h3 id="charName">Personagem</h3>
+                <p style="color: var(--silver);" id="charRaceClass"></p>
+            </div>
+            
+            <div class="dialog-content">
+                <div class="grid grid-2" style="margin-bottom: 20px;">
+                    <div>
+                        <h4 style="color: var(--primary-gold);">Atributos</h4>
+                        <ul style="color: var(--parchment);" id="charAttributes">
+                            <!-- Atributos carregados dinamicamente -->
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--primary-gold);">Status</h4>
+                        <ul style="color: var(--parchment);" id="charStatus">
+                            <!-- Status carregado dinamicamente -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;" id="charBackgroundSection">
+                    <h4 style="color: var(--primary-gold);">História</h4>
+                    <p style="color: var(--parchment); font-size: 0.9rem;" id="charBackground"></p>
+                </div>
+                
+                <div id="charEquipmentSection">
+                    <h4 style="color: var(--primary-gold);">Equipamentos</h4>
+                    <ul style="color: var(--parchment); font-size: 0.9rem;" id="charEquipment">
+                        <!-- Equipamentos carregados dinamicamente -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="flex" style="gap: 10px; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeCharacterDialog()" style="flex: 1;">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog de Confirmação de Expulsão -->
+    <div id="kickDialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog" style="max-width: 400px;">
+            <button class="dialog-close" onclick="closeKickDialog()">✕</button>
+            <div class="dialog-header">
+                <h3>⚠️ Expulsar Jogador</h3>
+            </div>
+            
+            <div class="dialog-content">
+                <p style="color: var(--parchment); text-align: center; margin: 20px 0;">
+                    Tem certeza que deseja expulsar <strong id="kickPlayerName"></strong> da sessão?
+                </p>
+            </div>
+            
+            <div class="flex" style="gap: 10px; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeKickDialog()" style="flex: 1;">Cancelar</button>
+                <button class="btn btn-danger" id="confirmKickBtn" style="flex: 1;">Expulsar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/ui/sessions/waiting-room.js"></script>
+</body>
+</html>

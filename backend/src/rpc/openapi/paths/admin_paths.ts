@@ -274,7 +274,7 @@ export function registerAdminPaths(registry: OpenAPIRegistry) {
     path: '/rpc/admin/sessions/delete',
     tags: ['Admin'],
     summary: 'Excluir sessão',
-    description: 'Exclui permanentemente uma sessão e todos os personagens relacionados em cascata. A resposta inclui o número de personagens excluídos. Wrapper REST que internamente chama o método RPC "deleteSession".',
+    description: 'Exclui permanentemente uma sessão e todos os personagens relacionados em cascata. A resposta inclui o número de personagens excluídos. Wrapper REST que internamente chama o método RPC "adminDeleteSession".',
     security: [{ bearerAuth: [] }],
     request: {
       body: {

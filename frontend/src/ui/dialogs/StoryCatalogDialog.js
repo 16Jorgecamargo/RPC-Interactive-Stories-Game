@@ -9,7 +9,6 @@ export function showStoryCatalog(manager, config = {}) {
 
   const finalConfig = { ...defaults, ...config };
 
-  // Store callback for use in showDialog
   manager.currentSelectCallback = finalConfig.onSelectStory;
 
   const dialog = createStoryCatalogDialog(manager, finalConfig);
@@ -91,14 +90,12 @@ export function createStoryCatalogDialog(manager, config) {
     </div>
   `;
 
-  // Adicionar scrollbar customizado
   const catalogContent = dialog.querySelector('.catalog-content');
   catalogContent.style.cssText += `
     overflow-y: auto;
     overflow-x: hidden;
   `;
 
-  // Estilo do scrollbar
   const style = document.createElement('style');
   style.textContent = `
     .catalog-content::-webkit-scrollbar {
@@ -135,7 +132,6 @@ export function createStoryCatalogDialog(manager, config) {
     closeBtn.style.background = 'rgba(139, 0, 0, 0.8)';
   });
 
-  // Popular filtro de gêneros dinamicamente
   const genreFilter = dialog.querySelector('#genreFilter');
   const uniqueGenres = [...new Set(config.stories.map(s => s.metadata?.genre).filter(Boolean))];
   uniqueGenres.forEach(genre => {
@@ -145,7 +141,6 @@ export function createStoryCatalogDialog(manager, config) {
     genreFilter.appendChild(option);
   });
 
-  // Adicionar lógica de filtros
   const filterStories = () => {
     const genre = dialog.querySelector('#genreFilter').value;
     const difficulty = dialog.querySelector('#difficultyFilter').value;
@@ -176,7 +171,6 @@ export function createStoryCatalogDialog(manager, config) {
   dialog.querySelector('#difficultyFilter').addEventListener('change', filterStories);
   dialog.querySelector('#playersFilter').addEventListener('change', filterStories);
 
-  // Toggle filtros em mobile
   const toggleFiltersBtn = dialog.querySelector('#toggleFiltersBtn');
   const filtersContainer = dialog.querySelector('#filtersContainer');
   const filterToggleText = dialog.querySelector('#filterToggleText');
@@ -201,7 +195,6 @@ export function createStoryCatalogDialog(manager, config) {
     toggleFiltersBtn.style.background = 'rgba(212, 175, 55, 0.2)';
   });
 
-  // Adicionar event listeners para expandir/recolher sinopse
   const toggleButtons = dialog.querySelectorAll('.btn-toggle-synopsis');
   toggleButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -230,7 +223,6 @@ export function createStoryCatalogDialog(manager, config) {
     });
   });
 
-  // Adicionar responsividade
   const mediaStyle = document.createElement('style');
   mediaStyle.textContent = `
     @media (max-width: 768px) {

@@ -13,7 +13,6 @@ export function showJoinSession(manager, config = {}) {
   const dialog = createJoinSessionDialog(manager, finalConfig);
   manager.showDialog(dialog);
 
-  // Auto-focus no input após renderização
   setTimeout(() => {
     const input = dialog.querySelector('#sessionCode');
     if (input) input.focus();
@@ -105,7 +104,6 @@ export function createJoinSessionDialog(manager, config) {
 
   let currentSession = null;
 
-  // Close handlers
   const closeAction = () => {
     manager.closeDialog();
     if (config.closeCallback) config.closeCallback();
@@ -113,7 +111,6 @@ export function createJoinSessionDialog(manager, config) {
 
   closeBtn.addEventListener('click', closeAction);
 
-  // Hover effects
   closeBtn.addEventListener('mouseenter', () => {
     closeBtn.style.transform = 'scale(1.1)';
     closeBtn.style.background = 'rgba(139, 0, 0, 1)';
@@ -123,7 +120,6 @@ export function createJoinSessionDialog(manager, config) {
     closeBtn.style.background = 'rgba(139, 0, 0, 0.8)';
   });
 
-  // Button hover effects
   joinBtn.addEventListener('mouseenter', () => {
     if (!joinBtn.disabled) {
       joinBtn.style.transform = 'translateY(-2px)';
@@ -135,12 +131,10 @@ export function createJoinSessionDialog(manager, config) {
     joinBtn.style.boxShadow = 'none';
   });
 
-  // Auto-uppercase and auto-search logic
   codeInput.addEventListener('input', (e) => {
     const code = e.target.value.toUpperCase();
     e.target.value = code;
 
-    // Reset when code changes
     sessionInfo.style.display = 'none';
     errorInfo.style.display = 'none';
     joinBtn.disabled = true;
@@ -148,13 +142,11 @@ export function createJoinSessionDialog(manager, config) {
     joinBtn.style.cursor = 'not-allowed';
     currentSession = null;
 
-    // Auto-search when 6 characters
     if (code.length === 6) {
       searchSession();
     }
   });
 
-  // Search session function
   async function searchSession() {
     const code = codeInput.value.toUpperCase();
 
@@ -218,18 +210,15 @@ export function createJoinSessionDialog(manager, config) {
     dialog.querySelector('#errorMessage').textContent = message;
   }
 
-  // Form submit (join session)
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     if (currentSession) {
-      // Redirect to waiting room
       manager.closeDialog();
       window.location.href = `/waiting-room.html?sessionId=${currentSession.id}`;
     }
   });
 
-  // Add spin animation
   if (!document.getElementById('join-dialog-styles')) {
     const style = document.createElement('style');
     style.id = 'join-dialog-styles';

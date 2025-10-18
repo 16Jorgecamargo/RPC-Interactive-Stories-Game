@@ -6,6 +6,7 @@
   <title>Taverna do Aventureiro</title>
   <script src="/config.js"></script>
   <link rel="stylesheet" href="/src/styles/home.css">
+  <link rel="stylesheet" href="/src/styles/tab-blocked-modal.css">
 </head>
 <body>
   <div class="container">
@@ -49,11 +50,29 @@
   <script type="module">
     import { requireAuth, logout } from '/src/utils/auth.js';
     import { loadHome, renderHomeData } from '/src/ui/home.js';
+    import tabManager from '/src/utils/tabManager.js';
+    import { showTabBlockedModal, hideTabBlockedModal } from '/src/ui/shared/tabBlockedModal.js';
 
     const loadingMessage = document.getElementById('loadingMessage');
     const errorMessage = document.getElementById('errorMessage');
 
     async function init() {
+      tabManager.init(
+        () => {
+          console.log('[HOME] Aba bloqueada - outra aba assumiu controle');
+          showTabBlockedModal();
+        },
+        () => {
+          console.log('[HOME] Aba desbloqueada - reassumindo controle');
+          hideTabBlockedModal();
+        }
+      );
+
+      if (!tabManager.isLeaderTab()) {
+        console.log('[HOME] Aba não é líder, aguardando...');
+        return;
+      }
+
       const user = await requireAuth();
 
       if (!user) {
@@ -77,11 +96,11 @@
     });
 
     document.getElementById('createSessionBtn').addEventListener('click', () => {
-      console.log('Funcionalidade "Criar Sessão" será implementada na próxima sprint!');
+      window.location.href = '/session-create.html';
     });
 
     document.getElementById('joinSessionBtn').addEventListener('click', () => {
-      console.log('Funcionalidade "Entrar em Sessão" será implementada na próxima sprint!');
+      console.log('Botão Entrar via Código - Use o dialog');
     });
 
     init();

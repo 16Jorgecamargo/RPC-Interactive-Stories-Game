@@ -3,6 +3,7 @@ export function showError(manager, config = {}) {
     title: 'Erro na Aventura!',
     message: 'Ops! Algo deu errado na sua jornada...',
     showRetry: false,
+    retryText: '🔄 Tentar Novamente',
     retryCallback: null,
     closeCallback: null,
   };
@@ -29,11 +30,8 @@ export function createErrorDialog(manager, config) {
 
   const buttonsHtml = config.showRetry
     ? `
-      <button class="btn-error-close" style="flex: 1; font-family: 'Cinzel', serif; font-weight: 600; padding: 12px 30px; border: 2px solid #C0C0C0; border-radius: 8px; background: linear-gradient(145deg, #C0C0C0, #A8A8A8); color: #2D1810; cursor: pointer; transition: all 0.3s ease;">
-        🚪 Fechar
-      </button>
-      <button class="btn-error-retry" style="flex: 1; font-family: 'Cinzel', serif; font-weight: 600; padding: 12px 30px; border: 2px solid #8B0000; border-radius: 8px; background: linear-gradient(145deg, #8B0000, #A00000); color: white; cursor: pointer; transition: all 0.3s ease;">
-        🔄 Tentar Novamente
+      <button class="btn-error-retry" style="width: 100%; font-family: 'Cinzel', serif; font-weight: 600; padding: 12px 30px; border: 2px solid #8B0000; border-radius: 8px; background: linear-gradient(145deg, #8B0000, #A00000); color: white; cursor: pointer; transition: all 0.3s ease;">
+        ${config.retryText}
       </button>
     `
     : `
@@ -73,7 +71,19 @@ export function createErrorDialog(manager, config) {
   };
 
   closeBtn.addEventListener('click', closeAction);
-  errorCloseBtn.addEventListener('click', closeAction);
+
+  if (errorCloseBtn) {
+    errorCloseBtn.addEventListener('click', closeAction);
+
+    errorCloseBtn.addEventListener('mouseenter', () => {
+      errorCloseBtn.style.transform = 'translateY(-2px)';
+      errorCloseBtn.style.boxShadow = '0 4px 12px rgba(192, 192, 192, 0.4)';
+    });
+    errorCloseBtn.addEventListener('mouseleave', () => {
+      errorCloseBtn.style.transform = 'translateY(0)';
+      errorCloseBtn.style.boxShadow = 'none';
+    });
+  }
 
   if (retryBtn) {
     retryBtn.addEventListener('click', () => {
@@ -91,7 +101,6 @@ export function createErrorDialog(manager, config) {
     });
   }
 
-  // Hover effects
   closeBtn.addEventListener('mouseenter', () => {
     closeBtn.style.transform = 'scale(1.1)';
     closeBtn.style.background = 'rgba(139, 0, 0, 1)';
@@ -99,15 +108,6 @@ export function createErrorDialog(manager, config) {
   closeBtn.addEventListener('mouseleave', () => {
     closeBtn.style.transform = 'scale(1)';
     closeBtn.style.background = 'rgba(139, 0, 0, 0.8)';
-  });
-
-  errorCloseBtn.addEventListener('mouseenter', () => {
-    errorCloseBtn.style.transform = 'translateY(-2px)';
-    errorCloseBtn.style.boxShadow = '0 4px 12px rgba(192, 192, 192, 0.4)';
-  });
-  errorCloseBtn.addEventListener('mouseleave', () => {
-    errorCloseBtn.style.transform = 'translateY(0)';
-    errorCloseBtn.style.boxShadow = 'none';
   });
 
   return dialog;

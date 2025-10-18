@@ -86,7 +86,6 @@ export function createSuccessDialog(manager, config) {
   closeBtn.addEventListener('click', closeAction);
   confirmBtn.addEventListener('click', confirmAction);
 
-  // Hover effect
   closeBtn.addEventListener('mouseenter', () => {
     closeBtn.style.transform = 'scale(1.1)';
     closeBtn.style.background = 'rgba(139, 0, 0, 1)';

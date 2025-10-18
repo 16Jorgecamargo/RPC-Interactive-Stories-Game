@@ -104,7 +104,7 @@ historias-interativas-cliente/
 │   │   ├── authService.js
 │   │   ├── gameService.js
 │   │   ├── chatService.js
-│   │   └── pollingService.js
+│   │   └── unifiedPollingService.js  # Serviço unificado de long polling
 │   ├── ui/
 │   │   ├── auth/
 │   │   │   ├── login.html

@@ -20,6 +20,9 @@ import {
   TransitionResponseSchema,
   CanStartResponseSchema,
   StartSessionResponseSchema,
+  EnterRoomSchema,
+  LeaveRoomSchema,
+  RoomActionResponseSchema,
 } from '../../../models/session_schemas.js';
 
 export async function registerSessionWrappers(app: FastifyInstance) {
@@ -190,6 +193,44 @@ export async function registerSessionWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await sessionService.startSession(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/enter-room',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Entrar na sala de espera',
+      description:
+        'Marca jogador como online e envia evento PLAYER_ROOM_JOINED + mensagem de chat. Use ao clicar no botão "Entrar na Sala" no /home. Internamente usa JSON-RPC 2.0 (method: "enterRoom").',
+      body: EnterRoomSchema,
+      response: {
+        200: RoomActionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.enterRoom(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/sessions/leave-room',
+    schema: {
+      tags: ['Sessions'],
+      summary: 'Sair da sala de espera (voltar à taverna)',
+      description:
+        'Marca jogador como offline e envia evento PLAYER_ROOM_LEFT + mensagem de chat. Use ao clicar no botão "Voltar para Taverna" na waiting-room. Internamente usa JSON-RPC 2.0 (method: "leaveRoom").',
+      body: LeaveRoomSchema,
+      response: {
+        200: RoomActionResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await sessionService.leaveRoom(request.body);
       return reply.send(result);
     },
   });

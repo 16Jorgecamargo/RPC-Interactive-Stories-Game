@@ -15,9 +15,17 @@ export const ParticipantSchema = z.object({
     example: 'user_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do usuário participante',
   }),
+  username: z.string().optional().openapi({
+    example: 'jorgecamargo',
+    description: 'Nome de usuário do participante (preenchido pelo backend)',
+  }),
   characterId: z.string().optional().openapi({
     example: 'char_123e4567-e89b-12d3-a456-426614174000',
     description: 'ID do personagem criado (opcional até criação)',
+  }),
+  characterName: z.string().optional().openapi({
+    example: 'Aragorn',
+    description: 'Nome do personagem criado (preenchido pelo backend)',
   }),
   hasCreatedCharacter: z.boolean().openapi({
     example: false,
@@ -200,6 +208,18 @@ export const SessionWithStorySchema = SessionSchema.extend({
     example: 'Fantasia',
     description: 'Gênero da história',
   }),
+  storySynopsis: z.string().nullable().openapi({
+    example: 'Uma jornada épica através de cavernas misteriosas repletas de perigos e tesouros antigos.',
+    description: 'Sinopse da história',
+  }),
+  myCharacterName: z.string().nullable().openapi({
+    example: 'Aragorn',
+    description: 'Nome do personagem do usuário nesta sessão (null se ainda não criou)',
+  }),
+  ownerUsername: z.string().openapi({
+    example: 'jorgecamargo',
+    description: 'Nome de usuário do dono da sessão',
+  }),
 });
 
 export const CreateSessionResponseSchema = z.object({
@@ -211,7 +231,7 @@ export const CreateSessionResponseSchema = z.object({
 });
 
 export const JoinSessionResponseSchema = z.object({
-  session: SessionSchema,
+  session: SessionWithStorySchema,
   message: z.string().openapi({
     example: 'Você entrou na sessão com sucesso',
     description: 'Mensagem de confirmação',
@@ -313,6 +333,33 @@ export const StartSessionResponseSchema = z.object({
   }),
 });
 
+export const EnterRoomSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const LeaveRoomSchema = z.object({
+  token: z.string().openapi({ example: 'eyJhbGc...', description: 'JWT token' }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const RoomActionResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a ação foi bem-sucedida',
+  }),
+  message: z.string().openapi({
+    example: 'Você entrou na sala',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
 export type SessionStatus = z.infer<typeof SessionStatusEnum>;
 export type Participant = z.infer<typeof ParticipantSchema>;
 export type Session = z.infer<typeof SessionSchema>;
@@ -335,3 +382,6 @@ export type StartSession = z.infer<typeof StartSessionSchema>;
 export type TransitionResponse = z.infer<typeof TransitionResponseSchema>;
 export type CanStartResponse = z.infer<typeof CanStartResponseSchema>;
 export type StartSessionResponse = z.infer<typeof StartSessionResponseSchema>;
+export type EnterRoom = z.infer<typeof EnterRoomSchema>;
+export type LeaveRoom = z.infer<typeof LeaveRoomSchema>;
+export type RoomActionResponse = z.infer<typeof RoomActionResponseSchema>;

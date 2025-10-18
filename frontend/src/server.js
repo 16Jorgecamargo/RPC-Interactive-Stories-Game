@@ -12,16 +12,24 @@ const app = express();
 const PORT = process.env.PORT || 5173;
 const SERVER_URL = process.env.SERVER_URL || 'http://173.249.60.72:8443';
 
-app.use(express.static(path.join(__dirname, '../public')));
-app.use('/src', express.static(path.join(__dirname, '../src')));
-
 app.get('/config.js', (req, res) => {
   res.type('application/javascript');
   res.send(`window.ENV = { SERVER_URL: '${SERVER_URL}' };`);
 });
 
+app.use('/src', express.static(path.join(__dirname, '../src')));
+
+app.use(express.static(path.join(__dirname, '../public'), {
+  extensions: ['html'],
+  index: false
+}));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });
 
 app.listen(PORT, () => {

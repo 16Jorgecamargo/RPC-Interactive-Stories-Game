@@ -1,4 +1,3 @@
-// Efeito visual de confetti para celebrações
 export function createConfetti(dialog) {
   const container = dialog.querySelector('#confettiContainer');
   if (!container) return;
@@ -31,7 +30,6 @@ export function createConfetti(dialog) {
     }, i * 100);
   }
 
-  // Add animation styles
   if (!document.getElementById('confetti-styles')) {
     const style = document.createElement('style');
     style.id = 'confetti-styles';

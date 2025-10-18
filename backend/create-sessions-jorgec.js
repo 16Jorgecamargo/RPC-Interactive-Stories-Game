@@ -26,10 +26,10 @@ async function rpcCall(method, params) {
 
 async function main() {
   try {
-    console.log('🔐 Fazendo login como jorgec...');
+    console.log('🔐 Fazendo login como jorgecamargo...');
     const loginResult = await rpcCall('login', {
-      username: 'jorgec',
-      password: 'senha123'
+      username: 'jorgecamargo',
+      password: '123456'
     });
     
     const token = loginResult.token;

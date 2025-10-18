@@ -1,4 +1,3 @@
-// Classe Base do Sistema de Dialogs Customizados
 export class DialogManager {
   constructor() {
     this.overlay = null;
@@ -37,7 +36,6 @@ export class DialogManager {
     this.overlay.appendChild(dialog);
     this.overlay.style.display = 'flex';
 
-    // Add event listeners for story selection buttons
     const selectButtons = dialog.querySelectorAll('.btn-select-story');
     selectButtons.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -45,7 +43,6 @@ export class DialogManager {
         const storyCard = e.target.closest('.story-card-catalog');
         const storyTitle = storyCard.querySelector('h3').textContent;
 
-        // Trigger callback if provided
         if (this.currentSelectCallback) {
           this.currentSelectCallback(storyId, storyTitle);
         }
@@ -53,7 +50,6 @@ export class DialogManager {
         this.closeDialog();
       });
 
-      // Hover effects
       btn.addEventListener('mouseenter', () => {
         btn.style.transform = 'translateY(-2px)';
         btn.style.boxShadow = '0 4px 12px rgba(34, 139, 34, 0.4)';
@@ -64,7 +60,6 @@ export class DialogManager {
       });
     });
 
-    // Escape key to close
     const escapeHandler = (e) => {
       if (e.key === 'Escape') {
         this.closeDialog();
