@@ -2,9 +2,12 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
+import fastifyStatic from '@fastify/static';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { OpenApiGeneratorV3 } from '@asteasolutions/zod-to-openapi';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { authenticate } from './middleware/auth.js';
 import { rateLimitMiddleware } from './middleware/rate_limit.js';
 import jsonRpcHandler from './handlers/jsonrpc_handler.js';
@@ -13,6 +16,9 @@ import { registry } from './openapi/registry.js';
 import { startCleanupScheduler, startHeartbeatChecker } from '../utils/scheduler.js';
 import { logInfo, logError } from '../utils/logger.js';
 import { createPayloadValidationHook } from '../utils/payload_validation.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -95,6 +101,15 @@ async function start() {
       allowedHeaders: ['Content-Type', 'Authorization'],
       credentials: true,
     });
+
+    const storiesPath = path.join(__dirname, '..', '..', 'stories');
+    await app.register(fastifyStatic, {
+      root: storiesPath,
+      prefix: '/stories/',
+      decorateReply: false,
+    });
+
+    logInfo('[STATIC] Servidor de arquivos estáticos configurado', { path: storiesPath });
 
     const generator = new OpenApiGeneratorV3(registry.definitions);
     const openapiDocument = generator.generateDocument({

@@ -11,32 +11,7 @@
         "intelligence": 1,
         "wisdom": 1,
         "charisma": 1
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Um idioma extra à sua escolha"],
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Suas pontuações de habilidade aumentam em 1 cada."
-        },
-        {
-          "name": "Idade",
-          "description": "Humanos atingem a maioridade em seus últimos anos de adolescência e vivem menos de um século."
-        },
-        {
-          "name": "Tamanho",
-          "description": "Humanos variam amplamente em altura e construção, de pouco menos de 1,50m a bem mais de 1,80m. Seu tamanho é Médio."
-        },
-        {
-          "name": "Velocidade",
-          "description": "Sua velocidade básica de caminhada é de 30 pés."
-        },
-        {
-          "name": "Idiomas",
-          "description": "Você pode falar, ler e escrever Comum e um idioma extra à sua escolha."
-        }
-      ]
+      }
     },
     {
       "id": "high-elf",
@@ -45,46 +20,7 @@
       "abilityScoreIncrease": {
         "dexterity": 2,
         "intelligence": 1
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Élfico", "Um idioma extra"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Sua pontuação de Destreza aumenta em 2, e sua pontuação de Inteligência aumenta em 1."
-        },
-        {
-          "name": "Idade",
-          "description": "Elfos amadurecem na mesma taxa que humanos, mas podem viver até 750 anos."
-        },
-        {
-          "name": "Visão no Escuro",
-          "description": "Você pode ver na luz tênue dentro de 60 pés como se fosse luz brilhante, e no escuro como se fosse luz tênue."
-        },
-        {
-          "name": "Sentidos Aguçados",
-          "description": "Você tem proficiência na perícia Percepção."
-        },
-        {
-          "name": "Ancestralidade Feérica",
-          "description": "Você tem vantagem em testes de resistência contra ser encantado, e magia não pode colocá-lo para dormir."
-        },
-        {
-          "name": "Transe",
-          "description": "Elfos não precisam dormir. Em vez disso, eles meditam profundamente por 4 horas por dia."
-        },
-        {
-          "name": "Treinamento em Armas Élficas",
-          "description": "Você tem proficiência com espadas longas, espadas curtas, arcos curtos e arcos longos."
-        },
-        {
-          "name": "Truque",
-          "description": "Você conhece um truque à sua escolha da lista de magias do mago. Inteligência é sua habilidade de conjuração para ele."
-        }
-      ],
-      "proficiencies": ["Percepção", "Espada Longa", "Espada Curta", "Arco Curto", "Arco Longo"]
+      }
     },
     {
       "id": "wood-elf",
@@ -93,1263 +29,2484 @@
       "abilityScoreIncrease": {
         "dexterity": 2,
         "wisdom": 1
-      },
-      "size": "Médio",
-      "speed": 35,
-      "languages": ["Comum", "Élfico"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Sua pontuação de Destreza aumenta em 2, e sua pontuação de Sabedoria aumenta em 1."
-        },
-        {
-          "name": "Velocidade de Pé",
-          "description": "Sua velocidade básica de caminhada aumenta para 35 pés."
-        },
-        {
-          "name": "Máscara da Natureza Selvagem",
-          "description": "Você pode tentar se esconder mesmo quando levemente obscurecido por folhagem, chuva pesada, neve caindo, névoa ou outros fenômenos naturais."
-        },
-        {
-          "name": "Treinamento em Armas Élficas",
-          "description": "Você tem proficiência com espadas longas, espadas curtas, arcos curtos e arcos longos."
-        }
-      ],
-      "proficiencies": ["Percepção", "Espada Longa", "Espada Curta", "Arco Curto", "Arco Longo"]
-    },
-    {
-      "id": "drow",
-      "name": "Drow (Elfo Negro)",
-      "description": "Elfos negros que habitam o Subterrâneo, conhecidos por sua astúcia e magia.",
-      "abilityScoreIncrease": {
-        "dexterity": 2,
-        "charisma": 1
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Élfico"],
-      "darkvision": 120,
-      "traits": [
-        {
-          "name": "Visão no Escuro Superior",
-          "description": "Sua visão no escuro tem um raio de 120 pés."
-        },
-        {
-          "name": "Sensibilidade à Luz Solar",
-          "description": "Você tem desvantagem em rolagens de ataque e testes de Percepção na luz solar direta."
-        },
-        {
-          "name": "Magia Drow",
-          "description": "Você conhece o truque Luzes Dançantes. No 3º nível, você pode lançar Luz Feérica uma vez por dia. No 5º nível, você pode lançar Escuridão uma vez por dia. Carisma é sua habilidade de conjuração."
-        },
-        {
-          "name": "Treinamento em Armas Drow",
-          "description": "Você tem proficiência com rapieiras, espadas curtas e bestas de mão."
-        }
-      ],
-      "proficiencies": ["Percepção", "Rapieira", "Espada Curta", "Besta de Mão"]
-    },
-    {
-      "id": "mountain-dwarf",
-      "name": "Anão da Montanha",
-      "description": "Anões fortes e resistentes que vivem debaixo das montanhas.",
-      "abilityScoreIncrease": {
-        "constitution": 2,
-        "strength": 2
-      },
-      "size": "Médio",
-      "speed": 25,
-      "languages": ["Comum", "Anão"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Sua pontuação de Constituição aumenta em 2, e sua pontuação de Força aumenta em 2."
-        },
-        {
-          "name": "Resiliência Anã",
-          "description": "Você tem vantagem em testes de resistência contra veneno, e resistência contra dano de veneno."
-        },
-        {
-          "name": "Treinamento em Combate Anão",
-          "description": "Você tem proficiência com machados de batalha, machados de mão, martelos leves e martelos de guerra."
-        },
-        {
-          "name": "Treinamento em Armaduras Anãs",
-          "description": "Você tem proficiência com armaduras leves e médias."
-        },
-        {
-          "name": "Conhecimento de Pedra",
-          "description": "Sempre que você fizer um teste de Inteligência (História) relacionado à origem de trabalhos em pedra, você é considerado proficiente e adiciona o dobro do seu bônus de proficiência."
-        }
-      ],
-      "proficiencies": ["Machado de Batalha", "Machado de Mão", "Martelo Leve", "Martelo de Guerra", "Armadura Leve", "Armadura Média"]
+      }
     },
     {
       "id": "hill-dwarf",
       "name": "Anão da Colina",
-      "description": "Anões com sentidos aguçados e profunda intuição, com resistência notável.",
+      "description": "Anões da colina são conhecidos por sua resistência e conexão com a terra.",
       "abilityScoreIncrease": {
         "constitution": 2,
         "wisdom": 1
-      },
-      "size": "Médio",
-      "speed": 25,
-      "languages": ["Comum", "Anão"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Sua pontuação de Constituição aumenta em 2, e sua pontuação de Sabedoria aumenta em 1."
-        },
-        {
-          "name": "Robustez Anã",
-          "description": "Seu máximo de pontos de vida aumenta em 1, e aumenta em 1 sempre que você ganha um nível."
-        },
-        {
-          "name": "Resiliência Anã",
-          "description": "Você tem vantagem em testes de resistência contra veneno, e resistência contra dano de veneno."
-        },
-        {
-          "name": "Treinamento em Combate Anão",
-          "description": "Você tem proficiência com machados de batalha, machados de mão, martelos leves e martelos de guerra."
-        }
-      ],
-      "proficiencies": ["Machado de Batalha", "Machado de Mão", "Martelo Leve", "Martelo de Guerra"]
+      }
+    },
+    {
+      "id": "mountain-dwarf",
+      "name": "Anão da Montanha",
+      "description": "Anões da montanha são fortes, resistentes e guerreiros natos.",
+      "abilityScoreIncrease": {
+        "strength": 2,
+        "constitution": 2
+      }
     },
     {
       "id": "lightfoot-halfling",
       "name": "Halfling Pés-Leves",
-      "description": "Pessoas pequenas e amigáveis que se misturam facilmente nas multidões.",
+      "description": "Halflings pés-leves são excepcionalmente ágeis e bons em se esconder.",
       "abilityScoreIncrease": {
         "dexterity": 2,
         "charisma": 1
-      },
-      "size": "Pequeno",
-      "speed": 25,
-      "languages": ["Comum", "Halfling"],
-      "traits": [
-        {
-          "name": "Sortudo",
-          "description": "Quando você rola um 1 em uma rolagem de ataque, teste de habilidade ou teste de resistência, você pode rerrolar o dado."
-        },
-        {
-          "name": "Bravo",
-          "description": "Você tem vantagem em testes de resistência contra ser amedrontado."
-        },
-        {
-          "name": "Agilidade Halfling",
-          "description": "Você pode se mover através do espaço de qualquer criatura que seja maior que você."
-        },
-        {
-          "name": "Furtividade Natural",
-          "description": "Você pode tentar se esconder mesmo quando obscurecido apenas por uma criatura que tenha pelo menos um tamanho maior que você."
-        }
-      ],
-      "proficiencies": []
+      }
     },
     {
       "id": "stout-halfling",
       "name": "Halfling Robusto",
-      "description": "Halflings mais resistentes que a média, com um pouco de sangue anão.",
+      "description": "Halflings robustos são resilientes e resistentes a venenos.",
       "abilityScoreIncrease": {
         "dexterity": 2,
         "constitution": 1
-      },
-      "size": "Pequeno",
-      "speed": 25,
-      "languages": ["Comum", "Halfling"],
-      "traits": [
-        {
-          "name": "Resiliência Robusta",
-          "description": "Você tem vantagem em testes de resistência contra veneno, e resistência contra dano de veneno."
-        },
-        {
-          "name": "Sortudo",
-          "description": "Quando você rola um 1 em uma rolagem de ataque, teste de habilidade ou teste de resistência, você pode rerrolar o dado."
-        },
-        {
-          "name": "Bravo",
-          "description": "Você tem vantagem em testes de resistência contra ser amedrontado."
-        }
-      ],
-      "proficiencies": []
-    },
-    {
-      "id": "dragonborn",
-      "name": "Draconato",
-      "description": "Humanoides orgulhosos semelhantes a dragões com armas de sopro poderosas.",
-      "abilityScoreIncrease": {
-        "strength": 2,
-        "charisma": 1
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Dracônico"],
-      "traits": [
-        {
-          "name": "Ancestralidade Dracônica",
-          "description": "Escolha um tipo de dragão. Sua arma de sopro e resistência a dano são determinadas pelo tipo de dragão."
-        },
-        {
-          "name": "Arma de Sopro",
-          "description": "Você pode usar sua ação para exalar energia destrutiva. Sua ancestralidade dracônica determina o tamanho, forma e tipo de dano."
-        },
-        {
-          "name": "Resistência a Dano",
-          "description": "Você tem resistência ao tipo de dano associado à sua ancestralidade dracônica."
-        }
-      ],
-      "draconicAncestry": [
-        { "dragon": "Preto", "damageType": "Ácido", "breath": "5 por 30 pés. linha (teste de Des.)" },
-        { "dragon": "Azul", "damageType": "Relâmpago", "breath": "5 por 30 pés. linha (teste de Des.)" },
-        { "dragon": "Latão", "damageType": "Fogo", "breath": "5 por 30 pés. linha (teste de Des.)" },
-        { "dragon": "Bronze", "damageType": "Relâmpago", "breath": "5 por 30 pés. linha (teste de Des.)" },
-        { "dragon": "Cobre", "damageType": "Ácido", "breath": "5 por 30 pés. linha (teste de Des.)" },
-        { "dragon": "Ouro", "damageType": "Fogo", "breath": "15 pés. cone (teste de Des.)" },
-        { "dragon": "Verde", "damageType": "Veneno", "breath": "15 pés. cone (teste de Con.)" },
-        { "dragon": "Vermelho", "damageType": "Fogo", "breath": "15 pés. cone (teste de Des.)" },
-        { "dragon": "Prata", "damageType": "Frio", "breath": "15 pés. cone (teste de Con.)" },
-        { "dragon": "Branco", "damageType": "Frio", "breath": "15 pés. cone (teste de Con.)" }
-      ],
-      "proficiencies": []
-    },
-    {
-      "id": "forest-gnome",
-      "name": "Gnomo da Floresta",
-      "description": "Pessoas pequenas e espertas com um dom natural para magia de ilusão.",
-      "abilityScoreIncrease": {
-        "intelligence": 2,
-        "dexterity": 1
-      },
-      "size": "Pequeno",
-      "speed": 25,
-      "languages": ["Comum", "Gnômico"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Ilusionista Natural",
-          "description": "Você conhece o truque Ilusão Menor. Inteligência é sua habilidade de conjuração para ele."
-        },
-        {
-          "name": "Falar com Animais Pequenos",
-          "description": "Através de sons e gestos, você pode comunicar ideias simples com Bestas Pequenas ou menores."
-        },
-        {
-          "name": "Astúcia Gnômica",
-          "description": "Você tem vantagem em testes de resistência de Inteligência, Sabedoria e Carisma contra magia."
-        }
-      ],
-      "proficiencies": []
-    },
-    {
-      "id": "rock-gnome",
-      "name": "Gnomo da Rocha",
-      "description": "Gnomos inventivos com talento para artesanato e engenharia.",
-      "abilityScoreIncrease": {
-        "intelligence": 2,
-        "constitution": 1
-      },
-      "size": "Pequeno",
-      "speed": 25,
-      "languages": ["Comum", "Gnômico"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Conhecimento do Artífice",
-          "description": "Sempre que você fizer um teste de Inteligência (História) relacionado a itens mágicos, objetos alquímicos ou dispositivos tecnológicos, adicione o dobro do seu bônus de proficiência."
-        },
-        {
-          "name": "Tinkering",
-          "description": "Você tem proficiência com ferramentas de artesão (ferramentas de tinker). Você pode construir dispositivos minúsculos de relógio."
-        },
-        {
-          "name": "Astúcia Gnômica",
-          "description": "Você tem vantagem em testes de resistência de Inteligência, Sabedoria e Carisma contra magia."
-        }
-      ],
-      "proficiencies": ["Ferramentas de Tinker"]
-    },
-    {
-      "id": "half-elf",
-      "name": "Meio-Elfo",
-      "description": "Caminhando em dois mundos, mas pertencendo a nenhum, meio-elfos combinam as melhores qualidades de ambas as raças.",
-      "abilityScoreIncrease": {
-        "charisma": 2,
-        "custom": "Duas outras pontuações de habilidade à sua escolha aumentam em 1"
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Élfico", "Um idioma extra"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Aumento de Pontuação de Habilidade",
-          "description": "Sua pontuação de Carisma aumenta em 2, e duas outras pontuações de habilidade à sua escolha aumentam em 1."
-        },
-        {
-          "name": "Ancestralidade Feérica",
-          "description": "Você tem vantagem em testes de resistência contra ser encantado, e magia não pode colocá-lo para dormir."
-        },
-        {
-          "name": "Versatilidade em Perícias",
-          "description": "Você ganha proficiência em duas perícias à sua escolha."
-        }
-      ],
-      "proficiencies": ["Duas perícias à sua escolha"]
-    },
-    {
-      "id": "half-orc",
-      "name": "Meio-Orc",
-      "description": "Nascidos de raiva e violência, meio-orcs são guerreiros formidáveis.",
-      "abilityScoreIncrease": {
-        "strength": 2,
-        "constitution": 1
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Orc"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Ameaçador",
-          "description": "Você ganha proficiência na perícia Intimidação."
-        },
-        {
-          "name": "Resistência Implacável",
-          "description": "Quando você é reduzido a 0 pontos de vida, mas não morto completamente, você pode cair para 1 ponto de vida em vez disso. Você não pode usar este recurso novamente até terminar um descanso longo."
-        },
-        {
-          "name": "Ataques Selvagens",
-          "description": "Quando você marca um acerto crítico com um ataque de arma corpo a corpo, você pode rolar um dos dados de dano da arma uma vez adicional e adicionar ao dano extra."
-        }
-      ],
-      "proficiencies": ["Intimidação"]
-    },
-    {
-      "id": "tiefling",
-      "name": "Tiefling",
-      "description": "Descendentes de seres infernais, tieflings carregam a marca de sua herança infernal.",
-      "abilityScoreIncrease": {
-        "intelligence": 1,
-        "charisma": 2
-      },
-      "size": "Médio",
-      "speed": 30,
-      "languages": ["Comum", "Infernal"],
-      "darkvision": 60,
-      "traits": [
-        {
-          "name": "Resistência Infernal",
-          "description": "Você tem resistência a dano de fogo."
-        },
-        {
-          "name": "Legado Infernal",
-          "description": "Você conhece o truque Taumaturgia. No 3º nível, você pode lançar Rebuke Infernal uma vez por dia. No 5º nível, você pode lançar Escuridão uma vez por dia. Carisma é sua habilidade de conjuração."
-        }
-      ],
-      "proficiencies": []
+      }
     }
   ],
   "classes": [
     {
-      "id": "barbarian",
-      "name": "Bárbaro",
-      "description": "Um guerreiro feroz de origem primitiva que pode entrar em um frenesi de batalha.",
-      "hitDie": 12,
-      "primaryAbility": "Força",
-      "savingThrowProficiencies": ["Força", "Constituição"],
-      "armorProficiencies": ["Armadura leve", "Armadura média", "Escudos"],
-      "weaponProficiencies": ["Armas simples", "Armas marciais"],
-      "skillChoices": 2,
-      "skillOptions": ["Adestrar Animais", "Atletismo", "Intimidação", "Natureza", "Percepção", "Sobrevivência"],
-      "startingEquipment": [
-        "Machado grande ou qualquer arma marcial corpo a corpo",
-        "Dois machados de mão ou qualquer arma simples",
-        "Pacote do explorador",
-        "Quatro azagaias"
+      "id": "wizard",
+      "name": "Mago",
+      "description": "Conjurador que domina magias arcanas através de estudo e prática intensa",
+      "weaponBase": "Cajado",
+      "primaryAttributes": [
+        "Inteligência",
+        "Sabedoria"
       ],
-      "features": [
+      "attacksPerLevel": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "attributeBonusPerLevel": [
         {
           "level": 1,
-          "name": "Frenesi",
-          "description": "Na batalha, você luta com ferocidade primitiva. Em seu turno, você pode entrar em um frenesi como uma ação bônus. Enquanto frenético, você ganha +2 de dano em ataques corpo a corpo usando Força, vantagem em testes de Força e resistência a dano de concussão, perfuração e corte."
-        },
-        {
-          "level": 1,
-          "name": "Defesa sem Armadura",
-          "description": "Enquanto não estiver vestindo armadura, sua CA é igual a 10 + modificador de Destreza + modificador de Constituição."
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 2,
+          "wisdom": 0,
+          "charisma": 0
         },
         {
           "level": 2,
-          "name": "Ataque Temerário",
-          "description": "Você pode jogar fora toda preocupação com defesa para atacar com ferocidade desesperada. Quando você faz seu primeiro ataque em seu turno, você pode decidir atacar temerariamente, dando vantagem em rolagens de ataque de arma corpo a corpo usando Força durante este turno, mas rolagens de ataque contra você têm vantagem até seu próximo turno."
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 2,
+          "wisdom": 1,
+          "charisma": 0
         },
         {
-          "level": 2,
-          "name": "Sentido de Perigo",
-          "description": "Você tem vantagem em testes de resistência de Destreza contra efeitos que você pode ver, como armadilhas e magias."
+          "level": 3,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 3,
+          "wisdom": 1,
+          "charisma": 0
+        },
+        {
+          "level": 4,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 3,
+          "wisdom": 2,
+          "charisma": 0
         },
         {
           "level": 5,
-          "name": "Ataque Extra",
-          "description": "Você pode atacar duas vezes, em vez de uma, sempre que você toma a ação Atacar em seu turno."
-        },
-        {
-          "level": 5,
-          "name": "Movimento Rápido",
-          "description": "Sua velocidade aumenta em 10 pés enquanto você não estiver vestindo armadura pesada."
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 4,
+          "wisdom": 2,
+          "charisma": 0
         }
       ],
-      "subclasses": [
+      "attacks": [
         {
-          "id": "path-of-the-berserker",
-          "name": "Caminho do Berserker",
-          "description": "Para alguns bárbaros, frenesi é um meio para um fim - esse fim sendo violência.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Frenesi",
-              "description": "Quando você frenesi, você pode entrar em um frenesi. Se o fizer, pela duração do seu frenesi você pode fazer um único ataque de arma corpo a corpo como uma ação bônus em cada um dos seus turnos depois deste."
-            }
-          ]
+          "id": "staff-strike",
+          "name": "Golpe de Cajado",
+          "damage": "1d6",
+          "description": "Ataque corpo a corpo com o cajado",
+          "cooldown": 0,
+          "level": 1
         },
         {
-          "id": "path-of-the-totem-warrior",
-          "name": "Caminho do Guerreiro Totêmico",
-          "description": "O Caminho do Guerreiro Totêmico é uma jornada espiritual, pois o bárbaro aceita um espírito animal como guia, protetor e inspiração.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Espírito Totêmico",
-              "description": "Escolha um animal totêmico: Urso (resistência a todo dano exceto psíquico enquanto frenético), Águia (inimigos têm desvantagem em ataques de oportunidade, e você pode Dash como uma ação bônus), ou Lobo (aliados têm vantagem em ataques corpo a corpo contra inimigos dentro de 5 pés de você enquanto frenético)."
-            }
-          ]
+          "id": "arcane-blast",
+          "name": "Rajada Arcana",
+          "damage": "1d8",
+          "description": "Disparo de energia arcana",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "force-push",
+          "name": "Empurrão de Força",
+          "damage": "1d4",
+          "description": "Empurra o inimigo 10 pés para trás",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "magic-dart",
+          "name": "Dardo Mágico",
+          "damage": "1d6",
+          "description": "Dardo de energia que nunca erra",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "arcane-whip",
+          "name": "Chicote Arcano",
+          "damage": "1d8",
+          "description": "Chicote de energia mágica com alcance de 15 pés",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "shocking-grasp",
+          "name": "Toque Chocante",
+          "damage": "1d10",
+          "description": "Toque elétrico que impede reações",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "wizard-l2-arcane-surge",
+          "name": "Surto Arcano",
+          "damage": "2d6",
+          "description": "Explosão curta de energia que atravessa armaduras.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "wizard-l2-spectral-blades",
+          "name": "Lâminas Espectrais",
+          "damage": "3d4",
+          "description": "Lâminas etéreas circulam o mago cortando inimigos próximos.",
+          "cooldown": 2,
+          "level": 2
+        },
+        {
+          "id": "wizard-l3-gravity-crush",
+          "name": "Esmagamento Gravitacional",
+          "damage": "2d8",
+          "description": "Condensa gravidade sobre um alvo, prendendo-o no chão.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "wizard-l3-mind-lash",
+          "name": "Chicote Mental",
+          "damage": "2d6",
+          "description": "Descarga psíquica que causa dor intensa e desorienta.",
+          "cooldown": 1,
+          "level": 3
+        },
+        {
+          "id": "wizard-l4-time-fracture",
+          "name": "Fratura Temporal",
+          "damage": "3d8",
+          "description": "Dobra o tempo em torno do alvo causando múltiplos impactos.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "wizard-l4-void-lance",
+          "name": "Lança do Vazio",
+          "damage": "4d6",
+          "description": "Projétil de energia negra que suga vitalidade.",
+          "cooldown": 2,
+          "level": 4
+        },
+        {
+          "id": "wizard-l5-starfall",
+          "name": "Queda Estelar",
+          "damage": "5d10",
+          "description": "Chama um fragmento estelar que explode em área.",
+          "cooldown": 5,
+          "level": 5
+        },
+        {
+          "id": "wizard-l5-arcane-cataclysm",
+          "name": "Cataclismo Arcano",
+          "damage": "6d8",
+          "description": "Libera uma onda devastadora de magia pura.",
+          "cooldown": 5,
+          "level": 5
         }
       ],
-      "spellcasting": null
-    },
-    {
-      "id": "bard",
-      "name": "Bardo",
-      "description": "Um mágico inspirador cujo poder ecoa a música da criação.",
-      "hitDie": 8,
-      "primaryAbility": "Carisma",
-      "savingThrowProficiencies": ["Destreza", "Carisma"],
-      "armorProficiencies": ["Armadura leve"],
-      "weaponProficiencies": ["Armas simples", "Bestas de mão", "Espadas longas", "Rapieiras", "Espadas curtas"],
-      "skillChoices": 3,
-      "skillOptions": "Três perícias quaisquer",
-      "startingEquipment": [
-        "Rapieira ou espada longa ou qualquer arma simples",
-        "Pacote do diplomata ou pacote do entertainer",
-        "Lira ou qualquer instrumento musical",
-        "Armadura de couro e adaga"
-      ],
-      "spellcasting": {
-        "ability": "Carisma",
-        "cantripsKnown": [2, 2, 2, 3, 3, 3, 3, 3, 3, 4],
-        "spellsKnown": [4, 5, 6, 7, 8, 9, 10, 11, 12, 14],
-        "spellSlots": {
-          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
-          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
-          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
-          "4": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3],
-          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2]
-        }
-      },
-      "features": [
+      "spells": [
         {
-          "level": 1,
-          "name": "Inspiração Bárdica",
-          "description": "Você pode inspirar outros através de palavras ou música edificantes. Como uma ação bônus, escolha uma criatura dentro de 60 pés. Ela ganha um dado de Inspiração Bárdica (d6) que pode adicionar a um teste de habilidade, rolagem de ataque ou teste de resistência dentro dos próximos 10 minutos. Você pode usar este recurso um número de vezes igual ao seu modificador de Carisma."
-        },
-        {
-          "level": 2,
-          "name": "Jack das Todas as Trocas",
-          "description": "Você pode adicionar metade do seu bônus de proficiência a qualquer teste de habilidade que você faça que não inclua já o seu bônus de proficiência."
-        },
-        {
-          "level": 2,
-          "name": "Canção de Descanso",
-          "description": "Você pode usar música ou oratória reconfortante durante um descanso curto para ajudar aliados a se recuperarem. Aliados recuperam 1d6 pontos de vida extras se gastarem Dados de Vida."
-        }
-      ],
-      "subclasses": [
-        {
-          "id": "college-of-lore",
-          "name": "Colégio do Conhecimento",
-          "description": "Bardos do Colégio do Conhecimento sabem algo sobre a maioria das coisas, coletando pedaços de conhecimento de fontes tão diversas quanto tomos acadêmicos e contos camponeses.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Proficiências Bônus",
-              "description": "Você ganha proficiência em três perícias à sua escolha."
-            },
-            {
-              "level": 3,
-              "name": "Palavras Cortantes",
-              "description": "Você pode usar sua reação para subtrair um dado de Inspiração Bárdica de uma rolagem de ataque, teste de habilidade ou rolagem de dano de uma criatura que você pode ver dentro de 60 pés."
-            }
-          ]
-        },
-        {
-          "id": "college-of-valor",
-          "name": "Colégio do Valor",
-          "description": "Bardos do Colégio do Valor são escaldos ousados cujas histórias mantêm viva a memória dos grandes heróis do passado.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Proficiências Bônus",
-              "description": "Você ganha proficiência com armadura média, escudos e armas marciais."
-            },
-            {
-              "level": 3,
-              "name": "Inspiração de Combate",
-              "description": "Uma criatura com um dado de Inspiração Bárdica pode usá-lo para adicionar o número rolado a uma rolagem de dano de arma, ou à sua CA como uma reação quando atingida por um ataque."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "cleric",
-      "name": "Clérigo",
-      "description": "Um campeão sacerdotal que empunha magia divina em serviço a um poder superior.",
-      "hitDie": 8,
-      "primaryAbility": "Sabedoria",
-      "savingThrowProficiencies": ["Sabedoria", "Carisma"],
-      "armorProficiencies": ["Armadura leve", "Armadura média", "Escudos"],
-      "weaponProficiencies": ["Armas simples"],
-      "skillChoices": 2,
-      "skillOptions": ["História", "Intuição", "Medicina", "Persuasão", "Religião"],
-      "startingEquipment": [
-        "Maça ou martelo de guerra",
-        "Armadura de escamas ou armadura de couro ou cota de malha",
-        "Besta leve e 20 virotes ou qualquer arma simples",
-        "Pacote do sacerdote ou pacote do explorador",
-        "Escudo e símbolo sagrado"
-      ],
-      "spellcasting": {
-        "ability": "Sabedoria",
-        "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5],
-        "spellsPrepared": "Modificador de Sabedoria + nível de clérigo",
-        "spellSlots": {
-          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
-          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
-          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
-          "4": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3],
-          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2]
-        }
-      },
-      "features": [
-        {
-          "level": 1,
-          "name": "Domínio Divino",
-          "description": "Escolha um domínio relacionado ao seu deus: Conhecimento, Vida, Luz, Natureza, Tempestade, Trapaça ou Guerra. Sua escolha concede magias de domínio e outros recursos."
-        },
-        {
-          "level": 2,
-          "name": "Canalizar Divindade",
-          "description": "Você pode canalizar energia divina para alimentar efeitos mágicos. Você começa com dois efeitos: Transformar Mortos e um efeito determinado pelo seu domínio."
-        },
-        {
-          "level": 5,
-          "name": "Destruir Mortos-Vivos",
-          "description": "Quando um morto-vivo falha em seu teste de resistência contra seu recurso Transformar Mortos-Vivos, ele é destruído instantaneamente se seu CR for 1/2 ou menor."
-        }
-      ],
-      "subclasses": [
-        {
-          "id": "life-domain",
-          "name": "Domínio da Vida",
-          "description": "O Domínio da Vida se concentra na energia positiva vibrante - uma das forças fundamentais do universo - que sustenta toda a vida.",
-          "features": [
-            {
-              "level": 1,
-              "name": "Proficiência Bônus",
-              "description": "Você ganha proficiência com armadura pesada."
-            },
-            {
-              "level": 1,
-              "name": "Discípulo da Vida",
-              "description": "Sempre que você usar uma magia de 1º nível ou superior para restaurar pontos de vida a uma criatura, a criatura recupera pontos de vida adicionais iguais a 2 + o nível da magia."
-            }
+          "id": "fireball-spell",
+          "name": "Bola de Fogo",
+          "damage": "8d6",
+          "usageLimit": 3,
+          "effects": [
+            "queimação",
+            "área"
           ],
-          "domainSpells": {
-            "1": ["Bênção", "Curar Ferimentos"],
-            "3": ["Restauração Menor", "Arma Espiritual"],
-            "5": ["Farol da Esperança", "Revivificar"]
-          }
+          "description": "Explosão de fogo em área de 20 pés",
+          "level": 1
         },
         {
-          "id": "war-domain",
-          "name": "Domínio da Guerra",
-          "description": "A guerra tem muitas manifestações. Ela pode fazer heróis de pessoas comuns. Ela pode ser desesperada e horrífica, com atos de crueldade e covardia eclipsando instâncias de excelência e coragem.",
-          "features": [
-            {
-              "level": 1,
-              "name": "Proficiência Bônus",
-              "description": "Você ganha proficiência com armas marciais e armadura pesada."
-            },
-            {
-              "level": 1,
-              "name": "Sacerdote da Guerra",
-              "description": "Quando você usa a ação Atacar, você pode fazer um ataque de arma como uma ação bônus. Você pode usar este recurso um número de vezes igual ao seu modificador de Sabedoria."
-            }
+          "id": "lightning-bolt-spell",
+          "name": "Raio Elétrico",
+          "damage": "8d6",
+          "usageLimit": 3,
+          "effects": [
+            "choque",
+            "linha"
           ],
-          "domainSpells": {
-            "1": ["Favor Divino", "Escudo da Fé"],
-            "3": ["Arma Mágica", "Arma Espiritual"],
-            "5": ["Manto do Cruzado", "Guardiões Espirituais"]
-          }
+          "description": "Raio em linha de 100 pés",
+          "level": 1
+        },
+        {
+          "id": "ice-storm",
+          "name": "Tempestade de Gelo",
+          "damage": "4d8",
+          "usageLimit": 4,
+          "effects": [
+            "congelamento",
+            "área"
+          ],
+          "description": "Granizo congelante em área de 20 pés",
+          "level": 1
+        },
+        {
+          "id": "acid-arrow",
+          "name": "Flecha Ácida",
+          "damage": "4d4",
+          "usageLimit": 5,
+          "effects": [
+            "corrosão"
+          ],
+          "description": "Flecha que causa dano ácido contínuo",
+          "level": 1
+        },
+        {
+          "id": "cone-of-cold",
+          "name": "Cone de Frio",
+          "damage": "8d8",
+          "usageLimit": 2,
+          "effects": [
+            "congelamento",
+            "cone"
+          ],
+          "description": "Cone de ar gelado de 60 pés",
+          "level": 1
+        },
+        {
+          "id": "disintegrate",
+          "name": "Desintegrar",
+          "damage": "10d6+40",
+          "usageLimit": 1,
+          "effects": [
+            "desintegração"
+          ],
+          "description": "Reduz o alvo a pó",
+          "level": 1
+        },
+        {
+          "id": "chain-lightning",
+          "name": "Raio em Cadeia",
+          "damage": "10d8",
+          "usageLimit": 2,
+          "effects": [
+            "choque",
+            "múltiplos alvos"
+          ],
+          "description": "Raio que salta entre 4 alvos",
+          "level": 1
+        },
+        {
+          "id": "meteor-swarm",
+          "name": "Enxame de Meteoros",
+          "damage": "20d6",
+          "usageLimit": 1,
+          "effects": [
+            "queimação",
+            "concussão",
+            "área"
+          ],
+          "description": "Chuva devastadora de meteoros",
+          "level": 1
+        },
+        {
+          "id": "mind-blast",
+          "name": "Explosão Mental",
+          "damage": "6d6",
+          "usageLimit": 4,
+          "effects": [
+            "atordoamento",
+            "psíquico"
+          ],
+          "description": "Ataque psíquico que atordoa",
+          "level": 1
+        },
+        {
+          "id": "poison-cloud",
+          "name": "Nuvem Venenosa",
+          "damage": "5d8",
+          "usageLimit": 3,
+          "effects": [
+            "envenenamento",
+            "área"
+          ],
+          "description": "Nuvem de veneno persistente",
+          "level": 1
+        },
+        {
+          "id": "vampiric-touch",
+          "name": "Toque Vampírico",
+          "damage": "3d6",
+          "usageLimit": 5,
+          "effects": [
+            "necrótico",
+            "cura"
+          ],
+          "description": "Drena vida e cura o conjurador",
+          "level": 1
+        },
+        {
+          "id": "sunburst",
+          "name": "Explosão Solar",
+          "damage": "12d6",
+          "usageLimit": 2,
+          "effects": [
+            "radiante",
+            "cegueira"
+          ],
+          "description": "Luz brilhante que cega e queima",
+          "level": 1
+        },
+        {
+          "id": "wizard-l2-mirror-image",
+          "name": "Imagem Espelhada",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "evasão",
+            "defesa"
+          ],
+          "description": "Cria ilusões do mago, dificultando ataques inimigos.",
+          "level": 2
+        },
+        {
+          "id": "wizard-l2-scorching-ray",
+          "name": "Raio Abrasador",
+          "damage": "3d6",
+          "usageLimit": 4,
+          "effects": [
+            "fogo",
+            "alvos múltiplos"
+          ],
+          "description": "Dispara três raios de fogo independentes.",
+          "level": 2
+        },
+        {
+          "id": "wizard-l3-counterspell",
+          "name": "Contra-Magia",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "anulação",
+            "reação"
+          ],
+          "description": "Interrompe a magia de um inimigo antes que se manifeste.",
+          "level": 3
+        },
+        {
+          "id": "wizard-l3-gravity-well",
+          "name": "Poço Gravitacional",
+          "damage": "4d6",
+          "usageLimit": 2,
+          "effects": [
+            "força",
+            "controle de área"
+          ],
+          "description": "Cria um campo gravitacional que puxa inimigos para o centro.",
+          "level": 3
+        },
+        {
+          "id": "wizard-l4-dimension-door",
+          "name": "Porta Dimensional",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "teleporte",
+            "movimento"
+          ],
+          "description": "Teleporta o mago e um aliado para um ponto visível.",
+          "level": 4
+        },
+        {
+          "id": "wizard-l4-wall-of-force",
+          "name": "Muralha de Força",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "barreira",
+            "proteção"
+          ],
+          "description": "Cria uma barreira invisível impenetrável por 1 minuto.",
+          "level": 4
+        },
+        {
+          "id": "wizard-l5-teleport",
+          "name": "Teletransporte",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "viagem",
+            "teleporte"
+          ],
+          "description": "Transporta o grupo instantaneamente para outro lugar conhecido.",
+          "level": 5
+        },
+        {
+          "id": "wizard-l5-meteor-swarm",
+          "name": "Chuva de Meteoros",
+          "damage": "12d6",
+          "usageLimit": 1,
+          "effects": [
+            "fogo",
+            "área massiva"
+          ],
+          "description": "Convoca meteoros flamejantes devastando uma vasta área.",
+          "level": 5
         }
-      ]
+      ],
+      "selectionRules": {
+        "attacksToSelect": 3,
+        "spellsToSelect": 6
+      }
     },
     {
       "id": "fighter",
       "name": "Guerreiro",
-      "description": "Um mestre de combate marcial, habilidoso com uma variedade de armas e armaduras.",
-      "hitDie": 10,
-      "primaryAbility": "Força ou Destreza",
-      "savingThrowProficiencies": ["Força", "Constituição"],
-      "armorProficiencies": ["Todas as armaduras", "Escudos"],
-      "weaponProficiencies": ["Armas simples", "Armas marciais"],
-      "skillChoices": 2,
-      "skillOptions": ["Acrobacia", "Adestrar Animais", "Atletismo", "História", "Intuição", "Intimidação", "Percepção", "Sobrevivência"],
-      "startingEquipment": [
-        "Cota de malha ou armadura de couro, arco longo e 20 flechas",
-        "Arma marcial e escudo ou duas armas marciais",
-        "Besta leve e 20 virotes ou dois machados de mão",
-        "Pacote do dungeoneiro ou pacote do explorador"
+      "description": "Combatente especializado em armas e técnicas marciais",
+      "weaponBase": "Espada Longa",
+      "primaryAttributes": [
+        "Força",
+        "Constituição"
       ],
-      "features": [
+      "attacksPerLevel": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "attributeBonusPerLevel": [
         {
           "level": 1,
-          "name": "Estilo de Combate",
-          "description": "Escolha um estilo de combate: Arqueiro (+2 em ataques à distância), Defesa (+1 CA em armadura), Duelo (+2 de dano com arma de uma mão), Arma Grande (rerole 1s e 2s em dados de dano), Proteção (impor desvantagem em ataques contra aliados dentro de 5 pés), ou Duas Armas (adicionar modificador de habilidade ao segundo ataque)."
-        },
-        {
-          "level": 1,
-          "name": "Segundo Sopro",
-          "description": "Você pode usar uma ação bônus para recuperar pontos de vida igual a 1d10 + seu nível de guerreiro. Você pode usar este recurso uma vez por descanso curto ou longo."
+          "strength": 2,
+          "dexterity": 0,
+          "constitution": 1,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
         },
         {
           "level": 2,
-          "name": "Surto de Ação",
-          "description": "Você pode tomar uma ação adicional em seu turno. Você pode usar este recurso uma vez por descanso curto ou longo."
+          "strength": 2,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 3,
+          "strength": 3,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 4,
+          "strength": 3,
+          "dexterity": 0,
+          "constitution": 3,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
         },
         {
           "level": 5,
-          "name": "Ataque Extra",
-          "description": "Você pode atacar duas vezes, em vez de uma, sempre que você toma a ação Atacar em seu turno."
+          "strength": 4,
+          "dexterity": 0,
+          "constitution": 3,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
         }
       ],
-      "subclasses": [
+      "attacks": [
         {
-          "id": "champion",
-          "name": "Campeão",
-          "description": "O Campeão arquetípico se concentra no desenvolvimento de poder físico bruto afiado à perfeição letal.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Crítico Melhorado",
-              "description": "Seus ataques com armas marcam um acerto crítico em uma rolagem de 19 ou 20."
-            }
-          ]
+          "id": "power-slash",
+          "name": "Golpe Poderoso",
+          "damage": "2d8",
+          "description": "Golpe devastador com a espada",
+          "cooldown": 1,
+          "level": 1
         },
         {
-          "id": "battle-master",
-          "name": "Mestre de Batalha",
-          "description": "Aqueles que emulam o Mestre de Batalha arquetípico empregam técnicas marciais passadas através de gerações.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Superioridade Marcial",
-              "description": "Você aprende três manobras à sua escolha e ganha quatro dados de superioridade (d8). Você pode gastar um dado de superioridade para executar uma manobra."
-            },
-            {
-              "level": 3,
-              "name": "Estudioso da Guerra",
-              "description": "Você ganha proficiência com um tipo de ferramentas de artesão à sua escolha."
-            }
-          ]
+          "id": "shield-bash",
+          "name": "Golpe de Escudo",
+          "damage": "1d8",
+          "description": "Ataque com escudo que atordoa",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "sweep-attack",
+          "name": "Ataque Giratório",
+          "damage": "1d10",
+          "description": "Ataca todos inimigos adjacentes",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "overhead-smash",
+          "name": "Esmagamento Aéreo",
+          "damage": "2d10",
+          "description": "Golpe vertical poderoso",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "quick-strike",
+          "name": "Golpe Rápido",
+          "damage": "1d6",
+          "description": "Ataque veloz e preciso",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "cleave",
+          "name": "Fender",
+          "damage": "1d12",
+          "description": "Corte profundo que causa sangramento",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "thrust",
+          "name": "Estocada",
+          "damage": "1d10",
+          "description": "Ataque perfurante preciso",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "pommel-strike",
+          "name": "Golpe de Pomo",
+          "damage": "1d6",
+          "description": "Atordoa o inimigo",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "riposte",
+          "name": "Ripostar",
+          "damage": "1d8",
+          "description": "Contra-ataque após defender",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "disarm",
+          "name": "Desarmar",
+          "damage": "1d4",
+          "description": "Remove a arma do inimigo",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "execute",
+          "name": "Executar",
+          "damage": "3d10",
+          "description": "Golpe final em inimigos com pouca vida",
+          "cooldown": 4,
+          "level": 1
+        },
+        {
+          "id": "whirlwind",
+          "name": "Redemoinho",
+          "damage": "2d8",
+          "description": "Gira atacando em área",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "fighter-l2-guard-breaker",
+          "name": "Quebra-Guarda",
+          "damage": "2d8",
+          "description": "Golpe pesado que reduz a defesa do alvo.",
+          "cooldown": 2,
+          "level": 2
+        },
+        {
+          "id": "fighter-l2-shield-slam",
+          "name": "Impacto de Escudo",
+          "damage": "1d10",
+          "description": "Arremessa o inimigo para trás e o desequilibra.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "fighter-l3-skullsplitter",
+          "name": "Parte-Crânios",
+          "damage": "3d8",
+          "description": "Ataque brutal mirando a cabeça do inimigo.",
+          "cooldown": 3,
+          "level": 3
+        },
+        {
+          "id": "fighter-l3-deflecting-strike",
+          "name": "Golpe Desviador",
+          "damage": "1d12",
+          "description": "Desvia o ataque inimigo e contra-ataca com precisão.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "fighter-l4-earthshatter",
+          "name": "Quebra-Terra",
+          "damage": "4d8",
+          "description": "Golpe no solo que cria uma onda de choque.",
+          "cooldown": 4,
+          "level": 4
+        },
+        {
+          "id": "fighter-l4-blade-storm",
+          "name": "Tempestade de Lâminas",
+          "damage": "3d10",
+          "description": "Sequência implacável de cortes rápidos.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "fighter-l5-legendary-strike",
+          "name": "Golpe Lendário",
+          "damage": "5d10",
+          "description": "Empunha toda a força em um ataque decisivo.",
+          "cooldown": 5,
+          "level": 5
+        },
+        {
+          "id": "fighter-l5-unyielding-advance",
+          "name": "Avanço Inabalável",
+          "damage": "2d12",
+          "description": "Avança enquanto golpeia tudo à frente.",
+          "cooldown": 4,
+          "level": 5
         }
       ],
-      "spellcasting": null
+      "spells": [
+        {
+          "id": "battle-cry",
+          "name": "Grito de Guerra",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "buff de ataque"
+          ],
+          "description": "Aumenta dano de aliados em +2",
+          "level": 1
+        },
+        {
+          "id": "second-wind",
+          "name": "Segundo Fôlego",
+          "damage": "-1d10",
+          "usageLimit": 3,
+          "effects": [
+            "cura"
+          ],
+          "description": "Recupera 1d10+5 PV",
+          "level": 1
+        },
+        {
+          "id": "intimidating-shout",
+          "name": "Grito Intimidador",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "medo"
+          ],
+          "description": "Assusta inimigos próximos",
+          "level": 1
+        },
+        {
+          "id": "rallying-cry",
+          "name": "Grito de Reunir",
+          "damage": "-2d6",
+          "usageLimit": 2,
+          "effects": [
+            "cura em área"
+          ],
+          "description": "Aliados próximos recuperam vida",
+          "level": 1
+        },
+        {
+          "id": "charge",
+          "name": "Investida",
+          "damage": "2d6",
+          "usageLimit": 4,
+          "effects": [
+            "movimento",
+            "derrubada"
+          ],
+          "description": "Corre até o inimigo e o derruba",
+          "level": 1
+        },
+        {
+          "id": "defensive-stance",
+          "name": "Postura Defensiva",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "buff defesa"
+          ],
+          "description": "Aumenta AC em +4 por 1 rodada",
+          "level": 1
+        },
+        {
+          "id": "fighter-l2-iron-will",
+          "name": "Vontade de Ferro",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "resistência",
+            "imunidade a medo"
+          ],
+          "description": "Concede resistência mental e ignora medo por 1 minuto.",
+          "level": 2
+        },
+        {
+          "id": "fighter-l2-battlefield-clarity",
+          "name": "Clareza de Batalha",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "vantagem",
+            "percepção"
+          ],
+          "description": "Melhora a percepção tática garantindo vantagem em iniciativas.",
+          "level": 2
+        },
+        {
+          "id": "fighter-l3-bulwark",
+          "name": "Baluarte",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "redução de dano",
+            "proteção aliada"
+          ],
+          "description": "Reduz o dano sofrido por aliados próximos em 3.",
+          "level": 3
+        },
+        {
+          "id": "fighter-l3-weapon-master",
+          "name": "Mestre das Armas",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "buff de ataque",
+            "versatilidade"
+          ],
+          "description": "Permite trocar de arma e ganha +2 em ataque por combate.",
+          "level": 3
+        },
+        {
+          "id": "fighter-l4-rallying-banner",
+          "name": "Estandarte Inspirador",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "moral",
+            "PV temporários"
+          ],
+          "description": "Concede 10 PV temporários a aliados que virem o estandarte.",
+          "level": 4
+        },
+        {
+          "id": "fighter-l4-unbreakable-stance",
+          "name": "Postura Inquebrável",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "imunidade a empurrão",
+            "resistência"
+          ],
+          "description": "Ignora efeitos que empurram ou derrubam por 1 minuto.",
+          "level": 4
+        },
+        {
+          "id": "fighter-l5-war-commander",
+          "name": "Comandante de Guerra",
+          "damage": "0",
+          "usageLimit": 1,
+          "effects": [
+            "ação extra",
+            "coordenação"
+          ],
+          "description": "Permite que dois aliados façam uma ação extra imediata.",
+          "level": 5
+        },
+        {
+          "id": "fighter-l5-heroic-resurgence",
+          "name": "Ressurgência Heróica",
+          "damage": "-4d8",
+          "usageLimit": 1,
+          "effects": [
+            "cura em massa",
+            "motivação"
+          ],
+          "description": "Aliados caídos se levantam com 4d8 PV recuperados.",
+          "level": 5
+        }
+      ],
+      "selectionRules": {
+        "attacksToSelect": 6,
+        "spellsToSelect": 3
+      }
+    },
+    {
+      "id": "cleric",
+      "name": "Clérigo",
+      "description": "Sacerdote divino que canaliza poder dos deuses para curar e proteger",
+      "weaponBase": "Maça",
+      "primaryAttributes": [
+        "Sabedoria",
+        "Constituição"
+      ],
+      "attacksPerLevel": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "attributeBonusPerLevel": [
+        {
+          "level": 1,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 1,
+          "intelligence": 0,
+          "wisdom": 2,
+          "charisma": 0
+        },
+        {
+          "level": 2,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 1,
+          "intelligence": 0,
+          "wisdom": 2,
+          "charisma": 1
+        },
+        {
+          "level": 3,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 3,
+          "charisma": 1
+        },
+        {
+          "level": 4,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 3,
+          "charisma": 2
+        },
+        {
+          "level": 5,
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 3,
+          "intelligence": 0,
+          "wisdom": 4,
+          "charisma": 2
+        }
+      ],
+      "attacks": [
+        {
+          "id": "mace-strike",
+          "name": "Golpe de Maça",
+          "damage": "1d6",
+          "description": "Ataque corpo a corpo com maça",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "sacred-flame-attack",
+          "name": "Chama Sagrada",
+          "damage": "1d8",
+          "description": "Chama divina que ignora cobertura",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "spiritual-hammer",
+          "name": "Martelo Espiritual",
+          "damage": "1d10",
+          "description": "Martelo flutuante de energia divina",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "divine-strike",
+          "name": "Golpe Divino",
+          "damage": "2d6",
+          "description": "Golpe imbuído com energia sagrada",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "wrath-smite",
+          "name": "Golpe da Ira",
+          "damage": "1d8",
+          "description": "Golpe que causa medo",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "holy-weapon",
+          "name": "Arma Sagrada",
+          "damage": "1d6",
+          "description": "Arma brilha com poder divino",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "cleric-l2-radiant-slam",
+          "name": "Impacto Radiante",
+          "damage": "2d6",
+          "description": "Golpe sagrado que explode em luz.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "cleric-l2-zealous-smite",
+          "name": "Castigo Zeloso",
+          "damage": "2d8",
+          "description": "Golpe fervoroso que repele criaturas malignas.",
+          "cooldown": 2,
+          "level": 2
+        },
+        {
+          "id": "cleric-l3-censer-swing",
+          "name": "Balançar do Turíbulo",
+          "damage": "2d6",
+          "description": "Incenso ardente que fere e purifica ao redor.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "cleric-l3-hammer-of-judgment",
+          "name": "Martelo do Julgamento",
+          "damage": "3d6",
+          "description": "Golpe esmagador que emite luz julgadora.",
+          "cooldown": 3,
+          "level": 3
+        },
+        {
+          "id": "cleric-l4-radiant-burst",
+          "name": "Explosão Radiante",
+          "damage": "3d8",
+          "description": "Libera uma onda de energia sagrada em área.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "cleric-l4-heavenly-spear",
+          "name": "Lança Celestial",
+          "damage": "4d6",
+          "description": "Projeta uma lança de luz que perfura defesas.",
+          "cooldown": 4,
+          "level": 4
+        },
+        {
+          "id": "cleric-l5-divine-comet",
+          "name": "Cometa Divino",
+          "damage": "4d10",
+          "description": "Invoca um cometa de pura luz sagrada.",
+          "cooldown": 4,
+          "level": 5
+        },
+        {
+          "id": "cleric-l5-judgment-day",
+          "name": "Dia do Julgamento",
+          "damage": "5d10",
+          "description": "Sentença final que fulmina criaturas corrompidas.",
+          "cooldown": 5,
+          "level": 5
+        }
+      ],
+      "spells": [
+        {
+          "id": "mass-cure",
+          "name": "Cura em Massa",
+          "damage": "-6d8",
+          "usageLimit": 2,
+          "effects": [
+            "cura em área"
+          ],
+          "description": "Cura vários aliados ao mesmo tempo",
+          "level": 1
+        },
+        {
+          "id": "divine-shield",
+          "name": "Escudo Divino",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "proteção"
+          ],
+          "description": "Concede +5 CA a um aliado",
+          "level": 1
+        },
+        {
+          "id": "holy-fire",
+          "name": "Fogo Sagrado",
+          "damage": "5d8",
+          "usageLimit": 4,
+          "effects": [
+            "radiante",
+            "queimação"
+          ],
+          "description": "Chamas divinas que queimam o mal",
+          "level": 1
+        },
+        {
+          "id": "resurrection",
+          "name": "Ressurreição",
+          "damage": "0",
+          "usageLimit": 1,
+          "effects": [
+            "reviver"
+          ],
+          "description": "Traz um aliado de volta à vida",
+          "level": 1
+        },
+        {
+          "id": "banishment",
+          "name": "Banimento",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "exílio"
+          ],
+          "description": "Bane criatura para outro plano",
+          "level": 1
+        },
+        {
+          "id": "spirit-guardians",
+          "name": "Guardiões Espirituais",
+          "damage": "3d8",
+          "usageLimit": 4,
+          "effects": [
+            "radiante",
+            "área contínua"
+          ],
+          "description": "Espíritos atacam inimigos próximos",
+          "level": 1
+        },
+        {
+          "id": "beacon-of-hope",
+          "name": "Farol de Esperança",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "buff cura"
+          ],
+          "description": "Aumenta efetividade de curas",
+          "level": 1
+        },
+        {
+          "id": "flame-strike",
+          "name": "Coluna de Chamas",
+          "damage": "8d6",
+          "usageLimit": 3,
+          "effects": [
+            "fogo",
+            "radiante"
+          ],
+          "description": "Pilar de fogo divino",
+          "level": 1
+        },
+        {
+          "id": "greater-restoration",
+          "name": "Restauração Maior",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "cura condições"
+          ],
+          "description": "Remove efeitos negativos",
+          "level": 1
+        },
+        {
+          "id": "divine-intervention",
+          "name": "Intervenção Divina",
+          "damage": "10d10",
+          "usageLimit": 1,
+          "effects": [
+            "divino",
+            "variável"
+          ],
+          "description": "Invoca poder direto do deus",
+          "level": 1
+        },
+        {
+          "id": "turn-undead",
+          "name": "Expulsar Mortos-Vivos",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "medo"
+          ],
+          "description": "Afasta ou destrói mortos-vivos",
+          "level": 1
+        },
+        {
+          "id": "sanctuary",
+          "name": "Santuário",
+          "damage": "0",
+          "usageLimit": 6,
+          "effects": [
+            "proteção"
+          ],
+          "description": "Protege aliado de ataques",
+          "level": 1
+        },
+        {
+          "id": "cleric-l2-prayer-healing",
+          "name": "Prece de Cura",
+          "damage": "-2d8",
+          "usageLimit": 4,
+          "effects": [
+            "cura em área",
+            "canalização"
+          ],
+          "description": "Cura aliados próximos com energia sagrada.",
+          "level": 2
+        },
+        {
+          "id": "cleric-l2-warding-bond",
+          "name": "Vínculo Guardião",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "proteção compartilhada"
+          ],
+          "description": "Divide o dano recebido com um aliado ligado.",
+          "level": 2
+        },
+        {
+          "id": "cleric-l3-spirit-shroud",
+          "name": "Manto Espiritual",
+          "damage": "3d8",
+          "usageLimit": 3,
+          "effects": [
+            "radiante",
+            "lentidão"
+          ],
+          "description": "Espíritos gelam inimigos próximos e reduzem sua velocidade.",
+          "level": 3
+        },
+        {
+          "id": "cleric-l3-revivify",
+          "name": "Reviver",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "reviver rápido"
+          ],
+          "description": "Traz um aliado recém-caído de volta com energia vital.",
+          "level": 3
+        },
+        {
+          "id": "cleric-l4-guardian-of-faith",
+          "name": "Guardião da Fé",
+          "damage": "4d8",
+          "usageLimit": 2,
+          "effects": [
+            "sentinela",
+            "radiante"
+          ],
+          "description": "Convoca um guardião de luz que fere inimigos.",
+          "level": 4
+        },
+        {
+          "id": "cleric-l4-aura-life",
+          "name": "Aura da Vida",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "cura contínua",
+            "proteção contra morte"
+          ],
+          "description": "Mantém aliados longe de 0 PV e cura gradualmente.",
+          "level": 4
+        },
+        {
+          "id": "cleric-l5-holy-word",
+          "name": "Palavra Sagrada",
+          "damage": "8d6",
+          "usageLimit": 1,
+          "effects": [
+            "radiante",
+            "atordoamento"
+          ],
+          "description": "Pronuncia palavra divina que cega e atordoa inimigos.",
+          "level": 5
+        },
+        {
+          "id": "cleric-l5-mass-heal",
+          "name": "Cura Suprema em Massa",
+          "damage": "-9d8",
+          "usageLimit": 1,
+          "effects": [
+            "cura total",
+            "alvos múltiplos"
+          ],
+          "description": "Restaura grandes quantidades de vida a todos os aliados.",
+          "level": 5
+        }
+      ],
+      "selectionRules": {
+        "attacksToSelect": 3,
+        "spellsToSelect": 6
+      }
+    },
+    {
+      "id": "barbarian",
+      "name": "Bárbaro",
+      "description": "Guerreiro selvagem que luta com fúria primitiva",
+      "weaponBase": "Machado Grande",
+      "primaryAttributes": [
+        "Força",
+        "Constituição"
+      ],
+      "attacksPerLevel": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "attributeBonusPerLevel": [
+        {
+          "level": 1,
+          "strength": 2,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 2,
+          "strength": 3,
+          "dexterity": 0,
+          "constitution": 2,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 3,
+          "strength": 3,
+          "dexterity": 0,
+          "constitution": 3,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 4,
+          "strength": 4,
+          "dexterity": 0,
+          "constitution": 3,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 5,
+          "strength": 4,
+          "dexterity": 0,
+          "constitution": 4,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
+        }
+      ],
+      "attacks": [
+        {
+          "id": "reckless-attack",
+          "name": "Ataque Temerário",
+          "damage": "2d12",
+          "description": "Ataque poderoso que expõe defesa",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "brutal-critical",
+          "name": "Crítico Brutal",
+          "damage": "3d12",
+          "description": "Golpe devastador com chance de crítico",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "greataxe-cleave",
+          "name": "Corte Brutal",
+          "damage": "2d10",
+          "description": "Corta através dos inimigos",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "wild-strike",
+          "name": "Golpe Selvagem",
+          "damage": "2d8",
+          "description": "Ataque instintivo e feroz",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "berserker-rage-attack",
+          "name": "Ataque Frenético",
+          "damage": "2d6+4",
+          "description": "Múltiplos golpes em fúria",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "skull-crusher",
+          "name": "Esmaga Crânios",
+          "damage": "2d12",
+          "description": "Golpe descendente devastador",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "primal-roar-strike",
+          "name": "Rugido Primitivo",
+          "damage": "1d12",
+          "description": "Grito que assusta e ataca",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "relentless-assault",
+          "name": "Assalto Implacável",
+          "damage": "3d8",
+          "description": "Sequência de golpes brutais",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "savage-rend",
+          "name": "Dilacerar Selvagem",
+          "damage": "2d10",
+          "description": "Ataque que causa sangramento severo",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "titan-slam",
+          "name": "Impacto Titânico",
+          "damage": "3d10",
+          "description": "Golpe que sacode a terra",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "feral-bite",
+          "name": "Mordida Feral",
+          "damage": "1d10",
+          "description": "Morde o inimigo selvagemente",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "war-cry-strike",
+          "name": "Golpe do Grito de Guerra",
+          "damage": "2d8",
+          "description": "Ataque com grito intimidador",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "barbarian-l2-bonebreaker",
+          "name": "Quebra-Ossos",
+          "damage": "3d8",
+          "description": "Golpe esmagador que pulveriza ossos.",
+          "cooldown": 2,
+          "level": 2
+        },
+        {
+          "id": "barbarian-l2-raging-pounce",
+          "name": "Investida Furiosa",
+          "damage": "2d10",
+          "description": "Salto agressivo que derruba o alvo.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "barbarian-l3-storm-hammer",
+          "name": "Martelo da Tempestade",
+          "damage": "3d10",
+          "description": "Canaliza trovões em um impacto devastador.",
+          "cooldown": 3,
+          "level": 3
+        },
+        {
+          "id": "barbarian-l3-thunderous-leap",
+          "name": "Salto Trovejante",
+          "damage": "2d12",
+          "description": "Cai sobre os inimigos criando onda sísmica.",
+          "cooldown": 3,
+          "level": 3
+        },
+        {
+          "id": "barbarian-l4-earthbreaker",
+          "name": "Quebra-Mundo",
+          "damage": "4d10",
+          "description": "Racha o solo e lança inimigos ao ar.",
+          "cooldown": 4,
+          "level": 4
+        },
+        {
+          "id": "barbarian-l4-primal-maul",
+          "name": "Malho Primal",
+          "damage": "5d8",
+          "description": "Sequência pesada de golpes ancestrais.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "barbarian-l5-apex-rend",
+          "name": "Dilacerar Supremacia",
+          "damage": "5d10",
+          "description": "Rasga o inimigo com força brutal suprema.",
+          "cooldown": 4,
+          "level": 5
+        },
+        {
+          "id": "barbarian-l5-worldsplitter",
+          "name": "Partir o Mundo",
+          "damage": "6d10",
+          "description": "Golpe final capaz de fender o terreno.",
+          "cooldown": 5,
+          "level": 5
+        }
+      ],
+      "spells": [
+        {
+          "id": "rage",
+          "name": "Fúria",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "buff ataque",
+            "resistência"
+          ],
+          "description": "Entra em fúria, +4 dano e resistência física",
+          "level": 1
+        },
+        {
+          "id": "primal-howl",
+          "name": "Uivo Primitivo",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "medo em área"
+          ],
+          "description": "Uivo que aterrroriza inimigos",
+          "level": 1
+        },
+        {
+          "id": "bloodlust",
+          "name": "Sede de Sangue",
+          "damage": "4d6",
+          "usageLimit": 3,
+          "effects": [
+            "cura por dano"
+          ],
+          "description": "Recupera vida ao causar dano",
+          "level": 1
+        },
+        {
+          "id": "unbreakable",
+          "name": "Inquebrantável",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "resistência total"
+          ],
+          "description": "Ignora dano por 1 rodada",
+          "level": 1
+        },
+        {
+          "id": "frenzy",
+          "name": "Frenesi",
+          "damage": "6d8",
+          "usageLimit": 2,
+          "effects": [
+            "múltiplos ataques"
+          ],
+          "description": "Ataca múltiplas vezes em fúria",
+          "level": 1
+        },
+        {
+          "id": "ancestral-spirits",
+          "name": "Espíritos Ancestrais",
+          "damage": "5d10",
+          "usageLimit": 2,
+          "effects": [
+            "espiritual",
+            "proteção"
+          ],
+          "description": "Invoca espíritos que atacam e protegem",
+          "level": 1
+        },
+        {
+          "id": "barbarian-l2-stonehide",
+          "name": "Pele de Pedra",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "resistência física",
+            "redução de dano"
+          ],
+          "description": "Endurece a pele, reduzindo dano físico em 3.",
+          "level": 2
+        },
+        {
+          "id": "barbarian-l2-hunter-sense",
+          "name": "Instinto Caçador",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "detecção",
+            "vantagem de ataque"
+          ],
+          "description": "Detecta inimigos ocultos e garante vantagem no primeiro ataque.",
+          "level": 2
+        },
+        {
+          "id": "barbarian-l3-blood-ward",
+          "name": "Proteção Sangrenta",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "PV temporários",
+            "reativo"
+          ],
+          "description": "Recebe PV temporários iguais ao modificador de Constituição x5.",
+          "level": 3
+        },
+        {
+          "id": "barbarian-l3-spirit-rampage",
+          "name": "Destruição Espiritual",
+          "damage": "4d8",
+          "usageLimit": 2,
+          "effects": [
+            "espiritual",
+            "área"
+          ],
+          "description": "Espíritos ancestrais devastam inimigos próximos.",
+          "level": 3
+        },
+        {
+          "id": "barbarian-l4-titanic-resilience",
+          "name": "Resiliência Titânica",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "imunidade a controle",
+            "resistência"
+          ],
+          "description": "Imune a atordoamento, paralisia e medo por 1 minuto.",
+          "level": 4
+        },
+        {
+          "id": "barbarian-l4-warpath",
+          "name": "Caminho de Guerra",
+          "damage": "3d8",
+          "usageLimit": 3,
+          "effects": [
+            "movimento",
+            "dano contínuo"
+          ],
+          "description": "Enquanto se move, causa dano em inimigos atravessados.",
+          "level": 4
+        },
+        {
+          "id": "barbarian-l5-ancestral-avatar",
+          "name": "Avatar Ancestral",
+          "damage": "6d8",
+          "usageLimit": 1,
+          "effects": [
+            "transformação",
+            "área"
+          ],
+          "description": "Manifesta um avatar gigante causando dano massivo ao redor.",
+          "level": 5
+        },
+        {
+          "id": "barbarian-l5-immortal-rage",
+          "name": "Fúria Imortal",
+          "damage": "0",
+          "usageLimit": 1,
+          "effects": [
+            "reviver",
+            "cura contínua"
+          ],
+          "description": "Ao cair a 0 PV, continua lutando com 20 PV temporários.",
+          "level": 5
+        }
+      ],
+      "selectionRules": {
+        "attacksToSelect": 6,
+        "spellsToSelect": 3
+      }
     },
     {
       "id": "rogue",
       "name": "Ladino",
-      "description": "Um patife que usa furtividade e truques para superar obstáculos e inimigos.",
-      "hitDie": 8,
-      "primaryAbility": "Destreza",
-      "savingThrowProficiencies": ["Destreza", "Inteligência"],
-      "armorProficiencies": ["Armadura leve"],
-      "weaponProficiencies": ["Armas simples", "Bestas de mão", "Espadas longas", "Rapieiras", "Espadas curtas"],
-      "skillChoices": 4,
-      "skillOptions": ["Acrobacia", "Atletismo", "Atuação", "Blefar", "Furtividade", "Intimidação", "Intuição", "Investigação", "Percepção", "Persuasão", "Prestidigitação", "Religião"],
-      "startingEquipment": [
-        "Rapieira ou espada curta",
-        "Arco curto e aljava com 20 flechas ou espada curta",
-        "Pacote do ladrão ou pacote do dungeoneiro ou pacote do explorador",
-        "Armadura de couro, duas adagas e ferramentas de ladrão"
+      "description": "Especialista em furtividade, armadilhas e ataques precisos",
+      "weaponBase": "Adaga",
+      "primaryAttributes": [
+        "Destreza",
+        "Inteligência"
       ],
-      "features": [
+      "attacksPerLevel": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "attributeBonusPerLevel": [
         {
           "level": 1,
-          "name": "Especialização",
-          "description": "Escolha duas de suas proficiências em perícias. Seu bônus de proficiência é dobrado para qualquer teste de habilidade que você faça que use uma das proficiências escolhidas."
-        },
-        {
-          "level": 1,
-          "name": "Ataque Furtivo",
-          "description": "Uma vez por turno, você pode causar 1d6 de dano extra a uma criatura que você atingiu com um ataque se você tiver vantagem na rolagem de ataque. O ataque deve usar uma arma de finesse ou à distância. Você não precisa de vantagem se outro inimigo do alvo estiver dentro de 5 pés dele. O dano aumenta conforme você ganha níveis."
+          "strength": 0,
+          "dexterity": 2,
+          "constitution": 1,
+          "intelligence": 1,
+          "wisdom": 0,
+          "charisma": 0
         },
         {
           "level": 2,
-          "name": "Ação Astuta",
-          "description": "Você pode tomar uma ação bônus para Correr, Desengajar ou Esconder."
+          "strength": 0,
+          "dexterity": 3,
+          "constitution": 1,
+          "intelligence": 1,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 3,
+          "strength": 0,
+          "dexterity": 3,
+          "constitution": 2,
+          "intelligence": 2,
+          "wisdom": 0,
+          "charisma": 0
+        },
+        {
+          "level": 4,
+          "strength": 0,
+          "dexterity": 4,
+          "constitution": 2,
+          "intelligence": 2,
+          "wisdom": 0,
+          "charisma": 0
         },
         {
           "level": 5,
-          "name": "Esquiva Sobrenatural",
-          "description": "Quando um atacante que você pode ver o atinge com um ataque, você pode usar sua reação para reduzir à metade o dano do ataque contra você."
+          "strength": 0,
+          "dexterity": 4,
+          "constitution": 3,
+          "intelligence": 3,
+          "wisdom": 0,
+          "charisma": 0
         }
       ],
-      "subclasses": [
+      "attacks": [
         {
-          "id": "thief",
-          "name": "Ladrão",
-          "description": "Você afia suas habilidades nas artes ladinas. Ladrões, bandidos, carteiristas e outros criminosos normalmente seguem este arquétipo.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Mãos Rápidas",
-              "description": "Você pode usar a ação bônus concedida pela sua Ação Astuta para fazer um teste de Destreza (Prestidigitação), usar ferramentas de ladrão para desarmar uma armadilha ou abrir uma fechadura, ou tomar a ação Usar um Objeto."
-            },
-            {
-              "level": 3,
-              "name": "Segundo Andar",
-              "description": "Escalar não custa movimento extra para você, e quando você faz um salto correndo, a distância que você cobre aumenta em um número de pés igual ao seu modificador de Destreza."
-            }
-          ]
+          "id": "sneak-attack",
+          "name": "Ataque Furtivo",
+          "damage": "3d6",
+          "description": "Ataque extra quando tem vantagem",
+          "cooldown": 1,
+          "level": 1
         },
         {
-          "id": "assassin",
-          "name": "Assassino",
-          "description": "Você foca seu treinamento na arte sombria da morte. Assassinos, assassinos de aluguel, espiões e caçadores de recompensas seguem este arquétipo.",
-          "features": [
-            {
-              "level": 3,
-              "name": "Proficiências Bônus",
-              "description": "Você ganha proficiência com o kit de disfarce e o kit de envenenador."
-            },
-            {
-              "level": 3,
-              "name": "Assassinar",
-              "description": "Você tem vantagem em rolagens de ataque contra qualquer criatura que não tenha tomado um turno no combate ainda. Qualquer acerto que você marcar contra uma criatura surpreendida é um acerto crítico."
-            }
-          ]
+          "id": "backstab",
+          "name": "Apunhalar",
+          "damage": "2d8",
+          "description": "Ataque pelas costas devastador",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "dual-wield",
+          "name": "Duas Armas",
+          "damage": "2d6",
+          "description": "Ataca com duas adagas",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "vital-strike",
+          "name": "Golpe Vital",
+          "damage": "2d10",
+          "description": "Atinge ponto vital do inimigo",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "quick-stab",
+          "name": "Punhalada Rápida",
+          "damage": "1d6",
+          "description": "Ataque veloz e preciso",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "poison-blade",
+          "name": "Lâmina Envenenada",
+          "damage": "1d8",
+          "description": "Ataque com veneno",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "shadow-strike",
+          "name": "Golpe das Sombras",
+          "damage": "2d8",
+          "description": "Ataca das sombras",
+          "cooldown": 2,
+          "level": 1
+        },
+        {
+          "id": "kidney-shot",
+          "name": "Golpe nos Rins",
+          "damage": "1d6",
+          "description": "Atordoa o inimigo",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "eviscerate",
+          "name": "Eviscerar",
+          "damage": "3d8",
+          "description": "Ataque sangr ento brutal",
+          "cooldown": 3,
+          "level": 1
+        },
+        {
+          "id": "throat-slash",
+          "name": "Corte na Garganta",
+          "damage": "2d10",
+          "description": "Silencia e causa sangramento",
+          "cooldown": 4,
+          "level": 1
+        },
+        {
+          "id": "cheap-shot",
+          "name": "Golpe Baixo",
+          "damage": "1d4",
+          "description": "Ataque desleal que cega",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "assassinate",
+          "name": "Assassinar",
+          "damage": "4d10",
+          "description": "Execução instantânea de alvo surpreso",
+          "cooldown": 5,
+          "level": 1
+        },
+        {
+          "id": "rogue-l2-crippling-strike",
+          "name": "Golpe Paralisante",
+          "damage": "2d6",
+          "description": "Ataque preciso que reduz a velocidade do alvo.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "rogue-l2-garrote",
+          "name": "Garrrote",
+          "damage": "2d8",
+          "description": "Ataque silencioso que sufoca o alvo.",
+          "cooldown": 3,
+          "level": 2
+        },
+        {
+          "id": "rogue-l3-bleeding-edge",
+          "name": "Lâmina Dilacerante",
+          "damage": "3d6",
+          "description": "Golpe que causa sangramento prolongado.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "rogue-l3-shadow-ambush",
+          "name": "Emboscada Sombria",
+          "damage": "3d8",
+          "description": "Aparece das sombras causando dano crítico.",
+          "cooldown": 3,
+          "level": 3
+        },
+        {
+          "id": "rogue-l4-heartseeker",
+          "name": "Caçadora de Corações",
+          "damage": "4d6",
+          "description": "Ataque fatal mirando órgãos vitais.",
+          "cooldown": 4,
+          "level": 4
+        },
+        {
+          "id": "rogue-l4-silent-tornado",
+          "name": "Tornado Silencioso",
+          "damage": "3d10",
+          "description": "Gira com duas lâminas atingindo vários alvos.",
+          "cooldown": 4,
+          "level": 4
+        },
+        {
+          "id": "rogue-l5-nightfall-execution",
+          "name": "Execução do Anoitecer",
+          "damage": "5d10",
+          "description": "Elimina inimigo isolado antes que perceba.",
+          "cooldown": 5,
+          "level": 5
+        },
+        {
+          "id": "rogue-l5-soul-puncture",
+          "name": "Perfuração da Alma",
+          "damage": "6d6",
+          "description": "Crava a lâmina na essência do alvo.",
+          "cooldown": 5,
+          "level": 5
         }
       ],
-      "spellcasting": null
+      "spells": [
+        {
+          "id": "vanish",
+          "name": "Desaparecer",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "invisibilidade"
+          ],
+          "description": "Fica invisível por 1 rodada",
+          "level": 1
+        },
+        {
+          "id": "smoke-bomb",
+          "name": "Bomba de Fumaça",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "ocultação"
+          ],
+          "description": "Cria nuvem de fumaça",
+          "level": 1
+        },
+        {
+          "id": "toxic-blade",
+          "name": "Lâmina Tóxica",
+          "damage": "3d8",
+          "usageLimit": 4,
+          "effects": [
+            "envenenamento"
+          ],
+          "description": "Veneno potente que causa dano contínuo",
+          "level": 1
+        },
+        {
+          "id": "shadow-step",
+          "name": "Passo Sombrio",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "teleporte"
+          ],
+          "description": "Teleporta para sombra próxima",
+          "level": 1
+        },
+        {
+          "id": "blinding-powder",
+          "name": "Pó Cegante",
+          "damage": "1d4",
+          "usageLimit": 6,
+          "effects": [
+            "cegueira"
+          ],
+          "description": "Cega inimigos próximos",
+          "level": 1
+        },
+        {
+          "id": "death-mark",
+          "name": "Marca da Morte",
+          "damage": "5d10",
+          "usageLimit": 2,
+          "effects": [
+            "dano amplificado"
+          ],
+          "description": "Marca alvo para dano extra",
+          "level": 1
+        },
+        {
+          "id": "rogue-l2-adrenaline-rush",
+          "name": "Corrida de Adrenalina",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "ação bônus extra",
+            "movimento"
+          ],
+          "description": "Permite ação bônus extra e +10 pés de movimento.",
+          "level": 2
+        },
+        {
+          "id": "rogue-l2-silence-dart",
+          "name": "Dardo Silenciador",
+          "damage": "1d6",
+          "usageLimit": 4,
+          "effects": [
+            "silêncio",
+            "impedir magia"
+          ],
+          "description": "Impede a conjuração do alvo por uma rodada.",
+          "level": 2
+        },
+        {
+          "id": "rogue-l3-phantom-veil",
+          "name": "Véu Fantasma",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "camuflagem perfeita"
+          ],
+          "description": "Fica indistinguível em sombras por 1 minuto.",
+          "level": 3
+        },
+        {
+          "id": "rogue-l3-noxious-cloud",
+          "name": "Nuvem Nociva",
+          "damage": "3d6",
+          "usageLimit": 3,
+          "effects": [
+            "veneno",
+            "área"
+          ],
+          "description": "Libera nuvem tóxica que causa dano e ofusca.",
+          "level": 3
+        },
+        {
+          "id": "rogue-l4-shadow-mirror",
+          "name": "Espelho Sombrio",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "duplicata",
+            "evasão"
+          ],
+          "description": "Cria uma duplicata sombria que confunde ataques.",
+          "level": 4
+        },
+        {
+          "id": "rogue-l4-grappling-shot",
+          "name": "Gancho Ágil",
+          "damage": "2d6",
+          "usageLimit": 3,
+          "effects": [
+            "movimento",
+            "reposicionamento"
+          ],
+          "description": "Dispara um gancho para reposicionar-se rapidamente.",
+          "level": 4
+        },
+        {
+          "id": "rogue-l5-shadow-doppelganger",
+          "name": "Doppelganger Sombrio",
+          "damage": "0",
+          "usageLimit": 1,
+          "effects": [
+            "infiltração",
+            "disfarce perfeito"
+          ],
+          "description": "Assume aparência idêntica à de outra criatura.",
+          "level": 5
+        },
+        {
+          "id": "rogue-l5-deathblow",
+          "name": "Golpe Mortal",
+          "damage": "7d6",
+          "usageLimit": 1,
+          "effects": [
+            "execução",
+            "crítico automático"
+          ],
+          "description": "Finaliza inimigos abaixo de metade da vida.",
+          "level": 5
+        }
+      ],
+      "selectionRules": {
+        "attacksToSelect": 6,
+        "spellsToSelect": 3
+      }
     },
     {
-      "id": "wizard",
-      "name": "Mago",
-      "description": "Um usuário de magia erudito capaz de manipular as estruturas da realidade.",
-      "hitDie": 6,
-      "primaryAbility": "Inteligência",
-      "savingThrowProficiencies": ["Inteligência", "Sabedoria"],
-      "armorProficiencies": [],
-      "weaponProficiencies": ["Adagas", "Dardos", "Fundas", "Cajados", "Bestas leves"],
-      "skillChoices": 2,
-      "skillOptions": ["Arcanismo", "História", "Intuição", "Investigação", "Medicina", "Religião"],
-      "startingEquipment": [
-        "Cajado ou adaga",
-        "Bolsa de componentes ou foco arcano",
-        "Pacote do erudito ou pacote do explorador",
-        "Grimório"
+      "id": "bard",
+      "name": "Bardo",
+      "description": "Artista mágico que inspira aliados e enfeitiça inimigos com música",
+      "weaponBase": "Rapieira",
+      "primaryAttributes": [
+        "Carisma",
+        "Destreza"
       ],
-      "spellcasting": {
-        "ability": "Inteligência",
-        "cantripsKnown": [3, 3, 3, 4, 4, 4, 4, 4, 4, 5],
-        "spellbookSpells": "6 no 1º nível, depois 2 por nível ganho",
-        "spellsPrepared": "Modificador de Inteligência + nível de mago",
-        "spellSlots": {
-          "1": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4],
-          "2": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3],
-          "3": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3],
-          "4": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3],
-          "5": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2]
-        }
-      },
-      "features": [
+      "attacksPerLevel": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "attributeBonusPerLevel": [
         {
           "level": 1,
-          "name": "Recuperação Arcana",
-          "description": "Uma vez por dia durante um descanso curto, você pode recuperar espaços de magia gastos. Os espaços podem ter um nível combinado igual ou menor que metade do seu nível de mago (arredondado para cima), e nenhum pode ser de 6º nível ou superior."
+          "strength": 0,
+          "dexterity": 1,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 2
         },
         {
           "level": 2,
-          "name": "Tradição Arcana",
-          "description": "Escolha uma tradição arcana, que concede recursos no 2º, 6º, 10º e 14º níveis."
-        }
-      ],
-      "subclasses": [
-        {
-          "id": "school-of-evocation",
-          "name": "Escola de Evocação",
-          "description": "Você foca seu estudo em magia que cria efeitos elementais poderosos como frio amargo, chama abrasadora, trovão rolante, relâmpago crepitante e ácido queimante.",
-          "features": [
-            {
-              "level": 2,
-              "name": "Savant de Evocação",
-              "description": "O ouro e o tempo que você deve gastar para copiar uma magia de evocação em seu grimório é reduzido à metade."
-            },
-            {
-              "level": 2,
-              "name": "Esculpir Magias",
-              "description": "Quando você lança uma magia de evocação que afeta outras criaturas, você pode escolher um número delas igual a 1 + o nível da magia. As criaturas escolhidas fazem automaticamente seus testes de resistência e não recebem dano se normalmente receberiam metade do dano em um sucesso."
-            }
-          ]
+          "strength": 0,
+          "dexterity": 1,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 1,
+          "charisma": 2
         },
         {
-          "id": "school-of-abjuration",
-          "name": "Escola de Abjuração",
-          "description": "A Escola de Abjuração enfatiza magia que bloqueia, bane ou protege.",
-          "features": [
-            {
-              "level": 2,
-              "name": "Savant de Abjuração",
-              "description": "O ouro e o tempo que você deve gastar para copiar uma magia de abjuração em seu grimório é reduzido à metade."
-            },
-            {
-              "level": 2,
-              "name": "Vara Arcana",
-              "description": "Quando você lança uma magia de abjuração de 1º nível ou superior, você pode criar uma vara mágica que tem pontos de vida iguais ao dobro do seu nível de mago + seu modificador de Inteligência. Sempre que você receber dano, a vara recebe o dano em vez de você."
-            }
-          ]
+          "level": 3,
+          "strength": 0,
+          "dexterity": 2,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 1,
+          "charisma": 3
+        },
+        {
+          "level": 4,
+          "strength": 0,
+          "dexterity": 2,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 2,
+          "charisma": 3
+        },
+        {
+          "level": 5,
+          "strength": 0,
+          "dexterity": 3,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 2,
+          "charisma": 4
         }
-      ]
+      ],
+      "attacks": [
+        {
+          "id": "rapier-thrust",
+          "name": "Estocada de Rapieira",
+          "damage": "1d8",
+          "description": "Ataque perfurante elegante",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "flourish",
+          "name": "Floreio",
+          "damage": "1d10",
+          "description": "Ataque elaborado que impressiona",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "sonic-slash",
+          "name": "Corte Sônico",
+          "damage": "1d8",
+          "description": "Ataque com onda sonora",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "vicious-mockery-attack",
+          "name": "Zombaria Cruel",
+          "damage": "1d6",
+          "description": "Insulto mágico que fere",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "bardic-blade",
+          "name": "Lâmina Bárdica",
+          "damage": "1d8",
+          "description": "Ataque imbuído com magia",
+          "cooldown": 0,
+          "level": 1
+        },
+        {
+          "id": "performance-strike",
+          "name": "Golpe Performático",
+          "damage": "1d10",
+          "description": "Ataque teatral",
+          "cooldown": 1,
+          "level": 1
+        },
+        {
+          "id": "bard-l2-harmonious-slash",
+          "name": "Corte Harmonioso",
+          "damage": "2d6",
+          "description": "Ataque sincronizado com notas musicais cortantes.",
+          "cooldown": 1,
+          "level": 2
+        },
+        {
+          "id": "bard-l2-resonant-thrust",
+          "name": "Estocada Ressonante",
+          "damage": "1d12",
+          "description": "Estocada vibrante que reverbera no alvo.",
+          "cooldown": 2,
+          "level": 2
+        },
+        {
+          "id": "bard-l3-lyric-flurry",
+          "name": "Rajada Lírica",
+          "damage": "2d8",
+          "description": "Sequência de golpes ritmados acompanhados de melodia.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "bard-l3-symphonic-riposte",
+          "name": "Ripostar Sinfônica",
+          "damage": "2d10",
+          "description": "Contra-ataque no tempo exato da música.",
+          "cooldown": 2,
+          "level": 3
+        },
+        {
+          "id": "bard-l4-aria-of-steel",
+          "name": "Ária de Aço",
+          "damage": "3d8",
+          "description": "Canta uma ária enquanto desfere golpes precisos.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "bard-l4-echoing-blade",
+          "name": "Lâmina Ecoante",
+          "damage": "3d10",
+          "description": "Lâmina vibrante que ecoa com dano adicional.",
+          "cooldown": 3,
+          "level": 4
+        },
+        {
+          "id": "bard-l5-grand-finale",
+          "name": "Grand Finale",
+          "damage": "4d10",
+          "description": "Golpe final com explosão sonora devastadora.",
+          "cooldown": 4,
+          "level": 5
+        },
+        {
+          "id": "bard-l5-mythic-performance",
+          "name": "Performance Mítica",
+          "damage": "5d8",
+          "description": "Ataque performático que inspira temor em todos.",
+          "cooldown": 5,
+          "level": 5
+        }
+      ],
+      "spells": [
+        {
+          "id": "mass-suggestion",
+          "name": "Sugestão em Massa",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "encantamento"
+          ],
+          "description": "Controla ações de múltiplos inimigos",
+          "level": 1
+        },
+        {
+          "id": "shatter",
+          "name": "Estilhaçar",
+          "damage": "3d8",
+          "usageLimit": 4,
+          "effects": [
+            "sônico",
+            "área"
+          ],
+          "description": "Explosão de som ensurdecedora",
+          "level": 1
+        },
+        {
+          "id": "hypnotic-pattern",
+          "name": "Padrão Hipnótico",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "encantamento",
+            "atordoamento"
+          ],
+          "description": "Padrão que fascina inimigos",
+          "level": 1
+        },
+        {
+          "id": "song-of-rest",
+          "name": "Canção de Descanso",
+          "damage": "-4d8",
+          "usageLimit": 3,
+          "effects": [
+            "cura"
+          ],
+          "description": "Música que cura aliados",
+          "level": 1
+        },
+        {
+          "id": "thunderwave-bard",
+          "name": "Onda Trovejante",
+          "damage": "2d8",
+          "usageLimit": 5,
+          "effects": [
+            "trovão",
+            "empurrão"
+          ],
+          "description": "Onda de som que empurra inimigos",
+          "level": 1
+        },
+        {
+          "id": "Otto's-irresistible-dance",
+          "name": "Dança Irresistível",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "encantamento",
+            "incapacitação"
+          ],
+          "description": "Força inimigo a dançar",
+          "level": 1
+        },
+        {
+          "id": "mass-cure-wounds-bard",
+          "name": "Cura em Massa",
+          "damage": "-5d8",
+          "usageLimit": 2,
+          "effects": [
+            "cura em área"
+          ],
+          "description": "Cura vários aliados",
+          "level": 1
+        },
+        {
+          "id": "power-word-kill",
+          "name": "Palavra de Poder Matar",
+          "damage": "9999",
+          "usageLimit": 1,
+          "effects": [
+            "morte instantânea"
+          ],
+          "description": "Mata inimigo com menos de 100 PV",
+          "level": 1
+        },
+        {
+          "id": "confusion",
+          "name": "Confusão",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "encantamento",
+            "confusão"
+          ],
+          "description": "Inimigos atacam aliados",
+          "level": 1
+        },
+        {
+          "id": "silence",
+          "name": "Silêncio",
+          "damage": "0",
+          "usageLimit": 5,
+          "effects": [
+            "silêncio"
+          ],
+          "description": "Impede conjuração em área",
+          "level": 1
+        },
+        {
+          "id": "charm-monster",
+          "name": "Encantar Monstro",
+          "damage": "0",
+          "usageLimit": 4,
+          "effects": [
+            "encantamento"
+          ],
+          "description": "Torna monstro amigável",
+          "level": 1
+        },
+        {
+          "id": "heroism",
+          "name": "Heroísmo",
+          "damage": "0",
+          "usageLimit": 6,
+          "effects": [
+            "buff",
+            "PV temporários"
+          ],
+          "description": "Concede coragem e vida temporária",
+          "level": 1
+        },
+        {
+          "id": "bard-l2-inspiring-word",
+          "name": "Palavra Inspiradora",
+          "damage": "-2d6",
+          "usageLimit": 4,
+          "effects": [
+            "cura",
+            "buff moral"
+          ],
+          "description": "Palavra encorajadora que cura e concede bônus.",
+          "level": 2
+        },
+        {
+          "id": "bard-l2-chromatic-chord",
+          "name": "Acorde Cromático",
+          "damage": "3d6",
+          "usageLimit": 4,
+          "effects": [
+            "prisma",
+            "desorientação"
+          ],
+          "description": "Acorde colorido que ofusca e causa dano elemental.",
+          "level": 2
+        },
+        {
+          "id": "bard-l3-enrapturing-melody",
+          "name": "Melodia Cativante",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "encantamento",
+            "fascínio prolongado"
+          ],
+          "description": "Mantém inimigos fascinados enquanto durar a canção.",
+          "level": 3
+        },
+        {
+          "id": "bard-l3-battle-hymn",
+          "name": "Hino de Batalha",
+          "damage": "0",
+          "usageLimit": 3,
+          "effects": [
+            "buff de ataque",
+            "ação extra"
+          ],
+          "description": "Aliados podem usar uma ação bônus para atacar.",
+          "level": 3
+        },
+        {
+          "id": "bard-l4-echoing-barrier",
+          "name": "Barreira Ecoante",
+          "damage": "0",
+          "usageLimit": 2,
+          "effects": [
+            "proteção sonora",
+            "redução de dano"
+          ],
+          "description": "Domo que reduz dano à distância pela metade.",
+          "level": 4
+        },
+        {
+          "id": "bard-l4-phantom-orchestra",
+          "name": "Orquestra Fantasma",
+          "damage": "4d6",
+          "usageLimit": 2,
+          "effects": [
+            "área",
+            "psíquico"
+          ],
+          "description": "Instrumentos fantasmagóricos atacam inimigos próximos.",
+          "level": 4
+        },
+        {
+          "id": "bard-l5-legendary-ballad",
+          "name": "Balada Lendária",
+          "damage": "0",
+          "usageLimit": 1,
+          "effects": [
+            "ressurreição parcial",
+            "inspiração"
+          ],
+          "description": "Traz um aliado a 1 PV e concede dados de inspiração.",
+          "level": 5
+        },
+        {
+          "id": "bard-l5-crushing-crescendo",
+          "name": "Crescendo Atronador",
+          "damage": "8d6",
+          "usageLimit": 1,
+          "effects": [
+            "sônico",
+            "derrubada"
+          ],
+          "description": "Explosão sonora final derruba inimigos.",
+          "level": 5
+        }
+      ],
+      "selectionRules": {
+        "attacksToSelect": 3,
+        "spellsToSelect": 6
+      }
     }
-  ],
-  "spells": {
-    "cantrips": [
-      {
-        "id": "fire-bolt",
-        "name": "Raio de Fogo",
-        "level": 0,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "120 pés",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Mago", "Feiticeiro"],
-        "description": "Você arremessa um mote de fogo em uma criatura ou objeto dentro do alcance. Faça uma rolagem de ataque de magia à distância. Em um acerto, o alvo recebe 1d10 de dano de fogo. O dano desta magia aumenta em 1d10 no 5º nível (2d10), 11º nível (3d10) e 17º nível (4d10)."
-      },
-      {
-        "id": "sacred-flame",
-        "name": "Chama Sagrada",
-        "level": 0,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "60 pés",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Clérigo"],
-        "description": "Radiância semelhante a chama desce sobre uma criatura que você pode ver dentro do alcance. O alvo deve ser bem-sucedido em um teste de resistência de Destreza ou receber 1d8 de dano radiante. O dano desta magia aumenta em 1d8 no 5º nível (2d8), 11º nível (3d8) e 17º nível (4d8)."
-      },
-      {
-        "id": "eldritch-blast",
-        "name": "Explosão Mística",
-        "level": 0,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "120 pés",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Bruxo"],
-        "description": "Um feixe de energia crepitante dispara em direção a uma criatura dentro do alcance. Faça uma rolagem de ataque de magia à distância. Em um acerto, o alvo recebe 1d10 de dano de força. No 5º nível, você cria dois feixes, três no 11º nível e quatro no 17º nível. Você pode direcionar os feixes no mesmo alvo ou alvos diferentes."
-      },
-      {
-        "id": "mage-hand",
-        "name": "Mão do Mago",
-        "level": 0,
-        "school": "Conjuração",
-        "castingTime": "1 ação",
-        "range": "30 pés",
-        "components": ["V", "S"],
-        "duration": "1 minuto",
-        "classes": ["Bardo", "Feiticeiro", "Bruxo", "Mago"],
-        "description": "Uma mão espectral flutuante aparece em um ponto que você escolher dentro do alcance. A mão dura pela duração. Você pode usar sua ação para controlar a mão e manipular objetos, abrir portas ou recipientes, ou guardar/recuperar itens."
-      },
-      {
-        "id": "minor-illusion",
-        "name": "Ilusão Menor",
-        "level": 0,
-        "school": "Ilusão",
-        "castingTime": "1 ação",
-        "range": "30 pés",
-        "components": ["S", "M"],
-        "duration": "1 minuto",
-        "classes": ["Bardo", "Feiticeiro", "Bruxo", "Mago"],
-        "description": "Você cria um som ou imagem de um objeto dentro do alcance que dura pela duração. Se você criar um som, seu volume pode variar de um sussurro a um grito. Se você criar uma imagem, ela deve ter no máximo 5 pés de cubo e não pode criar som, luz, cheiro ou qualquer efeito sensorial."
-      },
-      {
-        "id": "guidance",
-        "name": "Orientação",
-        "level": 0,
-        "school": "Adivinhação",
-        "castingTime": "1 ação",
-        "range": "Toque",
-        "components": ["V", "S"],
-        "duration": "Concentração, até 1 minuto",
-        "classes": ["Clérigo", "Druida"],
-        "description": "Você toca uma criatura voluntária. Uma vez antes da magia terminar, o alvo pode rolar um d4 e adicionar o número rolado a um teste de habilidade de sua escolha."
-      }
-    ],
-    "level1": [
-      {
-        "id": "cure-wounds",
-        "name": "Curar Ferimentos",
-        "level": 1,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "Toque",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Bardo", "Clérigo", "Druida", "Paladino", "Ranger"],
-        "description": "Uma criatura que você toca recupera pontos de vida iguais a 1d8 + seu modificador de habilidade de conjuração. Esta magia não tem efeito em mortos-vivos ou constructos. Em Níveis Superiores: Quando você lança esta magia usando um espaço de 2º nível ou superior, a cura aumenta em 1d8 para cada nível de espaço acima do 1º."
-      },
-      {
-        "id": "magic-missile",
-        "name": "Míssil Mágico",
-        "level": 1,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "120 pés",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Você cria três dardos luminosos de força mágica. Cada dardo acerta uma criatura de sua escolha dentro do alcance, causando 1d4 + 1 de dano de força. Os dardos atingem simultaneamente. Em Níveis Superiores: Quando você lança esta magia usando um espaço de magia de 2º nível ou superior, a magia cria um dardo adicional para cada nível de espaço acima do 1º."
-      },
-      {
-        "id": "shield",
-        "name": "Escudo",
-        "level": 1,
-        "school": "Abjuração",
-        "castingTime": "1 reação",
-        "range": "Pessoal",
-        "components": ["V", "S"],
-        "duration": "1 rodada",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Uma barreira invisível de força mágica aparece e o protege. Até o início do seu próximo turno, você tem um bônus de +5 na CA, incluindo contra o ataque desencadeante."
-      },
-      {
-        "id": "bless",
-        "name": "Bênção",
-        "level": 1,
-        "school": "Encantamento",
-        "castingTime": "1 ação",
-        "range": "30 pés",
-        "components": ["V", "S", "M"],
-        "duration": "Concentração, até 1 minuto",
-        "classes": ["Clérigo", "Paladino"],
-        "description": "Você abençoa até três criaturas de sua escolha dentro do alcance. Sempre que um alvo faz uma rolagem de ataque ou teste de resistência antes da magia terminar, o alvo pode rolar um d4 e adicionar o número rolado à rolagem de ataque ou teste de resistência. Em Níveis Superiores: Quando você lança esta magia usando um espaço de 2º nível ou superior, você pode afetar uma criatura adicional para cada nível de espaço acima do 1º."
-      },
-      {
-        "id": "burning-hands",
-        "name": "Mãos Flamejantes",
-        "level": 1,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "Pessoal (cone de 15 pés)",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Uma folha fina de chamas dispara das suas mãos estendidas. Cada criatura em um cone de 15 pés deve fazer um teste de resistência de Destreza, recebendo 3d6 de dano de fogo em um fracasso, ou metade do dano em um sucesso. Em Níveis Superiores: Quando você lança esta magia usando um espaço de 2º nível ou superior, o dano aumenta em 1d6 para cada nível de espaço acima do 1º."
-      },
-      {
-        "id": "thunderwave",
-        "name": "Onda de Trovão",
-        "level": 1,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "Pessoal (cubo de 15 pés)",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Bardo", "Druida", "Feiticeiro", "Mago"],
-        "description": "Uma onda de força trovejante varre a partir de você. Cada criatura em um cubo de 15 pés originando de você deve fazer um teste de resistência de Constituição. Em um fracasso, uma criatura recebe 2d8 de dano de trovão e é empurrada 10 pés para longe de você. Em um sucesso, a criatura recebe metade do dano e não é empurrada. Em Níveis Superiores: O dano aumenta em 1d8 para cada nível de espaço acima do 1º."
-      }
-    ],
-    "level2": [
-      {
-        "id": "hold-person",
-        "name": "Segurar Pessoa",
-        "level": 2,
-        "school": "Encantamento",
-        "castingTime": "1 ação",
-        "range": "60 pés",
-        "components": ["V", "S", "M"],
-        "duration": "Concentração, até 1 minuto",
-        "classes": ["Bardo", "Clérigo", "Druida", "Feiticeiro", "Bruxo", "Mago"],
-        "description": "Escolha um humanoide que você possa ver dentro do alcance. O alvo deve ser bem-sucedido em um teste de resistência de Sabedoria ou ser paralisado pela duração. No final de cada um dos turnos dele, o alvo pode fazer outro teste de resistência de Sabedoria. Em um sucesso, a magia termina. Em Níveis Superiores: Quando você lança esta magia usando um espaço de 3º nível ou superior, você pode afetar um humanoide adicional para cada nível de espaço acima do 2º."
-      },
-      {
-        "id": "spiritual-weapon",
-        "name": "Arma Espiritual",
-        "level": 2,
-        "school": "Evocação",
-        "castingTime": "1 ação bônus",
-        "range": "60 pés",
-        "components": ["V", "S"],
-        "duration": "1 minuto",
-        "classes": ["Clérigo"],
-        "description": "Você cria uma arma flutuante espectral dentro do alcance que dura pela duração. Quando você lança a magia, você pode fazer um ataque de magia corpo a corpo contra uma criatura dentro de 5 pés da arma. Em um acerto, o alvo recebe dano de força igual a 1d8 + seu modificador de habilidade de conjuração. Como uma ação bônus em seu turno, você pode mover a arma até 20 pés e repetir o ataque. Em Níveis Superiores: O dano aumenta em 1d8 para cada dois níveis de espaço acima do 2º."
-      },
-      {
-        "id": "scorching-ray",
-        "name": "Raio Abrasador",
-        "level": 2,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "120 pés",
-        "components": ["V", "S"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Você cria três raios de fogo e os arremessa em alvos dentro do alcance. Você pode arremessá-los em um alvo ou vários. Faça uma rolagem de ataque de magia à distância para cada raio. Em um acerto, o alvo recebe 2d6 de dano de fogo. Em Níveis Superiores: Quando você lança esta magia usando um espaço de 3º nível ou superior, você cria um raio adicional para cada nível de espaço acima do 2º."
-      },
-      {
-        "id": "misty-step",
-        "name": "Passo Nebuloso",
-        "level": 2,
-        "school": "Conjuração",
-        "castingTime": "1 ação bônus",
-        "range": "Pessoal",
-        "components": ["V"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Bruxo", "Mago"],
-        "description": "Momentaneamente cercado por névoa prateada, você se teleporta até 30 pés para um espaço desocupado que você possa ver."
-      }
-    ],
-    "level3": [
-      {
-        "id": "fireball",
-        "name": "Bola de Fogo",
-        "level": 3,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "150 pés",
-        "components": ["V", "S", "M"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Uma rajada brilhante lampeja do seu dedo apontado para um ponto que você escolher dentro do alcance e então floresce com um baixo rugido em uma explosão de chama. Cada criatura em uma esfera de 20 pés de raio centrada naquele ponto deve fazer um teste de resistência de Destreza. Um alvo recebe 8d6 de dano de fogo em um fracasso, ou metade em um sucesso. Em Níveis Superiores: O dano aumenta em 1d6 para cada nível de espaço acima do 3º."
-      },
-      {
-        "id": "lightning-bolt",
-        "name": "Raio",
-        "level": 3,
-        "school": "Evocação",
-        "castingTime": "1 ação",
-        "range": "Pessoal (linha de 100 pés)",
-        "components": ["V", "S", "M"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Mago"],
-        "description": "Um golpe de relâmpago formando uma linha de 100 pés de comprimento e 5 pés de largura explode a partir de você. Cada criatura na linha deve fazer um teste de resistência de Destreza, recebendo 8d6 de dano de relâmpago em um fracasso, ou metade em um sucesso. Em Níveis Superiores: O dano aumenta em 1d6 para cada nível de espaço acima do 3º."
-      },
-      {
-        "id": "revivify",
-        "name": "Revivificar",
-        "level": 3,
-        "school": "Necromancia",
-        "castingTime": "1 ação",
-        "range": "Toque",
-        "components": ["V", "S", "M"],
-        "duration": "Instantâneo",
-        "classes": ["Clérigo", "Paladino"],
-        "description": "Você toca uma criatura que morreu dentro do último minuto. Aquela criatura retorna à vida com 1 ponto de vida. Esta magia não pode retornar à vida uma criatura que morreu de velhice, nem pode restaurar partes do corpo perdidas."
-      },
-      {
-        "id": "counterspell",
-        "name": "Contramágica",
-        "level": 3,
-        "school": "Abjuração",
-        "castingTime": "1 reação",
-        "range": "60 pés",
-        "components": ["S"],
-        "duration": "Instantâneo",
-        "classes": ["Feiticeiro", "Bruxo", "Mago"],
-        "description": "Você tenta interromper uma criatura no processo de lançar uma magia. Se a criatura estiver lançando uma magia de 3º nível ou inferior, sua magia falha. Se ela estiver lançando uma magia de 4º nível ou superior, faça um teste de habilidade usando sua habilidade de conjuração. A CD é igual a 10 + o nível da magia. Em um sucesso, a magia falha. Em Níveis Superiores: A magia interrompida não tem efeito se seu nível for menor ou igual ao nível do espaço de magia que você usou."
-      }
-    ]
-  },
-  "backgrounds": [
-    {
-      "id": "folk-hero",
-      "name": "Herói do Povo",
-      "description": "Você vem de uma posição social humilde, mas está destinado a coisas maiores. O povo da sua vila natal o considera seu campeão.",
-      "skillProficiencies": ["Adestrar Animais", "Sobrevivência"],
-      "toolProficiencies": ["Um tipo de ferramentas de artesão", "Veículos (terra)"],
-      "equipment": [
-        "Conjunto de ferramentas de artesão",
-        "Pá",
-        "Panela de ferro",
-        "Roupas comuns",
-        "Bolsa de cinto com 10 po"
-      ],
-      "feature": {
-        "name": "Hospitalidade Rústica",
-        "description": "Como você vem das fileiras do povo comum, você se encaixa entre eles com facilidade. Você pode encontrar um lugar para se esconder, descansar ou se recuperar entre os plebeus, a menos que tenha mostrado ser um perigo para eles."
-      }
-    },
-    {
-      "id": "soldier",
-      "name": "Soldado",
-      "description": "A guerra tem sido sua vida por tanto tempo quanto você se lembra. Você treinou como jovem e viu sua parcela de batalhas.",
-      "skillProficiencies": ["Atletismo", "Intimidação"],
-      "toolProficiencies": ["Um tipo de conjunto de jogos", "Veículos (terra)"],
-      "equipment": [
-        "Insígnias de posto",
-        "Trofeu de inimigo caído",
-        "Conjunto de jogos",
-        "Roupas comuns",
-        "Bolsa de cinto com 10 po"
-      ],
-      "feature": {
-        "name": "Posto Militar",
-        "description": "Você tem um posto militar da sua carreira como soldado. Soldados leais à sua organização militar anterior ainda reconhecem sua autoridade e influência."
-      }
-    },
-    {
-      "id": "acolyte",
-      "name": "Acólito",
-      "description": "Você passou sua vida em serviço a um templo, aprendendo ritos sagrados e fornecendo sacrifícios aos deuses.",
-      "skillProficiencies": ["Intuição", "Religião"],
-      "toolProficiencies": [],
-      "languages": ["Duas à sua escolha"],
-      "equipment": [
-        "Símbolo sagrado",
-        "Livro de orações ou roda de orações",
-        "5 varetas de incenso",
-        "Vestimentas",
-        "Roupas comuns",
-        "Bolsa de cinto com 15 po"
-      ],
-      "feature": {
-        "name": "Abrigo dos Fiéis",
-        "description": "Você e seus companheiros de aventura podem esperar cura e cuidados gratuitos em um templo, santuário ou presença estabelecida de sua fé."
-      }
-    }
-  ],
-  "equipment": {
-    "weapons": [
-      {
-        "id": "longsword",
-        "name": "Espada Longa",
-        "category": "Corpo a Corpo Marcial",
-        "cost": "15 po",
-        "damage": "1d8 cortante",
-        "weight": "3 lb",
-        "properties": ["Versátil (1d10)"]
-      },
-      {
-        "id": "shortsword",
-        "name": "Espada Curta",
-        "category": "Corpo a Corpo Marcial",
-        "cost": "10 po",
-        "damage": "1d6 perfurante",
-        "weight": "2 lb",
-        "properties": ["Destreza", "Leve"]
-      },
-      {
-        "id": "rapier",
-        "name": "Rapieira",
-        "category": "Corpo a Corpo Marcial",
-        "cost": "25 po",
-        "damage": "1d8 perfurante",
-        "weight": "2 lb",
-        "properties": ["Destreza"]
-      },
-      {
-        "id": "greataxe",
-        "name": "Machado Grande",
-        "category": "Corpo a Corpo Marcial",
-        "cost": "30 po",
-        "damage": "1d12 cortante",
-        "weight": "7 lb",
-        "properties": ["Pesado", "Duas Mãos"]
-      },
-      {
-        "id": "longbow",
-        "name": "Arco Longo",
-        "category": "À Distância Marcial",
-        "cost": "50 po",
-        "damage": "1d8 perfurante",
-        "weight": "2 lb",
-        "properties": ["Munição (alcance 150/600)", "Pesado", "Duas Mãos"]
-      },
-      {
-        "id": "dagger",
-        "name": "Adaga",
-        "category": "Corpo a Corpo Simples",
-        "cost": "2 po",
-        "damage": "1d4 perfurante",
-        "weight": "1 lb",
-        "properties": ["Destreza", "Leve", "Arremessável (alcance 20/60)"]
-      }
-    ],
-    "armor": [
-      {
-        "id": "leather-armor",
-        "name": "Armadura de Couro",
-        "category": "Armadura Leve",
-        "cost": "10 po",
-        "armorClass": "11 + modificador de Destreza",
-        "weight": "10 lb"
-      },
-      {
-        "id": "chain-mail",
-        "name": "Cota de Malha",
-        "category": "Armadura Pesada",
-        "cost": "75 po",
-        "armorClass": "16",
-        "weight": "55 lb",
-        "properties": ["Desvantagem em Furtividade"]
-      },
-      {
-        "id": "shield",
-        "name": "Escudo",
-        "category": "Escudo",
-        "cost": "10 po",
-        "armorClass": "+2",
-        "weight": "6 lb"
-      }
-    ],
-    "magicItems": [
-      {
-        "id": "staff-of-defense",
-        "name": "Cajado de Defesa",
-        "rarity": "Raro",
-        "requiresAttunement": true,
-        "description": "Este cajado esguio e oco é feito de vidro, mas é tão forte quanto carvalho. Ele pesa 3 libras. Enquanto segura este cajado, você tem um bônus de +1 na sua Classe de Armadura. O cajado tem 10 cargas. Enquanto o segura, você pode usar uma ação para gastar 1 ou mais cargas para lançar uma das seguintes magias: Armadura de Mago (1 carga) ou Escudo (2 cargas). O cajado recupera 1d6 + 4 cargas gastas diariamente ao amanhecer."
-      },
-      {
-        "id": "lightbringer",
-        "name": "Portador da Luz (Maça)",
-        "rarity": "Incomum",
-        "requiresAttunement": false,
-        "description": "Esta maça +1 foi feita para um clérigo de Lathander, o deus da alvorada. A cabeça da maça é em forma de explosão solar e feita de latão sólido. Chamada Portador da Luz, esta arma brilha como uma tocha quando seu portador comanda. Enquanto brilhando, a maça causa 1d6 de dano radiante extra a criaturas mortas-vivas."
-      },
-      {
-        "id": "spider-staff",
-        "name": "Cajado Aranha",
-        "rarity": "Raro",
-        "requiresAttunement": true,
-        "description": "A ponta superior deste cajado negro de adamantina é em forma de aranha. O cajado pesa 6 libras. Você deve estar sintonizado com o cajado para obter seus benefícios e lançar suas magias. O cajado tem 10 cargas. Enquanto o segura, você pode usar uma ação para gastar 1 ou mais cargas para lançar Escalada de Aranha (1 carga) ou Teia (2 cargas, CD de resistência de magia 15). O cajado recupera 1d6 + 4 cargas gastas diariamente ao anoitecer."
-      }
-    ]
-  }
+  ]
 }

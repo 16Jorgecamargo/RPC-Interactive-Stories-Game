@@ -75,6 +75,9 @@ export const GameStateSchema = z.object({
   votos: z.array(VoteInfoSchema).openapi({
     description: 'Votos da rodada atual',
   }),
+  votes: z.record(z.string()).optional().openapi({
+    description: 'Mapa bruto de votos (characterId -> opcaoId)',
+  }),
   isFinalChapter: z.boolean().openapi({
     example: false,
     description: 'Se este é o capítulo final da história',
@@ -159,6 +162,54 @@ export const TimelineResponseSchema = z.object({
   }),
 });
 
+export const RevertChapterSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token do mestre da sessão',
+  }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+});
+
+export const ChapterSummarySchema = z.object({
+  id: z.string().openapi({
+    example: 'capitulo_entrada',
+    description: 'ID do capítulo atual após a reversão',
+  }),
+  texto: z.string().openapi({
+    example: 'Vocês retornam à encruzilhada onde a jornada começou...',
+    description: 'Texto do capítulo',
+  }),
+  opcoes: z
+    .array(
+      z.object({
+        id: z.string(),
+        texto: z.string(),
+        proximo: z.string().optional(),
+      }),
+    )
+    .optional()
+    .openapi({
+      description: 'Opções disponíveis no capítulo atual',
+    }),
+});
+
+export const RevertChapterResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Se a reversão ocorreu com sucesso',
+  }),
+  chapter: ChapterSummarySchema.optional().openapi({
+    description: 'Capítulo retornado após a reversão',
+  }),
+  message: z.string().openapi({
+    example: 'Capítulo revertido com sucesso',
+    description: 'Mensagem descritiva do resultado',
+  }),
+});
+
 export type ParticipantInfo = z.infer<typeof ParticipantInfoSchema>;
 export type VoteInfo = z.infer<typeof VoteInfoSchema>;
 export type GameState = z.infer<typeof GameStateSchema>;
@@ -167,3 +218,6 @@ export type GetGameState = z.infer<typeof GetGameStateSchema>;
 export type GetTimeline = z.infer<typeof GetTimelineSchema>;
 export type GameStateResponse = z.infer<typeof GameStateResponseSchema>;
 export type TimelineResponse = z.infer<typeof TimelineResponseSchema>;
+export type RevertChapter = z.infer<typeof RevertChapterSchema>;
+export type ChapterSummary = z.infer<typeof ChapterSummarySchema>;
+export type RevertChapterResponse = z.infer<typeof RevertChapterResponseSchema>;

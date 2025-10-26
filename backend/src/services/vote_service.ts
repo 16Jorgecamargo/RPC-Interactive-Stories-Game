@@ -131,6 +131,17 @@ export async function submitVote(params: SubmitVote): Promise<SubmitVoteResponse
 
   if (allVoted) {
     logInfo('[VOTE] Todos votaram, finalizando votação', { sessionId });
+
+    // CRITICAL: Desativar timer antes de finalizar votação
+    if (session.votingTimer && session.votingTimer.isActive) {
+      sessionStore.updateSession(sessionId, {
+        votingTimer: {
+          ...session.votingTimer,
+          isActive: false,
+        },
+      });
+    }
+
     const result = await finalizeVoting(sessionId);
     votingResult = result.votingResult;
     nextChapterId = result.nextChapterId;

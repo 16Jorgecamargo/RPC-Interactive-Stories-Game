@@ -1,23 +1,54 @@
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import type { CombatState } from '../models/combat_schemas.js';
 
-const COMBAT_FILE = join(process.cwd(), 'data', 'combats.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const DATA_DIR = path.join(__dirname, '../../data');
+const COMBAT_FILE = path.join(DATA_DIR, 'combats.json');
 
 interface CombatData {
   combats: CombatState[];
 }
 
 function load(): CombatData {
+  if (!existsSync(DATA_DIR)) {
+    mkdirSync(DATA_DIR, { recursive: true });
+  }
+
   try {
+    if (!existsSync(COMBAT_FILE)) {
+      return { combats: [] };
+    }
+
     const raw = readFileSync(COMBAT_FILE, 'utf-8');
-    return JSON.parse(raw);
+    if (!raw.trim()) {
+      return { combats: [] };
+    }
+
+    const parsed = JSON.parse(raw) as unknown;
+
+    if (Array.isArray(parsed)) {
+      return { combats: parsed as CombatState[] };
+    }
+
+    if (parsed && typeof parsed === 'object' && Array.isArray((parsed as CombatData).combats)) {
+      return parsed as CombatData;
+    }
+
+    return { combats: [] };
   } catch {
     return { combats: [] };
   }
 }
 
 function save(data: CombatData): void {
+  if (!existsSync(DATA_DIR)) {
+    mkdirSync(DATA_DIR, { recursive: true });
+  }
+
   writeFileSync(COMBAT_FILE, JSON.stringify(data, null, 2), 'utf-8');
 }
 

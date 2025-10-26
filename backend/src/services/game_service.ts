@@ -15,6 +15,8 @@ import type {
   ParticipantInfo,
   VoteInfo,
   TimelineEntry,
+  RevertChapter,
+  RevertChapterResponse,
 } from '../models/game_schemas.js';
 import type { Session } from '../models/session_schemas.js';
 import type { Story, Chapter } from '../models/story_schemas.js';
@@ -115,7 +117,10 @@ export async function getGameState(params: GetGameState): Promise<GameStateRespo
   };
 
   return {
-    gameState,
+    gameState: {
+      ...gameState,
+      votes: session.votes || {},
+    },
     message: isFinalChapter ? 'Capítulo final alcançado. História completa!' : 'Estado do jogo obtido com sucesso',
   };
 }
@@ -287,6 +292,191 @@ export async function getTimelineHistory(params: GetTimeline): Promise<TimelineR
   return {
     timeline,
     total: timeline.length,
+  };
+}
+
+export async function revertToPreviousChapter(params: RevertChapter): Promise<RevertChapterResponse> {
+  const { token, sessionId } = params;
+
+  const decoded = verifyToken(token);
+  const userId = decoded.userId;
+
+  const session = sessionStore.findById(sessionId);
+  if (!session) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Sessão não encontrada',
+      data: { sessionId },
+    };
+  }
+
+  if (session.ownerId !== userId) {
+    throw {
+      ...JSON_RPC_ERRORS.FORBIDDEN,
+      message: 'Apenas o mestre da sessão pode usar esse comando',
+      data: { sessionId, userId },
+    };
+  }
+
+  const story = storyStore.findById(session.storyId);
+  if (!story) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'História não encontrada',
+      data: { storyId: session.storyId },
+    };
+  }
+
+  let timeline = eventStore.findBySessionId(sessionId);
+  if (!timeline || timeline.length <= 1) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não há capítulos anteriores para retornar',
+      data: { sessionId },
+    };
+  }
+
+  // Remove mensagens do sistema no final da timeline (ex: conclusão da história)
+  while (timeline.length > 0) {
+    const lastEntry = timeline[timeline.length - 1];
+    if (lastEntry.type === 'SYSTEM_MESSAGE') {
+      const removedSystem = eventStore.popLastSessionEvent(sessionId);
+      if (!removedSystem) {
+        break;
+      }
+      timeline = eventStore.findBySessionId(sessionId);
+      continue;
+    }
+    break;
+  }
+
+  if (timeline.length <= 1) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não há capítulos anteriores para retornar',
+      data: { sessionId },
+    };
+  }
+
+  const lastEntry = timeline[timeline.length - 1];
+  if (lastEntry.type !== 'CHOICE_RESULT') {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não é possível reverter a partir deste estado',
+      data: { sessionId, lastEntry },
+    };
+  }
+
+  const previousEntry = timeline[timeline.length - 2];
+  if (!previousEntry) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Capítulo anterior não encontrado',
+      data: { sessionId },
+    };
+  }
+
+  const removedEntry = eventStore.popLastSessionEvent(sessionId);
+  if (!removedEntry) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Falha ao remover capítulo atual da timeline',
+      data: { sessionId },
+    };
+  }
+
+  const updatedTimeline = eventStore.findBySessionId(sessionId);
+  if (!updatedTimeline.length) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Timeline ficou vazia após a reversão',
+      data: { sessionId },
+    };
+  }
+
+  const currentEntry = updatedTimeline[updatedTimeline.length - 1];
+  const newChapterId = currentEntry.chapterId;
+  const newChapter = story.capitulos[newChapterId];
+
+  if (!newChapter) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Capítulo alvo da reversão não encontrado na história',
+      data: { sessionId, chapterId: newChapterId },
+    };
+  }
+
+  const wasCompleted = session.status === 'COMPLETED';
+  const now = new Date().toISOString();
+
+  const votingTimerUpdate = session.votingTimer
+    ? {
+        ...session.votingTimer,
+        isActive: false,
+        startedAt: undefined,
+        expiresAt: undefined,
+      }
+    : undefined;
+
+  const updatedSession = sessionStore.updateSession(session.id, {
+    currentChapter: newChapterId,
+    votes: {},
+    status: 'IN_PROGRESS',
+    votingTimer: votingTimerUpdate,
+  });
+
+  if (!updatedSession) {
+    throw {
+      ...JSON_RPC_ERRORS.SERVER_ERROR,
+      message: 'Não foi possível atualizar a sessão após a reversão',
+      data: { sessionId },
+    };
+  }
+
+  const chapterChangedUpdate: GameUpdate = {
+    id: `update_${uuidv4()}`,
+    type: 'CHAPTER_CHANGED',
+    timestamp: now,
+    sessionId,
+    data: {
+      newChapter: {
+        id: newChapterId,
+        texto: newChapter.texto,
+        opcoes: newChapter.opcoes || [],
+      },
+      meta: {
+        reverted: true,
+        revertedFrom: removedEntry.chapterId || null,
+        revertedTo: previousEntry.chapterId || null,
+      },
+    },
+  };
+
+  eventStore.addUpdate(chapterChangedUpdate);
+
+  if (wasCompleted) {
+    const sessionStateUpdate: GameUpdate = {
+      id: `update_${uuidv4()}`,
+      type: 'SESSION_STATE_CHANGED',
+      timestamp: now,
+      sessionId,
+      data: {
+        oldState: 'COMPLETED',
+        newState: 'IN_PROGRESS',
+      },
+    };
+
+    eventStore.addUpdate(sessionStateUpdate);
+  }
+
+  return {
+    success: true,
+    chapter: {
+      id: newChapterId,
+      texto: newChapter.texto,
+      opcoes: newChapter.opcoes || [],
+    },
+    message: 'Capítulo revertido com sucesso',
   };
 }
 

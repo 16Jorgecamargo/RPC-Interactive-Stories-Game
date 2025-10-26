@@ -34,6 +34,20 @@ export function addEvent(event: TimelineEntry): TimelineEntry {
   return event;
 }
 
+export function popLastSessionEvent(sessionId: string): TimelineEntry | null {
+  const events = loadEvents();
+
+  for (let i = events.length - 1; i >= 0; i -= 1) {
+    if (events[i].sessionId === sessionId) {
+      const [removed] = events.splice(i, 1);
+      saveEvents(events);
+      return removed;
+    }
+  }
+
+  return null;
+}
+
 export function findBySessionId(sessionId: string, limit?: number): TimelineEntry[] {
   const events = loadEvents();
   const sessionEvents = events

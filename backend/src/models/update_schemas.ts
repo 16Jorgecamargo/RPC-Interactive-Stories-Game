@@ -21,6 +21,7 @@ export const UpdateTypeEnum = z.enum([
   'GAME_STARTED',
   'COMBAT_STARTED',
   'ATTACK_MADE',
+  'TURN_SKIPPED',
   'CHARACTER_DIED',
   'CHARACTER_REVIVED',
   'REVIVE_FAILED',

@@ -34,6 +34,10 @@ export async function leaveSession(sessionId, token) {
 //   return await client.call('kickParticipant', { sessionId, userId, token });
 // }
 
+export async function transitionToCreatingCharacters(sessionId, token) {
+  return await client.call('transitionToCreatingCharacters', { sessionId, token });
+}
+
 export async function startSession(sessionId, token) {
   return await client.call('startSession', { sessionId, token });
 }

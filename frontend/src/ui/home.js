@@ -446,7 +446,7 @@ async function handleEnterSession(sessionId) {
         break;
       
       case 'IN_PROGRESS':
-        window.location.href = `/game.html?sessionId=${sessionId}`;
+        window.location.href = `/gameplay.html?sessionId=${sessionId}`;
         break;
       
       case 'COMPLETED':

@@ -8,12 +8,14 @@ import {
   GetCurrentTurnSchema,
   PerformAttackSchema,
   AttemptReviveSchema,
+  SkipTurnSchema,
   InitiateCombatResponseSchema,
   GetCombatStateResponseSchema,
   RollInitiativeResponseSchema,
   GetCurrentTurnResponseSchema,
   PerformAttackResponseSchema,
   AttemptReviveResponseSchema,
+  SkipTurnResponseSchema,
 } from '../../../models/combat_schemas.js';
 
 export async function registerCombatWrappers(app: FastifyInstance) {
@@ -103,6 +105,24 @@ export async function registerCombatWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await combatService.performAttack(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/combat/skip-turn',
+    schema: {
+      tags: ['Combat'],
+      summary: 'Pular turno do personagem',
+      description: 'Permite que o personagem pule o turno atual, recuperando uma pequena quantidade de HP e avançando para o próximo combatente.',
+      body: SkipTurnSchema,
+      response: {
+        200: SkipTurnResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await combatService.skipTurn(request.body);
       return reply.send(result);
     },
   });

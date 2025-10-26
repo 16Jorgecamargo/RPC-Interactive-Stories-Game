@@ -1,443 +1,443 @@
-# The Lost Mine of Phandelver
+# A Mina Perdida de Phandelver
 
-**A D&D 5e Adventure for Levels 1-5**
+**Uma Aventura de D&D 5e para Níveis 1-5**
 
-## Overview
+## Visão Geral
 
-The Lost Mine of Phandelver is a classic D&D adventure set in the Sword Coast of the Forgotten Realms. What begins as a simple escort mission becomes an epic quest involving goblin ambushes, sinister conspiracies, ancient ruins, and a legendary lost mine.
+A Mina Perdida de Phandelver é uma aventura clássica de D&D ambientada na Costa da Espada dos Reinos Esquecidos. O que começa como uma simples missão de escolta se transforma em uma busca épica envolvendo emboscadas de goblins, conspirações sinistras, ruínas antigas e uma mina perdida lendária.
 
-### Story Summary
+### Resumo da História
 
-The adventurers are hired by Gundren Rockseeker, a dwarf prospector, to escort a wagon of supplies to the frontier town of Phandalin. When Gundren is ambushed and captured by goblins, the party discovers a conspiracy involving the mysterious "Black Spider" who seeks to claim the legendary Wave Echo Cave and its magical forge.
-
----
-
-## Adventure Structure
-
-### Part 1: Goblin Arrows (Levels 1-2)
-**Location:** Triboar Trail & Cragmaw Hideout
-**Key NPCs:** Klarg (bugbear boss), Sildar Hallwinter
-**Main Objective:** Survive the goblin ambush and rescue Sildar
-
-The adventure begins with a goblin ambush on the Triboar Trail. Following the goblin tracks leads to Cragmaw Hideout, where the party can rescue Sildar Hallwinter and learn about the greater conspiracy.
-
-**Key Encounters:**
-- Goblin ambush (4 goblins)
-- Cragmaw Hideout exploration (traps, wolves, goblins)
-- Boss fight: Klarg and his guards
-- Rescue: Sildar Hallwinter
-
-**Rewards:**
-- 10 gp each (from Gundren for wagon delivery)
-- Morningstar +1 (from Klarg)
-- Letter revealing the Black Spider's involvement
-
-### Part 2: Phandalin (Levels 2-3)
-**Location:** Town of Phandalin & Redbrand Hideout
-**Key NPCs:** Glasstaff (Iarno Albrek), Townmaster Harbin Wester, various townsfolk
-**Main Objective:** Liberate Phandalin from the Redbrands
-
-The party arrives in Phandalin to find the town terrorized by a gang called the Redbrands. Their investigation leads to Tresendar Manor and a confrontation with the gang's mysterious leader, Glasstaff.
-
-**Key Encounters:**
-- Redbrand confrontations in town
-- Redbrand Hideout dungeon (nothic, ruffians)
-- Boss fight: Glasstaff (evil wizard)
-- Optional: Rescue the Dendrar family
-
-**Rewards:**
-- Staff of Defense (from Glasstaff)
-- Ring of Protection
-- Evidence about the Black Spider and Cragmaw Castle
-- Gratitude of Phandalin
-
-**Side Quests Available:**
-- Old Owl Well (undead problem)
-- Wyvern Tor (orc raiders)
-- Thundertree (dragon!)
-- Banshee's bargain
-
-### Part 3: The Spider's Web (Levels 3-4)
-**Location:** Wilderness locations around Phandalin
-**Key NPCs:** Reidoth (druid), Venomfang (young green dragon), King Grol
-**Main Objective:** Locate and assault Cragmaw Castle to rescue Gundren
-
-With clues from Glasstaff's papers, the party explores the wilderness to find Cragmaw Castle and rescue Gundren Rockseeker before he's delivered to the Black Spider.
-
-**Major Locations:**
-
-**Thundertree** (Optional)
-- Ruined town overrun by ash zombies and twig blights
-- Venomfang the dragon's lair (CR 8 boss fight!)
-- Reidoth the druid can provide information
-- Dendrar family heirloom quest
-
-**Cragmaw Castle**
-- Goblinoid stronghold
-- Multiple approach options (stealth, climb, assault)
-- Boss fight: King Grol, doppelganger, wolf
-- Rescue: Gundren Rockseeker
-
-**Rewards:**
-- Map to Wave Echo Cave
-- Gundren's information about the Forge of Spells
-- Dragon's hoard (if Venomfang defeated)
-- Regional fame as heroes
-
-### Part 4: Wave Echo Cave (Levels 4-5)
-**Location:** Wave Echo Cave (ancient dwarven mine)
-**Key NPCs:** Nezznar the Black Spider, Nundro Rockseeker
-**Main Objective:** Defeat the Black Spider and secure the Forge of Spells
-
-The climactic finale takes place in Wave Echo Cave, the legendary mine containing the Forge of Spells. The party must navigate dangerous tunnels, battle monsters and undead, and confront Nezznar the Black Spider in his lair.
-
-**Key Encounters:**
-- Ochre jelly, stirges, gricks
-- Wraiths and spectral guardians
-- Flameskull guardian
-- Bugbears and giant spiders (Black Spider's forces)
-- Final Boss: Nezznar the Black Spider
-
-**Rewards:**
-- Spider Staff (rare magic item)
-- Lightbringer mace
-- Partnership in Wave Echo Cave mining operation
-- Access to the Forge of Spells
-- Fame as heroes of the Sword Coast
+Os aventureiros são contratados por Gundren Rockseeker, um anão prospector, para escoltar uma carroça de suprimentos até o assentamento fronteiriço de Phandalin. Quando Gundren é emboscado e capturado por goblins, o grupo descobre uma conspiração envolvendo a misteriosa "Aranha Negra" que busca reivindicar a lendária Caverna Eco de Onda e sua forja mágica.
 
 ---
 
-## File Structure
+## Estrutura da Aventura
+
+### Parte 1: Flechas de Goblin (Níveis 1-2)
+**Localização:** Trilha Triboar & Esconderijo Cragmaw
+**PNJs Principais:** Klarg (chefe bugbear), Sildar Hallwinter
+**Objetivo Principal:** Sobreviver à emboscada goblin e resgatar Sildar
+
+A aventura começa com uma emboscada goblin na Trilha Triboar. Seguir as pegadas goblin leva ao Esconderijo Cragmaw, onde o grupo pode resgatar Sildar Hallwinter e aprender sobre a conspiração maior.
+
+**Encontros Principais:**
+- Emboscada goblin (4 goblins)
+- Exploração do Esconderijo Cragmaw (armadilhas, lobos, goblins)
+- Luta contra chefe: Klarg e seus guardas
+- Resgate: Sildar Hallwinter
+
+**Recompensas:**
+- 10 po cada (de Gundren pela entrega da carroça)
+- Morningstar +1 (de Klarg)
+- Carta revelando o envolvimento da Aranha Negra
+
+### Parte 2: Phandalin (Níveis 2-3)
+**Localização:** Cidade de Phandalin & Esconderijo Redbrand
+**PNJs Principais:** Glasstaff (Iarno Albrek), Mestre da Cidade Harbin Wester, vários moradores
+**Objetivo Principal:** Libertar Phandalin dos Redbrands
+
+O grupo chega a Phandalin para encontrar a cidade aterrorizada por uma gangue chamada Redbrands. Sua investigação leva ao Mansão Tresendar e um confronto com o líder misterioso da gangue, Glasstaff.
+
+**Encontros Principais:**
+- Confrontos com Redbrands na cidade
+- Calabouço do Esconderijo Redbrand (nothic, rufiões)
+- Luta contra chefe: Glasstaff (mago maligno)
+- Opcional: Resgatar a família Dendrar
+
+**Recompensas:**
+- Cajado de Defesa (de Glasstaff)
+- Anel de Proteção
+- Evidências sobre a Aranha Negra e Castelo Cragmaw
+- Gratidão de Phandalin
+
+**Missões Secundárias Disponíveis:**
+- Poço Velha Coruja (problema de mortos-vivos)
+- Monte Tor (saqueadores orcs)
+- Thundertree (dragão!)
+- Barganha da banshee
+
+### Parte 3: A Teia da Aranha (Níveis 3-4)
+**Localização:** Locais selvagens ao redor de Phandalin
+**PNJs Principais:** Reidoth (druida), Venomfang (dragão verde jovem), Rei Grol
+**Objetivo Principal:** Localizar e assaltar o Castelo Cragmaw para resgatar Gundren
+
+Com pistas dos papéis de Glasstaff, o grupo explora o selvagem para encontrar o Castelo Cragmaw e resgatar Gundren Rockseeker antes que ele seja entregue à Aranha Negra.
+
+**Locais Principais:**
+
+**Thundertree** (Opcional)
+- Cidade arruinada tomada por zumbis de cinzas e galhos retorcidos
+- Covil do dragão Venomfang (luta contra chefe CR 8!)
+- Reidoth o druida pode fornecer informações
+- Missão do herança da família Dendrar
+
+**Castelo Cragmaw**
+- Fortaleza goblinóide
+- Múltiplas opções de abordagem (furtividade, escalada, assalto)
+- Luta contra chefe: Rei Grol, doppelganger, lobo
+- Resgate: Gundren Rockseeker
+
+**Recompensas:**
+- Mapa para a Caverna Eco de Onda
+- Informações de Gundren sobre a Forja de Feitiços
+- Tesouro do dragão (se Venomfang for derrotado)
+- Fama regional como heróis
+
+### Parte 4: Caverna Eco de Onda (Níveis 4-5)
+**Localização:** Caverna Eco de Onda (mina anã antiga)
+**PNJs Principais:** Nezznar a Aranha Negra, Nundro Rockseeker
+**Objetivo Principal:** Derrotar a Aranha Negra e garantir a Forja de Feitiços
+
+O clímax final acontece na Caverna Eco de Onda, a mina lendária contendo a Forja de Feitiços. O grupo deve navegar por túneis perigosos, batalhar monstros e mortos-vivos, e confrontar Nezznar a Aranha Negra em seu covil.
+
+**Encontros Principais:**
+- Geleia ocre, stirges, gricks
+- Wraiths e guardiões espectrais
+- Guardião flameskull
+- Bugbears e aranhas gigantes (forças da Aranha Negra)
+- Chefe Final: Nezznar a Aranha Negra
+
+**Recompensas:**
+- Cajado Aranha (item mágico raro)
+- Maça Lightbringer
+- Parceria nas operações de mineração da Caverna Eco de Onda
+- Acesso à Forja de Feitiços
+- Fama como heróis da Costa da Espada
+
+---
+
+## Estrutura de Arquivos
 
 ```
 backend/stories/lost-mine-phandelver/
-├── story.json              # Complete adventure narrative (60+ chapters)
-├── monsters.json           # 22 monsters with full D&D 5e stats
-├── player-options.json     # Character creation system (races, classes, spells)
-└── README.md              # This file
+├── story.json              # Narrativa completa da aventura (60+ capítulos)
+├── monsters.json           # 22 monstros com estatísticas completas de D&D 5e
+├── player-options.json     # Sistema de criação de personagem (raças, classes, magias)
+└── README.md              # Este arquivo
 ```
 
 ### story.json
-Contains the complete branching narrative with:
-- 60+ interactive chapters
-- Multiple choice options affecting the story
-- Combat encounters with monster references
-- Loot and treasure distribution
-- NPCs and dialogue
-- Success/failure paths
-- Epilogue based on player choices
+Contém a narrativa ramificada completa com:
+- 60+ capítulos interativos
+- Múltiplas opções de escolha que afetam a história
+- Encontros de combate com referências a monstros
+- Distribuição de loot e tesouros
+- NPCs e diálogos
+- Caminhos de sucesso/fracasso
+- Epílogo baseado nas escolhas do jogador
 
 ### monsters.json
-Complete monster statistics for 22 creatures:
-- **Humanoids:** Goblin, Hobgoblin, Bugbear, Redbrand Ruffian
-- **Bosses:** Klarg, Glasstaff, King Grol, Mosk, Black Spider, Venomfang
-- **Beasts:** Wolf, Giant Spider, Owlbear, Stirge
-- **Aberrations:** Nothic, Doppelganger, Spectator
-- **Undead:** Zombie, Skeleton, Wraith, Flameskull
-- **Oozes:** Ochre Jelly
-- **Monstrosities:** Grick
+Estatísticas completas de monstros para 22 criaturas:
+- **Humanoides:** Goblin, Hobgoblin, Bugbear, Rufião Redbrand
+- **Chefes:** Klarg, Glasstaff, Rei Grol, Mosk, Aranha Negra, Venomfang
+- **Feras:** Lobo, Aranha Gigante, Owlbear, Stirge
+- **Aberrações:** Nothic, Doppelganger, Spectator
+- **Morto-vivos:** Zumbi, Esqueleto, Wraith, Flameskull
+- **Geleias:** Geleia Ocre
+- **Monstruosidades:** Grick
 
-Each monster includes: AC, HP, abilities, attacks, special traits, CR, XP
+Cada monstro inclui: CA, PV, habilidades, ataques, traços especiais, ND, XP
 
 ### player-options.json
-Complete D&D 5e character creation system:
+Sistema completo de criação de personagem D&D 5e:
 
-**Races (13):**
-- Human
-- Elf (High Elf, Wood Elf, Drow)
-- Dwarf (Mountain Dwarf, Hill Dwarf)
-- Halfling (Lightfoot, Stout)
-- Dragonborn (10 draconic ancestries)
-- Gnome (Forest, Rock)
-- Half-Elf
-- Half-Orc
+**Raças (13):**
+- Humano
+- Elfo (Elfo Alto, Elfo da Floresta, Drow)
+- Anão (Anão da Montanha, Anão da Colina)
+- Halfling (Pés Leves, Robusto)
+- Draconato (10 ascendências dracônicas)
+- Gnomo (Gnomo da Floresta, Gnomo da Pedra)
+- Meio-Elfo
+- Meio-Orc
 - Tiefling
 
-**Classes with Subclasses (6):**
-- Barbarian (Berserker, Totem Warrior)
-- Bard (Lore, Valor)
-- Cleric (Life, War)
-- Fighter (Champion, Battle Master)
-- Rogue (Thief, Assassin)
-- Wizard (Evocation, Abjuration)
+**Classes com Subclasses (6):**
+- Bárbaro (Furioso, Guerreiro Totêmico)
+- Bardo (Conhecimento, Valor)
+- Clérigo (Vida, Guerra)
+- Lutador (Campeão, Mestre de Batalha)
+- Ladino (Ladrão, Assassino)
+- Mago (Evocação, Abjuração)
 
-**Spells:** 20+ spells organized by level (cantrips through level 3)
+**Magias:** 20+ magias organizadas por nível (truques até nível 3)
 
-**Backgrounds:** Folk Hero, Soldier, Acolyte
+**Antecedentes:** Herói do Povo, Soldado, Acólito
 
-**Equipment:** Weapons, armor, magic items specific to this adventure
+**Equipamento:** Armas, armaduras, itens mágicos específicos desta aventura
 
 ---
 
-## Key NPCs
+## PNJs Principais
 
-### Allies
+### Aliados
 
 **Gundren Rockseeker**
-- Dwarf prospector who hired the party
-- One of three brothers who discovered Wave Echo Cave
-- Captured by Cragmaw goblins in Part 1
+- Anão prospector que contratou o grupo
+- Um dos três irmãos que descobriram a Caverna Eco de Onda
+- Capturado pelos goblins de Cragmaw na Parte 1
 
 **Sildar Hallwinter**
-- Human warrior and member of the Lords' Alliance
-- Captured with Gundren, rescued from Cragmaw Hideout
-- Seeking the missing wizard Iarno Albrek
+- Guerreiro humano e membro da Aliança dos Lordes
+- Capturado com Gundren, resgatado do Esconderijo Cragmaw
+- Procurando pelo mago desaparecido Iarno Albrek
 
 **Nundro Rockseeker**
-- Gundren's brother
-- Imprisoned in Wave Echo Cave by the Black Spider
-- Can be rescued in Part 4
+- Irmão de Gundren
+- Preso na Caverna Eco de Onda pela Aranha Negra
+- Pode ser resgatado na Parte 4
 
-**Reidoth the Druid**
-- Lives in Thundertree ruins
-- Can provide information about Cragmaw Castle location
-- Opposes Venomfang the dragon
+**Reidoth o Druida**
+- Vive nas ruínas de Thundertree
+- Pode fornecer informações sobre a localização do Castelo Cragmaw
+- Oposição a Venomfang o dragão
 
-### Antagonists
+### Antagonistas
 
-**Klarg** (Part 1 Boss)
-- Bugbear leader of Cragmaw Hideout
-- Wields a morningstar +1
-- Serves King Grol and the Black Spider
+**Klarg** (Chefe da Parte 1)
+- Bugbear líder do Esconderijo Cragmaw
+- Empunha uma maça estrela +1
+- Serve ao Rei Grol e à Aranha Negra
 
-**Glasstaff / Iarno Albrek** (Part 2 Boss)
-- Evil wizard leading the Redbrands
-- Traitor to the Lords' Alliance
-- Serves the Black Spider
-- Wields Staff of Defense
+**Glasstaff / Iarno Albrek** (Chefe da Parte 2)
+- Mago maligno liderando os Redbrands
+- Traidor da Aliança dos Lordes
+- Serve à Aranha Negra
+- Empunha Cajado de Defesa
 
-**King Grol** (Part 3 Boss)
-- Bugbear king ruling Cragmaw Castle
-- Holds Gundren Rockseeker captive
-- Allied with a doppelganger advisor
+**Rei Grol** (Chefe da Parte 3)
+- Rei bugbear governando o Castelo Cragmaw
+- Mantém Gundren Rockseeker cativo
+- Aliado a um conselheiro doppelganger
 
-**Venomfang** (Optional Part 3 Boss)
-- Young green dragon (CR 8 - very dangerous!)
-- Lairs in Thundertree
-- Cunning and treacherous
-- Major challenge with great rewards
+**Venomfang** (Chefe Opcional da Parte 3)
+- Dragão verde jovem (ND 8 - muito perigoso!)
+- Vive em Thundertree
+- Astuto e traiçoeiro
+- Desafio maior com grandes recompensas
 
-**Nezznar the Black Spider** (Part 4 Final Boss)
-- Drow wizard mastermind behind the conspiracy
-- Seeks to claim Wave Echo Cave's Forge of Spells
-- Commands giant spiders, bugbears, and doppelgangers
-- Wields the Spider Staff
+**Nezznar a Aranha Negra** (Chefe Final da Parte 4)
+- Mestre das trevas drow por trás da conspiração
+- Busca reivindicar a Forja de Feitiços da Caverna Eco de Onda
+- Comanda aranhas gigantes, bugbears e doppelgangers
+- Empunha o Cajado Aranha
 
 ---
 
-## Major Locations
+## Locais Principais
 
 ### Phandalin
-A small frontier town recently rebuilt from ruins. Key locations:
-- **Barthen's Provisions** - Trading post, quest giver
-- **Stonehill Inn** - Rumors and rest
-- **Townmaster's Hall** - Cowardly Townmaster Harbin Wester
-- **Tresendar Manor** - Ruined manor hiding Redbrand hideout entrance
-- **Shrine of Luck** - Sister Garaele, banshee quest
+Uma pequena cidade fronteiriça reconstruída recentemente de ruínas. Locais principais:
+- **Provisões Barthen** - Posto comercial, doador de missões
+- **Estalagem Stonehill** - Rumores e descanso
+- **Salão do Mestre da Cidade** - Mestre da Cidade covarde Harbin Wester
+- **Mansão Tresendar** - Mansão arruinada escondendo entrada do esconderijo Redbrand
+- **Santuário da Sorte** - Irmã Garaele, missão da banshee
 
-### Cragmaw Hideout
-Cave complex serving as goblin base:
-- Trapped entrance (snare, flood trap)
-- Goblin den with wolves
-- Klarg's throne room across wooden bridge
-- Prison cells
+### Esconderijo Cragmaw
+Complexo de cavernas servindo como base goblin:
+- Entrada armadilhada (armadilha de laço, armadilha de inundação)
+- Covil goblin com lobos
+- Sala do trono de Klarg através de ponte de madeira
+- Células de prisão
 
-### Tresendar Manor / Redbrand Hideout
-Underground complex beneath ruined manor:
-- Natural caverns and worked stone
-- Nothic's lair
-- Prison cells (Dendrar family)
-- Glasstaff's wizard chambers
-- Hidden treasury
+### Mansão Tresendar / Esconderijo Redbrand
+Complexo subterrâneo abaixo da mansão arruinada:
+- Cavernas naturais e pedra trabalhada
+- Covil do nothic
+- Células de prisão (família Dendrar)
+- Câmaras de mago de Glasstaff
+- Tesouro escondido
 
 ### Thundertree
-Ruined village destroyed 30 years ago:
-- Overgrown with vegetation
-- Ash zombies and twig blights
-- Cultists of the dragon
-- Venomfang's tower lair
-- Reidoth the druid's cottage
+Aldeia arruinada destruída há 30 anos:
+- Tomada por vegetação
+- Zumbis de cinzas e galhos retorcidos
+- Cultistas do dragão
+- Covil da torre de Venomfang
+- Cabana do druida Reidoth
 
-### Cragmaw Castle
-Ruined fortress occupied by goblins:
-- Multiple entry points (gate, tower, tunnel)
-- Banquet hall, barracks, trophy room
-- Owlbear in captivity
-- King Grol's throne room
-- Gundren's prison cell
+### Castelo Cragmaw
+Fortaleza arruinada ocupada por goblins:
+- Múltiplas entradas (portão, torre, túnel)
+- Salão de banquetes, quartéis, sala de troféus
+- Owlbear em cativeiro
+- Sala do trono do Rei Grol
+- Célula de prisão de Gundren
 
-### Wave Echo Cave
-Legendary lost mine and final dungeon:
-- Echoing caverns (magical sound effect)
-- Ancient battlefield (skeletons from 500-year-old battle)
-- Mining tunnels and ore veins
-- Temple of Dumathoin
-- Forge of Spells (magical workshop)
-- Black Spider's lair
-
----
-
-## Magic Items
-
-**Found in Adventure:**
-- Morningstar +1 (Klarg)
-- Staff of Defense (Glasstaff)
-- Ring of Protection (Glasstaff)
-- Spider Staff (Black Spider)
-- Lightbringer (Wave Echo Cave) - Glowing mace, +1d6 radiant vs undead
-- Dragonguard (Wave Echo Cave) - Breastplate with dragon resistance
-- Potion of Healing (various locations)
-- Scrolls and spell components
-
-**Forge of Spells:**
-The legendary magical forge can create uncommon magic items once operational. Requires time and resources but provides ongoing benefits.
+### Caverna Eco de Onda
+Mina lendária perdida e masmorra final:
+- Cavernas ecoantes (efeito sonoro mágico)
+- Campo de batalha antigo (esqueletos de batalha de 500 anos)
+- Túneis de mineração e veias de minério
+- Templo de Dumathoin
+- Forja de Feitiços (oficina mágica)
+- Covil da Aranha Negra
 
 ---
 
-## Level Progression
+## Itens Mágicos
 
-**Recommended Experience Thresholds:**
-- **Level 1:** Start of adventure
-- **Level 2:** After Cragmaw Hideout or first Redbrand encounter
-- **Level 3:** After clearing Redbrand Hideout
-- **Level 4:** After Cragmaw Castle or major side quest (Venomfang)
-- **Level 5:** During or after Wave Echo Cave
+**Encontrados na Aventura:**
+- Maça Estrela +1 (Klarg)
+- Cajado de Defesa (Glasstaff)
+- Anel de Proteção (Glasstaff)
+- Cajado Aranha (Aranha Negra)
+- Lightbringer (Caverna Eco de Onda) - Maça brilhante, +1d6 radiante vs morto-vivos
+- Dragonguard (Caverna Eco de Onda) - Peitoral com resistência a dragão
+- Poção de Cura (vários locais)
+- Pergaminhos e componentes de magia
 
-**Milestone Leveling (Alternative):**
-- Level 2: Rescue Sildar Hallwinter
-- Level 3: Defeat Glasstaff and liberate Phandalin
-- Level 4: Rescue Gundren Rockseeker from Cragmaw Castle
-- Level 5: Enter Wave Echo Cave
-
----
-
-## Treasure and Rewards
-
-**Monetary Wealth:**
-- Part 1: ~200 gp
-- Part 2: ~500 gp
-- Part 3: ~1,200 gp (more if dragon defeated)
-- Part 4: ~2,000 gp
-- **Total:** ~3,900 gp + magic items + Wave Echo Cave partnership
-
-**Partnership in Wave Echo Cave:**
-If the party secures the mine, Gundren offers them a 10% share of profits. This generates approximately 100 gp per month once mining operations resume.
+**Forja de Feitiços:**
+A lendária forja mágica pode criar itens mágicos incomuns uma vez operacional. Requer tempo e recursos mas fornece benefícios contínuos.
 
 ---
 
-## Side Quests
+## Progressão de Níveis
 
-### Old Owl Well
-- **Giver:** Daran Edermath
-- **Location:** 50 miles northeast of Phandalin
-- **Encounter:** Evil wizard raising undead
-- **Reward:** 100 gp
+**Limites de Experiência Recomendados:**
+- **Nível 1:** Início da aventura
+- **Nível 2:** Após Esconderijo Cragmaw ou primeiro encontro Redbrand
+- **Nível 3:** Após limpar Esconderijo Redbrand
+- **Nível 4:** Após Castelo Cragmaw ou missão secundária maior (Venomfang)
+- **Nível 5:** Durante ou após Caverna Eco de Onda
 
-### Wyvern Tor
-- **Giver:** Townmaster Harbin Wester
-- **Location:** Hills near Phandalin
-- **Encounter:** Orc raiders and ogre
-- **Reward:** 100 gp
-
-### Banshee's Bargain
-- **Giver:** Sister Garaele
-- **Location:** Woodland shrine
-- **Encounter:** Agatha the banshee
-- **Reward:** Potion of healing, information
-
-### Dendrar Family Heirloom
-- **Giver:** Mirna Dendrar (if rescued)
-- **Location:** Thundertree ruins (herbalist shop)
-- **Encounter:** Search ruins, possible dragon
-- **Reward:** Emerald necklace (200 gp value)
+**Progressão por Marcos (Alternativa):**
+- Nível 2: Resgatar Sildar Hallwinter
+- Nível 3: Derrotar Glasstaff e libertar Phandalin
+- Nível 4: Resgatar Gundren Rockseeker do Castelo Cragmaw
+- Nível 5: Entrar na Caverna Eco de Onda
 
 ---
 
-## Tips for Running the Adventure
+## Tesouros e Recompensas
 
-### For Players
+**Riqueza Monetária:**
+- Parte 1: ~200 po
+- Parte 2: ~500 po
+- Parte 3: ~1.200 po (mais se dragão derrotado)
+- Parte 4: ~2.000 po
+- **Total:** ~3.900 po + itens mágicos + parceria na Caverna Eco de Onda
 
-1. **Exploration is Rewarded:** Many treasures and allies are found by thoroughly exploring
-2. **Choices Matter:** Different approaches to encounters yield different outcomes
-3. **Stealth vs Combat:** Not every encounter requires fighting
-4. **Information Gathering:** Talk to NPCs, read documents, investigate
-5. **Resource Management:** Short and long rests are important
-6. **Teamwork:** Coordinate abilities and support each other
-
-### For Game Masters
-
-1. **Pacing:** Let players set the pace; don't rush them through the story
-2. **Flexibility:** Players will find creative solutions; adapt to their choices
-3. **NPCs:** Give personalities to important NPCs like Sildar, Gundren, Glasstaff
-4. **Atmosphere:** Describe the echoing sounds in Wave Echo Cave, the decay of Thundertree
-5. **Challenge:** Venomfang is extremely dangerous at low levels; foreshadow the threat
-6. **Consequences:** Actions in Phandalin affect how the town treats the party
+**Parceria na Caverna Eco de Onda:**
+Se o grupo garantir a mina, Gundren oferece a eles uma parcela de 10% dos lucros. Isso gera aproximadamente 100 po por mês uma vez que as operações de mineração sejam retomadas.
 
 ---
 
-## Combat Difficulty Reference
+## Missões Secundárias
 
-**Easy Encounters:**
+### Poço Velha Coruja
+- **Doador:** Daran Edermath
+- **Localização:** 50 milhas nordeste de Phandalin
+- **Encontro:** Mago maligno erguendo morto-vivos
+- **Recompensa:** 100 po
+
+### Monte Tor
+- **Doador:** Mestre da Cidade Harbin Wester
+- **Localização:** Colinas perto de Phandalin
+- **Encontro:** Saqueadores orcs e ogro
+- **Recompensa:** 100 po
+
+### Barganha da Banshee
+- **Doador:** Irmã Garaele
+- **Localização:** Santuário na floresta
+- **Encontro:** Agatha a banshee
+- **Recompensa:** Poção de cura, informações
+
+### Herança da Família Dendrar
+- **Doador:** Mirna Dendrar (se resgatada)
+- **Localização:** Ruínas de Thundertree (loja de herbalista)
+- **Encontro:** Buscar nas ruínas, possível dragão
+- **Recompensa:** Colar de esmeralda (200 po de valor)
+
+---
+
+## Dicas para Executar a Aventura
+
+### Para Jogadores
+
+1. **Exploração é Recompensada:** Muitos tesouros e aliados são encontrados explorando completamente
+2. **Escolhas Importam:** Abordagens diferentes para encontros produzem resultados diferentes
+3. **Furtividade vs Combate:** Nem todo encontro requer luta
+4. **Coleta de Informações:** Fale com PNJs, leia documentos, investigue
+5. **Gerenciamento de Recursos:** Descansos curtos e longos são importantes
+6. **Trabalho em Equipe:** Coordene habilidades e apoiem uns aos outros
+
+### Para Mestres
+
+1. **Ritmo:** Deixe os jogadores definirem o ritmo; não os apresse pela história
+2. **Flexibilidade:** Jogadores encontrarão soluções criativas; adapte-se às escolhas deles
+3. **PNJs:** Dê personalidades aos PNJs importantes como Sildar, Gundren, Glasstaff
+4. **Atmosfera:** Descreva os sons ecoantes na Caverna Eco de Onda, o declínio de Thundertree
+5. **Desafio:** Venomfang é extremamente perigoso em níveis baixos; antecipe a ameaça
+6. **Consequências:** Ações em Phandalin afetam como a cidade trata o grupo
+
+---
+
+## Referência de Dificuldade de Combate
+
+**Encontros Fáceis:**
 - 2-4 goblins
-- 1-2 zombies
+- 1-2 zumbis
 - Stirges
 
-**Medium Encounters:**
+**Encontros Médios:**
 - 4-6 goblins
-- 2-3 Redbrand ruffians
-- Ochre jelly
+- 2-3 rufiões Redbrand
+- Geleia ocre
 - Nothic
 
-**Hard Encounters:**
-- Klarg + guards
+**Encontros Difíceis:**
+- Klarg + guardas
 - Glasstaff
 - 4+ hobgoblins
 - Spectator
 - Wraith
 
-**Deadly Encounters:**
-- King Grol + doppelganger + wolf
-- Venomfang (CR 8 dragon!)
-- Black Spider + giant spiders + bugbears
+**Encontros Mortais:**
+- Rei Grol + doppelganger + lobo
+- Venomfang (dragão ND 8!)
+- Aranha Negra + aranhas gigantes + bugbears
 - Flameskull
 
 ---
 
-## Connections to Broader Campaign
+## Conexões com Campanha Mais Ampla
 
-The Lost Mine of Phandelver is designed as a self-contained adventure but can lead to:
+A Mina Perdida de Phandelver é projetada como uma aventura autocontida mas pode levar a:
 
-1. **Princes of the Apocalypse** - Elemental cults threaten the region
-2. **Storm King's Thunder** - Giants begin attacking the Sword Coast
-3. **Custom Adventures** - The party has established themselves as regional heroes
-4. **Wave Echo Cave Operations** - Managing the mine becomes an ongoing campaign element
+1. **Príncipes do Apocalipse** - Cultos elementais ameaçam a região
+2. **Rei da Tempestade** - Gigantes começam a atacar a Costa da Espada
+3. **Aventuras Personalizadas** - O grupo estabeleceu-se como heróis regionais
+4. **Operações na Caverna Eco de Onda** - Gerenciar a mina se torna um elemento de campanha contínua
 
-The characters' reputation, allies (Lords' Alliance, Harpers), and resources (magic items, gold, mine) provide excellent foundations for future adventures.
-
----
-
-## Credits
-
-**Original Adventure:** Wizards of the Coast (D&D 5e Starter Set)
-**Adapted for RPC Interactive Stories Game:** 2025
-**Format:** Choose-your-own-adventure with D&D 5e combat system
+A reputação dos personagens, aliados (Aliança dos Lordes, Harpistas), e recursos (itens mágicos, ouro, mina) fornecem excelentes fundações para futuras aventuras.
 
 ---
 
-## Technical Implementation Notes
+## Créditos
 
-### Integration with RPC Game System
+**Aventura Original:** Wizards of the Coast (Kit Inicial D&D 5e)
+**Adaptada para Jogo de Histórias Interativas RPC:** 2025
+**Formato:** Escolha-sua-própria-aventura com sistema de combate D&D 5e
 
-This adventure is designed to work with the RPC Interactive Stories Game backend:
+---
 
-- **story.json** integrates with existing story parsing system
-- **monsters.json** provides combat statistics for encounter resolution
-- **player-options.json** extends character creation beyond base 4 classes/races
-- All content is JSON-formatted for easy RPC method consumption
+## Notas de Implementação Técnica
 
-### Combat Resolution
+### Integração com Sistema de Jogo RPC
 
-Combat encounters reference monster IDs and counts:
+Esta aventura é projetada para funcionar com o backend do Jogo de Histórias Interativas RPC:
+
+- **story.json** integra com sistema de análise de história existente
+- **monsters.json** fornece estatísticas de combate para resolução de encontros
+- **player-options.json** estende criação de personagem além das 4 raças/classes base
+- Todo conteúdo é formatado em JSON para fácil consumo de métodos RPC
+
+### Resolução de Combate
+
+Encontros de combate referenciam IDs de monstros e contagens:
 ```json
 {
   "isCombat": true,
@@ -447,62 +447,62 @@ Combat encounters reference monster IDs and counts:
 }
 ```
 
-The game system handles:
-- Initiative rolls
-- Turn order
-- Attack rolls vs AC
-- Damage calculation
-- HP tracking
-- Death/unconsciousness
-- Victory conditions
+O sistema de jogo lida com:
+- Rolagens de iniciativa
+- Ordem de turnos
+- Rolagens de ataque vs CA
+- Cálculo de dano
+- Rastreamento de PV
+- Morte/inconsciência
+- Condições de vitória
 
-### Choice Branching
+### Ramificação de Escolhas
 
-Each chapter offers multiple choices that lead to different narrative paths:
-- Diplomatic solutions vs combat
-- Stealth vs direct assault
-- Moral choices affecting the ending
-- Resource management decisions
+Cada capítulo oferece múltiplas escolhas que levam a caminhos narrativos diferentes:
+- Soluções diplomáticas vs combate
+- Furtividade vs assalto direto
+- Escolhas morais afetando o final
+- Decisões de gerenciamento de recursos
 
-Player choices are tracked and influence:
-- Available NPCs and quests
-- Town reputation
-- Epilogue outcomes
-- Treasure and rewards
-
----
-
-## Appendix: Quick Reference
-
-### Important Checks
-
-**Perception DC 12:** Notice goblin tracks, hidden enemies
-**Stealth DC 13:** Sneak past guards
-**Persuasion DC 15:** Convince NPCs, negotiate
-**Intimidation DC 15:** Frighten enemies into cooperation
-**Investigation DC 12:** Find hidden treasures, read clues
-
-### Travel Times
-
-- Neverwinter to Phandalin: 3 days
-- Triboar Trail ambush to Phandalin: Half day
-- Phandalin to Cragmaw Hideout: 2 hours (following trail)
-- Phandalin to Thundertree: 2 days
-- Phandalin to Cragmaw Castle: 1 day
-- Phandalin to Wave Echo Cave: Half day
-
-### Rest and Recovery
-
-**Short Rest:** 1 hour, spend Hit Dice to recover HP
-**Long Rest:** 8 hours, recover all HP and half of spent Hit Dice
-
-Characters should have opportunities for rests between major encounters.
+Escolhas do jogador são rastreadas e influenciam:
+- PNJs e missões disponíveis
+- Reputação na cidade
+- Resultados de epílogo
+- Tesouros e recompensas
 
 ---
 
-**Adventure Length:** 12-16 hours of gameplay
-**Difficulty:** Medium (suitable for new players)
-**Tone:** Classic heroic fantasy with dungeon exploration
-**Themes:** Mystery, conspiracy, treasure hunting, overcoming evil
+## Apêndice: Referência Rápida
 
-**May your dice roll high, and your adventures be legendary!**
+### Testes Importantes
+
+**Percepção CD 12:** Notar pegadas goblin, inimigos escondidos
+**Furtividade CD 13:** Passar pelos guardas despercebido
+**Persuasão CD 15:** Convencer PNJs, negociar
+**Intimidação CD 15:** Assustar inimigos para cooperação
+**Investigação CD 12:** Encontrar tesouros escondidos, ler pistas
+
+### Tempos de Viagem
+
+- Neverwinter para Phandalin: 3 dias
+- Emboscada na Trilha Triboar para Phandalin: Meia dia
+- Phandalin para Esconderijo Cragmaw: 2 horas (seguindo trilha)
+- Phandalin para Thundertree: 2 dias
+- Phandalin para Castelo Cragmaw: 1 dia
+- Phandalin para Caverna Eco de Onda: Meia dia
+
+### Descanso e Recuperação
+
+**Descanso Curto:** 1 hora, gaste Dados de Vida para recuperar PV
+**Descanso Longo:** 8 horas, recupere todos os PV e metade dos Dados de Vida gastos
+
+Personagens devem ter oportunidades de descansos entre encontros principais.
+
+---
+
+**Duração da Aventura:** 12-16 horas de jogo
+**Dificuldade:** Média (adequada para jogadores novos)
+**Tom:** Fantasia heroica clássica com exploração de masmorras
+**Temas:** Mistério, conspiração, caça ao tesouro, superar o mal
+
+**Que seus dados rolem alto, e suas aventuras sejam lendárias!**

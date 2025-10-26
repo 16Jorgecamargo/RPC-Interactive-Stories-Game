@@ -7,7 +7,7 @@ export const ROUTES = {
   SESSIONS: '/sessions.html',
   SESSION_CREATE: '/session-create.html',
   SESSION_LOBBY: '/session-lobby.html',
-  GAME: '/game.html',
+  GAME: '/gameplay.html',
   ADMIN: '/admin.html'
 };
 

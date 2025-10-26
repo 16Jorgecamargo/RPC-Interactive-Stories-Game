@@ -25,3 +25,11 @@ export async function extendVotingTimeout(sessionId, additionalMinutes, token) {
 export async function checkGameUpdates(sessionId, lastUpdateId, token) {
   return await client.call('checkGameUpdates', { sessionId, lastUpdateId, token });
 }
+
+export async function getTimelineHistory(sessionId, token, limit = 5) {
+  return await client.call('getTimelineHistory', { sessionId, token, limit });
+}
+
+export async function revertChapter(sessionId, token) {
+  return await client.call('revertChapter', { sessionId, token });
+}

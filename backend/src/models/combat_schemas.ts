@@ -8,6 +8,10 @@ export const EnemySchema = z.object({
     example: 'enemy_goblin_1',
     description: 'ID único do inimigo',
   }),
+  monsterId: z.string().optional().openapi({
+    example: 'goblin',
+    description: 'ID do monstro base usado na geração',
+  }),
   name: z.string().openapi({
     example: 'Goblin Guerreiro',
     description: 'Nome do inimigo',
@@ -31,6 +35,61 @@ export const EnemySchema = z.object({
   isDead: z.boolean().default(false).openapi({
     example: false,
     description: 'Indica se o inimigo está morto',
+  }),
+  size: z.string().optional().openapi({
+    example: 'Pequeno',
+    description: 'Tamanho da criatura',
+  }),
+  type: z.string().optional().openapi({
+    example: 'Humanoide (goblinóide)',
+    description: 'Tipo da criatura',
+  }),
+  alignment: z.string().optional().openapi({
+    example: 'Neutro Mal',
+    description: 'Alinhamento da criatura',
+  }),
+  abilities: z.object({
+    strength: z.number().int(),
+    dexterity: z.number().int(),
+    constitution: z.number().int(),
+    intelligence: z.number().int(),
+    wisdom: z.number().int(),
+    charisma: z.number().int(),
+  }).optional().openapi({
+    description: 'Atributos da criatura',
+  }),
+  skills: z.record(z.number()).optional().openapi({
+    description: 'Perícias e bônus',
+  }),
+  senses: z.record(z.number()).optional().openapi({
+    description: 'Sentidos especiais',
+  }),
+  languages: z.array(z.string()).optional().openapi({
+    description: 'Idiomas que a criatura fala',
+  }),
+  challengeRating: z.number().optional().openapi({
+    example: 0.25,
+    description: 'Nível de desafio (CR)',
+  }),
+  xp: z.number().int().optional().openapi({
+    example: 50,
+    description: 'Experiência concedida ao derrotar',
+  }),
+  traits: z.array(z.object({
+    name: z.string(),
+    description: z.string(),
+  })).optional().openapi({
+    description: 'Traços especiais da criatura',
+  }),
+  actions: z.array(z.object({
+    name: z.string(),
+    type: z.string(),
+    attackBonus: z.number().int(),
+    reach: z.number().int().optional(),
+    range: z.string().optional(),
+    damage: z.string(),
+  })).optional().openapi({
+    description: 'Ações de combate disponíveis',
   }),
 });
 
@@ -346,6 +405,57 @@ export const PerformAttackResponseSchema = z.object({
   }),
 });
 
+export const SkipTurnSchema = z.object({
+  token: z.string().openapi({
+    example: 'eyJhbGc...',
+    description: 'JWT token',
+  }),
+  sessionId: z.string().openapi({
+    example: 'session_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID da sessão',
+  }),
+  characterId: z.string().openapi({
+    example: 'char_123e4567-e89b-12d3-a456-426614174000',
+    description: 'ID do personagem que está pulando o turno',
+  }),
+});
+
+export const SkipTurnResponseSchema = z.object({
+  success: z.boolean().openapi({
+    example: true,
+    description: 'Indica se a ação de pular turno foi executada com sucesso',
+  }),
+  healed: z.object({
+    id: z.string(),
+    name: z.string(),
+    amount: z.number().int().min(0),
+    hpBefore: z.number().int().min(0),
+    hpAfter: z.number().int().min(0),
+  }).openapi({
+    description: 'Informações sobre a cura recebida ao pular o turno',
+  }),
+  combatEnded: z.boolean().openapi({
+    example: false,
+    description: 'Indica se o combate terminou após essa ação',
+  }),
+  nextTurn: z
+    .object({
+      entityId: z.string(),
+      entityName: z.string(),
+      entityType: z.enum(['PLAYER', 'ENEMY']),
+      turnIndex: z.number().int().min(0),
+      totalTurns: z.number().int().min(1),
+    })
+    .optional()
+    .openapi({
+      description: 'Informações sobre o próximo turno após a ação',
+    }),
+  message: z.string().openapi({
+    example: 'Turno pulado. Você recuperou 3 pontos de vida.',
+    description: 'Mensagem de confirmação',
+  }),
+});
+
 export type CombatParticipant = z.infer<typeof CombatParticipantSchema>;
 export const AttemptReviveSchema = z.object({
   token: z.string().openapi({
@@ -434,6 +544,8 @@ export type PerformAttack = z.infer<typeof PerformAttackSchema>;
 export type AttackRoll = z.infer<typeof AttackRollSchema>;
 export type DamageRoll = z.infer<typeof DamageRollSchema>;
 export type PerformAttackResponse = z.infer<typeof PerformAttackResponseSchema>;
+export type SkipTurn = z.infer<typeof SkipTurnSchema>;
+export type SkipTurnResponse = z.infer<typeof SkipTurnResponseSchema>;
 export type AttemptRevive = z.infer<typeof AttemptReviveSchema>;
 export type ReviveRoll = z.infer<typeof ReviveRollSchema>;
 export type AttemptReviveResponse = z.infer<typeof AttemptReviveResponseSchema>;

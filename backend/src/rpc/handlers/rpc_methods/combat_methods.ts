@@ -6,6 +6,7 @@ import {
   GetCurrentTurnSchema,
   PerformAttackSchema,
   AttemptReviveSchema,
+  SkipTurnSchema,
   type InitiateCombat,
   type GetCombatState,
   type InitiateCombatResponse,
@@ -18,6 +19,8 @@ import {
   type PerformAttackResponse,
   type AttemptRevive,
   type AttemptReviveResponse,
+  type SkipTurn,
+  type SkipTurnResponse,
 } from '../../../models/combat_schemas.js';
 
 export const combatMethods = {
@@ -49,5 +52,10 @@ export const combatMethods = {
   attemptRevive: async (params: unknown): Promise<AttemptReviveResponse> => {
     const validated = AttemptReviveSchema.parse(params) as AttemptRevive;
     return await combatService.attemptRevive(validated);
+  },
+
+  skipTurn: async (params: unknown): Promise<SkipTurnResponse> => {
+    const validated = SkipTurnSchema.parse(params) as SkipTurn;
+    return await combatService.skipTurn(validated);
   },
 };

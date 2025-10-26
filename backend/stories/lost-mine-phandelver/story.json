@@ -5,7 +5,7 @@
   "metadata": {
     "genre": "Fantasia",
     "setting": "Forgotten Realms - Costa da Espada",
-    "synopsis": "Na Trilha Triboar, uma escolta simples de suprimentos se envolve em uma conspiração envolvendo a Aranha Negra, os Redbrands e a mina perdida de Wave Echo Cave—uma mina de imenso poder e riquezas.",
+    "synopsis": "Os aventureiros são contratados por Gundren Rockseeker, um anão prospector, para escoltar uma carroça de suprimentos até o assentamento fronteiriço de Phandalin. Quando Gundren é emboscado e capturado por goblins, o grupo descobre uma conspiração envolvendo a misteriosa 'Aranha Negra' que busca reivindicar a lendária Caverna Eco de Onda e sua forja mágica.",
     "recommendedPlayers": {
       "min": 3,
       "max": 6,
@@ -1301,6 +1301,855 @@
           "id": "try_again",
           "texto": "Tentar uma abordagem diferente",
           "proximo": "trail_to_hideout"
+        }
+      ]
+    },
+    "combat_klarg_ranged": {
+      "texto": "Vocês atacam Klarg à distância! Flechas e raios mágicos voam pela câmara. O bugbear ruge e pega um escudo, ordenando seus goblins a retornarem fogo. O lobo late furiosamente mas não consegue alcançá-los enquanto estão do outro lado da ponte.",
+      "isCombat": true,
+      "monsterId": "klarg-bugbear-boss",
+      "monsterCount": 1,
+      "additionalMonsters": [
+        {
+          "monsterId": "goblin",
+          "count": 2
+        },
+        {
+          "monsterId": "wolf",
+          "count": 1
+        }
+      ],
+      "loot": [
+        "Morningstar +1",
+        "50 gold pieces",
+        "Jeweled eye patch (worth 25 gp)",
+        "Letter from 'The Black Spider' mentioning Cragmaw Castle and Wave Echo Cave"
+      ],
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Revistar a câmara de Klarg e continuar",
+          "proximo": "klarg_defeated"
+        }
+      ]
+    },
+    "klarg_bridge_destroyed": {
+      "texto": "Vocês atacam a ponte improvisada! Com alguns golpes bem colocados, as tábuas de madeira se despedaçam e caem no abismo escuro. Klarg ruge em raiva, preso do outro lado. 'Vocês pagarão por isso!' ele berra, atirando sua maça em sua direção antes de recuar mais fundo em sua câmara.\n\nVocês podem ouvir Klarg gritando em goblin, possivelmente chamando reforços. A câmara dele ainda contém tesouro, mas alcançá-la agora será muito mais difícil. Vocês podem encontrar outro caminho, ou deixá-lo para trás.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "find_another_way",
+          "texto": "Procurar outro caminho para a câmara de Klarg",
+          "proximo": "hideout_depths"
+        },
+        {
+          "id": "leave_klarg",
+          "texto": "Deixar Klarg preso e procurar os cativos",
+          "proximo": "captive_chamber"
+        }
+      ]
+    },
+    "klarg_paid": {
+      "texto": "Vocês pagam a Klarg 50 peças de ouro. O bugbear morde cada moeda para testá-la, então ri. 'Sabios! Klarg deixa vocês passarem. Vão, antes que eu mude de ideia!'\n\nKlarg aponta para a passagem setentrional. Enquanto passam, ele murmura para seus goblins em sua linguagem. Vocês ouvem risadinhas sinistras—Klarg pode não ter mantido seu lado do acordo, mas por ora, ele os deixa passar.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "continue_to_captives",
+          "texto": "Continuar para a passagem setentrional (cativos)",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "attack_anyway",
+          "texto": "Atacar Klarg apesar do acordo",
+          "proximo": "combat_klarg_normal"
+        }
+      ]
+    },
+    "klarg_intimidate_check": {
+      "texto": "Vocês tentam intimidar Klarg! Façam um teste de Intimidação (CD 15).\n\nSe for bem-sucedido: Klarg recua, os olhos arregalados. 'Você... você é forte! Klarg respeita força! Vá! Klarg não quer lutar com você!' Ele se afasta de sua pilha de tesouro, permitindo que passem.\n\nSe falhar: Klarg ri alto. 'Você acha que Klarg tem medo de você? KLARG NÃO TEM MEDO!' Ele ruge e ataca!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Passar (se teste for bem-sucedido)",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "failure",
+          "texto": "Lutar (se teste falhar)",
+          "proximo": "combat_klarg_normal"
+        }
+      ]
+    },
+    "klarg_persuade_check": {
+      "texto": "Vocês tentam convencer Klarg a trair a Aranha Negra! Façam um teste de Persuasão (CD 18).\n\nSe for bem-sucedido: Os olhos de Klarg se estreitam pensativamente. 'Hmm... Aranha Negra paga pouco. Promete muito, entrega pouco. Se VOCÊ paga Klarg 100 peças de ouro AGORA, Klarg conta tudo. Aranha Negra está no Castelo Cragmaw. Procura Caverna Eco de Onda. Quer forja mágica.'\n\nSe falhar: Klarg cospe. 'Klarg não trai patrão! Você morre agora!' Ele ataca.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "pay_information",
+          "texto": "Pagar 100po pela informação (se bem-sucedido)",
+          "proximo": "captive_chamber"
+        },
+        {
+          "id": "refuse_deal",
+          "texto": "Recusar o acordo e lutar",
+          "proximo": "combat_klarg_normal"
+        },
+        {
+          "id": "failed_check",
+          "texto": "Lutar (se teste falhar)",
+          "proximo": "combat_klarg_normal"
+        }
+      ]
+    },
+    "redbrand_introduction": {
+      "texto": "Ao chegarem em Phandalin, vocês notam um grupo de quatro rufiões vestindo capas escarlates se reunindo perto da praça da cidade. Estes devem ser os Redbrands que Sildar mencionou. Eles estão assediando alguns moradores locais, claramente intimidando-os.\n\nUm dos Redbrands percebe vocês e aponta. 'Olhem, garotos! Novos rostos na cidade!' Os outros riem e começam a caminhar em sua direção.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "confront_them",
+          "texto": "Enfrentá-los diretamente",
+          "proximo": "redbrand_confrontation"
+        },
+        {
+          "id": "avoid_them",
+          "texto": "Evitá-los e ir para Barthen's Provisions",
+          "proximo": "barthens_provisions"
+        },
+        {
+          "id": "observe_first",
+          "texto": "Observar de longe primeiro",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "townmaster_hall": {
+      "texto": "O Salão do Mestre da Cidade é um pequeno edifício de madeira com um sino de latão pendurado na varanda. Dentro, vocês encontram Harbin Wester, um humano gordo e de meia-idade que serve como o mestre da cidade de Phandalin.\n\nHarbin parece nervoso quando vocês entram. 'Ah, visitantes! Bem-vindos a Phandalin. Eu gostaria de lhes oferecer trabalho, mas... bem, a cidade tem alguns problemas. Os Redbrands, vocês veem. Eles são... exigentes. Não quero causar problemas.'\n\nEle folheia alguns papéis nervosamente. 'Posso oferecer recompensas por limpar certas ameaças na região: orcs em Monte Tor, mortos-vivos no Poço Velha Coruja... mas quanto aos Redbrands...' Ele desvia o olhar.\n\nÉ claro que Harbin é covarde demais para enfrentar os Redbrands diretamente.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "accept_orc_quest",
+          "texto": "Aceitar a missão dos orcs",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "accept_undead_quest",
+          "texto": "Aceitar a missão dos mortos-vivos",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "press_about_redbrands",
+          "texto": "Pressionar sobre os Redbrands",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "leave_hall",
+          "texto": "Sair e explorar a cidade",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "barthen_gundren_info": {
+      "texto": "Barthen suspira profundamente. 'Gundren estava muito animado nos últimos meses. Ele e seus irmãos—Nundro e Tharden—descobriram algo grande nas colinas a leste. Eles chamaram de Caverna Eco de Onda, uma mina anã perdida há séculos.\n\nGundren foi ao sul para Neverwinter para contratar mercenários e organizar suprimentos. Ele deveria ter chegado há dias atrás com Sildar Hallwinter. Se algo aconteceu com eles na estrada... Bem, não é bom. Especialmente com os Redbrands controlando a cidade. Eles trabalham para alguém, tenho certeza. Alguém que pode estar interessado na descoberta de Gundren.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "ask_about_redbrands",
+          "texto": "Perguntar sobre os Redbrands",
+          "proximo": "barthen_redbrand_info"
+        },
+        {
+          "id": "leave",
+          "texto": "Sair da loja",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "barthen_redbrand_info": {
+      "texto": "Barthen baixa a voz. 'Os Redbrands apareceram há cerca de dois meses. Eles ocuparam o velho Mansão Tresendar na borda leste da cidade e começaram a extorquir moradores. Seu líder se chama Glasstaff—ninguém viu o rosto dele, mas dizem que é um mago.\n\nEles intimidam, roubam e pior. Pessoas desapareceram. O Mestre da Cidade é muito covarde para fazer qualquer coisa. Se alguém pudesse livrar Phandalin desses rufiões... bem, a cidade seria grata.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "ask_about_gundren",
+          "texto": "Perguntar sobre Gundren",
+          "proximo": "barthen_gundren_info"
+        },
+        {
+          "id": "leave",
+          "texto": "Sair da loja",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "phandalin_exploration": {
+      "texto": "Vocês exploram Phandalin. A cidade tem vários locais de interesse:\n\n• Barthen's Provisions - O posto comercial geral\n• Stonehill Inn - A estalagem principal\n• Edermath Orchard - Casa de um aventureiro aposentado\n• Lionshield Coster - Loja de mercadorias comerciais\n• Phandalin Miner's Exchange - Onde mineradores vendem seus achados\n• Shrine of Luck - Um pequeno santuário a Tymora\n• Sleeping Giant Tap House - Uma taverna decadente (território Redbrand)\n• Townmaster's Hall - Residência do mestre da cidade\n• Tresendar Manor - Ruínas na borda leste (esconderijo Redbrand)\n\nOs moradores são amigáveis mas claramente nervosos. Muitos falam em sussurros sobre os Redbrands.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "visit_inn",
+          "texto": "Ir para Stonehill Inn",
+          "proximo": "stonehill_inn"
+        },
+        {
+          "id": "visit_barthen",
+          "texto": "Ir para Barthen's Provisions",
+          "proximo": "barthens_provisions"
+        },
+        {
+          "id": "visit_townmaster",
+          "texto": "Visitar o Salão do Mestre da Cidade",
+          "proximo": "townmaster_hall"
+        },
+        {
+          "id": "confront_redbrands",
+          "texto": "Confrontar os Redbrands",
+          "proximo": "redbrand_confrontation"
+        }
+      ]
+    },
+    "toblen_conversation": {
+      "texto": "Toblen Stonehill é um halfling rotundo e alegre que adora conversar. 'Bem-vindos à minha estalagem! Sempre feliz em ver novos rostos. Deixe-me contar sobre a cidade...\n\nOs Redbrands são o grande problema—rufões todos. Seu líder, Glasstaff, opera a partir do velho mansão. Ninguém sabe seu rosto verdadeiro. Algumas pessoas desapareceram, incluindo a família Dendrar. Thel Dendrar foi morto quando confrontou os Redbrands.\n\nMas há outras coisas estranhas acontecendo! Mortos-vivos no Poço Velha Coruja, um dragão nas ruínas de Thundertree, orcs em Monte Tor... tempos perigosos!'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "ask_dragon",
+          "texto": "Perguntar sobre o dragão",
+          "proximo": "dragon_rumor"
+        },
+        {
+          "id": "rent_rooms",
+          "texto": "Alugar quartos",
+          "proximo": "phandalin_rested"
+        },
+        {
+          "id": "leave_inn",
+          "texto": "Sair da estalagem",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "farmer_quest": {
+      "texto": "Vocês ouvem um grupo de fazendeiros reclamando amargamente: 'Esses malditos Redbrands levaram meia nossa colheita! Disseram que era 'imposto de proteção.' Proteção de quem? Deles mesmos!\n\nMinha irmã tentou reclamar e eles a ameaçaram. Um deles, sujeito feio com uma cicatriz, disse que ela deveria 'aprender seu lugar' ou acabaria como a família Dendrar.'\n\nOs fazendeiros claramente precisam de ajuda mas têm muito medo de se opor aos Redbrands sozinhos.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "promise_help",
+          "texto": "Prometer lidar com os Redbrands",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "gather_more_info",
+          "texto": "Reunir mais informações primeiro",
+          "proximo": "stonehill_inn"
+        }
+      ]
+    },
+    "dragon_rumor": {
+      "texto": "Toblen se inclina mais perto, os olhos arregalados. 'Ah sim, o dragão! Um halfling chamado Pip viu com seus próprios olhos! Ele estava forrageando nas ruínas de Thundertree—você sabe, a vila velha que foi destruída há 30 anos pela erupção vulcânica.\n\nPip diz que viu um dragão verde empoleirado na torre velha! Jovem, mas ainda um dragão! Ele fugiu antes de ser notado. Reidoth o druida vive lá agora, cuidando das ruínas. Se alguém conhece a verdade, seria ele.\n\nThundertree fica cerca de 30 milhas ao noroeste daqui. Lugar perigoso—zumbis de cinzas também, pelo que ouvi.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "plan_dragon_quest",
+          "texto": "Planejar ir para Thundertree",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "ask_other_rumors",
+          "texto": "Perguntar sobre outros rumores",
+          "proximo": "toblen_conversation"
+        }
+      ]
+    },
+    "phandalin_rested": {
+      "texto": "Vocês descansam confortavelmente em quartos limpos na Stonehill Inn. A comida de Toblen é substancial e seus pontos de vida e recursos são totalmente restaurados.\n\nPela manhã, vocês se sentem renovados e prontos para enfrentar os desafios à frente. Phandalin aguarda suas decisões.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "deal_with_redbrands",
+          "texto": "É hora de lidar com os Redbrands",
+          "proximo": "tresendar_manor_approach"
+        },
+        {
+          "id": "explore_region",
+          "texto": "Explorar os arredores de Phandalin",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "investigate_more",
+          "texto": "Reunir mais informações na cidade",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "redbrands_paid": {
+      "texto": "Vocês pagam relutantemente 10 peças de ouro para cada Redbrand. O líder morde as moedas, então ri. 'Sabios! Vocês aprendem rápido. Agora fiquem longe do nosso caminho e não se metam em nossos negócios, e viverão um pouco mais em Phandalin.'\n\nOs Redbrands se afastam, rindo e contando suas moedas. Os moradores que testemunharam parecem desapontados—eles esperavam que alguém finalmente se posicionasse contra os bandidos.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "plan_revenge",
+          "texto": "Planejar lidar com eles depois",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "attack_them_anyway",
+          "texto": "Atacá-los pelas costas",
+          "proximo": "redbrand_fight_start"
+        }
+      ]
+    },
+    "redbrand_intimidate": {
+      "texto": "Vocês tentam intimidar os Redbrands! Façam um teste de Intimidação (CD 13).\n\nSe bem-sucedido: O líder Redbrand recua, sua confiança abalando. 'Ei, ei... sem necessidade de violência! Vamos... vamos apenas ir embora.' Os Redbrands recuam, mas vocês ganham um inimigo—eles reportarão isso a Glasstaff.\n\nSe falhar: O líder ri. 'Você acha que pode nos intimidar? Nós SOMOS a intimidação em Phandalin!' Eles atacam.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Deixá-los ir (se bem-sucedido)",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "failure",
+          "texto": "Lutar (se falhar)",
+          "proximo": "redbrand_fight_start"
+        }
+      ]
+    },
+    "redbrand_investigation": {
+      "texto": "Vocês passam tempo coletando informações sobre os Redbrands de vários moradores de Phandalin:\n\n• A família Dendrar foi sequestrada há três dias; o pai foi morto quando resistiu\n• O esconderijo dos Redbrands fica debaixo do Mansão Tresendar\n• Há rumores de uma 'coisa' estranha morando no esconderijo\n• Glasstaff raramente é visto, mas ordens vêm dele\n• Os Redbrands têm cerca de 20 membros no total\n• Alguns moradores suspeita que eles trabalham para alguém mais poderoso\n\nVocês também aprendem sobre uma entrada secreta através de um túnel de drenagem sob o mansão.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "assault_hideout",
+          "texto": "Assaltar o esconderijo com as informações",
+          "proximo": "tresendar_manor_approach"
+        },
+        {
+          "id": "rest_first",
+          "texto": "Descansar antes do assalto",
+          "proximo": "phandalin_rested"
+        }
+      ]
+    },
+    "redbrand_hideout_alert": {
+      "texto": "Vocês irrompem pela porta! Alarmes soam enquanto Redbrands pegam armas. Vocês ouvem gritos de 'Invasores!' ecoando pelo complexo.\n\nTrês Redbrands carregam imediatamente, espadas em punho, enquanto outros correm para pegar reforços. Vocês perderam o elemento surpresa!",
+      "isCombat": true,
+      "monsterId": "redbrand-ruffian",
+      "monsterCount": 3,
+      "opcoes": [
+        {
+          "id": "victory",
+          "texto": "Empurrar mais fundo rapidamente",
+          "proximo": "redbrand_common_room"
+        }
+      ]
+    },
+    "redbrand_hideout_scout": {
+      "texto": "Vocês exploram cuidadosamente o perímetro do mansão em ruínas. Encontram:\n\n1. A entrada principal (vigiada)\n2. Uma porta escondida na fundação (túnel de drenagem)\n3. Uma janela quebrada que leva a uma adega desmoronada\n4. Marcas na grama sugerindo outra entrada oculta\n\nVocês também notam padrões de patrulha—os guardas Redbrand mudam a cada quatro horas, e há um breve intervalo de 5 minutos durante a troca.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "use_drainage",
+          "texto": "Usar o túnel de drenagem",
+          "proximo": "redbrand_hideout_sneak"
+        },
+        {
+          "id": "wait_for_patrol_change",
+          "texto": "Esperar pela troca de guarda",
+          "proximo": "redbrand_hideout_sneak"
+        },
+        {
+          "id": "frontal_assault",
+          "texto": "Assalto frontal",
+          "proximo": "redbrand_hideout_alert"
+        }
+      ]
+    },
+    "redbrand_cistern": {
+      "texto": "Vocês seguem o som de água para uma câmara natural que serve como cisterna para o complexo. Água fresca goteja pelas paredes da caverna, coletando em uma piscina rasa.\n\nA câmara é pacífica e silenciosa—um bom lugar para descansar sem ser perturbado. Vocês também notam pegadas molhadas levando para o leste, sugerindo que alguém usa este caminho regularmente.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "rest_here",
+          "texto": "Fazer um descanso curto",
+          "proximo": "redbrand_hideout_sneak"
+        },
+        {
+          "id": "follow_tracks",
+          "texto": "Seguir as pegadas para o leste",
+          "proximo": "redbrand_common_room"
+        }
+      ]
+    },
+    "redbrand_hideout_depths": {
+      "texto": "Vocês se movem mais fundo no complexo Redbrand. O lugar é uma mistura de masmorras naturais e câmaras talhadas. Vocês notam:\n\n• Suprimentos armazenados (comida roubada, equipamento)\n• Câmaras de dormir para os bandidos\n• Uma área de treinamento improvisada\n• A nothic's lair (se ainda não encontrada)\n• Celas de prisão (se ainda não encontradas)\n• Glasstaff's quarters ao norte\n\nVocês precisam decidir seu próximo movimento cuidadosamente.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "free_prisoners",
+          "texto": "Priorizar libertação de prisioneiros",
+          "proximo": "redbrand_prison"
+        },
+        {
+          "id": "confront_glasstaff",
+          "texto": "Ir direto para Glasstaff",
+          "proximo": "glasstaff_chamber"
+        },
+        {
+          "id": "clear_systematically",
+          "texto": "Limpar câmara por câmara",
+          "proximo": "redbrand_common_room"
+        }
+      ]
+    },
+    "redbrand_sneak_past_gamblers": {
+      "texto": "Vocês tentam passar furtivamente pelos Redbrands jogando! Façam um teste de Furtividade em grupo (CD 12).\n\nSe bem-sucedido: Vocês deslizam pelas sombras enquanto os bandidos estão absortos em seu jogo. Risadas altas e o tilintar de moedas mascaram qualquer pequeno ruído que vocês fazem.\n\nSe falhar: Um Redbrand olha para cima de repente. 'Ei! Quem está aí?' Ele alcança sua espada. Os outros se viram, percebendo vocês!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Continuar silenciosamente (se bem-sucedido)",
+          "proximo": "redbrand_nothic_cave"
+        },
+        {
+          "id": "failure",
+          "texto": "Lutar (se detectado)",
+          "proximo": "combat_redbrand_gamblers"
+        }
+      ]
+    },
+    "redbrand_bluff": {
+      "texto": "Vocês marcham confiantes dizendo que são recrutas novos enviados por 'contato no norte.' Façam um teste de Enganação (CD 15).\n\nSe bem-sucedido: Os Redbrands trocam olhares. 'Ninguém nos avisou sobre novos recrutas... mas Glasstaff tem tido muitas coisas acontecendo. Tudo bem. Depósito está ali, celas por lá. Não incomodem a nothic na caverna. Glasstaff está nos quartos dele se você precisar de ordens.'\n\nSe falhar: Um Redbrand franze a testa. 'Espere... eu conheço todos os nossos contatos. Quem diabos são vocês?' Ele saca sua espada. 'INTRUSOS!'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Explorar livremente (se bem-sucedido)",
+          "proximo": "redbrand_hideout_depths"
+        },
+        {
+          "id": "failure",
+          "texto": "Lutar (se falhar)",
+          "proximo": "combat_redbrand_gamblers"
+        }
+      ]
+    },
+    "redbrand_storeroom": {
+      "texto": "O depósito está cheio de mercadorias roubadas de moradores de Phandalin. Vocês encontram:\n\n• Sacos de grãos e alimentos preservados\n• Várias ferramentas de minerador (marca do Phandalin Miner's Exchange)\n• Uma caixa de ferro contendo 150 peças de prata\n• Vinho e cerveja de qualidade (roubado da Lionshield Coster)\n• Várias armas e armaduras de qualidade comum\n\nDevolver esses bens para Phandalin ganharia muito boa vontade dos moradores.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "take_valuables",
+          "texto": "Pegar itens valiosos para devolver depois",
+          "proximo": "redbrand_nothic_cave"
+        },
+        {
+          "id": "continue_north",
+          "texto": "Continuar ao norte",
+          "proximo": "redbrand_nothic_cave"
+        }
+      ]
+    },
+    "redbrand_hideout_cleared": {
+      "texto": "Com Glasstaff derrotado ou fugido e os Redbrands eliminados, vocês limparam sistematicamente o esconderijo. Vocês libertaram qualquer prisioneiro restante, recuperaram mercadorias roubadas, e asseguraram a área.\n\nA família Dendrar (se resgatada) está a caminho da segurança. O tesouro de Glasstaff é seu. Os moradores de Phandalin finalmente estarão livres da tirania Redbrand.\n\nVocês podem agora usar o mansão como base de operações se desejar, ou retornar a Phandalin como heróis.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "return_to_phandalin",
+          "texto": "Retornar a Phandalin com as boas notícias",
+          "proximo": "phandalin_liberated"
+        }
+      ]
+    },
+    "nothic_bargain": {
+      "texto": "A nothic inclina sua cabeça, seu olho grande piscando pensativamente. 'Ah, viajantes sensatos! A nothic adora barganhas. Digam a nothic seus segredos—onde vocês nasceram, quem vocês amam, o que temem—e nothic deixa vocês passarem. Ou... deem nothic magia brilhante. Item mágico, sim? Nothic sente magia em vocês...'\n\nA criatura está claramente interessada em negociar, mas barganhar com aberrações é perigoso.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "share_secrets",
+          "texto": "Compartilhar alguns segredos",
+          "proximo": "nothic_bribe"
+        },
+        {
+          "id": "offer_magic_item",
+          "texto": "Oferecer um item mágico",
+          "proximo": "nothic_bribe"
+        },
+        {
+          "id": "attack_instead",
+          "texto": "Atacar a criatura",
+          "proximo": "combat_nothic"
+        }
+      ]
+    },
+    "glasstaff_approach": {
+      "texto": "Vocês se aproximam dos quartos de Glasstaff silenciosamente. A porta está ligeiramente entreaberta, e vocês podem ouvir movimento dentro—o som de papéis sendo mexidos apressadamente, um livro batendo.\n\nUma voz masculina murmura para si mesma: 'Preciso sair daqui. A Aranha Negra vai ficar furiosa se o plano falhar agora. Os Rockseeker devem saber...'\n\nGlasstaff ainda não percebeu vocês. Este é o momento perfeito para atacar, ou vocês podem optar por negociar.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "burst_in",
+          "texto": "Irromper e atacar",
+          "proximo": "combat_glasstaff"
+        },
+        {
+          "id": "knock_and_talk",
+          "texto": "Bater e tentar parlamentar",
+          "proximo": "glasstaff_chamber"
+        },
+        {
+          "id": "listen_more",
+          "texto": "Ouvir mais antes de agir",
+          "proximo": "glasstaff_interrogation"
+        }
+      ]
+    },
+    "glasstaff_surrender_check": {
+      "texto": "Glasstaff olha ao redor nervosamente, avaliando suas chances. Vocês podem fazer um teste de Intimidação (CD 14) para fazê-lo se render sem luta.\n\nSe bem-sucedido: 'Está bem, está bem!' Glasstaff joga seu cajado. 'Eu me rendo! Apenas... não me machuquem. Posso contar tudo sobre a Aranha Negra! Iarno Albrek—esse é meu nome verdadeiro. Eu estava trabalhando para os Lordes' Alliance até que a Aranha Negra me recrutou. Posso dar informações!'\n\nSe falhar: Glasstaff ri nervosamente. 'Vocês acham que eu vou apenas me render? Experimentei demais do poder para voltar agora!' Ele agarra seu cajado.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "success",
+          "texto": "Capturá-lo (se intimidação bem-sucedida)",
+          "proximo": "glasstaff_interrogation"
+        },
+        {
+          "id": "failure",
+          "texto": "Lutar (se intimid ação falhar)",
+          "proximo": "combat_glasstaff"
+        }
+      ]
+    },
+    "glasstaff_interrogation": {
+      "texto": "Glasstaff (Iarno Albrek) fala rapidamente, tentando salvar sua pele:\n\n'Eu era um membro da Aliança dos Lordes! Enviado para investigar Phandalin. Mas a Aranha Negra me ofereceu poder, riqueza... Ele é um elfo negro chamado Nezznar. Ele está obcecado em encontrar a Caverna Eco de Onda—uma mina anã perdida com uma forja mágica lendária.\n\nOs Rockseeker descobriram sua localização. Nezznar ordenou que eu capturasse Gundren para extrair a informação. Gundren está no Castelo Cragmaw—sede de Nezznar. Eu só estava fazendo o que me mandaram! Por favor, deixem-me ir e eu desapareço. Vocês nunca me verão novamente!'\n\nVocês aprenderam muito. Agora precisam decidir o destino de Glasstaff.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "arrest_him",
+          "texto": "Levá-lo para as autoridades",
+          "proximo": "glasstaff_defeated"
+        },
+        {
+          "id": "let_him_go",
+          "texto": "Deixá-lo fugir (ele desaparece)",
+          "proximo": "glasstaff_defeated"
+        },
+        {
+          "id": "execute_him",
+          "texto": "Executá-lo por seus crimes",
+          "proximo": "glasstaff_defeated"
+        }
+      ]
+    },
+    "old_owl_well": {
+      "texto": "O Poço Velha Coruja fica nas planícies desertas a leste de Phandalin. Ruínas antigas marcam o local de um posto avançado do antigo reino de Phalorm. O poço em si ainda funciona, mas a área está assombrada por mortos-vivos.\n\nEnquanto se aproximam, vocês veem zumbis cambaleando entre as ruínas. Mais interessante, há uma torre de vigília onde um humano em vestes negras comanda os mortos-vivos. Este é Hamun Kost, um necromante da Red Wizards de Thay.\n\nKost acena quando vocês se aproximam: 'Saúdem! Não estou procurando problemas. Estou meramente estudando essas ruínas. Mantenham distância dos meus servos mortos-vivos e não teremos conflito.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "negotiate",
+          "texto": "Negociar com o necromante",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "attack_undead",
+          "texto": "Atacar os mortos-vivos",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "leave_peacefully",
+          "texto": "Deixar em paz",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "banshee_quest": {
+      "texto": "Irmã Garaele, uma elfa e sacerdotisa de Tymora no Santuário da Sorte, tem uma missão para vocês. 'Há uma banshee chamada Agatha morando nas ruínas de Conyberry ao norte. A Aliança dos Lordes gostaria de fazer contato com ela—ela pode saber a localização de um livro de feitiços há muito perdido.\n\nLeve este pente de prata como presente. Seja respeitoso! Banshees são perigosas quando provocadas, mas Agatha respondeu educadamente a perguntas no passado. Se ela responder sua pergunta sobre o livro de feitiços, retornem e eu lhes recompensarei com três poções de cura.'\n\nA missão exige diplomacia, não violência.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "accept_quest",
+          "texto": "Aceitar a missão da banshee",
+          "proximo": "phandalin_exploration"
+        },
+        {
+          "id": "decline",
+          "texto": "Recusar educadamente",
+          "proximo": "phandalin_exploration"
+        }
+      ]
+    },
+    "phandalin_heroes": {
+      "texto": "Vocês retornam a Phandalin como heróis conquistadores! A notícia de suas feitos se espalhou:\n\n• Derrotaram os Redbrands e libertaram a cidade da tirania\n• Resgataram prisioneiros e recuperaram mercadorias roubadas\n• Derrotaram Glasstaff (ou o entregaram à justiça)\n• (Se aplicável) Mataram um dragão em Thundertree\n\nMoradores os saúdam nas ruas. O Mestre da Cidade oferece recompensas. Toblen Stonehill oferece acomodação gratuita. Barthen quer negociar descontos em mercadorias.\n\nVocês ganharam a lealdade e gratidão de Phandalin. A cidade agora serve como sua base de operações para futuras aventuras.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "prepare_for_cragmaw",
+          "texto": "Preparar para assaltar Castelo Cragmaw",
+          "proximo": "cragmaw_castle_search"
+        },
+        {
+          "id": "explore_more",
+          "texto": "Completar mais missões regionais",
+          "proximo": "region_exploration"
+        }
+      ]
+    },
+    "region_exploration": {
+      "texto": "A região ao redor de Phandalin oferece várias oportunidades de aventura:\n\n• Poço Velha Coruja - Ruínas assombradas com um necromante\n• Thundertree - Vila destruída com um dragão verde\n• Missão da Banshee - Procurar Agatha por Irmã Garaele\n• Monte Tor - Orcs ameaçam viajantes\n• Wyvern Tor - Uma quimera foi avistada\n• Conyberry - Ruínas de uma antiga cidade\n\nCada local oferece desafios, tesouros e oportunidades de ganhar experiência antes de enfrentar o Castelo Cragmaw e a Caverna Eco de Onda.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "visit_old_owl",
+          "texto": "Investigar Poço Velha Coruja",
+          "proximo": "old_owl_well"
+        },
+        {
+          "id": "visit_thundertree",
+          "texto": "Explorar Thundertree",
+          "proximo": "thundertree_approach"
+        },
+        {
+          "id": "ready_for_main_quest",
+          "texto": "Pronto para a missão principal",
+          "proximo": "cragmaw_castle_search"
+        }
+      ]
+    },
+    "cragmaw_castle_climb": {
+      "texto": "Vocês escalam silenciosamente a torre desmoronada. A escalada é arriscada (teste de Atletismo CD 12), mas conseguem alcançar uma janela quebrada que dá para um corredor interno.\n\nVocês conseguem entrar no castelo por cima! Estão agora em um corredor mal iluminado com passagens que levam em várias direções. Podem ouvir vozes de goblins ecoando pela estrutura.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "explore_stealthily",
+          "texto": "Explorar furtivamente para encontrar Gundren",
+          "proximo": "cragmaw_castle_exploration"
+        },
+        {
+          "id": "stealth_rescue",
+          "texto": "Procurar uma rota furtiva até a cela (Furtividade CD 15)",
+          "proximo": "gundren_stealth_rescue"
+        }
+      ]
+    },
+    "cragmaw_castle_assault": {
+      "texto": "Vocês lançam um assalto frontal no portão principal! Os sentinelas goblins gritam alarmes enquanto vocês carregam. Esta é uma batalha épica—corajosa, mas extremamente perigosa.\n\nGuardas bugbears e goblins convergem para o portão. Vocês enfrentarão múltiplas ondas de inimigos antes de chegarem ao salão do trono onde o Rei Grol mantém Gundren.",
+      "isCombat": true,
+      "monsterId": "bugbear",
+      "monsterCount": 3,
+      "additionalMonsters": [
+        {
+          "monsterId": "goblin",
+          "count": 6
+        }
+      ],
+      "loot": [
+        "Várias armas goblins",
+        "100 peças de prata",
+        "3 poções de cura"
+      ],
+      "opcoes": [
+        {
+          "id": "press_forward",
+          "texto": "Avançar para o salão do trono",
+          "proximo": "cragmaw_castle_exploration"
+        }
+      ]
+    },
+    "gundren_stealth_rescue": {
+      "texto": "Vocês se movem silenciosamente pelos corredores (teste de Furtividade CD 15). Com sucesso, conseguem evitar as principais forças inimigas e localizam a cela onde Gundren está preso.\n\nHá apenas dois guardas hobgoblin na porta. Vocês podem tentar neutralizá-los silenciosamente ou arriscar um confronto direto para libertar Gundren rapidamente.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "silent_takedown",
+          "texto": "Neutralizar os guardas silenciosamente (Furtividade CD 16)",
+          "proximo": "gundren_rescued"
+        },
+        {
+          "id": "quick_fight",
+          "texto": "Atacar rapidamente os guardas",
+          "proximo": "combat_king_grol"
+        }
+      ]
+    },
+    "cragmaw_owlbear_chaos": {
+      "texto": "Vocês liberam o owlbear enjaulado! A criatura enfurecida sai rugindo, atacando qualquer goblinóide à vista. O caos se espalha pelo castelo enquanto o owlbear causa destruição.\n\nEsta distração permite que vocês se movam mais livremente, mas também torna tudo imprevisível. O owlbear pode atacar vocês também se cruzarem seu caminho!",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "use_chaos",
+          "texto": "Usar o caos para alcançar a cela de Gundren",
+          "proximo": "gundren_stealth_rescue"
+        },
+        {
+          "id": "follow_owlbear",
+          "texto": "Seguir a trilha de destruição do owlbear",
+          "proximo": "cragmaw_castle_exploration"
+        }
+      ]
+    },
+    "reidoth_encounter": {
+      "texto": "Vocês encontram Reidoth, o druida, vivendo em uma cabana relativamente intacta em Thundertree. É um humano idoso com barba longa, vestido em peles de animais e cercado por pequenos animais da floresta.\n\n'Bem-vindos, viajantes,' ele diz calmamente. 'Poucos se atrevem a vir aqui com o dragão presente. Venomfang se mudou para a torre há alguns meses. Eu permaneço porque este é meu lar, e tenho... um acordo com a criatura.'\n\nReidoth pode fornecer informações valiosas:\n• A localização do Castelo Cragmaw\n• Detalhes sobre Venomfang e como evitá-lo\n• Rotas seguras através de Thundertree\n• Alertas sobre os cultistas dragão morando aqui",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "ask_cragmaw",
+          "texto": "Perguntar sobre o Castelo Cragmaw",
+          "proximo": "cragmaw_castle_search"
+        },
+        {
+          "id": "ask_dragon",
+          "texto": "Pedir conselhos sobre o dragão",
+          "proximo": "thundertree_exploration"
+        },
+        {
+          "id": "leave_peacefully",
+          "texto": "Agradecer e partir",
+          "proximo": "thundertree_approach"
+        }
+      ]
+    },
+    "thundertree_exploration": {
+      "texto": "Vocês exploram as ruínas de Thundertree. A vila destruída contém vários pontos de interesse:\n\n1. **Loja do Herbalista** - Agora infestada de aranhas gigantes, mas contém poções valiosas\n2. **Casa de Fazenda** - Habitada por zumbis de cinzas\n3. **Cabana dos Cultistas** - Seis cultistas do Dragão de Talos adoram Venomfang\n4. **Casas Destruídas** - Contêm pequenos tesouros mas também perigos\n5. **Torre do Dragão** - Venomfang habita no topo\n\nCada localização oferece riscos e recompensas. Vocês devem decidir quanto explorar antes de lidar com o dragão ou partir.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "loot_herbalist",
+          "texto": "Investigar a loja do herbalista (aranhas gigantes)",
+          "proximo": "thundertree_approach"
+        },
+        {
+          "id": "confront_cultists",
+          "texto": "Confrontar os cultistas do dragão",
+          "proximo": "thundertree_approach"
+        },
+        {
+          "id": "approach_dragon",
+          "texto": "Ir até a torre do dragão",
+          "proximo": "venomfang_encounter"
+        },
+        {
+          "id": "leave_area",
+          "texto": "Deixar Thundertree e retornar mais tarde",
+          "proximo": "region_exploration"
+        }
+      ]
+    },
+    "venomfang_negotiation": {
+      "texto": "Vocês tentam negociar com Venomfang (teste de Persuasão CD 18). O dragão verde é inteligente, ganancioso e traiçoeiro.\n\n'Interessante,' o dragão ronrona. 'Mortais que preferem palavras a violência. Muito bem. Tenho pouco interesse em vocês—seres tão pequenos e frágeis. Se me trouxerem tributo adequado (digamos, 500 peças de ouro ou itens mágicos equivalentes), permitirei que vivam. Também compartilharei um segredo: a Aranha Negra procura a Caverna Eco de Onda. Talvez isso seja útil para vocês... se sobreviverem.'\n\nO dragão pode ser subornado, mas dragões verdes raramente mantêm seus acordos perfeitamente.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "pay_tribute",
+          "texto": "Pagar o tributo ao dragão (500 po ou equivalente)",
+          "proximo": "thundertree_ruins"
+        },
+        {
+          "id": "refuse_deal",
+          "texto": "Recusar o acordo",
+          "proximo": "combat_venomfang"
+        },
+        {
+          "id": "deceive_dragon",
+          "texto": "Tentar enganar o dragão (Enganação CD 20)",
+          "proximo": "combat_venomfang"
+        }
+      ]
+    },
+    "thundertree_ruins": {
+      "texto": "Vocês deixam o encontro com Venomfang vivos. O dragão permanece na sua torre, uma ameaça persistente para a região.\n\nThumdertree permanece uma ruína perigosa, mas vocês aprenderam informações valiosas e sobreviveram a um encontro com um dragão—algo que poucos aventureiros podem dizer.\n\nReidoth agradece por não matarem o dragão desnecessariamente (se vocês evitaram o combate): 'Sabedoria às vezes é melhor que bravura. Aqui, tome esta poção como agradecimento.' Ele dá a vocês uma poção de cura maior.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "return_phandalin",
+          "texto": "Retornar a Phandalin",
+          "proximo": "phandalin_heroes"
+        },
+        {
+          "id": "continue_exploring",
+          "texto": "Explorar mais a região",
+          "proximo": "region_exploration"
+        },
+        {
+          "id": "head_to_cragmaw",
+          "texto": "Seguir para o Castelo Cragmaw",
+          "proximo": "cragmaw_castle_search"
+        }
+      ]
+    },
+    "wave_echo_mining_tunnels": {
+      "texto": "Vocês exploram os túneis de mineração ao norte. Estes túneis antigos contêm:\n\n• Veios de minério não extraídos (prata e ouro)\n• Equipamento de mineração anão antigo mas bem preservado\n• Esqueletos de mineiros que morreram durante o ataque orc há 500 anos\n• Gravações rúnicas anãs nas paredes descrevendo a lendária Forja de Feitiços\n\nEnquanto exploram, vocês são emboscados por stirges—criaturas sugadoras de sangue que vivem nos túneis escuros!",
+      "isCombat": true,
+      "monsterId": "stirge",
+      "monsterCount": 6,
+      "loot": [
+        "Minério de prata bruto (vale 50 po)",
+        "Picareta de mineração anã (ferramenta de qualidade)"
+      ],
+      "opcoes": [
+        {
+          "id": "continue_north",
+          "texto": "Continuar explorando ao norte",
+          "proximo": "wave_echo_cave_depths"
+        },
+        {
+          "id": "return_entrance",
+          "texto": "Retornar à entrada principal",
+          "proximo": "wave_echo_cave_entrance"
+        }
+      ]
+    },
+    "wave_echo_fungi_cavern": {
+      "texto": "Vocês entram em uma caverna natural iluminada por um brilho esverdeado fantasmagórico. A fonte são fungos bioluminescentes gigantes que cobrem as paredes e o teto—um espetáculo impressionante!\n\nOs fungos não são perigosos, mas a caverna contém outros perigos:\n• Gases venenosos em algumas áreas (teste de Constituição CD 12 para evitar envenenamento)\n• Buracos profundos escondidos pela vegetação\n• Um fungo violeta que libera esporos quando perturbado\n\nHá também uma fonte de água cristalina pura—água mágica que pode restaurar 2d4+2 pontos de vida se bebida.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "drink_water",
+          "texto": "Beber da fonte mágica (restaura 2d4+2 HP)",
+          "proximo": "wave_echo_cave_depths"
+        },
+        {
+          "id": "harvest_fungi",
+          "texto": "Colher alguns fungos bioluminescentes (útil para iluminação)",
+          "proximo": "wave_echo_cave_depths"
+        },
+        {
+          "id": "move_on",
+          "texto": "Continuar pela caverna",
+          "proximo": "wave_echo_cave_depths"
+        }
+      ]
+    },
+    "nundro_freed": {
+      "texto": "Vocês liberam Nundro Rockseeker de sua cela. Ele está ferido e fraco, mas agradecido.\n\n'Graças a Moradin! Gundren está vivo? Graças aos deuses. Meu irmão Tharden... Tharden está morto. A Aranha Negra o matou quando se recusou a revelar os segredos da Forja. Nezznar está obcecado em desvendar o poder da forja.\n\nO elfo negro está na câmara da Forja de Feitiços agora, com seus guardas mais fortes. Tenham cuidado—ele é um mago poderoso com magia negra. Mas se alguém pode detê-lo, são vocês. Vou escapar daqui e encontrar meu irmão. Boa sorte, amigos. Acabem com a Aranha Negra!'\n\nNundro lhes dá um mapa mostrando a rota mais curta para a Forja de Feitiços.",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "escort_nundro",
+          "texto": "Escoltar Nundro para a segurança primeiro",
+          "proximo": "wave_echo_cave_entrance"
+        },
+        {
+          "id": "proceed_immediately",
+          "texto": "Enviar Nundro embora e ir direto para a Forja",
+          "proximo": "forge_of_spells_approach"
+        }
+      ]
+    },
+    "black_spider_negotiation": {
+      "texto": "Vocês tentam negociar com Nezznar, a Aranha Negra (teste de Persuasão CD 20—ele é extremamente desconfiado e arrogante).\n\n'Negociar?' Nezznar ri friamente. 'Vocês, simples aventureiros, acham que têm algo a me oferecer? Eu passei anos procurando este lugar! Os segredos da Forja de Feitiços serão meus!'\n\nSe vocês tiverem algo valioso (como o Cajado de Glasstaff, informações sobre os Lordes da Aliança, ou pelo menos 1000 po em tesouros), ele pode considerar:\n\n'Muito bem. Talvez vocês sejam úteis. Jurem-me fidelidade, ajudem-me a desvendar os últimos segredos da forja, e deixarei que vivam. Vocês podem até compartilhar uma pequena parte do poder que reivindicarei. Recusem... e seus ossos se juntarão aos outros que apodrecem nesta mina.'",
+      "isCombat": false,
+      "opcoes": [
+        {
+          "id": "false_oath",
+          "texto": "Fingir jurar fidelidade e depois traí-lo (Enganação CD 22)",
+          "proximo": "combat_black_spider_final"
+        },
+        {
+          "id": "reject_offer",
+          "texto": "Rejeitar a oferta e lutar",
+          "proximo": "combat_black_spider_final"
+        },
+        {
+          "id": "truly_join",
+          "texto": "Verdadeiramente se juntar a ele (FINAL RUIM—a campanha termina com vocês se tornando servos do mal)",
+          "proximo": "epilogue"
         }
       ]
     }

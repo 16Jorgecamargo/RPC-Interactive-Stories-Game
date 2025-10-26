@@ -6,6 +6,8 @@ import {
   GetTimelineSchema,
   GameStateResponseSchema,
   TimelineResponseSchema,
+  RevertChapterSchema,
+  RevertChapterResponseSchema,
 } from '../../../models/game_schemas.js';
 
 export async function registerGameWrappers(app: FastifyInstance) {
@@ -42,6 +44,24 @@ export async function registerGameWrappers(app: FastifyInstance) {
     },
     handler: async (request, reply) => {
       const result = await gameService.getTimelineHistory(request.body);
+      return reply.send(result);
+    },
+  });
+
+  app.withTypeProvider<ZodTypeProvider>().route({
+    method: 'POST',
+    url: '/rpc/game/revert',
+    schema: {
+      tags: ['Game'],
+      summary: 'Reverter para o capítulo anterior',
+      description: 'Permite ao mestre voltar um capítulo na história atual.',
+      body: RevertChapterSchema,
+      response: {
+        200: RevertChapterResponseSchema,
+      },
+    },
+    handler: async (request, reply) => {
+      const result = await gameService.revertToPreviousChapter(request.body);
       return reply.send(result);
     },
   });
