@@ -33,6 +33,24 @@ class CustomColors {
   static const Color textSecondary = Color(0xFF8b7355);
   static const Color textDisabled = Color(0xFF4a3321);
 
+  // Cores específicas para Login/Register
+  static const Color panelBackground = Color(0xFFD4C5A0); // Fundo do painel
+  static const Color panelBorder = Color(0xFF8B7355); // Borda do painel
+  static const Color fieldBackground = Color(0xFF6B5D4F); // Fundo dos campos de texto
+  static const Color fieldBorder = Color(0xFF3B3119); // Borda dos campos e botões
+  static const Color fieldText = Color(0xFFDACCB0); // Texto dos campos e hints
+
+  // Cores dos botões (gradientes)
+  static const Color buttonGreenLight = Color(0xFF5A9E5E); // Botão primário - top
+  static const Color buttonGreenMedium = Color(0xFF4A7C4E); // Botão primário - middle
+  static const Color buttonGreenDark = Color(0xFF3B5F3E); // Botão primário - bottom
+  static const Color buttonBrownLight = Color(0xFF8B7355); // Botão secundário - top
+  static const Color buttonBrownMedium = Color(0xFF6B5D4F); // Botão secundário - middle
+  static const Color buttonBrownDark = Color(0xFF5A4D3F); // Botão secundário - bottom
+
+  // Cor de erro (validação)
+  static const Color errorText = Color(0xFFD32F2F);
+
   // Cores para partículas e efeitos
   static const Color particleGlow = Color(0xFF3a5555);
   static const Color particleLight = Color(0xFF5a7a7a);

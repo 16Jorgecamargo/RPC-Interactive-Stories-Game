@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
+import 'screens/session_screen.dart';
 import 'utils/custom_colors.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RPG Stories',
+      title: 'RPC Stories',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -25,11 +26,12 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: CustomColors.background,
         fontFamily: 'Zany',
       ),
-      initialRoute: '/',
+      initialRoute: '/session',
       routes: {
         '/': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/session': (context) => const SessionScreen(),
       },
     );
   }

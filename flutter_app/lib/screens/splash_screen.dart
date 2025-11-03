@@ -45,22 +45,22 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Navegar para login após 3 segundos
     Timer(const Duration(seconds: 3), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                const LoginScreen(),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        );
-      }
+      // if (mounted) {
+      //   Navigator.of(context).pushReplacement(
+      //     PageRouteBuilder(
+      //       pageBuilder: (context, animation, secondaryAnimation) =>
+      //           const LoginScreen(),
+      //       transitionsBuilder:
+      //           (context, animation, secondaryAnimation, child) {
+      //         return FadeTransition(
+      //           opacity: animation,
+      //           child: child,
+      //         );
+      //       },
+      //       transitionDuration: const Duration(milliseconds: 500),
+      //     ),
+      //   );
+      // }
     });
   }
 
@@ -72,59 +72,54 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomColors.background,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              CustomColors.backgroundDark,
-              CustomColors.background,
-              CustomColors.backgroundLight,
-            ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: CustomColors.background,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                CustomColors.backgroundDark,
+                CustomColors.background,
+                CustomColors.backgroundLight,
+              ],
+            ),
           ),
-        ),
-        child: Center(
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return FadeTransition(
-                opacity: _fadeAnimation,
-                child: ScaleTransition(
-                  scale: _scaleAnimation,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Logo
-                      Container(
-                        constraints: const BoxConstraints(
-                          maxWidth: 300,
-                          maxHeight: 300,
-                        ),
-                        child: Image.asset(
-                          'assets/images/LOGO.png',
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      // Loading indicator
-                      const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            CustomColors.particleLight,
+          child: SafeArea(
+            top: true,
+            child: Align(
+              alignment: const AlignmentDirectional(0.0, 0.0),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: AnimatedBuilder(
+                  animation: _controller,
+                  builder: (context, child) {
+                    return FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6.0),
+                          child: Image.asset(
+                            'assets/images/LOGO.png',
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.contain,
+                            alignment: const Alignment(0.0, 0.0),
                           ),
-                          strokeWidth: 3,
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ),
       ),

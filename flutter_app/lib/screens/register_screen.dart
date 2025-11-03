@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '../components/animated_background.dart';
-import '../components/custom_button.dart';
-import '../components/custom_text_field.dart';
+import '../utils/custom_colors.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -13,240 +11,207 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isLoading = false;
+  String _errorMessage = '';
 
   @override
   void dispose() {
     _usernameController.dispose();
-    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
 
   Future<void> _handleRegister() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
+    setState(() => _errorMessage = '');
 
-      // Mock: Simulando chamada ao backend
-      await Future.delayed(const Duration(seconds: 2));
+    // Validação manual dos campos
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
 
+    if (username.isEmpty && password.isEmpty && confirmPassword.isEmpty) {
+      setState(() => _errorMessage = 'Por favor preencha todos os campos');
+      return;
+    } else if (username.isEmpty) {
+      setState(() => _errorMessage = 'Por favor digite o nome do usuario');
+      return;
+    } else if (password.isEmpty) {
+      setState(() => _errorMessage = 'Por favor digite a senha');
+      return;
+    } else if (confirmPassword.isEmpty) {
+      setState(() => _errorMessage = 'Por favor confirme a senha');
+      return;
+    } else if (password != confirmPassword) {
+      setState(() => _errorMessage = 'As senhas nao coincidem');
+      return;
+    } else if (password.length < 6) {
+      setState(() => _errorMessage = 'A senha deve ter pelo menos 6 caracteres');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    // Mock: Simulando chamada ao backend
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (mounted) {
+      setState(() => _isLoading = false);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Conta criada com sucesso!'),
+          backgroundColor: CustomColors.success,
+        ),
+      );
+
+      // Voltar para login após 1 segundo
+      await Future.delayed(const Duration(seconds: 1));
       if (mounted) {
-        setState(() => _isLoading = false);
-
-        // Mock: Simulando sucesso
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Conta criada com sucesso!',
-              style: TextStyle(fontFamily: 'Zany'),
-            ),
-            backgroundColor: Color(0xFF4a7c4e),
-          ),
-        );
-
-        // Voltar para login após registro
-        await Future.delayed(const Duration(seconds: 1));
-        if (mounted) {
-          Navigator.pop(context);
-        }
+        Navigator.pop(context);
       }
     }
   }
 
-  void _navigateBack() {
+  void _navigateToLogin() {
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final isSmallScreen = screenWidth < 600;
+
     return Scaffold(
-      body: AnimatedBackground(
+        body: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            CustomColors.backgroundDark,
+            CustomColors.background,
+            CustomColors.backgroundLight,
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 20 : 40,
+              vertical: 20,
+            ),
+            child: Form(
+              key: _formKey,
+              child: SizedBox(
+                width: isSmallScreen ? screenWidth * 0.9 : 400,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.topCenter,
                   children: [
-                    // Logo/Título
-                    const Text(
-                      'RPG Stories',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Zany',
-                        fontSize: 48,
-                        color: Color(0xFFd4a574),
-                        shadows: [
-                          Shadow(
-                            color: Colors.black,
-                            offset: Offset(3, 3),
-                            blurRadius: 8,
+                    // Painel de fundo (camada de baixo)
+                    Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(top: 80),
+                      padding: const EdgeInsets.only(
+                        top: 120,
+                        left: 32,
+                        right: 32,
+                        bottom: 32,
+                      ),
+                      decoration: BoxDecoration(
+                        color: CustomColors.panelBackground,
+                        border: Border.all(
+                          color: CustomColors.panelBorder,
+                          width: 4,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          // Campo de Usuário
+                          _buildTextField(
+                            controller: _usernameController,
+                            hintText: 'USUARIO',
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Campo de Senha
+                          _buildTextField(
+                            controller: _passwordController,
+                            hintText: 'SENHA',
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Campo de Confirmar Senha
+                          _buildTextField(
+                            controller: _confirmPasswordController,
+                            hintText: 'CONFIRMAR SENHA',
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Mensagem de erro (aparece acima do botão de registro)
+                          if (_errorMessage.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Text(
+                                _errorMessage,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontFamily: 'Zany',
+                                  fontSize: 14,
+                                  color: CustomColors.errorText,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black26,
+                                      offset: Offset(1, 1),
+                                      blurRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                          // Botão de Registrar
+                          _buildButton(
+                            text: 'REGISTRAR',
+                            onPressed: _isLoading ? null : _handleRegister,
+                            isLoading: _isLoading,
+                          ),
+                          const SizedBox(height: 16),
+
+                          // Botão de Voltar ao Login
+                          _buildButton(
+                            text: 'VOLTAR AO LOGIN',
+                            onPressed: _navigateToLogin,
+                            isPrimary: false,
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Crie sua Conta',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Zany',
-                        fontSize: 18,
-                        color: Color(0xFF8b7355),
-                      ),
-                    ),
-                    const SizedBox(height: 48),
 
-                    // Painel de Registro com imagem de fundo
-                    Stack(
-                      children: [
-                        // Imagem do painel de pedra
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                            vertical: 40,
-                          ),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/painel_de_pedra.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          child: Column(
-                            children: [
-                              const Text(
-                                'Criar Conta',
-                                style: TextStyle(
-                                  fontFamily: 'Zany',
-                                  fontSize: 24,
-                                  color: Color(0xFFDACCB0),
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-
-                              // Campo Username
-                              CustomTextField(
-                                label: 'USUARIO',
-                                controller: _usernameController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Por favor, insira um usuário';
-                                  }
-                                  if (value.length < 3) {
-                                    return 'Usuário deve ter pelo menos 3 caracteres';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-
-                              // Campo Email
-                              CustomTextField(
-                                label: 'EMAIL',
-                                controller: _emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Por favor, insira seu email';
-                                  }
-                                  if (!value.contains('@')) {
-                                    return 'Email inválido';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-
-                              // Campo Senha
-                              CustomTextField(
-                                label: 'SENHA',
-                                controller: _passwordController,
-                                obscureText: true,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Por favor, insira uma senha';
-                                  }
-                                  if (value.length < 6) {
-                                    return 'Senha deve ter pelo menos 6 caracteres';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 16),
-
-                              // Campo Confirmar Senha
-                              CustomTextField(
-                                label: 'CONFIRMAR SENHA',
-                                controller: _confirmPasswordController,
-                                obscureText: true,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Por favor, confirme sua senha';
-                                  }
-                                  if (value != _passwordController.text) {
-                                    return 'As senhas não coincidem';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              const SizedBox(height: 32),
-
-                              // Botão Registrar
-                              _isLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator(
-                                        valueColor: AlwaysStoppedAnimation<Color>(
-                                          Color(0xFFd4a574),
-                                        ),
-                                      ),
-                                    )
-                                  : CustomButton(
-                                      text: 'Registrar',
-                                      onPressed: _handleRegister,
-                                      width: 200,
-                                      height: 60,
-                                    ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
-
-                    // Link para Login com seta papiro
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: _navigateBack,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/seta_papiro.png',
-                              width: 250,
-                              height: 80,
-                              fit: BoxFit.contain,
-                            ),
-                            const Positioned(
-                              child: Text(
-                                'Já tenho conta',
-                                style: TextStyle(
-                                  fontFamily: 'Zany',
-                                  fontSize: 22,
-                                  color: Color(0xFF3B3119),
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ],
+                    // Logo por cima (camada de cima - overlay)
+                    Positioned(
+                      top: isSmallScreen ? -25 : -149,
+                      child: IgnorePointer(
+                        child: Image.asset(
+                          'assets/images/LOGO.png',
+                          width: isSmallScreen ? screenWidth * 95 : 380,
+                          height: isSmallScreen ? 200 : 450,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
@@ -255,6 +220,118 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    ));
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String hintText,
+    bool obscureText = false,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: CustomColors.fieldBackground,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: CustomColors.fieldBorder,
+          width: 2,
+        ),
+      ),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        style: const TextStyle(
+          fontFamily: 'Zany',
+          color: CustomColors.fieldText,
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(
+            fontFamily: 'Zany',
+            color: CustomColors.fieldText,
+            fontSize: 14,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+          border: InputBorder.none,
+        ),
+        cursorColor: CustomColors.fieldText,
+      ),
+    );
+  }
+
+  Widget _buildButton({
+    required String text,
+    required VoidCallback? onPressed,
+    bool isPrimary = true,
+    bool isLoading = false,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isPrimary
+                ? [
+                    CustomColors.buttonGreenLight,
+                    CustomColors.buttonGreenMedium,
+                    CustomColors.buttonGreenDark,
+                  ]
+                : [
+                    CustomColors.buttonBrownLight,
+                    CustomColors.buttonBrownMedium,
+                    CustomColors.buttonBrownDark,
+                  ],
+          ),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: CustomColors.fieldBorder,
+            width: 3,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Center(
+          child: isLoading
+              ? const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      CustomColors.fieldText,
+                    ),
+                    strokeWidth: 3,
+                  ),
+                )
+              : Text(
+                  text,
+                  style: const TextStyle(
+                    fontFamily: 'Zany',
+                    fontSize: 18,
+                    color: CustomColors.fieldText,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black38,
+                        offset: Offset(1, 1),
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
         ),
       ),
     );
