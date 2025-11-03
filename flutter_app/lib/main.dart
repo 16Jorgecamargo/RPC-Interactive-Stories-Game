@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: CustomColors.background,
         fontFamily: 'Zany',
       ),
-      initialRoute: '/session',
+      initialRoute: '/session', //[ ] usar o spashscreen '/'
       routes: {
         '/': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),

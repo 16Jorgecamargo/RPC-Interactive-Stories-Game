@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../utils/custom_colors.dart';
+import '../widgets/app_background.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -65,33 +67,25 @@ class _LoginScreenState extends State<LoginScreen> {
     final isSmallScreen = screenWidth < 600;
 
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            CustomColors.backgroundDark,
-            CustomColors.background,
-            CustomColors.backgroundLight,
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(
-              horizontal: isSmallScreen ? 20 : 40,
-              vertical: 20,
-            ),
-            child: Form(
-              key: _formKey,
-              child: SizedBox(
-                width: isSmallScreen ? screenWidth * 0.9 : 400,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.topCenter,
-                  children: [
+      backgroundColor: Colors.transparent,
+      body: AppBackground(
+        imageAsset: 'assets/backgrounds/login.png',
+        overlayColor: Colors.black.withOpacity(0.25),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 20 : 40,
+                vertical: 20,
+              ),
+              child: Form(
+                key: _formKey,
+                child: SizedBox(
+                  width: isSmallScreen ? screenWidth * 0.9 : 400,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.topCenter,
+                    children: [
                     // Painel de fundo (camada de baixo)
                     Container(
                       width: double.infinity,

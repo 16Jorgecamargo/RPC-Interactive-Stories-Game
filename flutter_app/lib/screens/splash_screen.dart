@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-import '../utils/custom_colors.dart';
+
+import 'package:flutter/material.dart';
+
+import '../widgets/app_background.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Configurar animações
+    // Configurar animacoes
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -40,10 +42,10 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Iniciar animação
+    // Iniciar animacao
     _controller.forward();
 
-    // Navegar para login após 3 segundos
+    // Navegar para login apos 3 segundos
     Timer(const Duration(seconds: 3), () {
       // if (mounted) {
       //   Navigator.of(context).pushReplacement(
@@ -78,19 +80,10 @@ class _SplashScreenState extends State<SplashScreen>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: CustomColors.background,
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                CustomColors.backgroundDark,
-                CustomColors.background,
-                CustomColors.backgroundLight,
-              ],
-            ),
-          ),
+        backgroundColor: Colors.transparent,
+        body: AppBackground(
+          imageAsset: 'assets/backgrounds/splash.png',
+          overlayColor: Colors.black.withOpacity(0.2),
           child: SafeArea(
             top: true,
             child: Align(
@@ -104,14 +97,16 @@ class _SplashScreenState extends State<SplashScreen>
                       opacity: _fadeAnimation,
                       child: ScaleTransition(
                         scale: _scaleAnimation,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6.0),
-                          child: Image.asset(
-                            'assets/images/LOGO.png',
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.contain,
-                            alignment: const Alignment(0.0, 0.0),
+                        child: SizedBox(
+                          width: 800,
+                          height: 800,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6.0),
+                            child: Image.asset(
+                              'assets/images/LOGO.png',
+                              fit: BoxFit.contain,
+                              alignment: const Alignment(0.0, 0.0),
+                            ),
                           ),
                         ),
                       ),
