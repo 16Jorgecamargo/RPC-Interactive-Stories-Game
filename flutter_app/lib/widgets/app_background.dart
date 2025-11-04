@@ -12,7 +12,7 @@ class AppBackground extends StatelessWidget {
 
   final String imageAsset;
   final Widget child;
-  final Alignment alignment;
+  final AlignmentGeometry alignment;
   final Gradient? overlayGradient;
   final Color? overlayColor;
 

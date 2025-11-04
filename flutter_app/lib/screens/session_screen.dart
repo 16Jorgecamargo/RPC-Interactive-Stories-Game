@@ -126,7 +126,7 @@ class _SessionScreenState extends State<SessionScreen> {
     required double top,
     required double left,
     double size = 50,
-    double rotation = 0.0, // Rotacao em radianos
+    double rotation = 0.0, 
   }) {
     return Positioned(
       top: top,

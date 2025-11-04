@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_background.dart';
-import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Configurar animacoes
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -42,7 +40,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Iniciar animacao
     _controller.forward();
 
     // Navegar para login apos 3 segundos
@@ -84,6 +81,7 @@ class _SplashScreenState extends State<SplashScreen>
         body: AppBackground(
           imageAsset: 'assets/backgrounds/splash.png',
           overlayColor: Colors.black.withOpacity(0.2),
+          alignment: const Alignment(0.0, 8.0),
           child: SafeArea(
             top: true,
             child: Align(
