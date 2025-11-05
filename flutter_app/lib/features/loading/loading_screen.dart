@@ -214,22 +214,52 @@ class _LoadingScreenState extends State<LoadingScreen>
       builder: (context, child) {
         return Transform.scale(
           scale: _pulseAnimation.value,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFFFFD700).withOpacity(0.3 * _pulseAnimation.value),
-                  blurRadius: 40,
-                  spreadRadius: 10,
+          child: SizedBox(
+            width: isSmallScreen ? 250 : 350,
+            height: isSmallScreen ? 250 : 350,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Brilho dourado externo (maior)
+                Container(
+                  width: (isSmallScreen ? 250 : 350) * 0.85,
+                  height: (isSmallScreen ? 250 : 350) * 0.85,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFFD700)
+                            .withOpacity(_pulseAnimation.value * 0.4),
+                        blurRadius: 80 * _pulseAnimation.value,
+                        spreadRadius: 30 * _pulseAnimation.value,
+                      ),
+                    ],
+                  ),
+                ),
+                // Brilho laranja interno (menor)
+                Container(
+                  width: (isSmallScreen ? 250 : 350) * 0.7,
+                  height: (isSmallScreen ? 250 : 350) * 0.7,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFFF6B35)
+                            .withOpacity(_pulseAnimation.value * 0.3),
+                        blurRadius: 50 * _pulseAnimation.value,
+                        spreadRadius: 15 * _pulseAnimation.value,
+                      ),
+                    ],
+                  ),
+                ),
+                // Logo por cima dos brilhos
+                Image.asset(
+                  'assets/shared/logo.png',
+                  width: isSmallScreen ? 250 : 350,
+                  height: isSmallScreen ? 250 : 350,
+                  fit: BoxFit.contain,
                 ),
               ],
-            ),
-            child: Image.asset(
-              'assets/shared/logo.png',
-              width: isSmallScreen ? 250 : 350,
-              height: isSmallScreen ? 250 : 350,
-              fit: BoxFit.contain,
             ),
           ),
         );

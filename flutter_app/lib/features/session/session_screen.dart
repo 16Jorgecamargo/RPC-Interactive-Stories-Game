@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,11 @@ class SessionScreen extends StatefulWidget {
   State<SessionScreen> createState() => _SessionScreenState();
 }
 
-class _SessionScreenState extends State<SessionScreen> {
+class _SessionScreenState extends State<SessionScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _transitionController;
+  late Animation<double> _zoomAnimation;
+  late Animation<double> _blurAnimation;
+  bool _isTransitioning = false;
   static const double _bookAspectRatio = 934 / 612;
   static const double _bookReferenceWidth = 934;
   static const double _buttonScale = 0.055;
@@ -38,6 +43,45 @@ class _SessionScreenState extends State<SessionScreen> {
   bool _isHovering2 = false;
   bool _isHovering3 = false;
   int? _hoveredCard;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Configurar animação de transição
+    _transitionController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    _zoomAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.5,
+    ).animate(CurvedAnimation(
+      parent: _transitionController,
+      curve: Curves.easeInOut,
+    ));
+
+    _blurAnimation = Tween<double>(
+      begin: 0.0,
+      end: 10.0,
+    ).animate(CurvedAnimation(
+      parent: _transitionController,
+      curve: Curves.easeIn,
+    ));
+
+    _transitionController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.pushReplacementNamed(context, '/lobby-transition');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _transitionController.dispose();
+    super.dispose();
+  }
 
   void _showCodeDialog() {
     showDialog(
@@ -110,8 +154,11 @@ class _SessionScreenState extends State<SessionScreen> {
   }
 
   void _createSession() {
-    // Navega para a transição em vídeo antes do lobby
-    Navigator.pushReplacementNamed(context, '/lobby-transition');
+    // Inicia animação de zoom out + blur antes de navegar
+    setState(() {
+      _isTransitioning = true;
+    });
+    _transitionController.forward();
   }
 
   Widget _buildBookmarkButton({
@@ -272,17 +319,30 @@ class _SessionScreenState extends State<SessionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Stack(
-        children: [
-          // Background com as velas
-          AppBackground(
-            imageAsset: 'assets/session/background.png',
-            overlayColor: Colors.black.withOpacity(0.2),
-            child: const SizedBox.expand(),
-          ),
+      body: AnimatedBuilder(
+        animation: _transitionController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _zoomAnimation.value,
+            child: Stack(
+              children: [
+                // Background com zoom (SEM blur)
+                AppBackground(
+                  imageAsset: 'assets/session/background.png',
+                  overlayColor: Colors.black.withOpacity(0.2),
+                  child: const SizedBox.expand(),
+                ),
 
-          // Conteúdo principal (livro e botões)
-          LayoutBuilder(
+                // GUI com zoom E blur
+                ImageFiltered(
+                  imageFilter: ImageFilter.blur(
+                    sigmaX: _blurAnimation.value,
+                    sigmaY: _blurAnimation.value,
+                  ),
+                  child: Stack(
+                    children: [
+                      // Conteúdo principal (livro e botões)
+                      LayoutBuilder(
           builder: (context, constraints) {
             final widthFraction = constraints.maxWidth < 600 ? 0.95 : 0.6;
             var bookWidth = constraints.maxWidth * widthFraction;
@@ -370,30 +430,36 @@ class _SessionScreenState extends State<SessionScreen> {
           },
         ),
 
-          // Animações de luz das velas (por cima do livro para iluminá-lo)
-          const Positioned.fill(
-            child: IgnorePointer(
-              child: Stack(
-                children: [
-                  // Vela superior esquerda (no topo da chama)
-                  CandleLight(
-                    position: Offset(0.177, 0.105), // Posicionada na chama
-                    size: 140,
-                    intensity: 0.85,
-                    color: Color(0xFFFFB84D), // Amarelo alaranjado quente
+                      // Animações de luz das velas (por cima do livro para iluminá-lo)
+                      const Positioned.fill(
+                        child: IgnorePointer(
+                          child: Stack(
+                            children: [
+                              // Vela superior esquerda (no topo da chama)
+                              CandleLight(
+                                position: Offset(0.177, 0.105), // Posicionada na chama
+                                size: 140,
+                                intensity: 0.85,
+                                color: Color(0xFFFFB84D), // Amarelo alaranjado quente
+                              ),
+                              // Vela inferior direita (no topo da chama)
+                              CandleLight(
+                                position: Offset(0.750, 0.765), // Posicionada na chama
+                                size: 140,
+                                intensity: 0.85,
+                                color: Color(0xFFFFB84D), // Amarelo alaranjado quente
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Vela inferior direita (no topo da chama)
-                  CandleLight(
-                    position: Offset(0.750, 0.765), // Posicionada na chama
-                    size: 140,
-                    intensity: 0.85,
-                    color: Color(0xFFFFB84D), // Amarelo alaranjado quente
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

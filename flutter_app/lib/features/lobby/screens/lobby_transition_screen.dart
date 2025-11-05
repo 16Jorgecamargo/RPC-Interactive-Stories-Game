@@ -32,8 +32,8 @@ class _LobbyTransitionScreenState extends State<LobbyTransitionScreen> {
         _isInitialized = true;
       });
 
-      // Define o ponto de início: 00:02:35 = 2 minutos e 35 segundos = 155 segundos
-      await _controller.seekTo(const Duration(seconds: 155));
+      // Define o ponto de início: 00:00:02:30 = 2 segundos e 30 frames (≈ 3 segundos em 30fps)
+      await _controller.seekTo(const Duration(seconds: 2, milliseconds: 30));
 
       // Adiciona listener para quando o vídeo terminar
       _controller.addListener(_videoListener);
@@ -87,10 +87,14 @@ class _LobbyTransitionScreenState extends State<LobbyTransitionScreen> {
                   _navigateToLobby();
                 }
               },
-              child: Center(
-                child: AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
+              child: SizedBox.expand(
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: _controller.value.size.width,
+                    height: _controller.value.size.height,
+                    child: VideoPlayer(_controller),
+                  ),
                 ),
               ),
             )
