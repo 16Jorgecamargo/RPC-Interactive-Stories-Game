@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   flame: ^1.17.0
+  video_player: ^2.8.2
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +60,28 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
+  # Assets organizados por feature
   assets:
-    - assets/images/
-    - assets/backgrounds/
+    # Splash
+    - assets/splash/
+
+    # Auth (Login/Register)
+    - assets/auth/
+
+    # Session
+    - assets/session/
+    - assets/session/bookmarks/
+
+    # Lobby
+    - assets/lobby/
+
+    # Movies (vídeos de transição)
+    - assets/movies/
+
+    # Shared (recursos compartilhados)
+    - assets/shared/
+    - assets/shared/characters/
+    - assets/shared/ui_elements/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -78,4 +97,4 @@ flutter:
   fonts:
     - family: Zany
       fonts:
-        - asset: assets/fonts/Zany-yYngM.ttf
+        - asset: assets/shared/fonts/Zany-yYngM.ttf

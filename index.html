@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Login com Vagalumes — movimento misto</title>
+<style>
+  html, body { margin:0; height:100%; overflow:hidden; background:#000; font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  body { background: radial-gradient(ellipse at bottom, #06152b 0%, #000 65%); }
+  canvas { position:fixed; inset:0; display:block; z-index:0; }
+  #login{
+    position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:min(92vw, 380px);
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:16px; padding:28px 24px;
+    color:#fff; text-align:center; z-index:2; backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(0,255,160,0.12), inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  #login h2 { margin:0 0 12px; letter-spacing:2px; }
+  #login input {
+    width:100%; margin:8px 0; padding:12px 14px; border-radius:10px;
+    border:none; background:rgba(255,255,255,0.14); color:#fff; outline:none;
+  }
+  #login button {
+    margin-top:10px; width:100%; padding:12px 14px; border:none; border-radius:10px;
+    background:#00ffcc; color:#002015; font-weight:700; cursor:pointer;
+    box-shadow: 0 6px 18px rgba(0,255,180,0.25);
+  }
+  .corner-glow { position:fixed; width:16px; height:16px; border-radius:50%; pointer-events:none; z-index:1; }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+
+<div id="login">
+  <h2>LOGIN</h2>
+  <input placeholder="Usuário" />
+  <input type="password" placeholder="Senha" />
+  <button>Entrar</button>
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const CFG = {
+  count: 52,
+  color: [255, 238, 180],
+  coreAlpha: 0.35,
+  minSize: 4, maxSize: 9,
+  maxSpeed: 55,          // px/s
+  maxForce: 55,          // px/s²
+  separationRadius: 36,
+  separationForce: 42,
+  fieldScale: 0.0018,
+  fieldStrength: 55,
+  windStrength: 8,
+  wanderStrength: 18,
+  blinkFreqFly: [1.2, 2.0],
+  blinkFreqLanded: [0.35, 0.7],
+  landChancePerSec: 0.16,
+  landSlowRadius: 90,
+  dwellTime: [2.5, 6.0],
+  takeoffKick: 90,
+  jitterWhileLanded: 0.5,
+  cornerCapacity: 2,
+
+  /* === Interação com mouse === */
+  fearFraction: 0.45,
+  fearRadius: 140,         // CSS px (convertido p/ DPR)
+  fearForce: 160,
+  fearSpeedBoost: 1.4,
+  panicRadiusAnchors: 120,
+
+  /* === Mistura de estilos de movimento === */
+  floatFraction: 0.38,     // 👈 porcentagem que usa movimento “FloatingParticles”
+  floatSpeed: 0.22,        // equivalente ao widget.speed (~0.18–0.4)
+  floatMinOpacity: 0.25,   // só para variar levemente a estética
+  floatMaxOpacity: 0.65,
+  floatEdgePadding: 0.08,  // igual ao _edgePadding do Flutter
+  floatSpawnFromEdges: true
+};
+
+/* ============ Canvas & layout ============ */
+const canvas = document.getElementById('fx');
+const ctx = canvas.getContext('2d', { alpha: true });
+let W=0,H=0, DPR = Math.max(1, window.devicePixelRatio || 1);
+function resize(){
+  W = canvas.width = Math.round(innerWidth * DPR);
+  H = canvas.height = Math.round(innerHeight * DPR);
+  canvas.style.width = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+}
+addEventListener('resize', ()=>{ resize(); updateAnchors(); });
+resize();
+
+/* ====== Mouse ====== */
+const mouse = { x:null, y:null, active:false };
+addEventListener('pointermove', (e)=>{ mouse.x = e.clientX*DPR; mouse.y = e.clientY*DPR; mouse.active = true; });
+addEventListener('pointerleave', ()=>{ mouse.active = false; });
+
+/* ====== Âncoras (quinas do login) ====== */
+const loginEl = document.getElementById('login');
+const anchors = [
+  { id:'tl', x:0, y:0, occupied:[] },
+  { id:'tr', x:0, y:0, occupied:[] },
+  { id:'bl', x:0, y:0, occupied:[] },
+  { id:'br', x:0, y:0, occupied:[] }
+];
+const cornerGlows = { tl: mkCornerGlow(), tr: mkCornerGlow(), bl: mkCornerGlow(), br: mkCornerGlow() };
+function mkCornerGlow(){
+  const n = document.createElement('div');
+  n.className = 'corner-glow';
+  n.style.boxShadow = '0 0 26px 8px rgba(180,255,180,0.25)';
+  document.body.appendChild(n);
+  return n;
+}
+function posGlow(el, x, y){ el.style.left = x+'px'; el.style.top = y+'px'; }
+function updateAnchors(){
+  const r = loginEl.getBoundingClientRect();
+  anchors[0].x = (r.left) * DPR;  anchors[0].y = (r.top) * DPR;    anchors[0].id='tl';
+  anchors[1].x = (r.right) * DPR; anchors[1].y = (r.top) * DPR;    anchors[1].id='tr';
+  anchors[2].x = (r.left) * DPR;  anchors[2].y = (r.bottom) * DPR; anchors[2].id='bl';
+  anchors[3].x = (r.right) * DPR; anchors[3].y = (r.bottom) * DPR; anchors[3].id='br';
+
+  posGlow(cornerGlows.tl, r.left-8,  r.top-8);
+  posGlow(cornerGlows.tr, r.right-8, r.top-8);
+  posGlow(cornerGlows.bl, r.left-8,  r.bottom-8);
+  posGlow(cornerGlows.br, r.right-8, r.bottom-8);
+
+  for (const a of anchors) {
+    const el = cornerGlows[a.id];
+    const occ = a.occupied.length;
+    el.style.opacity = occ ? Math.min(0.85, 0.35 + occ*0.28) : 0.0;
+    el.style.filter = 'blur(' + (occ ? 0 : 2) + 'px)';
+  }
+}
+updateAnchors();
+
+/* ============ Utils / Noise ============ */
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function smoothstep(t){ return t*t*(3-2*t); }
+function randIn(a,b){ return Math.random()*(b-a)+a; }
+function hash3(ix,iy,iz){ let x=Math.sin(ix*127.1 + iy*311.7 + iz*74.7)*43758.5453; return x-Math.floor(x); }
+function noise3(x,y,z){
+  const xi=Math.floor(x), yi=Math.floor(y), zi=Math.floor(z);
+  const xf=x-xi, yf=y-yi, zf=z-zi;
+  const u=smoothstep(xf), v=smoothstep(yf), w=smoothstep(zf);
+  function n(i,j,k){ return hash3(xi+i, yi+j, zi+k); }
+  const n000=n(0,0,0), n100=n(1,0,0), n010=n(0,1,0), n110=n(1,1,0);
+  const n001=n(0,0,1), n101=n(1,0,1), n011=n(0,1,1), n111=n(1,1,1);
+  const x00=lerp(n000,n100,u), x10=lerp(n010,n110,u);
+  const x01=lerp(n001,n101,u), x11=lerp(n011,n111,u);
+  const y0=lerp(x00,x10,v), y1=lerp(x01,x11,v);
+  return lerp(y0,y1,w);
+}
+function curlField(px, py, t) {
+  const s = CFG.fieldScale, tt=t*0.12, eps=0.0007;
+  const n1 = noise3(px*s, py*s, tt);
+  const n2 = noise3((px+eps)*s, py*s, tt);
+  const n3 = noise3(px*s, (py+eps)*s, tt);
+  const ddx = (n2 - n1)/eps;
+  const ddy = (n3 - n1)/eps;
+  return { x:  ddy, y: -ddx };
+}
+
+/* ====== Perfil FLOAT (estilo FloatingParticles) ====== */
+function floatRandomSeed(){
+  const sizeNorm = randIn(CFG.minSize, CFG.maxSize);
+  const speedMultiplier = (()=>{
+    const range = Math.max(0.0001, CFG.maxSize - CFG.minSize);
+    const normalized = ((sizeNorm - CFG.minSize)/range);
+    return 0.35 + normalized * 0.9;
+  })();
+
+  const ep = CFG.floatEdgePadding;
+  const inwardMin = 0.2, inwardMax = 0.55, lateralRange = 0.35;
+  const edgeOffset = ep * (0.55 + Math.random()*0.6);
+
+  let posN, drift;
+  if (!CFG.floatSpawnFromEdges){
+    posN = { x: Math.random(), y: Math.random() };
+    drift = { x: Math.random()*2 - 1, y: Math.random()*2 - 1 };
+  } else {
+    const roll = Math.random();
+    const topW=0.15, botW=0.15, leftW=0.35;
+    let side = (roll<topW)?0 : (roll<topW+botW)?1 : (roll<topW+botW+leftW)?2 : 3;
+    switch(side){
+      case 0: posN={x:Math.random(), y:-edgeOffset}; drift={x:(Math.random()*lateralRange)-lateralRange/2, y: inwardMin+Math.random()*(inwardMax-inwardMin)}; break;
+      case 1: posN={x:Math.random(), y: 1+edgeOffset}; drift={x:(Math.random()*lateralRange)-lateralRange/2, y:- (inwardMin+Math.random()*(inwardMax-inwardMin))}; break;
+      case 2: posN={x:-edgeOffset, y:Math.random()}; drift={x: inwardMin+Math.random()*(inwardMax-inwardMin), y:(Math.random()*lateralRange)-lateralRange/2}; break;
+      default: posN={x:1+edgeOffset, y:Math.random()}; drift={x: -(inwardMin+Math.random()*(inwardMax-inwardMin)), y:(Math.random()*lateralRange)-lateralRange/2};
+    }
+  }
+
+  return {
+    posN,                   // posição normalizada de origem
+    drift,                  // direção normalizada
+    phase: Math.random()*Math.PI*2,
+    sizeNorm,               // apenas para consistência com cálculo do speedMultiplier
+    speedMultiplier,
+    lifetime: 3.0 + Math.random()*2.5,
+    age: 0
+  };
+}
+function wrapN(v, pad){
+  const range = 1 + pad*2;
+  let x=v;
+  while (x < -pad) x += range;
+  while (x > 1+pad) x -= range;
+  return x;
+}
+
+/* ============ Partículas (FSM + medo + 2 perfis) ============ */
+const State = { FLYING:0, SEEK:1, LANDING:2, LANDED:3 };
+const Profile = { CURL:0, FLOAT:1 };
+let nextId = 1;
+
+class Firefly {
+  constructor() {
+    this.id = nextId++;
+    this.pos = { x: Math.random()*W, y: Math.random()*H };
+    this.vel = { x: randIn(-20,20), y: randIn(-20,20) };
+    this.acc = { x:0, y:0 };
+    this.size = randIn(CFG.minSize, CFG.maxSize) * DPR;
+    this.baseAlpha = randIn(0.22, 0.5);
+    this.phase = Math.random()*Math.PI*2;
+    this.state = State.FLYING;
+    this.target = null;
+    this.landingSince = 0;
+    this.dwell = 0;
+    this.blinkHz = randIn(...CFG.blinkFreqFly);
+    this._blinkHzLanded = null;
+
+    // perfil de movimento
+    this.profile = (Math.random() < CFG.floatFraction) ? Profile.FLOAT : Profile.CURL;
+    if (this.profile === Profile.FLOAT) {
+      this.floatSeed = floatRandomSeed();
+      // coloca o núcleo próximo do local calculado pra iniciar coerente
+      const initial = this._floatTarget(0);
+      this.pos.x = initial.x; this.pos.y = initial.y;
+      this.baseAlpha = randIn(CFG.floatMinOpacity, CFG.floatMaxOpacity);
+    }
+
+    // medo
+    this.fearful = Math.random() < CFG.fearFraction;
+    this.isScared = false;
+  }
+
+  /* —— lógica de âncoras —— */
+  chooseLanding(anchors){
+    const free = anchors.filter(a => a.occupied.length < CFG.cornerCapacity);
+    if (!free.length) return;
+    let best = null, bestD = 1e9;
+    for (const a of free){
+      const dx = a.x - this.pos.x, dy = a.y - this.pos.y;
+      const d = Math.hypot(dx,dy);
+      if (d < bestD){ bestD = d; best = a; }
+    }
+    if (best){
+      this.target = best;
+      best.occupied.push(this.id);
+      this.state = State.SEEK;
+    }
+  }
+  releaseAnchor(){
+    if (!this.target) return;
+    const arr = this.target.occupied;
+    const i = arr.indexOf(this.id); if (i>=0) arr.splice(i,1);
+    this.target = null;
+  }
+
+  /* —— forças utilitárias —— */
+  steerLimit(vx,vy,max){ const m=Math.hypot(vx,vy); if (m>max){const k=max/m; return {x:vx*k,y:vy*k};} return {x: vx,y: vy}; }
+  addForce(fx,fy){ this.acc.x += fx; this.acc.y += fy; }
+
+  /* —— perfil FLOAT: compute target do frame (estilo FloatingParticles) —— */
+  _floatTarget(globalTime){
+    const s = this.floatSeed;
+    // avança idade (como o widget faz: baseMovement = delta * speed; aqui somamos fora)
+    const ep = CFG.floatEdgePadding;
+    const wave = Math.sin(globalTime*2*Math.PI + s.phase);
+    const rawX = s.posN.x + s.drift.x * s.age;
+    const rawY = s.posN.y + s.drift.y * s.age;
+    const offX = wrapN(rawX, ep);
+    const offY = wrapN(rawY, ep);
+    const vertical = clamp(offY + wave*0.02, -ep, 1+ep);
+    return { x: offX * W, y: vertical * H };
+  }
+
+  applyFearRepulsion(){
+    this.isScared = false;
+    if (!mouse.active || !this.fearful) return;
+
+    const fr = CFG.fearRadius * DPR;
+    const dx = this.pos.x - mouse.x, dy = this.pos.y - mouse.y;
+    const d2 = dx*dx + dy*dy;
+    if (d2 < fr*fr){
+      const d = Math.sqrt(d2) || 1;
+      const falloff = 1 - (d / fr);
+      const force = CFG.fearForce * falloff*falloff;
+      this.addForce((dx/d)*force, (dy/d)*force);
+      this.isScared = true;
+    }
+  }
+
+  update(dt, t, others){
+    // chance de pouso quando FLYING
+    if (this.state === State.FLYING){
+      const p = 1 - Math.exp(-CFG.landChancePerSec * dt);
+      if (Math.random() < p) this.chooseLanding(anchors);
+    }
+
+    // forças de "voo livre" por perfil
+    if (this.state === State.FLYING){
+      if (this.profile === Profile.CURL){
+        // curl field + vento + wander
+        const f = curlField(this.pos.x, this.pos.y, t);
+        this.addForce(f.x * CFG.fieldStrength, f.y * CFG.fieldStrength);
+        const wx = Math.cos(t*0.17)*CFG.windStrength;
+        const wy = Math.sin(t*0.13)*CFG.windStrength*0.6;
+        this.addForce(wx, wy);
+        const angle = (noise3(this.id*7.13, t*0.45, 0)*Math.PI*2);
+        this.addForce(Math.cos(angle)*CFG.wanderStrength, Math.sin(angle)*CFG.wanderStrength);
+      } else {
+        // steering até o target FLOAT (gera a mesma trajetória base do Flutter)
+        const s = this.floatSeed;
+        s.age += dt * CFG.floatSpeed * s.speedMultiplier;
+        if (s.age >= s.lifetime){ this.floatSeed = floatRandomSeed(); }
+        const tgt = this._floatTarget(t);
+        const dx = tgt.x - this.pos.x, dy = tgt.y - this.pos.y;
+        const desiredX = dx * 2.0;  // ganho de aproximação
+        const desiredY = dy * 2.0;
+        const steer = this.steerLimit(desiredX - this.vel.x, desiredY - this.vel.y, CFG.maxForce*0.9);
+        this.addForce(steer.x, steer.y);
+        // um pouquinho de vento pra integração com o resto da cena
+        const wx = Math.cos(t*0.12)*CFG.windStrength*0.35;
+        const wy = Math.sin(t*0.16)*CFG.windStrength*0.22;
+        this.addForce(wx, wy);
+      }
+
+      // separação local (boids light) — comum aos dois perfis
+      let sx=0, sy=0, n=0;
+      for (const o of others){
+        if (o===this) continue;
+        const dx = this.pos.x - o.pos.x, dy = this.pos.y - o.pos.y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < (CFG.separationRadius*DPR)**2){
+          const d = Math.sqrt(d2)+1e-6;
+          sx += dx/d; sy += dy/d; n++;
+        }
+      }
+      if (n>0){ const k = CFG.separationForce / n; this.addForce(sx*k, sy*k); }
+    }
+
+    // repulsão por medo, em qualquer estado
+    this.applyFearRepulsion();
+
+    // SEEK / ARRIVE para quina
+    if ((this.state === State.SEEK || this.state === State.LANDING) && this.target){
+      const tx = this.target.x, ty = this.target.y;
+      const dx = tx - this.pos.x, dy = ty - this.pos.y;
+      const dist = Math.hypot(dx,dy);
+
+      // mouse perto da quina → aborta
+      if (mouse.active){
+        const md = Math.hypot(tx - mouse.x, ty - mouse.y);
+        if (md < CFG.panicRadiusAnchors*DPR){ this.state = State.FLYING; this.releaseAnchor(); }
+      }
+
+      const desiredSpeed = (dist < CFG.landSlowRadius*DPR)
+        ? lerp(0, CFG.maxSpeed, dist/(CFG.landSlowRadius*DPR))
+        : CFG.maxSpeed;
+      const steer = this.steerLimit(dx/(dist||1)*desiredSpeed - this.vel.x,
+                                    dy/(dist||1)*desiredSpeed - this.vel.y,
+                                    CFG.maxForce);
+      this.addForce(steer.x, steer.y);
+
+      if (dist < Math.max(6*DPR, this.size*0.7)){
+        this.state = State.LANDING;
+        this.landingSince = 0;
+        this.dwell = randIn(...CFG.dwellTime);
+        this.vel.x *= 0.25; this.vel.y *= 0.25;
+      }
+    }
+
+    if (this.state === State.LANDING){
+      this.landingSince += dt;
+      if (this.target){
+        const dx = this.target.x - this.pos.x, dy = this.target.y - this.pos.y;
+        this.addForce(dx*10, dy*10); // mola amortecida
+      }
+      if (this.landingSince > 0.25) { this.state = State.LANDED; this.landingSince = 0; }
+    }
+
+    if (this.state === State.LANDED){
+      this.landingSince += dt;
+      const j = CFG.jitterWhileLanded * DPR;
+      this.pos.x += (Math.random()-0.5)*j;
+      this.pos.y += (Math.random()-0.5)*j;
+      this.blinkHz = this._blinkHzLanded ??= randIn(...CFG.blinkFreqLanded);
+    } else {
+      if (!this._blinkHzLanded) this.blinkHz = randIn(...CFG.blinkFreqFly);
+    }
+
+    // integração
+    this.vel.x += this.acc.x * dt;
+    this.vel.y += this.acc.y * dt;
+    this.vel.x *= (1 - 0.7*dt);
+    this.vel.y *= (1 - 0.7*dt);
+
+    const maxSp = (this.isScared ? CFG.maxSpeed*CFG.fearSpeedBoost : CFG.maxSpeed);
+    const sp = Math.hypot(this.vel.x, this.vel.y);
+    if (sp > maxSp){ const s=maxSp/sp; this.vel.x*=s; this.vel.y*=s; }
+
+    this.pos.x += this.vel.x * dt;
+    this.pos.y += this.vel.y * dt;
+
+    // wrap suave na borda
+    const m = 8*DPR;
+    if (this.pos.x < -m) this.pos.x = W + m;
+    if (this.pos.x > W + m) this.pos.x = -m;
+    if (this.pos.y < -m) this.pos.y = H + m;
+    if (this.pos.y > H + m) this.pos.y = -m;
+
+    this.acc.x = this.acc.y = 0;
+  }
+
+  forceTakeoffFromMouse(){
+    if (this.state === State.LANDED || this.state === State.LANDING){
+      this.state = State.FLYING;
+      this.landingSince = 0;
+      let vx, vy;
+      if (mouse.active){
+        const dx = this.pos.x - mouse.x, dy = this.pos.y - mouse.y;
+        const d = Math.hypot(dx,dy)||1;
+        vx = (dx/d)*CFG.takeoffKick*1.2;
+        vy = (dy/d)*CFG.takeoffKick*1.2;
+      } else {
+        const a = Math.random()*Math.PI*2;
+        vx = Math.cos(a)*CFG.takeoffKick; vy = Math.sin(a)*CFG.takeoffKick;
+      }
+      this.vel.x += vx; this.vel.y += vy;
+      this.releaseAnchor();
+      this._blinkHzLanded = null;
+      this.blinkHz = randIn(...CFG.blinkFreqFly);
+
+      // se for FLOAT, re-semeia o caminho pra não “voltar” na mesma rota imediatamente
+      if (this.profile === Profile.FLOAT){
+        this.floatSeed = floatRandomSeed();
+      }
+    }
+  }
+
+  draw(t){
+    const hz = this.blinkHz;
+    const blink = 0.5 + 0.5*Math.sin((t + this.phase)*Math.PI*2*hz);
+    const baseA = (this.state===State.LANDED ? 0.22 : CFG.coreAlpha);
+    const a = clamp(baseA + blink*0.6, 0, 1);
+
+    const x = this.pos.x, y = this.pos.y;
+    const rGlow = this.size * (this.state===State.LANDED ? 3.2 : 2.2);
+    const rCore = this.size*0.55;
+
+    const g = ctx.createRadialGradient(x,y,0, x,y,rGlow);
+    const c = CFG.color;
+    const rgba = (op)=>`rgba(${c[0]},${c[1]},${c[2]},${op})`;
+    const mult = (this.state===State.LANDED ? 1.0 : 1.3);
+    g.addColorStop(0.00, rgba(0.60*a*mult));
+    g.addColorStop(0.35, rgba(0.28*a));
+    g.addColorStop(1.00, rgba(0.0));
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x,y,rGlow,0,Math.PI*2); ctx.fill();
+
+    ctx.fillStyle = rgba(0.85*a);
+    ctx.beginPath(); ctx.arc(x,y,rCore,0,Math.PI*2); ctx.fill();
+  }
+}
+
+/* ============ Sistema ============ */
+const bugs = Array.from({length: CFG.count}, ()=> new Firefly());
+
+function triggerPanicIfMouseNearAnchor(){
+  if (!mouse.active) return;
+  const panicR = CFG.panicRadiusAnchors * DPR;
+  for (const a of anchors){
+    const d = Math.hypot((a.x - mouse.x), (a.y - mouse.y));
+    if (d < panicR){
+      for (const b of bugs) b.forceTakeoffFromMouse();
+      return;
+    }
+  }
+}
+
+let last = performance.now()/1000;
+function frame(nowMs){
+  const now = nowMs/1000;
+  let dt = now - last; last = now;
+  dt = Math.min(dt, 1/30);
+
+  if ((now*10|0) % 5 === 0) updateAnchors();
+  triggerPanicIfMouseNearAnchor();
+
+  ctx.clearRect(0,0,W,H);
+  for (const b of bugs) b.update(dt, now, bugs);
+  for (const b of bugs) b.draw(now);
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
