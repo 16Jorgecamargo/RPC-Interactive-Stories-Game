@@ -56,6 +56,20 @@ class PlayerModel {
         hasCharacter: false,
         isCurrentUser: false,
       ),
+      const PlayerModel(
+        id: '3',
+        playerName: 'Ciclano',
+        characterName: 'Morgana',
+        characterClass: 'Maga',
+        hasCharacter: true,
+        isCurrentUser: false,
+      ),
+      const PlayerModel(
+        id: '4',
+        playerName: 'Fulano',
+        hasCharacter: false,
+        isCurrentUser: false,
+      ),
     ];
   }
 }

@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
     // Navegar para login após 5 segundos (tempo para apreciar as animações)
     Timer(const Duration(seconds: 5), () {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed('/login');
+        //Navigator.of(context).pushReplacementNamed('/login');
       }
     });
   }

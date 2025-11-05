@@ -28,120 +28,52 @@ class _PlayerCardState extends State<PlayerCard> {
       onExit: (_) => setState(() => _isHovering = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: const Color(0xFFD4AF6A).withOpacity(0.95),
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: const Color(0xFF8B6F47),
-            width: 3,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(_isHovering ? 0.5 : 0.3),
-              blurRadius: _isHovering ? 12 : 8,
-              spreadRadius: _isHovering ? 2 : 0,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
+        margin: const EdgeInsets.all(8),
+        child: Stack(
+          clipBehavior: Clip.none, 
           children: [
-            // Avatar
-            _buildAvatar(),
-            const SizedBox(width: 16),
-
-            // Informações do jogador
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Nome do jogador
-                  Text(
-                    widget.player.playerName,
-                    style: const TextStyle(
-                      fontFamily: 'Zany',
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF2D1B00),
-                      height: 1.2,
-                    ),
-                  ),
-
-                  // Nome do personagem (se tiver)
-                  if (widget.player.hasCharacter &&
-                      widget.player.characterName != null) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      widget.player.characterName!,
-                      style: TextStyle(
-                        fontFamily: 'Zany',
-                        fontSize: 18,
-                        color: const Color(0xFF2D1B00).withOpacity(0.8),
-                        height: 1.2,
+            Positioned(
+              left: -45,   
+              top: 270,     
+              width: 400, 
+              height: 100,
+              child: Image.asset(
+                'assets/lobby/char_tile.png',
+                fit: BoxFit.contain, 
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD4AF6A).withOpacity(0.95),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: const Color(0xFF8B6F47),
+                        width: 3,
                       ),
                     ),
-                  ],
-                ],
+                  );
+                },
               ),
             ),
 
-            // Botão (só aparece para o usuário atual)
-            if (widget.player.isCurrentUser) ...[
-              const SizedBox(width: 12),
-              _buildActionButton(),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAvatar() {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE5D4A9),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(
-          color: Colors.black,
-          width: 3,
-        ),
-      ),
-      child: widget.player.hasCharacter && widget.player.avatarAsset != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: Image.asset(
-                widget.player.avatarAsset!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return _buildPlaceholderAvatar();
-                },
+            Positioned(
+              left: 155,     
+              top: 310,     
+              child: Text(
+                widget.player.playerName,
+                style: const TextStyle(
+                  fontFamily: 'Zany',
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF2D1B00),
+                  height: 1.2,
+                ),
               ),
-            )
-          : _buildPlaceholderAvatar(),
-    );
-  }
+            ),
 
-  Widget _buildPlaceholderAvatar() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.grey.shade700,
-            Colors.grey.shade500,
+            _buildActionButton(),
+
+            _buildStatusCheck(),
           ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: const Center(
-        child: Icon(
-          Icons.person,
-          size: 50,
-          color: Colors.white54,
         ),
       ),
     );
@@ -149,37 +81,83 @@ class _PlayerCardState extends State<PlayerCard> {
 
   Widget _buildActionButton() {
     final bool hasCharacter = widget.player.hasCharacter;
-    final String buttonText = hasCharacter ? 'VER PERSONAGEM' : 'CRIAR PERSONAGEM';
+    final bool isCurrentUser = widget.player.isCurrentUser;
     final VoidCallback? onPressed = hasCharacter
         ? widget.onViewCharacter
         : widget.onCreateCharacter;
 
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF2D2D2D),
-        foregroundColor: const Color(0xFFFFD700),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 14,
+    String assetPath;
+    if (isCurrentUser) {
+      assetPath = 'assets/lobby/button_create.png';
+    } else if (hasCharacter) {
+      assetPath = 'assets/lobby/button_show.png';
+    } else {
+      assetPath = 'assets/lobby/button_no_show.png';
+    }
+
+    return Positioned(
+      left: 152,     
+      top: 330,      
+      width: 150,  
+      height: 50,  
+      child: InkWell(
+        onTap: onPressed,
+        child: Image.asset(
+          assetPath,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: hasCharacter ? Colors.green : const Color(0xFFFFAA00),
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(color: Colors.black, width: 2),
+              ),
+              child: Center(
+                child: Text(
+                  isCurrentUser ? 'CRIAR' : (hasCharacter ? 'VER' : 'NO SHOW'),
+                  style: const TextStyle(
+                    fontFamily: 'Zany',
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          },
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: const BorderSide(
-            color: Color(0xFF1A1A1A),
-            width: 2,
-          ),
-        ),
-        elevation: 4,
       ),
-      child: Text(
-        buttonText,
-        style: const TextStyle(
-          fontFamily: 'Zany',
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 0.5,
-        ),
+    );
+  }
+
+  Widget _buildStatusCheck() {
+    final bool hasCharacter = widget.player.hasCharacter;
+
+    return Positioned(
+      left: -20,   
+      top: 300,     
+      width: 40,   
+      height: 40, 
+      child: Image.asset(
+        hasCharacter
+            ? 'assets/lobby/char_check_ready.png'
+            : 'assets/lobby/char_check.png',
+        fit: BoxFit.contain,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: hasCharacter ? Colors.green : Colors.grey,
+              border: Border.all(color: Colors.black, width: 2),
+            ),
+            child: Icon(
+              hasCharacter ? Icons.check : Icons.circle,
+              color: Colors.white,
+              size: 20,
+            ),
+          );
+        },
       ),
     );
   }

@@ -70,7 +70,6 @@ class _ChatWidgetState extends State<ChatWidget> {
       _messageController.clear();
     });
 
-    // Scroll para o final
     Future.delayed(const Duration(milliseconds: 100), () {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
@@ -84,62 +83,46 @@ class _ChatWidgetState extends State<ChatWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFFD4AF6A).withOpacity(0.95),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFF8B6F47),
-          width: 3,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Cabeçalho "CHAT"
-          _buildHeader(),
-
-          // Lista de mensagens
-          Expanded(
-            child: _buildMessageList(),
-          ),
-
-          // Input de mensagem
-          _buildMessageInput(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Color(0xFF8B6F47),
-            width: 2,
+    return Stack(
+      children: [
+        Positioned(
+          left: 30,     
+          top: 0,      
+          right: 0,
+          bottom: 0,
+          child: Image.asset(
+            'assets/shared/ui_elements/chat.png',
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD4AF6A).withOpacity(0.95),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF8B6F47),
+                    width: 3,
+                  ),
+                ),
+              );
+            },
           ),
         ),
-      ),
-      child: const Center(
-        child: Text(
-          'CHAT',
-          style: TextStyle(
-            fontFamily: 'Zany',
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF2D1B00),
-            letterSpacing: 2,
+
+        Positioned(
+          left: 127,   
+          top: 260,  
+          width: 280, 
+          height: 400, 
+          child: _buildMessageList(),
+        ),
+
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: _buildMessageInput(),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -176,7 +159,6 @@ class _ChatWidgetState extends State<ChatWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Nome do jogador
           Text(
             '${message.playerName}:',
             style: TextStyle(
@@ -190,7 +172,6 @@ class _ChatWidgetState extends State<ChatWidget> {
           ),
           const SizedBox(width: 6),
 
-          // Mensagem
           Expanded(
             child: Text(
               message.message,
@@ -208,92 +189,80 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   Widget _buildMessageInput() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFF8B6F47),
-            width: 2,
-          ),
-        ),
-      ),
-      child: Row(
-        children: [
-          // Campo de texto
-          Expanded(
-            child: TextField(
+    return Transform.translate(
+      offset: const Offset(122, -205), 
+      child: SizedBox(
+        width: 280, 
+        child: Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            TextField(
               controller: _messageController,
               style: const TextStyle(
                 fontFamily: 'Zany',
                 fontSize: 14,
-                color: Color(0xFF2D1B00),
+                color: Color(0xFFE5D4A9), 
               ),
               decoration: InputDecoration(
                 hintText: 'Digite sua mensagem...',
                 hintStyle: TextStyle(
                   fontFamily: 'Zany',
                   fontSize: 14,
-                  color: const Color(0xFF2D1B00).withOpacity(0.5),
+                  color: const Color(0xFFE5D4A9).withOpacity(0.5),
                 ),
                 filled: true,
-                fillColor: const Color(0xFFE5D4A9),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
+                fillColor: Colors.transparent, 
+                contentPadding: const EdgeInsets.only(
+                  left: 12,
+                  right: 60,
+                  top: 10,
+                  bottom: 10,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF8B6F47),
-                    width: 2,
-                  ),
+                  borderSide: BorderSide.none, 
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF8B6F47),
-                    width: 2,
-                  ),
+                  borderSide: BorderSide.none, 
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(6),
-                  borderSide: const BorderSide(
-                    color: Color(0xFF6B5437),
-                    width: 2,
-                  ),
+                  borderSide: BorderSide.none, 
                 ),
               ),
               onSubmitted: (_) => _sendMessage(),
             ),
-          ),
-          const SizedBox(width: 8),
 
-          // Botão enviar
-          ElevatedButton(
-            onPressed: _sendMessage,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2D2D2D),
-              foregroundColor: const Color(0xFFFFD700),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-                side: const BorderSide(
-                  color: Color(0xFF1A1A1A),
-                  width: 2,
+            Positioned(
+              right: 15, 
+              child: InkWell(
+                onTap: _sendMessage,
+                child: Image.asset(
+                  'assets/shared/ui_elements/arrow.png',
+                  width: 35,
+                  height: 35,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF8B4513),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      child: const Icon(
+                        Icons.send,
+                        color: Color(0xFFFFD700),
+                        size: 24,
+                      ),
+                    );
+                  },
                 ),
               ),
-              elevation: 2,
             ),
-            child: const Icon(
-              Icons.send,
-              size: 20,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,15 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../../../shared/utils/screen_helpers.dart';
 import '../../../shared/widgets/common/app_background.dart';
-import '../../../shared/widgets/particles/floating_particles.dart';
 import '../models/player_model.dart';
+import '../widgets/action_footer_widget.dart';
 import '../widgets/character_modal.dart';
 import '../widgets/chat_widget.dart';
 import '../widgets/player_card.dart';
-import '../widgets/room_code_widget.dart';
 
 class LobbyScreen extends StatefulWidget {
   const LobbyScreen({super.key});
@@ -21,7 +20,7 @@ class LobbyScreen extends StatefulWidget {
 class _LobbyScreenState extends State<LobbyScreen> {
   final List<PlayerModel> _players = PlayerModel.getMockPlayers();
   final String _roomCode = _generateRoomCode();
-  int _unreadMessages = 0;
+  bool _isReady = false;
 
   static String _generateRoomCode() {
     final random = math.Random();
@@ -52,74 +51,55 @@ class _LobbyScreenState extends State<LobbyScreen> {
     Navigator.of(context).pushReplacementNamed('/session');
   }
 
-  void _showChatModal() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.7),
-      builder: (context) => Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.all(20),
-        child: Container(
-          constraints: const BoxConstraints(
-            maxWidth: 400,
-            maxHeight: 600,
-          ),
-          child: const ChatWidget(isModal: true),
-        ),
+  void _handleStart() {
+    if (!_isReady) return;
+
+    // TODO: Implementar lógica de iniciar o jogo
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Iniciando o jogo...'),
+        duration: Duration(seconds: 2),
       ),
-    ).then((_) {
-      // Zera mensagens não lidas ao fechar o chat
-      setState(() => _unreadMessages = 0);
-    });
+    );
+  }
+
+  void _handleCodeTap() {
+    Clipboard.setData(ClipboardData(text: _roomCode));
   }
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = ScreenHelpers.isSmallScreen(context);
+    _isReady = _players.every((player) => player.hasCharacter);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          // Background
           const AppBackground(
             imageAsset: '/lobby/background.png',
             overlayColor: Colors.black26,
             child: SizedBox.expand(),
           ),
 
-          // Partículas flutuantes
-          const Positioned.fill(
-            child: FloatingParticles(
-              particleCount: 15,
-              minSize: 4,
-              maxSize: 10,
-              minOpacity: 0.2,
-              maxOpacity: 0.6,
-              speed: 0.12,
-              color: Color(0xFFFFF9C4),
-              glowType: ParticleGlowType.spark,
-              activity: 1.0,
-              spawnFromEdges: true,
-              maxActiveParticles: 12,
-            ),
-          ),
-
-          // Conteúdo principal
           SafeArea(
-            child: Column(
-              children: [
-                // Cabeçalho com botões
-                _buildHeader(isSmallScreen),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Expanded(
+                    flex: 4,
+                    child: ChatWidget(),
+                  ),
 
-                // Conteúdo (jogadores e chat)
-                Expanded(
-                  child: isSmallScreen
-                      ? _buildMobileLayout()
-                      : _buildDesktopLayout(),
-                ),
-              ],
+                  const SizedBox(width: 20),
+
+                  Expanded(
+                    flex: 6,
+                    child: _buildAdventurersPanel(),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -127,196 +107,74 @@ class _LobbyScreenState extends State<LobbyScreen> {
     );
   }
 
-  Widget _buildHeader(bool isSmallScreen) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // Botão Sair (X)
-          _buildExitButton(),
-
-          const Spacer(),
-
-          // Ícone de chat (apenas mobile) com notificação
-          if (isSmallScreen) ...[
-            _buildChatIconButton(),
-            const SizedBox(width: 12),
-          ],
-
-          // Código da sala
-          RoomCodeWidget(roomCode: _roomCode),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildExitButton() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.6),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFFFFD700).withOpacity(0.4),
-          width: 2,
-        ),
-      ),
-      child: IconButton(
-        onPressed: _handleExit,
-        icon: const Icon(
-          Icons.close,
-          color: Color(0xFFFFD700),
-          size: 28,
-        ),
-        tooltip: 'Sair do Lobby',
-      ),
-    );
-  }
-
-  Widget _buildChatIconButton() {
+  Widget _buildAdventurersPanel() {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.6),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: const Color(0xFFFFD700).withOpacity(0.4),
-              width: 2,
-            ),
-          ),
-          child: IconButton(
-            onPressed: _showChatModal,
-            icon: const Icon(
-              Icons.chat_bubble,
-              color: Color(0xFFFFD700),
-              size: 24,
-            ),
-            tooltip: 'Abrir Chat',
-          ),
-        ),
-        // Badge de notificação
-        if (_unreadMessages > 0)
-          Positioned(
-            right: 0,
-            top: 0,
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                color: Colors.red,
-                shape: BoxShape.circle,
-              ),
-              constraints: const BoxConstraints(
-                minWidth: 20,
-                minHeight: 20,
-              ),
-              child: Center(
-                child: Text(
-                  _unreadMessages > 9 ? '9+' : _unreadMessages.toString(),
-                  style: const TextStyle(
-                    fontFamily: 'Zany',
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+        Positioned(
+          left: -15,     
+          top: 0,     
+          right: 0,
+          bottom: 0,
+          child: Image.asset(
+            'assets/lobby/player_list.png',
+            fit: BoxFit.contain, // Mantém a proporção da imagem
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD4AF6A).withOpacity(0.95),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF8B6F47),
+                    width: 3,
                   ),
                 ),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildDesktopLayout() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Lista de jogadores (60%)
-          Expanded(
-            flex: 6,
-            child: _buildPlayersList(),
-          ),
-
-          const SizedBox(width: 20),
-
-          // Chat (40%)
-          Expanded(
-            flex: 4,
-            child: const ChatWidget(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMobileLayout() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: _buildPlayersList(),
-    );
-  }
-
-  Widget _buildPlayersList() {
-    return Column(
-      children: [
-        // Título "JOGADORES"
-        _buildPlayersTitle(),
-
-        const SizedBox(height: 16),
-
-        // Lista de cards
-        Expanded(
-          child: ListView.builder(
-            itemCount: _players.length,
-            itemBuilder: (context, index) {
-              final player = _players[index];
-              return PlayerCard(
-                player: player,
-                onViewCharacter: player.isCurrentUser
-                    ? () => _handleViewCharacter(player)
-                    : null,
-                onCreateCharacter:
-                    player.isCurrentUser ? _handleCreateCharacter : null,
               );
             },
           ),
         ),
-      ],
-    );
-  }
 
-  Widget _buildPlayersTitle() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-      decoration: BoxDecoration(
-        color: const Color(0xFFD4AF6A).withOpacity(0.95),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color(0xFF8B6F47),
-          width: 3,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+        Positioned.fill(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(60, 100, 20, 20), 
+            child: Column(
+              children: [
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 3,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: _players.length,
+                    itemBuilder: (context, index) {
+                      final player = _players[index];
+                      return PlayerCard(
+                        player: player,
+                        onViewCharacter: player.isCurrentUser
+                            ? () => _handleViewCharacter(player)
+                            : null,
+                        onCreateCharacter:
+                            player.isCurrentUser ? _handleCreateCharacter : null,
+                      );
+                    },
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                ActionFooterWidget(
+                  roomCode: _roomCode,
+                  isReady: _isReady,
+                  onStart: _handleStart,
+                  onBack: _handleExit,
+                  onCodeTap: _handleCodeTap,
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-      child: const Center(
-        child: Text(
-          'JOGADORES',
-          style: TextStyle(
-            fontFamily: 'Zany',
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF2D1B00),
-            letterSpacing: 3,
-          ),
         ),
-      ),
+      ],
     );
   }
 }

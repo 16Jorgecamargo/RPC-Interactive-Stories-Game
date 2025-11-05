@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: CustomColors.background,
         fontFamily: 'Zany',
       ),
-      initialRoute: '/',
+      initialRoute: '/lobby',
       onGenerateRoute: (settings) {
         // Função para criar rotas sem animação
         Widget? page;
