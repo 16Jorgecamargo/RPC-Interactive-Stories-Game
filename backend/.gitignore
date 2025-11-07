@@ -1,7 +1,9 @@
-node_modules
-dist
-npm-debug.log
-.env
-.DS_Store
+node_modules/
+dist/
 *.log
-data
+.DS_Store
+.env
+*.env.local
+.vscode/
+.idea/
+data/rooms.json

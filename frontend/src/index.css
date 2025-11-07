@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Fantasy RPG Theme */
+    --background: 20 20% 10%; /* Dark Brown */
+    --foreground: 35 30% 80%; /* Light Tan */
+    --card: 20 20% 15%;
+    --card-foreground: 35 30% 80%;
+    --popover: 20 20% 10%;
+    --popover-foreground: 35 30% 80%;
+    --primary: 35 60% 50%; /* Brown */
+    --primary-foreground: 35 30% 90%;
+    --secondary: 0 50% 40%; /* Deep Red */
+    --secondary-foreground: 35 30% 90%;
+    --muted: 20 20% 25%;
+    --muted-foreground: 35 30% 60%;
+    --accent: 45 50% 50%; /* Muted Gold */
+    --accent-foreground: 20 20% 10%;
+    --destructive: 0 70% 40%; /* Deep Red */
+    --destructive-foreground: 0 0% 100%;
+    --border: 20 20% 30%;
+    --input: 20 20% 20%;
+    --ring: 45 50% 50%; /* Muted Gold */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}

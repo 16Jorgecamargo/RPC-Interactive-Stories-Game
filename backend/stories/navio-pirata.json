@@ -1,0 +1,47 @@
+{
+  "id": "navio-pirata",
+  "title": "O Navio Pirata",
+  "description": "Uma aventura em alto mar",
+  "cards": [
+    {
+      "id": "inicio",
+      "text": "Vocês acordam em um navio pirata! Não se lembram como chegaram aqui. O capitão, um velho pirata de barba grisalha, oferece uma escolha: juntar-se à tripulação ou caminhar na prancha.",
+      "choices": [
+        { "id": "juntar", "text": "Juntar-se à tripulação", "nextCard": "tripulacao" },
+        { "id": "recusar", "text": "Recusar e tentar negociar", "nextCard": "negociacao" },
+        { "id": "lutar", "text": "Tentar tomar o controle do navio", "nextCard": "batalha" }
+      ]
+    },
+    {
+      "id": "tripulacao",
+      "text": "Vocês se tornam parte da tripulação. O capitão revela que estão em busca de um tesouro lendário. Em alguns dias, avistam uma ilha misteriosa.",
+      "choices": [
+        { "id": "explorar-ilha", "text": "Explorar a ilha", "nextCard": "ilha" }
+      ]
+    },
+    {
+      "id": "negociacao",
+      "text": "Vocês tentam negociar. O capitão ri, mas fica impressionado com sua coragem. Ele oferece um desafio: se ganharem uma partida de dados, serão libertados.",
+      "choices": [
+        { "id": "aceitar-desafio", "text": "Aceitar o desafio", "nextCard": "dados" }
+      ]
+    },
+    {
+      "id": "batalha",
+      "text": "A luta é intensa! Vocês são superados em número, mas lutam bravamente. No final, o capitão respeita a coragem de vocês e oferece uma trégua.",
+      "choices": [
+        { "id": "tregua", "text": "Aceitar a trégua", "nextCard": "tripulacao" }
+      ]
+    },
+    {
+      "id": "ilha",
+      "text": "Na ilha, vocês encontram ruínas antigas e um mapa que leva ao tesouro. Parabéns! A aventura foi um sucesso e vocês ficam ricos!",
+      "choices": []
+    },
+    {
+      "id": "dados",
+      "text": "Vocês jogam os dados... e ganham! O capitão, um homem de palavra, liberta vocês em um bote com provisões. Sobrevivem e retornam para casa com uma história incrível!",
+      "choices": []
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "id": "reino-perdido",
+  "title": "O Reino Perdido de Eldoria",
+  "description": "Uma épica jornada de fantasia medieval com magia, dragões e destinos a serem escolhidos",
+  "cards": [
+    {
+      "id": "inicio",
+      "text": "Vocês chegam à capital de Eldoria, um reino outrora próspero, agora coberto por uma névoa mágica. O rei convoca aventureiros para recuperar o Cetro do Amanhecer, roubado pelo feiticeiro Malakar. Dizem que três caminhos levam à Torre Sombria onde ele se esconde.",
+      "choices": [
+        { "id": "caminho-floresta", "text": "Atravessar a Floresta Encantada", "nextCard": "floresta-encantada" },
+        { "id": "caminho-montanhas", "text": "Escalar as Montanhas Gélidas", "nextCard": "montanhas-gelidas" },
+        { "id": "caminho-pântano", "text": "Navegar pelo Pântano das Almas", "nextCard": "pantano-almas" }
+      ]
+    },
+    {
+      "id": "floresta-encantada",
+      "text": "A floresta está viva com magia antiga. Árvores sussurram segredos e criaturas mágicas observam de longe. Vocês encontram uma clareira onde um unicórnio ferido jaz no chão, cercado por caçadores obscuros.",
+      "choices": [
+        { "id": "salvar-unicornio", "text": "Lutar contra os caçadores e salvar o unicórnio", "nextCard": "aliado-unicornio" },
+        { "id": "evitar-conflito", "text": "Evitar o conflito e seguir em frente", "nextCard": "encontro-fadas" },
+        { "id": "negociar-cacadores", "text": "Tentar negociar com os caçadores", "nextCard": "traiçao-cacadores" }
+      ]
+    },
+    {
+      "id": "montanhas-gelidas",
+      "text": "O frio é intenso e o ar rarefeito. Ao escalar, vocês encontram uma caverna que promete abrigo. Dentro dela, brilham cristais azuis e há pegadas de algo grande.",
+      "choices": [
+        { "id": "explorar-caverna", "text": "Explorar a caverna profundamente", "nextCard": "dragao-gelo" },
+        { "id": "descansar-entrada", "text": "Descansar na entrada e seguir ao amanhecer", "nextCard": "tempestade-neve" }
+      ]
+    },
+    {
+      "id": "pantano-almas",
+      "text": "O pântano é sombrio e cheio de perigos. Luzes fantasmagóricas dançam sobre a água podre. De repente, um barqueiro espectral surge oferecendo passagem... por um preço.",
+      "choices": [
+        { "id": "aceitar-barqueiro", "text": "Aceitar a ajuda do barqueiro espectral", "nextCard": "barco-espectral" },
+        { "id": "recusar-barqueiro", "text": "Recusar e seguir a pé", "nextCard": "criaturas-pantano" },
+        { "id": "atacar-barqueiro", "text": "Atacar o barqueiro, suspeitando de uma armadilha", "nextCard": "combate-espectro" }
+      ]
+    },
+    {
+      "id": "aliado-unicornio",
+      "text": "Vocês derrotam os caçadores! O unicórnio, grato, compartilha sua magia curativa e revela um atalho secreto através da floresta. Ele os guia até a Torre Sombria com segurança.",
+      "choices": [
+        { "id": "chegar-torre-1", "text": "Chegar à Torre Sombria", "nextCard": "entrada-torre" }
+      ]
+    },
+    {
+      "id": "encontro-fadas",
+      "text": "Vocês encontram um círculo de fadas dançando. Elas oferecem três presentes: uma espada flamejante, um escudo impenetrável, ou conhecimento sobre o ponto fraco de Malakar.",
+      "choices": [
+        { "id": "escolher-espada", "text": "Aceitar a espada flamejante", "nextCard": "rumo-torre-armados" },
+        { "id": "escolher-escudo", "text": "Aceitar o escudo impenetrável", "nextCard": "rumo-torre-armados" },
+        { "id": "escolher-conhecimento", "text": "Aceitar o conhecimento", "nextCard": "rumo-torre-sabedoria" }
+      ]
+    },
+    {
+      "id": "traiçao-cacadores",
+      "text": "Os caçadores concordam em deixá-los passar... mas era uma armadilha! Eles os cercam, mas vocês lutam heroicamente e escapam, feridos mas vivos.",
+      "choices": [
+        { "id": "continuar-feridos", "text": "Continuar feridos rumo à torre", "nextCard": "rumo-torre-feridos" }
+      ]
+    },
+    {
+      "id": "dragao-gelo",
+      "text": "No fundo da caverna, um majestoso dragão de gelo desperta! Ele não os ataca imediatamente, mas exige que provem seu valor. Ele propõe um desafio de enigmas.",
+      "choices": [
+        { "id": "aceitar-enigma", "text": "Aceitar o desafio dos enigmas", "nextCard": "enigma-dragao" },
+        { "id": "oferecer-tributo", "text": "Oferecer tesouros como tributo", "nextCard": "dragao-aliado" }
+      ]
+    },
+    {
+      "id": "tempestade-neve",
+      "text": "Uma terrível tempestade de neve os atinge durante a noite. Vocês acordam cobertos de neve, mas encontram runas antigas nas paredes que concedem proteção mágica temporária.",
+      "choices": [
+        { "id": "usar-runas", "text": "Usar as runas e seguir protegidos", "nextCard": "rumo-torre-armados" }
+      ]
+    },
+    {
+      "id": "barco-espectral",
+      "text": "O barqueiro os leva em segurança, mas exige uma memória preciosa de cada um como pagamento. Vocês chegam à torre, mas algo importante foi perdido...",
+      "choices": [
+        { "id": "chegar-torre-2", "text": "Entrar na Torre Sombria", "nextCard": "entrada-torre" }
+      ]
+    },
+    {
+      "id": "criaturas-pantano",
+      "text": "Criaturas do pântano emergem da lama! Uma batalha feroz acontece. Vocês vencem, mas gastam muita energia e recursos.",
+      "choices": [
+        { "id": "continuar-cansados", "text": "Continuar exaustos rumo à torre", "nextCard": "rumo-torre-feridos" }
+      ]
+    },
+    {
+      "id": "combate-espectro",
+      "text": "O combate contra o espectro é árduo! Vocês descobrem que ele era um antigo guardião do reino, amaldiçoado. Ao libertá-lo, ele revela segredos sobre Malakar.",
+      "choices": [
+        { "id": "seguir-com-info", "text": "Seguir com as informações do guardião", "nextCard": "rumo-torre-sabedoria" }
+      ]
+    },
+    {
+      "id": "enigma-dragao",
+      "text": "Vocês resolvem os enigmas do dragão! Impressionado, ele oferece sua benção e um fragmento de escama mágica que protegerá contra magia sombria.",
+      "choices": [
+        { "id": "aceitar-bencao", "text": "Agradecer e partir para a torre", "nextCard": "rumo-torre-armados" }
+      ]
+    },
+    {
+      "id": "dragao-aliado",
+      "text": "O dragão aceita o tributo e, mais que isso, decide acompanhá-los! Com um dragão ao lado, vocês voam direto para a Torre Sombria!",
+      "choices": [
+        { "id": "voar-torre", "text": "Voar até a torre com o dragão", "nextCard": "confronto-final-dragao" }
+      ]
+    },
+    {
+      "id": "entrada-torre",
+      "text": "Vocês chegam à Torre Sombria. As portas se abrem sozinhas, revelando um corredor iluminado por chamas verdes. Ao fundo, Malakar os aguarda com o Cetro do Amanhecer em mãos.",
+      "choices": [
+        { "id": "confronto", "text": "Confrontar Malakar", "nextCard": "confronto-final" }
+      ]
+    },
+    {
+      "id": "rumo-torre-armados",
+      "text": "Bem equipados e preparados, vocês chegam à Torre Sombria. A jornada foi dura, mas vocês estão prontos para o confronto final.",
+      "choices": [
+        { "id": "entrar-torre", "text": "Entrar na Torre Sombria", "nextCard": "entrada-torre" }
+      ]
+    },
+    {
+      "id": "rumo-torre-sabedoria",
+      "text": "Com conhecimento sobre os pontos fracos de Malakar, vocês chegam à Torre Sombria confiantes. A sabedoria será sua maior arma.",
+      "choices": [
+        { "id": "entrar-torre-sabio", "text": "Entrar na Torre Sombria", "nextCard": "confronto-final-sabio" }
+      ]
+    },
+    {
+      "id": "rumo-torre-feridos",
+      "text": "Feridos e exaustos, vocês finalmente avistam a Torre Sombria. A jornada cobrou seu preço, mas desistir não é uma opção.",
+      "choices": [
+        { "id": "entrar-torre-ferido", "text": "Entrar na Torre Sombria", "nextCard": "confronto-final-dificil" }
+      ]
+    },
+    {
+      "id": "confronto-final",
+      "text": "A batalha contra Malakar é épica! Magias explodem, espadas chocam. Com esforço heroico, vocês conseguem derrotá-lo e recuperar o Cetro do Amanhecer!",
+      "choices": [
+        { "id": "vitoria", "text": "Retornar ao reino vitorioso", "nextCard": "final-heroi" }
+      ]
+    },
+    {
+      "id": "confronto-final-sabio",
+      "text": "Usando o conhecimento adquirido, vocês exploram os pontos fracos de Malakar! A batalha é rápida e estratégica. Ele cai derrotado sem chance de defesa. O Cetro é seu!",
+      "choices": [
+        { "id": "vitoria-perfeita", "text": "Retornar ao reino vitorioso", "nextCard": "final-heroi-lenda" }
+      ]
+    },
+    {
+      "id": "confronto-final-dragao",
+      "text": "Com o dragão ao seu lado, Malakar não tem chance! O feiticeiro tenta fugir, mas as chamas do dragão o impedem. Vocês recuperam o Cetro e o dragão se torna protetor de Eldoria!",
+      "choices": [
+        { "id": "vitoria-alianca", "text": "Celebrar a nova aliança", "nextCard": "final-heroi-dragao" }
+      ]
+    },
+    {
+      "id": "confronto-final-dificil",
+      "text": "A batalha é brutal. Feridos e cansados, vocês lutam com tudo que resta. No último momento, conseguem um golpe de sorte que derrota Malakar, mas o preço foi alto...",
+      "choices": [
+        { "id": "vitoria-sacrificio", "text": "Retornar ao reino", "nextCard": "final-heroi-sacrificio" }
+      ]
+    },
+    {
+      "id": "final-heroi",
+      "text": "Vocês retornam a Eldoria como heróis! O Cetro do Amanhecer dissipa a névoa mágica e o reino floresce novamente. O rei os recompensa com terras e títulos. Vocês são lembrados como os salvadores de Eldoria!",
+      "choices": []
+    },
+    {
+      "id": "final-heroi-lenda",
+      "text": "Vocês retornam como heróis lendários! Sua sabedoria e estratégia são cantadas em baladas por todo o reino. O rei os nomeia Conselheiros Reais. Eldoria entra em uma era de ouro sob sua orientação!",
+      "choices": []
+    },
+    {
+      "id": "final-heroi-dragao",
+      "text": "Vocês retornam com um dragão aliado! O reino de Eldoria agora tem o protetor mais poderoso de todas as terras. Vocês são nomeados Cavaleiros do Dragão e guardiões eternos do reino. Uma nova era de prosperidade e magia começa!",
+      "choices": []
+    },
+    {
+      "id": "final-heroi-sacrificio",
+      "text": "Vocês retornam vitoriosos, mas marcados pelas batalhas. O reino é salvo, mas vocês carregam as cicatrizes da jornada. Mesmo assim, são recebidos como heróis verdadeiros que não mediram esforços para salvar Eldoria. Às vezes, a vitória tem um preço...",
+      "choices": []
+    }
+  ]
+}

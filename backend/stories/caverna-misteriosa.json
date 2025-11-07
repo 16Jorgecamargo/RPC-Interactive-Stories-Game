@@ -1,0 +1,83 @@
+{
+  "id": "caverna-misteriosa",
+  "title": "A Caverna Misteriosa",
+  "description": "Uma aventura em uma caverna cheia de mistérios",
+  "cards": [
+    {
+      "id": "inicio",
+      "text": "Vocês estão viajando por uma floresta densa quando ouvem um barulho estranho vindo de uma caverna próxima. O som parece um gemido baixo, quase inumano. O que vocês fazem?",
+      "choices": [
+        { "id": "investigar", "text": "Investigar a caverna", "nextCard": "dentro-caverna" },
+        { "id": "fugir", "text": "Seguir viagem e ignorar o barulho", "nextCard": "floresta" },
+        { "id": "observar", "text": "Observar de longe antes de decidir", "nextCard": "observando" }
+      ]
+    },
+    {
+      "id": "dentro-caverna",
+      "text": "Vocês entram cautelosamente na caverna. As paredes são úmidas e há uma luz estranha brilhando ao fundo. À medida que avançam, percebem que o gemido vem de uma criatura ferida. É um dragão pequeno, não maior que um cavalo, com uma asa quebrada.",
+      "choices": [
+        { "id": "ajudar", "text": "Tentar ajudar o dragão", "nextCard": "ajudando-dragao" },
+        { "id": "fugir-dragao", "text": "Fugir antes que ele os veja", "nextCard": "fuga" }
+      ]
+    },
+    {
+      "id": "floresta",
+      "text": "Vocês decidem continuar pela floresta, ignorando o barulho. Após algumas horas de caminhada, encontram um vilarejo abandonado. As casas estão vazias, mas há sinais de que as pessoas saíram às pressas.",
+      "choices": [
+        { "id": "explorar-vilarejo", "text": "Explorar o vilarejo", "nextCard": "vilarejo" },
+        { "id": "acampar", "text": "Acampar e descansar", "nextCard": "acampamento" }
+      ]
+    },
+    {
+      "id": "observando",
+      "text": "Vocês se escondem atrás de algumas rochas e observam a entrada da caverna. Depois de alguns minutos, veem uma fumaça verde saindo da caverna. O gemido para abruptamente.",
+      "choices": [
+        { "id": "entrar-agora", "text": "Entrar na caverna agora", "nextCard": "dentro-caverna" },
+        { "id": "ir-embora", "text": "Ir embora enquanto podem", "nextCard": "floresta" }
+      ]
+    },
+    {
+      "id": "ajudando-dragao",
+      "text": "Vocês se aproximam do dragão com cuidado. Surpreendentemente, ele não ataca. Seus olhos dourados os observam com inteligência. Vocês enfaixam sua asa e oferecem água. O dragão, agradecido, revela que pode falar! Ele oferece um tesouro ancestral como recompensa.",
+      "choices": [
+        { "id": "fim-tesouro", "text": "Aceitar o tesouro e partir", "nextCard": "vitoria" }
+      ]
+    },
+    {
+      "id": "fuga",
+      "text": "Vocês correm da caverna o mais rápido possível. Na pressa, tropeçam em raízes e pedras. Quando finalmente param para descansar, percebem que estão completamente perdidos na floresta.",
+      "choices": [
+        { "id": "fim-perdidos", "text": "Tentar encontrar o caminho de volta", "nextCard": "perdidos" }
+      ]
+    },
+    {
+      "id": "vilarejo",
+      "text": "Explorando as casas, vocês encontram diários que falam sobre uma maldição. Ao ler, descobrem que a caverna que ignoraram era a chave para quebrar a maldição. As pessoas fugiram, mas há uma maneira de salvá-las.",
+      "choices": [
+        { "id": "voltar-caverna", "text": "Voltar para a caverna", "nextCard": "dentro-caverna" }
+      ]
+    },
+    {
+      "id": "acampamento",
+      "text": "Vocês acampam no vilarejo abandonado. Durante a noite, ouvem passos ao redor do acampamento. Pela manhã, descobrem pegadas estranhas e um mapa antigo deixado propositalmente.",
+      "choices": [
+        { "id": "seguir-mapa", "text": "Seguir o mapa", "nextCard": "tesouro-escondido" }
+      ]
+    },
+    {
+      "id": "vitoria",
+      "text": "Parabéns! Vocês completaram a aventura com sucesso. O dragão os recompensou com tesouros e conhecimento antigo. A bondade de vocês salvou uma criatura mágica e trouxe fortuna ao grupo!",
+      "choices": []
+    },
+    {
+      "id": "perdidos",
+      "text": "Vocês vagam pela floresta por dias. Eventualmente, encontram o caminho de volta, mas a aventura termina sem grandes conquistas. Às vezes, a curiosidade vale a pena...",
+      "choices": []
+    },
+    {
+      "id": "tesouro-escondido",
+      "text": "O mapa os leva a um tesouro escondido há séculos! Vocês encontram ouro, joias e artefatos mágicos. A aventura foi um sucesso!",
+      "choices": []
+    }
+  ]
+}
